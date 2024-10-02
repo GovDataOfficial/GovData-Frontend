@@ -1,0 +1,58 @@
+.gd-a-button-icon {
+  @extend .link-reset;
+  @extend .details-reset;
+
+  display: flex;
+  justify-content: flex-start;
+  padding: 24px 32px 32px 0;
+
+  &.gd-a-button-icon-border {
+    border-top: 1px solid $grey-light;
+
+    &:last-of-type {
+      border-bottom: 1px solid $grey-light;
+    }
+  }
+
+  .gd-a-button-icon-summary {
+    @extend .paragraph;
+    @extend .bold;
+
+    display: flex;
+    position: relative;
+    padding-left: 32px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      content: "";
+      height: 24px;
+      width: 24px;
+      background: url("/images/arrow_right.svg");
+      background-size: cover;
+      margin-left: 0;
+      margin-right: rem-calc(8);
+      transition: transform 0.2s;
+      -webkit-transition: -webkit-transform .2s;
+      -ms-transition: -ms-transform .2s;
+      display: inline-block;
+    }
+  }
+
+  .gd-a-button-icon-content {
+    padding-left: rem-calc(32);
+    padding-top: rem-calc(20);
+  }
+
+  &[open] .gd-a-button-icon-summary::before,
+  &[aria-expanded="true"] .gd-a-button-icon-summary::before {
+    transform: rotate(90deg);
+    -ms-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+  }
+}

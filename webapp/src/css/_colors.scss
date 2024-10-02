@@ -1,0 +1,203 @@
+// primary colors
+// defined in styleguide https://www.figma.com/design/UYARvGaolVKDyxX28bWPDR/GOVDATA?node-id=209-629&t=RiF66boWSJu3zy4S-0
+$clr-primary-500: #004565;
+$clr-primary-400: #0073a8;
+$clr-primary-300: #4d9dc2;
+$clr-primary-200: #99c7dc;
+$clr-primary-100: #e6f1f6;
+
+// media type colors
+$clr-media-green-500: #1e5a5a;
+$clr-media-red-500: #5a0a0a;
+$clr-media-blue-500: #002d62;
+$clr-media-grey-500: #3d3d3d;
+
+// metadaten
+$clr-metadaten-magenta-400: #80004b;
+$clr-metadaten-magenta-200: #e6cbda;
+
+//neutral colors
+$clr-neutral-grey-900: #030d18;
+$clr-neutral-grey-800: #192738;
+$clr-neutral-grey-700: #24384d;
+$clr-neutral-grey-600: #3d4f66;
+$clr-neutral-grey-500: #5d728b;
+$clr-neutral-grey-400: #93a5bb;
+$clr-neutral-grey-300: #cdd8e1;
+$clr-neutral-grey-200: #e3e8ef;
+$clr-neutral-grey-100: #f3f6fb;
+$clr-neutral-grey-50: #f8fafe;
+$clr-neutral-grey-0: #f5f5f5;
+
+//success colors
+$clr-success-green-500: #206d5c;
+$clr-success-green-400: #2d9880;
+$clr-success-green-300: #40d9b7;
+$clr-success-green-200: #d9f7f1;
+
+// warning colors
+$clr-warning-yellow-500: #7b7301;
+$clr-warning-yellow-400: #938a01;
+$clr-warning-yellow-300: #f5e601;
+$clr-warning-yellow-200: #fdfacc;
+
+// error colors
+$clr-error-red-500: #b33030;
+$clr-error-red-400: #e63e3e;
+$clr-error-red-300: #ff4545;
+$clr-error-red-200: #ffdada;
+
+// shades
+$clr-shades-black-500: #000000;
+$clr-shades-white-0: #ffffff;
+
+$clr-body-background: #f5f5f5;
+// colors from the styleguide
+
+$clr-hvd: #daa520;
+$light-gray: #f5f5f5;
+$kontur-gray: #c5c5c5;
+
+$dokument-violett: #503278;
+$app-blue: #284664;
+$blog-red: #5a0a0a;
+$showcase-blue: #002d62;
+$magenta: #80004b;
+$devcorner-green: #064300;
+$devcorner-green-light: rgba(6, 67, 0, 0.3);
+
+$green: #1d8747;
+$green-light: #d9f7f1;
+
+$yellow-light: #fdfacc;
+$yellow-dirty: #7b7301;
+
+$metadataquality-pink: rgb(128, 0, 75);
+$metadataquality-pink-light: rgb(230, 203, 218);
+
+$link-blue: #009fe3;
+$white: #fff;
+$black: #000;
+
+$twitter-black: #14171a;
+$mastodon-purple: #563acc;
+
+$grey-light: #cdd8e1;
+$disabled-text: #737373;
+
+$filter-primary: brightness(0) saturate(100%) invert(25%) sepia(89%)
+  saturate(2036%) hue-rotate(179deg) brightness(92%) contrast(101%);
+
+$filter-white: brightness(0) saturate(100%) invert(100%) ;
+
+// a colors map - name => color
+$colors: (
+  "primary": $clr-primary-400,
+  "data-green": $clr-media-green-500,
+  "devcorner-green": $devcorner-green,
+  "blog-red": $blog-red,
+  "black": $black,
+  "white": $white,
+  "showcase-blue": $showcase-blue,
+  "dark-gray": $clr-media-grey-500,
+  "green-light": $green-light,
+  "green": $green,
+  "yellow-dirty": $yellow-dirty,
+  "yellow-light": $yellow-light,
+  "magenta": $magenta,
+);
+
+// generate color classes from the colors map
+// you can use it like: <div class="bg-data-green clr-data-green"></div>
+@each $color_name, $color_code in $colors {
+  // background color classes
+  .bg-#{$color_name} {
+    --class-item-bg: #{$color_code};
+    background-color: $color_code;
+  }
+
+  // color classes
+  .clr-#{$color_name} {
+    --class-item-clr: #{$color_code};
+    color: $color_code;
+  }
+}
+
+// own colors
+$checkbox-border: darken($kontur-gray, 10%);
+
+@mixin navcolor($background-color, $color) {
+  &.active > a {
+    background-color: $background-color;
+    color: $color;
+
+    &:focus {
+      background-color: transparent;
+      color: $clr-media-grey-500;
+    }
+  }
+
+  a::after {
+    border-top-color: $background-color;
+    color: $background-color;
+  }
+}
+
+// colors for the background of the main menu...
+#layout_3 {
+  // Daten
+  @include navcolor($clr-media-green-500, $white);
+}
+
+#layout_6 {
+  // Dokumente
+  @include navcolor($dokument-violett, $white);
+}
+
+#layout_7 {
+  // Showcases
+  @include navcolor($showcase-blue, $white);
+}
+
+#layout_8 {
+  // Neues
+  @include navcolor($blog-red, $white);
+}
+
+#layout_9 {
+  // Bibliothek
+  @include navcolor($black, $white);
+}
+
+#layout_47 {
+  // Entwicklerecke
+  @include navcolor($devcorner-green, $white);
+}
+
+#layout_51 {
+  // Metadatenqualität
+  @include navcolor($metadataquality-pink, $white);
+}
+
+// colors for mediatype-icons
+$mediatypes: (
+  "article": $clr-media-grey-500,
+  "blog": $blog-red,
+  "dataset": $clr-media-green-500,
+  "dokument": $dokument-violett,
+  "concept": $showcase-blue,
+  "publication": $showcase-blue,
+  "visualization": $showcase-blue,
+  "website": $showcase-blue,
+  "tool": $showcase-blue,
+  "mobile_app": $showcase-blue,
+  "other": $showcase-blue,
+);
+
+@each $suffix, $typeColor in $mediatypes {
+  .mediatype-icon {
+    &.mediatype-#{$suffix} {
+      background-color: #{$typeColor};
+    }
+  }
+}

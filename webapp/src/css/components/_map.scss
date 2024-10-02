@@ -1,0 +1,53 @@
+.map {
+  background-color: $kontur-gray;
+  height: 400px;
+  max-height: 60vh; // maximum 60% of viewport height
+  position: relative;
+  width: 100%;
+
+  @include media-breakpoint-up(md) {
+    height: 600px;
+  }
+}
+
+.map-search-button-container {
+  bottom: rem-calc(5px);
+  left: 0;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+
+  .button-search {
+    white-space: nowrap;
+  }
+}
+
+.center-selection-control {
+  left: 0.5rem;
+  top: 5rem;
+}
+
+.ol-control button {
+  background-color: rgba($clr-media-grey-500, 0.7);
+
+  &:hover {
+    background-color: $clr-media-grey-500;
+  }
+}
+
+// move the copyright hint to the top
+.ol-attribution {
+  &.ol-uncollapsible {
+    height: inherit;
+    top: 0;
+    bottom: auto;
+    border-top-left-radius: 0;
+  }
+
+  & * {
+    font-size: inherit;
+    line-height: inherit;
+    font: inherit;
+    font-weight: inherit;
+  }
+}

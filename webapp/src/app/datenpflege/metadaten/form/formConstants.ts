@@ -1,0 +1,51 @@
+export type ContactType = "author" | "maintainer" | "publisher" | "originator";
+
+export const METADATA_FORM_ID = "metadata-form";
+
+export const METADATA_FORM_INPUTS = {
+  DATA_ORG: "data_org",
+  CONTRIBUTER_ID: "contributer-id",
+  TITLE: "title",
+  DESCRIPTION: "description",
+  TAGS: "tags",
+  CATEGORIES: "categories",
+  HVD_CATEGORIES: "hvd-categories",
+  WEBSITE: "webseite",
+  CONTACTS: (type: ContactType) => ({
+    name: `contacts[${type}].name`,
+    email: `contacts[${type}].email`,
+    url: `contacts[${type}].url`,
+    address: {
+      addressee: `contacts[${type}].address.addressee`,
+      details: `contacts[${type}].address.details`,
+      street: `contacts[${type}].address.street`,
+      city: `contacts[${type}].address.city`,
+      zip: `contacts[${type}].address.zip`,
+      country: `contacts[${type}].address.country`,
+    },
+  }),
+  RESSOURCE: (num: number) => ({
+    name: `resources[${num}].name`,
+    email: `resources[${num}].email`,
+    url: `resources[${num}].url`,
+    description: `resources[${num}].description`,
+    format: `resources[${num}].format`,
+    language: `resources[${num}].language`,
+    licenseId: `resources[${num}].licenseId`,
+    licenseAttributionByText: `resources[${num}].licenseAttributionByText`,
+    modified: `resources[${num}].modified`,
+    availability: `resources[${num}].availability`,
+    hvd: `resources[${num}].hvd.`,
+    id: `resources[${num}].id`,
+    issued: `resources[${num}].issued`,
+  }),
+  POLICITICAL_GEOCODING_LEVEL: "policiticalGeocodingLevelURI",
+  POLICITICAL_GEOCODING: "policiticalGeocodingURI",
+  GEOCODING_TEXT: "geocodingText",
+  SPATIAL: "spatial",
+  LEGAL_BASIS_TEXT: "legalbasisText",
+  TEMPORAL_COVERAGE_FROM: "temporalCoverageFrom",
+  TEMPORAL_COVERAGE_UNTIL: "temporalCoverageFrom",
+  DATES_PUBLISHED: "datesPublished",
+  DATES_MODIFIED: "datesModified",
+};

@@ -1,0 +1,212 @@
+.step-container {
+  h2,
+  h3 {
+    margin-bottom: map-get($spacers, 1);
+  }
+
+  &[aria-hidden="true"] {
+    position: absolute;
+    visibility: hidden;
+    overflow: hidden;
+    height: 0;
+  }
+
+  // this should be inside of FormRow
+  // but easier for now as it covers most of styling
+  .gd-input:not(:last-of-type) {
+    margin-bottom: map-get($spacers, 3);
+  }
+
+  &:has(+ .step-container[aria-hidden="false"]) {
+    //margin-bottom: map-get($spacers, 5);
+  }
+}
+
+.metadata-form-geolocation {
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+
+  .gd-input {
+    width: 50%;
+
+    textarea {
+      resize: none;
+      height: 250px;
+    }
+  }
+
+  .metadata-form-geolocation-code-example {
+    @extend .gd-input;
+    strong {
+      @extend label;
+    }
+    code {
+      display: block;
+      @extend textarea;
+      overflow: auto;
+      background: $clr-neutral-grey-0;
+    }
+  }
+}
+
+.metadata-sticky-form-navigation {
+  position: fixed;
+  transform: translateY(35%);
+
+  &.mobile {
+    display: block;
+    transform: translate(0);
+    position: relative;
+
+    ul {
+      display: inline-flex;
+      margin: 0;
+      li {
+        width: 56px;
+        height: 56px;
+        padding: 0;
+        &:before {
+          height: 1px;
+          width: 21px;
+          transform: translate(-21px, 22px);
+        }
+      }
+    }
+
+    .sticky-nav-button {
+      .sticky-nav-button-text-container {
+        display: none
+      }
+    }
+  }
+
+  .sticky-nav-error {
+    @extend .paragraph-small;
+    color: $clr-error-red-400;
+    margin: 0;
+    display: inline-block;
+    text-align: left;
+  }
+
+  button {
+    @include outline-base();
+    @include transparent-border();
+    @extend .button-reset;
+    @extend .paragraph;
+    @extend .bold;
+
+    .sticky-nav-button-text-container:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  ul {
+    display: inline;
+    list-style: none;
+    padding: 0;
+    counter-reset: step;
+  }
+
+  li {
+    position: relative;
+    display: block;
+    align-content: center;
+    height: 56px;
+    padding: 0 map-get($spacers, 2);
+    width: 330px;
+  }
+
+  .sticky-nav-button {
+    height: 45px;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .sticky-nav-button-text-container {
+      display: block;
+      text-align: left;
+    }
+
+    &:before {
+      @extend .bold;
+      content: counter(step);
+      counter-increment: step;
+      width: 32px;
+      height: 32px;
+      border-radius: 100%;
+      text-align: center;
+      display: inline-flex;
+      align-self: center;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-right: map-get($spacers, 1);
+      border: 2px solid transparent;
+      flex-shrink: 0;
+    }
+  }
+
+  // horizontal line
+  li:not(:first-of-type):before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 1px;
+    background-color: $clr-primary-400;
+    height: 22px;
+    transform: translate(18px, -17px);
+  }
+
+  li.done {
+    .sticky-nav-button:before {
+      color: white;
+      background: $clr-primary-400;
+      border-color: $clr-primary-400;
+    }
+  }
+
+  li.visited {
+    .sticky-nav-button:before {
+      color: white;
+      background: $clr-primary-400;
+      border-color: $clr-primary-400;
+    }
+  }
+
+  li.error {
+    .sticky-nav-button:before {
+      color: black;
+      background: $clr-neutral-grey-100;
+      border-color: $clr-error-red-400;
+    }
+  }
+
+  li.notVisited {
+    &:before {
+      display: none;
+    }
+    color: $clr-neutral-grey-500;
+    .sticky-nav-button:before {
+      background: $clr-neutral-grey-100;
+      border-color: $clr-neutral-grey-100;
+    }
+  }
+
+  li.active {
+    .sticky-nav-button:before {
+      background: $clr-neutral-grey-100;
+      border-color: $clr-primary-400;
+    }
+    .sticky-nav-button-text-container {
+      text-decoration: underline;
+    }
+  }
+}
+
+.metadata-form-bottom-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: map-get($spacers, 2);
+}

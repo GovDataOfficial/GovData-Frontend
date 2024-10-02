@@ -1,0 +1,35 @@
+$alert-border-radius: 5px;
+
+$alert-info-bg: #e6f1f6;
+$alert-info-clr: #0073a8;
+
+.alert {
+  @extend .paragraph-small;
+
+  border-radius: $alert-border-radius;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 8px 12px !important;
+
+  .alert-icon {
+    display: inline-block;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    margin-right: 8px;
+  }
+
+  &.alert-info {
+    background: $alert-info-bg;
+    color: $alert-info-clr;
+    border: 1px solid;
+  }
+
+  &.gd-alert-danger {
+    background-color: #fee5e2;
+    color: #b50303;
+    margin: rem-calc(32) 0;
+    border: 1px solid #fcaca5;
+  }
+}

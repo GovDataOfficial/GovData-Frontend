@@ -1,0 +1,109 @@
+.gd-input {
+  label,
+  legend {
+    @extend .paragraph;
+    @extend .bold;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: $spacer * 1 $spacer * 1.5;
+
+    border-radius: $spacer * 0.5;
+    border: 1px solid $clr-neutral-grey-500;
+
+    &:user-invalid,
+    &.gd-input-invalid {
+      border: 2px solid;
+      border-color: $clr-error-red-500;
+    }
+  }
+
+  input {
+    height: rem-calc(40);
+  }
+
+  textarea {
+    height: 120px;
+    resize: vertical;
+  }
+
+  select {
+    appearance: none;
+    background: white url($theme-image-path + "/select-arrow-down-gray.png")
+      no-repeat right center;
+    font-size: 14px;
+    margin: 0;
+    width: 100%;
+    height: rem-calc(40);
+  }
+
+  textarea {
+    width: 100%;
+  }
+
+  input[type="date"] {
+    @extend .paragraph;
+    color: #000;
+    display: inline-block;
+    font-size: 14px;
+    margin-bottom: 10px;
+    vertical-align: middle;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    transition:
+      border 0.2s linear,
+      box-shadow 0.2s linear;
+  }
+
+  input[type="checkbox"] {
+    width: map-get($spacers, 3);
+  }
+
+  +.gd-input-checkbox,
+  .gd-input-multi-checkbox-item {
+    @include transparent-border();
+    display: flex;
+    align-items: center;
+
+
+    &:has(:focus-visible) {
+      @extend .focus-outline-common;
+    }
+
+    input {
+      outline: none;
+      margin-right: map-get($spacers, 1);
+    }
+    label {
+      @extend .link;
+      @extend .paragraph;
+      //noto-sans-normal, need better css decoupling for checkboxes here
+      font-weight: 400;
+      color: $clr-neutral-grey-800;
+    }
+  }
+}
+
+.gd-form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: rem-calc(30);
+
+  &.gd-form-row-even {
+    .gd-input {
+      width: 48%;
+    }
+  }
+
+  &.gd-form-row-1-2 {
+    .gd-input:first-of-type {
+      width: 25%;
+    }
+    .gd-input:not(:first-of-type) {
+      width: 75%;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.gd-container-fluid-sm {
+  max-width: $small-breakpoint;
+}
+
+.gd-container-fluid-md {
+  max-width: $medium-breakpoint;
+}
+
+.gd-container-fluid-lg {
+  max-width: $large-breakpoint;
+}
+
+.gd-container-fluid-930 {
+  max-width: 930px + $grid-gutter-width;
+}
+
+.gd-content-section-separator {
+  border-color: #c5c5c5;
+  border-style: solid;
+  border-width: 0 0 1px;
+}

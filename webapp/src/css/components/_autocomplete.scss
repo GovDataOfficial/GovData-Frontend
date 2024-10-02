@@ -1,0 +1,72 @@
+// autocomplete
+.gd-autocomplete {
+  .yui3-aclist {
+    position: relative;
+  }
+
+  .yui3-aclist-content {
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #afafaf;
+    -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.58);
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.58);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.58);
+    z-index: 9999;
+  }
+
+  .yui3-aclist-item {
+    padding: 0.5em;
+    cursor: pointer;
+    list-style: none;
+
+    &:hover,
+    &:focus,
+    &.yui3-aclist-item-active {
+      background-color: $clr-media-grey-500;
+      color: $white;
+    }
+  }
+
+  .yui3-aclist-list {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+
+.searchmap-input-row {
+  position: relative;
+  top: - rem-calc(45);
+
+  .button-search {
+    padding: rem-calc(5) rem-calc(13);
+    box-shadow: 1px 1px 4px rgba($black, 0.5);
+  }
+
+  @include media-breakpoint-down(sm) {
+    top: - rem-calc(80);
+
+    .button-search {
+      padding: rem-calc(5) rem-calc(13);
+      box-shadow: 1px 1px 4px rgba($black, 0.5);
+      width: 100%;
+    }
+  }
+
+
+}
+
+.locationsearch {
+  input.input-search {
+    height: 30px;
+    box-shadow: 1px 1px 4px rgba($black, 0.5);
+  }
+
+  .yui3-aclist-item {
+    span {
+      color: darken($kontur-gray, 20%);
+    }
+  }
+}

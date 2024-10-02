@@ -1,0 +1,82 @@
+.featured-portlet {
+  @media #{$small-only} {
+    .portlet-header h1 {
+      margin-top: 10px;
+    }
+  }
+}
+
+// portlet header fix
+.portlet-header {
+  margin: 0 auto;
+  max-width: rem-calc(1440 - 1);
+  width: 100%;
+
+  h1 {
+    padding-left: rem-calc(15);
+    padding-right: rem-calc(15);
+
+    @media #{$large-up} {
+      padding-left: rem-calc(24);
+      padding-right: rem-calc(24);
+    }
+  }
+}
+
+// off-canvas
+.off-canvas-inner-wrap {
+  // innerwrap for off-canvas menu
+  position: relative;
+  top: 0;
+}
+
+.off-canvas-container {
+  .design-box {
+    border: 0;
+  }
+}
+
+// special case for searchdetails... where we only need this box to be on the right on mobile displays
+.floatcontainer-right {
+  float: right !important;
+}
+
+.offscreen {
+  display: inline;
+  height: 1px;
+  left: -10000px;
+  overflow: hidden;
+  position: absolute;
+  top: auto;
+  width: 1px;
+}
+
+.flex-container {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+}
+
+.overflowscroll {
+  overflow: auto;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
+input[type="text"],
+input.input-search {
+  border-radius: 0;
+  border: 1px solid $clr-media-grey-500;
+}
+
+.gd-common-dl {
+  dt:not(:first-of-type) {
+    margin-top: rem-calc(20);
+  }
+}
+
+.border-bottom {
+  border-bottom: 1px solid $clr-neutral-grey-300;
+}

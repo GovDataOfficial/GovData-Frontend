@@ -1,0 +1,81 @@
+.border-1-solid {
+  border: 1px solid;
+}
+
+.hvd {
+  border: 2px dashed $clr-hvd !important;
+}
+
+.gd-mb-20 {
+  margin-bottom: rem-calc(20px)
+}
+
+.mw-140 {
+  max-width: 140px;
+}
+
+.mw-lg-140 {
+  @media #{$large-only} {
+    max-width: 140px;
+  }
+}
+
+.mw-md-140 {
+  @media #{$medium-only} {
+    max-width: 140px;
+  }
+}
+
+.mw-100 {
+  max-width: 100%;
+}
+
+.list-unstyled {
+  list-style: none;
+  padding-left: 0;
+}
+
+
+.underline {
+  text-decoration: underline;
+}
+
+.text-break {
+  word-break: normal;
+  overflow-wrap: anywhere;
+  hyphens: manual;
+}
+
+.text-break-force {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  hyphens: manual;
+}
+
+.gd-truncate-single {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.external-link-icon {
+  content: " h";
+  font-family: "govdata";
+  font-size: 80%;
+  font-weight: normal;
+  display: inline-block;
+  padding: 0 0.4em;
+}
+
+.external-link {
+  &::after {
+    @extend .external-link-icon;
+  }
+}
+
+.mark-external-links {
+  a[target="_blank"]::after {
+    @extend .external-link-icon;
+  }
+}

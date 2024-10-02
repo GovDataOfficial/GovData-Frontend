@@ -1,0 +1,50 @@
+///@todo new theme: this should not be the base style for each link, but a special kind
+.fnt-link {
+  @include outline-base();
+
+  @extend .paragraph;
+  @extend .bold;
+
+  color: #0073a8;
+  display: flex;
+
+  &:hover {
+    color: #0073a8;
+    background: none;
+    text-decoration: underline;
+  }
+
+  &:focus {
+    color: #0073a8;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: rem-calc(16);
+    line-height: rem-calc(24);
+  }
+
+  &-external {
+    display: block;
+
+    &:after {
+      content: "";
+      position: absolute;
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background: url($theme-image-path + "/external.svg") no-repeat right;
+    }
+
+    @media #{$small-only} {
+      &:after {
+        height: rem-calc(17);
+      }
+    }
+  }
+
+  &-download {
+    align-items: center;
+  }
+}
+
+

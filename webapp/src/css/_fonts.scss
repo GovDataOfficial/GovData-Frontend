@@ -1,0 +1,78 @@
+@import "@fontsource/noto-sans/400.css";
+@import "@fontsource/noto-sans/700.css";
+@import "@fontsource/noto-sans/300.css";
+
+//*******************************
+// Font Definition
+//*******************************
+.noto-sans-normal {
+  font-family: "Noto Sans";
+  font-weight: 400;
+}
+
+.noto-sans-bold {
+  font-family: "Noto Sans";
+  font-weight: 700;
+}
+
+.normal {
+  @extend .noto-sans-normal;
+}
+
+.bold {
+  @extend .noto-sans-bold;
+}
+
+//*******************************
+// Font Sizes - Headings
+//*******************************
+
+h1,
+.h1 {
+  @include heading($fnt-h1-size, $fnt-h1-size-mobile, $line-height-heading);
+}
+
+h2,
+.h2 {
+  @include heading($fnt-h2-size, $fnt-h2-size-mobile, $line-height-heading);
+}
+
+h3,
+.h3 {
+  @include heading($fnt-h3-size, $fnt-h3-size-mobile, $line-height-heading);
+}
+
+h4,
+.h4 {
+  @include heading($fnt-h4-size, $fnt-h4-size-mobile, $line-height-heading);
+}
+
+h5,
+.h5 {
+  @include heading($fnt-h5-size, $fnt-h5-size-mobile, $line-height-heading);
+}
+
+//*******************************
+// Font Sizes - Paragraphs
+//*******************************
+p,
+.paragraph {
+  @extend .normal;
+  font-size: $fnt-paragraph-regular;
+  line-height: $line-height-paragraph;
+}
+
+.paragraph-large {
+  @extend .paragraph;
+  font-size: $fnt-paragraph-large;
+}
+
+.paragraph-small {
+  @extend .paragraph;
+  font-size: $fnt-paragraph-small;
+}
+
+.paragraph-extra-small {
+  @extend .paragraph;
+  font-size: $fnt-paragraph-extra-small;
+}

@@ -1,0 +1,10 @@
+.gd-charts-table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid $metadataquality-pink;
+
+  th, td {
+    border: 1px solid $metadataquality-pink;
+  }
+}

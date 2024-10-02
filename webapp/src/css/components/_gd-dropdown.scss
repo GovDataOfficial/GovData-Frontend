@@ -1,0 +1,114 @@
+.gd-dropdown {
+  position: relative;
+
+  [aria-expanded="true"] {
+    & + .gd-dropdown-menu {
+      display: block;
+    }
+  }
+}
+
+.gd-dropdown-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  z-index: 99;
+  padding: rem-calc(8);
+  margin-top: 0;
+
+  background-color: $white;
+  border: 1px solid $clr-neutral-grey-800;
+  width: 100%;
+
+  @include media-breakpoint-up(sm) {
+    width: 200%;
+  }
+
+  li {
+    display: inline-block;
+    width: 100%;
+
+    @include media-breakpoint-up(sm) {
+      width: 50%;
+    }
+  }
+
+  button {
+    @include outline-base();
+    background: none;
+    border: 0;
+    padding: 0.5em;
+    width: 100%;
+
+    &:active,
+    &:hover,
+    &:focus {
+      background-color: $clr-media-grey-500;
+      color: $white;
+    }
+  }
+}
+
+.gd-dropdown-toggle {
+  @extend .button-search;
+  position: relative;
+  text-wrap: nowrap;
+  width: 100%;
+
+  &::after {
+    content: "e";
+    font-family: "govdata";
+    margin-left: rem-calc(16);
+    position: relative;
+    top: 3px;
+  }
+}
+
+// some overwrites to make adjust our dropdown to a select that can contain links
+.gd-dropdown-select {
+  display: inline-block;
+  position: relative;
+
+  @include media-breakpoint-only(xs) {
+    width: 100%;
+  }
+
+  .gd-dropdown-select-label {
+    @extend .bold;
+    display: block;
+    margin-bottom: rem-calc(3);
+  }
+
+  .gd-dropdown-toggle {
+    @extend .button-reset;
+
+    width: 100%;
+    background-color: white;
+    padding: 8px 12px;
+    border: 1px solid $kontur-gray;
+    border-radius: 4px;
+
+    position: relative;
+
+    @include media-breakpoint-only(xs) {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  .gd-dropdown-menu {
+    padding: rem-calc(4);
+    width: 100%;
+  }
+
+  li {
+    width: 100%;
+    padding: 2px;
+
+    a {
+      display: block;
+      text-wrap: nowrap;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+.quick-access-nav {
+  position: absolute;
+  top: -20em;
+  width: 25%;
+
+  a {
+    background: $clr-shades-white-0;
+    padding: rem-calc(10);
+    position: absolute;
+    text-align: center;
+    margin: rem-calc(10) 0 0 rem-calc(10);
+
+    &:focus,
+    &:hover {
+      top: 20em;
+    }
+  }
+}

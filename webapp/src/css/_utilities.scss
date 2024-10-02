@@ -1,0 +1,76 @@
+$utilities: map-merge($utilities, (
+  "width": (
+    property: width,
+    class: w,
+    values: (
+      25: 25%,
+      50: 50%,
+      75: 75%,
+      90: 90%,
+      100: 100%,
+      auto: auto
+    ),
+    responsive: true
+  ),
+  "float": (
+    responsive: true,
+    property: float,
+    values: (
+      start: left,
+      end: right,
+      none: none,
+    )
+  ),
+  "overflow": (
+    property: overflow,
+    values: auto hidden visible scroll,
+  ),
+  "text-align": (
+    responsive: true,
+    property: text-align,
+    class: text,
+    values: (
+      start: left,
+      left: left,
+      end: right,
+      right: right,
+      center: center,
+    )
+  ),
+  "text-transform": (
+    property: text-transform,
+    class: text,
+    values: lowercase uppercase capitalize
+  ),
+  "white-space": (
+    property: white-space,
+    class: text,
+    values: (
+      wrap: normal,
+      nowrap: nowrap,
+    )
+  ),
+  "opacity": (
+    property: opacity,
+    values: (
+      0: 0,
+      25: .25,
+      50: .5,
+      75: .75,
+      100: 1,
+    )
+  ),
+  "min-viewport-height": (
+    property: min-height,
+    class: min-vh,
+    values: (100: 100vh)
+  ),
+  "position": (
+    property: position,
+    values: static relative absolute fixed sticky
+  ),
+)
+);
+
+@import "bootstrap/scss/utilities/api";
+

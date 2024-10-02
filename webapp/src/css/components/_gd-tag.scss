@@ -1,0 +1,36 @@
+.gd-tag {
+  font-size: $fnt-paragraph-small;
+
+  display: inline-block;
+  padding: 0 $spacer * 1;
+  border-radius: 5px;
+  text-wrap: nowrap;
+
+  abbr {
+    text-decoration-line: none;
+  }
+
+  &.black {
+    background-color: $clr-media-grey-500;
+    color: $clr-shades-white-0;
+  }
+
+  &.green {
+    background-color: $clr-success-green-200;
+    color: $clr-success-green-500;
+    border: 1px solid;
+  }
+
+  &.yellow {
+    background-color: $clr-warning-yellow-200;
+    color: $clr-warning-yellow-500;
+    border: 1px solid;
+  }
+
+  &.hvd-icon {
+    color: black;
+    background-color: $clr-hvd;
+    float: none;
+    border: none;
+  }
+}

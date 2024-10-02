@@ -1,0 +1,51 @@
+.region-search {
+  svg {
+    display: block;
+    margin: auto;
+    height: 700px;
+
+    a:focus {
+      outline: 0;
+    }
+
+    @include media-breakpoint-down(md) {
+      height: 580px;
+    }
+
+    path {
+      fill: $clr-primary-100;
+      &:hover,
+      &[data-active="true"] {
+        cursor: pointer;
+        fill: $clr-primary-400;
+      }
+    }
+  }
+}
+
+.region-search-box {
+  border-radius: $spacer * 1;
+  border: 1px solid $clr-primary-400;
+  padding: $spacer * 8;
+
+  @include media-breakpoint-down(md) {
+    padding: $spacer * 2.5;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li:first-of-type {
+      margin-bottom: rem-calc(20);
+    }
+    li:not(:first-of-type):not(:last-of-type) {
+      margin-bottom: rem-calc(8);
+    }
+
+    li a[data-active="true"] {
+      text-decoration: underline 2px;
+    }
+  }
+}

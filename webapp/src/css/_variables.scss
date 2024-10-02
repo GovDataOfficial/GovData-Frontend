@@ -1,0 +1,122 @@
+$theme-image-path: "/images/";
+$enable-grid-classes: true;
+
+//*******************************
+// Font Sizes
+//*******************************
+$fnt-h1-size: rem-calc(32);
+$fnt-h1-size-mobile: rem-calc(24);
+
+$fnt-h2-size: rem-calc(24);
+$fnt-h2-size-mobile: rem-calc(20);
+
+$fnt-h3-size: rem-calc(20);
+$fnt-h3-size-mobile: rem-calc(18);
+
+$fnt-h4-size: rem-calc(18);
+$fnt-h4-size-mobile: rem-calc(16);
+
+$fnt-h5-size: rem-calc(16);
+$fnt-h5-size-mobile: rem-calc(14);
+
+$fnt-paragraph-large: rem-calc(20);
+$fnt-paragraph-regular: rem-calc(16);
+$fnt-paragraph-small: rem-calc(14);
+$fnt-paragraph-extra-small: rem-calc(12);
+
+$line-height-heading: 125%;
+$line-height-paragraph: 150%;
+
+
+//*******************************
+// Breakpoints
+//*******************************
+$small-breakpoint: 767px;
+$medium-breakpoint: 1024px;
+$large-breakpoint: 1440px;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: $small-breakpoint,
+  md: $medium-breakpoint,
+  lg: $large-breakpoint,
+);
+
+$small-range: (0, $small-breakpoint);
+$medium-range: ($small-breakpoint + 1px, $medium-breakpoint);
+$large-range: ($medium-breakpoint + 1px, em-calc(99999999));
+
+$screen: "only screen" !default;
+
+$landscape: "#{$screen} and (orientation: landscape)" !default;
+$portrait: "#{$screen} and (orientation: portrait)" !default;
+
+$small-up: $screen !default;
+$small-only: "#{$screen} and (max-width: #{upper-bound($small-range)})";
+
+$medium-up: "#{$screen} and (min-width:#{lower-bound($medium-range)})";
+$medium-only: "#{$screen} and (min-width:#{lower-bound($medium-range)}) and (max-width:#{upper-bound($medium-range)})";
+$medium-down: "#{$screen} and (max-width:#{upper-bound($medium-range)})"; // extra thingy (timo)
+
+$large-up: "#{$screen} and (min-width:#{lower-bound($large-range)})";
+$large-only: "#{$screen} and (min-width:#{lower-bound($large-range)}) and (max-width:#{upper-bound($large-range)})";
+
+//*******************************
+// Grid
+//*******************************
+$grid-columns: 12;
+$grid-gutter-width: 30px;
+
+$container-max-widths: (
+  sm: $small-breakpoint,
+  md: $medium-breakpoint,
+  lg: $large-breakpoint
+);
+
+//*******************************
+// Spacing
+//*******************************
+$spacer: 0.5rem;
+$spacers: (
+  0: 0,
+  "0_5": $spacer * 0.5,
+  1: $spacer,
+  "1_5": $spacer * 1.5,
+  2: $spacer * 2,
+  "2_5": $spacer * 2.5,
+  3: $spacer * 3,
+  4: $spacer * 4,
+  5: $spacer * 5,
+  6: $spacer * 6,
+  7: $spacer * 7,
+  8: $spacer * 8,
+  9: $spacer * 9,
+  10: $spacer * 10,
+  11: $spacer * 11,
+  12: $spacer * 12,
+  13: $spacer * 13,
+  14: $spacer * 14,
+  15: $spacer * 15,
+  16: $spacer * 16,
+  17: $spacer * 17,
+  18: $spacer * 18,
+);
+
+$grid-gutter-width: 32px;
+$gutters: $spacers;
+
+
+// previously found in _mixins.scss
+$breakpoint_phone: 767px !default;
+$breakpoint_tablet: 1024px !default;
+$default-text-shadow-color: #aaaaaa;
+$default-text-shadow-h-offset: 0px;
+$default-text-shadow-v-offset: 0px;
+$default-text-shadow-blur: 1px;
+$default-text-shadow-spread: false;
+
+//previously found in components/dockbar.scss
+$addContentPanelWidth: 350px;
+$devicePreviewPanelWidth: 220px;
+$diamondSize: 12px;
+$editLayoutPanelWidth: 460px;

@@ -1,0 +1,33 @@
+.gd-info-icon-toggle {
+  position: relative;
+  border: 0;
+  background: none;
+  cursor: pointer;
+
+  &[aria-expanded="true"] {
+    img {
+      filter: invert(100%);
+      background: white;
+      border-radius: 40px;
+    }
+  }
+}
+
+.gd-info-icon {
+  display: block;
+
+  .gd-info-icon-description {
+    @extend .paragraph;
+
+    display: none;
+    margin-top: rem-calc(14);
+
+    &:last-child {
+      margin-bottom: rem-calc(14);
+    }
+  }
+
+  [aria-hidden="false"] {
+    display: block;
+  }
+}

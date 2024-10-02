@@ -1,0 +1,64 @@
+.gd-site-navigation {
+  --background-primary: #{$clr-neutral-grey-900};
+  --background-secondary: #{$kontur-gray};
+
+  &.magenta {
+    --background-primary: #{$clr-metadaten-magenta-400};
+    --background-secondary: #{$clr-metadaten-magenta-200};
+  }
+
+  background: var(--background-secondary);
+
+  ul {
+    @extend .list-unstyled;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0;
+
+    li {
+      background: var(--background-secondary);
+
+      border-left: 2px solid white;
+      border-right: 2px solid white;
+      margin-right: -1px;
+
+      // this is some liferay hack...
+      &::after {
+        content: "";
+        height: 2px;
+        background: white;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        z-index: 0;
+      }
+    }
+  }
+
+  .gd-site-navigation-link {
+    @extend .paragraph;
+    color: white;
+    display: inline-block;
+    padding: rem-calc(16);
+    min-width: 10rem;
+    text-align: center;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:not(.selected) {
+      color: black;
+
+      &:hover {
+        color: white;
+        background: var(--background-primary);
+      }
+    }
+
+    &.selected {
+      background: var(--background-primary);
+    }
+  }
+}

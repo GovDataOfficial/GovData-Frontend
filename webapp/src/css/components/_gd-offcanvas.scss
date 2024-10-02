@@ -1,0 +1,207 @@
+.gd-offcanvas {
+  transition: all 500ms ease 0s;
+  z-index: 1003;
+  visibility: hidden;
+  opacity: 1;
+  top: 0;
+  bottom: 0;
+  background: $white;
+  position: fixed;
+  width: 90%;
+  max-width: 300px;
+  right: 0;
+  left: auto;
+
+  transform: translateX(100%);
+
+  &.open {
+    transform: translateX(0%);
+    visibility: visible;
+    overflow: auto;
+  }
+}
+
+.off-canvas-container {
+  padding: rem-calc(60) 0 rem-calc(15);
+}
+
+.gd-exit-off-canvas {
+  display: none;
+}
+
+.gd-offcanvas.open ~ .gd-exit-off-canvas {
+  display: block;
+  cursor: pointer;
+
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5) !important;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1002;
+}
+
+// ### migrating existing menu to fit styleguide
+// remove unused button
+#_145_navAccountControlsNavbarBtn {
+  display: none;
+}
+
+// restyle remaining buttons
+.portlet-dockbar .navbar {
+  .navbar-inner {
+    padding: 0;
+  }
+}
+
+.off-canvas-close {
+  display: block;
+  float: right;
+  margin-top: rem-calc(24);
+  margin-right: rem-calc(16);
+}
+
+// hide the off-canvas area if a bigger breakpoint is reached
+// restyle main navigation for use in off-canvas
+#off-canvas-mainmenu {
+  padding: rem-calc(60) rem-calc(15) rem-calc(15) rem-calc(15);
+  padding-left: 0;
+  padding-right: 0;
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .off-canvas-nav {
+    li {
+      padding-left: rem-calc(15) !important;
+      padding-right: rem-calc(15) !important;
+    }
+
+    .dropdown.open .dropdown-toggle::after {
+      speak: none;
+      content: "\f106";
+    }
+
+    .dropdown-toggle {
+      @include outline-base();
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    a,
+    .dropdown-toggle {
+      @extend .fnt-link;
+
+      color: black;
+      transition: none;
+      line-height: rem-calc(24);
+      position: relative;
+      z-index: 1;
+      text-underline-offset: rem-calc(3.22);
+      background: none;
+
+      &:hover {
+        background: none;
+        text-decoration: underline;
+      }
+
+      &.selected {
+        color: $clr-primary-400;
+      }
+
+      &:not(.selected) {
+        &:hover {
+          color: black;
+        }
+
+        &:focus,
+        &:focus-visible {
+          color: black;
+        }
+      }
+    }
+  }
+
+  .off-canvas-nav,
+  .oc-meta-menu {
+    li,
+    a {
+      display: block;
+    }
+
+    a {
+      padding: 0.5em 0;
+      position: relative;
+    }
+  }
+
+  .off-canvas-nav > li {
+    border-bottom: 1px solid $kontur-gray;
+  }
+
+  .child-menu a {
+    padding-left: 1em;
+  }
+
+  .lfr-nav-child-toggle {
+    float: right;
+  }
+
+  .oc-languagechooser {
+    margin: rem-calc(5) 0 rem-calc(10);
+
+    > .buttongroup {
+      margin-right: rem-calc(10);
+    }
+  }
+
+  .oc-metamenu {
+    margin: rem-calc(10) 0;
+  }
+
+  .oc-accountinfo {
+    padding-bottom: rem-calc(10);
+  }
+
+  .oc-profile-sub {
+    display: block;
+    font-size: 14px;
+    line-height: 22px;
+    padding-left: 1em;
+  }
+
+  // folding submenu
+  .dropdown ul {
+    display: none;
+  }
+
+  .dropdown.open ul {
+    display: block;
+  }
+
+  .dropdown-toggle {
+    background: none $white;
+    border: 0;
+    display: block;
+    padding: 0.5em 0;
+    position: relative;
+    text-align: left;
+    width: 100%;
+
+    &::after {
+      content: "\f107";
+      speak: none;
+      float: right;
+      font: var(--fa-font-solid);
+    }
+  }
+}
+
+#off-canvas-filter {
+  padding-top: 53px;
+}

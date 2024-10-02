@@ -1,0 +1,28 @@
+.gd-list {
+  display: inline;
+  list-style: none;
+  padding: 0;
+
+  &.gd-list-comma {
+    li {
+      display: inline;
+    }
+
+    li:after {
+      content: ", ";
+    }
+
+    li:last-child::after {
+      content: "";
+    }
+  }
+
+  &.gd-list-inline {
+    li {
+      display: inline;
+      &:not(:first-of-type) {
+        margin-left: rem-calc(16);
+      }
+    }
+  }
+}

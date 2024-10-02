@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+  <suppress until="2025-02-01Z">
+    <notes>Chart.js - uses thrid-party dependencies with vulnerabilities - requires update to new major version</notes>
+    <packageUrl regex="true">^pkg:javascript/moment\.js@.*$</packageUrl>
+    <cve>CVE-2022-24785</cve>
+    <cve>CVE-2022-31129</cve>
+    <cve>CVE-2023-22467</cve>
+  </suppress>
+</suppressions>

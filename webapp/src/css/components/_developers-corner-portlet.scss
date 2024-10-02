@@ -1,0 +1,135 @@
+.developers-corner-portlet {
+  .custom-sparql-layout {
+    .yasgui {
+      .tabsList {
+        display: none;
+      }
+
+      .controlbar {
+        display: none;
+      }
+
+      .yasr {
+        .tableControls {
+          .pageSizerLabel {
+            display: none;
+          }
+
+          .tableSizer {
+            margin-bottom: 0;
+          }
+
+          .switch {
+            display: none;
+          }
+          // this input is overriden by our new global input style.
+          input {
+            width: 200px;
+            height: 30px;
+            border: 1px solid $clr-neutral-grey-500;
+            border-radius: 2px;
+          }
+        }
+      }
+    }
+  }
+
+  .select-format-margin {
+    margin-bottom: 15px;
+  }
+
+  .query-execute {
+    float: right;
+  }
+
+  .mobileList {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .btn-small {
+      width: 33%;
+      padding: 0.3em 0.5em !important;
+
+      @media #{$medium-up} {
+        display: none;
+      }
+    }
+  }
+
+  .listElements {
+    @media #{$small-only} {
+      display: none;
+    }
+    @media #{$medium-up} {
+      display: block;
+    }
+  }
+
+  .prefix-textbox {
+    width: 100%;
+  }
+
+  .btn-margin {
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+
+  .prefix-btn-active {
+    background: #fff;
+    color: #000;
+  }
+
+  .formatselectarea {
+    select {
+      background: url($theme-image-path + "/select-arrow-down-gray.png") no-repeat right center $clr-media-grey-500;
+      background-color: $white;
+      color: $clr-media-grey-500;
+      font-family: "Source Sans Pro";
+      font-size: 16px;
+      font-weight: bold;
+      height: inherit;
+      margin: 0;
+      padding: 6px 8px;
+      width: 100%;
+      border: 1px solid $kontur-gray;
+      box-shadow: 1px 1px 1px $kontur-gray;
+
+      @media #{$medium-up} {
+        float: left;
+        width: 25%;
+      }
+    }
+
+    @media #{$small-only} {
+      font-size: 14px;
+    }
+
+    .select-with-info-icon {
+      .gd-select {
+        vertical-align: middle;
+
+        @media #{$medium-up} {
+          float: none;
+        }
+
+        @media #{$small-only} {
+          width: 90%;
+        }
+      }
+
+      .show-full-text {
+        vertical-align: middle;
+        font-size: 18px;
+
+        svg {
+          top: 0;
+        }
+
+        .lexicon-icon {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}

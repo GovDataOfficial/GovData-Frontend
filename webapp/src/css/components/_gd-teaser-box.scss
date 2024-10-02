@@ -1,0 +1,77 @@
+.gd-teaser-box {
+  display: flex;
+  padding: map-get($spacers, 1) map-get($spacers, 2);
+
+  flex-direction: column;
+
+  height: 112px;
+  width: 210px;
+
+  * {
+    margin: 0;
+  }
+
+  .crop {
+    display: -webkit-box;
+    /* max-width: 330px; */
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &.gd-teaser-box-dark {
+    background: $clr-media-grey-500;
+    color: white;
+
+    &:hover {
+      background: $clr-neutral-grey-900;
+    }
+  }
+
+  &.gd-teaser-box-bright {
+    background: white;
+    color: $clr-neutral-grey-800;
+    border: 1px solid $clr-neutral-grey-300;
+
+    &:hover {
+      background: $clr-neutral-grey-50;
+    }
+  }
+
+  .gd-teaser-box-numbers-heading {
+    font-size: 36px;
+    line-height: 36px;
+  }
+}
+
+// not according to our breakpoints but due to their sizes,
+// this feels way more fluid.
+.gd-teaser-box-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: auto;
+
+  @media (max-width: 900px) {
+    gap: map-get($spacers, 1);
+    justify-content: center;
+    width: 70%;
+  }
+
+  @media (max-width: 676px) {
+    justify-content: center;
+    width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    justify-content: center;
+    width: 100%;
+    .gd-teaser-box {
+      width: 65%;
+    }
+  }
+}

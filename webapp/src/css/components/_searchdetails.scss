@@ -1,0 +1,41 @@
+.searchdetails-infobox {
+  word-break: break-word;
+}
+
+.searchdetails-infobox-group {
+  margin-bottom: rem-calc(32px);
+
+  dt:not(:nth-of-type(1)) {
+    margin-top: rem-calc(8px);
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.searchdetails-infobox-group-inline {
+  dd {
+    display: inline;
+  }
+  // Add a comma between the DD elements
+  dd:not(:last-child) {
+    &:after {
+      content: ", ";
+    }
+  }
+}
+
+.search-details-showcase-images-box {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: rem-calc(10px);
+
+  .search-details-showcase-image {
+    position: relative;
+    padding: rem-calc(2.5px);
+
+    width: rem-calc(200);
+    height: rem-calc(200);
+  }
+}

@@ -1,0 +1,54 @@
+footer {
+  background-color: $clr-media-grey-500;
+  color: $white;
+
+  a {
+    color: $white;
+  }
+
+  .footer-links {
+    @extend .list-unstyled;
+    display: inline-block;
+
+
+    li {
+      margin-left: rem-calc(14);
+
+      @include media-breakpoint-down(sm) {
+        margin-left: 0;
+      }
+
+    }
+
+    a {
+      font-weight: bold;
+    }
+  }
+
+  .social-icons {
+    @extend .list-unstyled;
+
+    > * {
+      display: inline-block;
+    }
+
+    a {
+      display: inline-block;
+      line-height: 1.667em;
+      text-align: center;
+      width: 1.667em;
+
+      font-size: 1.667em;
+      margin-right: rem-calc(5);
+
+      &:focus-visible,
+      &:hover {
+        border-radius: 2px;
+        background: $clr-body-background;
+        .fa-brands {
+          filter: invert(100%);
+        }
+      }
+    }
+  }
+}

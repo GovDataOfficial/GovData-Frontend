@@ -1,0 +1,166 @@
+$rem-base: 16px;
+
+@mixin heading($fnt-size, $fnt-size-mobile, $line-height) {
+  @extend .noto-sans-bold;
+
+  font-size: $fnt-size-mobile;
+  line-height: $line-height;
+
+  @include media-breakpoint-up(md) {
+    font-size: $fnt-size;
+  }
+
+  & > a {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+  }
+}
+
+// Media of at least the minimum breakpoint width. No query for the smallest breakpoint.
+// Makes the @content apply to the given breakpoint and wider.
+@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+  $min: map-get($breakpoints, $name);
+  @return if($min != 0, $min, null);
+}
+
+@function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
+  @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
+}
+
+
+$focus-common-outline: 3px solid #0073a8;
+$focus-common-outline-offset: 2px;
+$focus-common-box-shadow: none;
+$focus-common-z-index: 100;
+
+.focus-outline-common {
+  outline: $focus-common-outline;
+  outline-offset: $focus-common-outline-offset;
+  box-shadow: $focus-common-box-shadow;
+  z-index: $focus-common-z-index;
+}
+
+/* Base outline for :focus-visible */
+@mixin outline-base() {
+  &:focus-visible {
+    outline: $focus-common-outline;
+    outline-offset: $focus-common-outline-offset;
+    box-shadow: $focus-common-box-shadow;
+    z-index: $focus-common-z-index;
+  }
+}
+
+/**
+ * Extended outline for setting focus programmatically.
+ * prefer outline-base when in doubt.
+ **/
+@mixin outline-extended() {
+  &:focus,
+  &:focus-visible {
+    outline: $focus-common-outline;
+    outline-offset: $focus-common-outline-offset;
+    box-shadow: $focus-common-box-shadow;
+    z-index: $focus-common-z-index;
+  }
+}
+
+@mixin transparent-border() {
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+@mixin respond-to($types...) {
+  $maxWidth: -1;
+  $minWidth: -1;
+
+  @each $type in $types {
+    @if $type == phone {
+      $maxWidth: if($maxWidth == -1, $breakpoint_phone - 1, $maxWidth);
+      $minWidth: 0;
+    } @else if $type == tablet {
+      @if $maxWidth != 0 {
+        $maxWidth: if(
+          $maxWidth == -1,
+          $breakpoint_tablet - 1,
+          max($breakpoint_tablet - 1, $maxWidth)
+        );
+      }
+
+      $minWidth: if(
+        $minWidth == -1,
+        $breakpoint_phone,
+        min($breakpoint_phone, $minWidth)
+      );
+    } @else if $type == desktop {
+      $maxWidth: 0;
+      $minWidth: if($minWidth == -1, $breakpoint_tablet, $minWidth);
+    }
+  }
+
+  @if $maxWidth <= 0 and $minWidth <= 0 {
+    @content;
+  } @else if $maxWidth <= 0 {
+    @media (min-width: $minWidth) {
+      @content;
+    }
+  } @else if $minWidth <= 0 {
+    @media (max-width: $maxWidth) {
+      @content;
+    }
+  } @else {
+    @media (min-width: $minWidth) and (max-width: $maxWidth) {
+      @content;
+    }
+  }
+}
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+@mixin text-shadow($shadow...) {
+  $shadow: if(length($shadow) > 0, $shadow, default);
+  $default: -compass-space-list(
+    compact(
+      $default-text-shadow-h-offset $default-text-shadow-v-offset
+        $default-text-shadow-blur $default-text-shadow-spread
+        $default-text-shadow-color
+    )
+  );
+  $shadows-without-spread: join((), (), comma);
+  $shadows: join((), (), comma);
+  $has-spread: false;
+  @each $layer in $shadow {
+    $layer: if($layer == "default", $default, $layer);
+    @if length($layer) > 4 {
+      $has-spread: true;
+      $shadows-without-spread: append(
+        $shadows-without-spread,
+        nth($layer, 1) nth($layer, 2) nth($layer, 3) nth($layer, 5)
+      );
+      $shadows: append($shadows, $layer);
+    } @else {
+      $shadows-without-spread: append($shadows-without-spread, $layer);
+      $shadows: append($shadows, $layer);
+    }
+  }
+  @if $has-spread {
+    text-shadow: $shadows-without-spread;
+  }
+  text-shadow: $shadows;
+}
