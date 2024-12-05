@@ -2,23 +2,19 @@
 
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { GET } from "../scroll/route";
-import { headers } from "next/headers";
+import { fetchSearchScrollResults } from "@/app/_lib/getData";
 
-vi.mock("next/headers");
+vi.mock("@/app/_lib/getData");
 
 describe("api/scroll", () => {
   beforeAll(() => {
-    vi.stubEnv("BE_GD_SEARCH_SCROLL_URL", "www.scroll.me");
+    vi.stubEnv("be_index_app2_url", "www.scroll.me");
   });
 
   beforeEach(() => {
-    vi.mocked(headers).mockReturnValue(new Headers());
-    global.fetch = vi.fn().mockResolvedValue({
-      status: 200,
-      json: () => ({
-        hits: [{ content: "<div>hey</div>" }],
-      }),
-    });
+    vi.mocked(fetchSearchScrollResults).mockResolvedValue({
+      hits: [{ content: "<div>hey</div>" }],
+    } as any);
   });
 
   it("should not call fetch if no scrollId is provided", async () => {
@@ -26,7 +22,7 @@ describe("api/scroll", () => {
     const request = new Request(url);
     const response = await GET(request);
 
-    expect(fetch).not.toHaveBeenCalled();
+    expect(fetchSearchScrollResults).not.toHaveBeenCalled();
     expect(response.status).toBe(200);
     expect(await response.text()).toBe("[]");
   });
@@ -39,9 +35,6 @@ describe("api/scroll", () => {
     expect(response.status).toBe(200);
     const text = await response.text();
     expect(text).toBe('{"hits":[{"content":"hey"}]}');
-    expect(fetch).toHaveBeenCalledWith(
-      "www.scroll.me/12345",
-      expect.anything(),
-    );
+    expect(fetchSearchScrollResults).toHaveBeenCalledWith("12345");
   });
 });

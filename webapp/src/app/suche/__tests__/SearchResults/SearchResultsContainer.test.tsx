@@ -1,10 +1,8 @@
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { act, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { SearchResultsContainer } from "@/app/suche/_components/SearchResults/SearchResultsContainer";
 import { SearchResults } from "@/types/types";
 import userEvent from "@testing-library/user-event";
-import { useSearchParams } from "next/navigation";
-import { SearchResultsEmpty } from "@/app/suche/_components/SearchResults/SearchResultsEmpty";
 
 describe("SearchResultsContainer", () => {
   beforeAll(() => {
@@ -71,7 +69,7 @@ describe("SearchResultsContainer", () => {
       name: /4 weitere anzeigen/i,
     });
 
-    await act(() => user.click(loadMoreButton));
+    await user.click(loadMoreButton);
     expect(global.fetch).toHaveBeenCalledWith("/api/scroll?scrollId=aaabbb");
 
     const listitemsAfterload = screen.getAllByRole("listitem");
@@ -90,7 +88,7 @@ describe("SearchResultsContainer", () => {
       name: /.* weitere anzeigen/i,
     });
 
-    await act(() => user.click(loadMoreButton));
+    await user.click(loadMoreButton);
     expect(global.fetch).toHaveBeenCalledWith("/api/scroll?scrollId=aaabbb");
 
     const alert = screen.getByRole("alert");

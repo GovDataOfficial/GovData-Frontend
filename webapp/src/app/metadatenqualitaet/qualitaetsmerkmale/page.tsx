@@ -5,10 +5,11 @@ import { MetaDataQualityCharts } from "@/app/metadatenqualitaet/_components/Meta
 import { DesignBoxDiscoverability } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxDiscoverability";
 import { DesignBoxUsability } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxUsability";
 import { fetchMetaDataQuality } from "@/app/_lib/getData";
-import { AlertBadge } from "@/app/_components/AlertBadge/AlertBadge";
 import { PageConstructor } from "@/types/types";
 import { ContainerDiv } from "@/app/_components/Container";
 import { notFound } from "next/navigation";
+import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
+import React from "react";
 
 export const metadata: Metadata = {
   title: i18n.t("meta.qualitaetsmerkmale.title"),
@@ -30,7 +31,11 @@ export default async function Page({ searchParams }: PageConstructor) {
         </MetaDataQualityCharts>
       ) : (
         <ContainerDiv containerWidth="md">
-          <AlertBadge>{i18n.t("error.alert.common")}</AlertBadge>
+          <InfoBox
+            className="mt-3"
+            title={i18n.t("error.alert.common")}
+            variant="error"
+          />
         </ContainerDiv>
       )}
     </>

@@ -11,7 +11,7 @@ type OffCanvasMenuContainer = {
   menuItem?: MenuItem[];
   // need to pass menu settings from outside as this is client component,
   // and menu settings depend on process env.
-  menuSettings: MenuItem[];
+  menuSettings: MenuItemMobile[];
 };
 
 function closeOnBigBreakpoints(e: Event) {

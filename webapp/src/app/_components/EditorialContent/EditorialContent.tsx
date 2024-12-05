@@ -24,9 +24,10 @@ export function EditorialContent({ pageData }: EditorialContent) {
       containerWidth="lg"
       modifier={[ContainerWrapperModifier.PADDING_Y]}
     >
-      <DesignBox extraClasses={["editoral-content"]}>
+      <DesignBox>
         {elements.map((element) => (
           <div
+            className="editoral-content"
             key={element.id}
             dangerouslySetInnerHTML={{ __html: element.content.bodytext }}
           />

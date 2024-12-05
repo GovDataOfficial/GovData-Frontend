@@ -19,7 +19,9 @@ describe("not-found", () => {
 
   it("should render link to home page", () => {
     render(<NotFoundPage />);
-    const link = screen.getByRole("link", { name: "zur Startseite." });
+    const link = screen.getByRole("link", {
+      name: "zur Startseite von GovData.",
+    });
     expect(link).toHaveAttribute("href", "/");
   });
 });

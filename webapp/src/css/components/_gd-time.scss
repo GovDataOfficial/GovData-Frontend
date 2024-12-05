@@ -1,0 +1,23 @@
+
+.time-with-date {
+
+  time {
+    display: flex;
+    flex-direction: column;
+
+    &.time-with-date-row {
+      flex-direction: row;
+      align-items: baseline;
+    }
+
+    span:first-of-type {
+      @extend .paragraph;
+      margin-right: $spacer;
+    }
+    span:last-of-type {
+      @extend .paragraph-small;
+      color: $clr-neutral-grey-500;
+
+    }
+  }
+}

@@ -1,0 +1,26 @@
+.gd-user-header-navigation {
+  border-top: 1px solid $clr-neutral-grey-300;
+
+  .gd-user-header-accordion-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: map-get($spacers, "1_5");
+
+    .gd-user-header-accordion-flyout {
+      position: absolute;
+      background: $clr-shades-white-0;
+      padding: 0 map-get($spacers, 2) 0 map-get($spacers, 2);
+      border: 1px solid $clr-neutral-grey-300;
+      z-index: 1;
+
+      li {
+        padding-top: map-get($spacers, "1_5");
+        padding-bottom: map-get($spacers, "1_5");
+
+        &:last-of-type {
+          border-top: 1px solid $clr-neutral-grey-300;
+        }
+      }
+    }
+  }
+}

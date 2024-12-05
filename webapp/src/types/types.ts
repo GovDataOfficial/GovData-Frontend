@@ -53,11 +53,11 @@ export type FilterMap = {
 
 export type RecordFilterMap = Partial<Record<KnownFilter, FilterMap>>;
 
-// TODO differentiate between resulthits for datasets and showcases
 export type SearchResultHit = {
   id: string;
   name: string;
   lastModified: string;
+  created: string;
   title: string;
   content: string;
   type: string;
@@ -112,6 +112,7 @@ export type OrganizationSorted = {
   name: string;
   displayName: string;
   title: string;
+  contributorIds: string[];
 }[];
 
 export type ResourceFormatsSorted = string[];
@@ -177,6 +178,28 @@ export type MetaDataResource = {
   hvd: boolean;
 };
 
+export enum MetaDataContactRole {
+  creator = "CREATOR",
+  maintainer = "MAINTAINER",
+  publisher = "PUBLISHER",
+  originator = "ORIGINATOR",
+}
+
+export type MetaDataContact = {
+  name: string;
+  email?: string;
+  url: string;
+  address?: Partial<{
+    addressee: string;
+    details: string;
+    street: string;
+    city: string;
+    zip: string;
+    country: string;
+  }>;
+  role: MetaDataContactRole;
+};
+
 export type MetaData = {
   id: string;
   title: string;
@@ -191,13 +214,7 @@ export type MetaData = {
     count: number;
     description: string;
   }[];
-  contacts: {
-    name: string;
-    url: string;
-    address: {};
-    email?: string;
-    role: "PUBLISHER" | "MAINTAINER";
-  }[];
+  contacts: MetaDataContact[];
   averageRating: number;
   categories: {
     name: string;
@@ -229,7 +246,7 @@ export type MetaData = {
     active: boolean;
   }[];
   state: "active";
-  hvdCategories?: Array<"MET" | "GEO">;
+  hvdCategories?: Array<"MET" | "GEO" | "CCO" | "EOE" | "MOB" | "STA">;
   applicableLegislation: string[];
   hvd: boolean;
   private: boolean;
@@ -289,3 +306,5 @@ export type PostDto = {
   isRetweet: boolean;
   retweet: boolean;
 };
+
+export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";

@@ -3,11 +3,11 @@
   overflow-x: auto;
 }
 
-
 .gd-table {
   @extend .paragraph;
   @extend .bold;
   border-collapse: collapse;
+  width: 100%;
 
   &.gd-table-accordion {
     tbody tr td:first-child {
@@ -15,10 +15,11 @@
       position: relative;
     }
 
-    tbody tr:nth-child(odd) td:first-child  {
+    tbody tr:nth-child(odd) td:first-child {
       padding: 0;
 
-      & > button, a {
+      & > button,
+      a {
         @extend .button-reset;
         @extend .link-reset;
 
@@ -27,8 +28,7 @@
       }
     }
 
-    tbody tr.hidden + tr
-    {
+    tbody tr.hidden + tr {
       border-top: 1px solid $grey-light;
     }
 
@@ -39,14 +39,8 @@
   }
 
   .gd-table-head {
-
-
-    & th:first-child {
-      padding-left: 32px;
-    }
-
     th {
-      background: #F5F5F5;
+      background: #f5f5f5;
       padding: 8px;
 
       &:first-child {
@@ -56,16 +50,62 @@
       &:last-child {
         border-radius: 0 5px 5px 0;
       }
+
+      button {
+        @extend .button-reset;
+      }
+
+      .gd-table-sort-button {
+        &:hover {
+          text-decoration: underline;
+        }
+
+        &::after {
+          font-family: "Font Awesome 6 Free";
+
+          display: inline-block;
+          margin-left: rem-calc(4);
+          font-size: rem-calc(14);
+          text-decoration: none;
+          // hiding it here but calculating it with button width
+          // so complete table wont jump when button appears
+          visibility: hidden;
+          content: "\f077";
+        }
+        &.ascending::after {
+          visibility: visible;
+          content: "\f077";
+        }
+        &.descending::after {
+          visibility: visible;
+          content: "\f078";
+        }
+      }
+    }
+  }
+  &.gd-table-with-divider {
+    tbody tr {
+      border-bottom: 1px solid $clr-neutral-grey-300;
     }
   }
 
-  td {
-    padding: 24px 8px 32px 8px;
+  tbody {
+    td {
+      padding: $spacer;
+      &:first-child {
+        width: 100%;
+      }
+    }
 
-    &:first-child {
-      width: 100%;
+    // how to better adjust withs of certain rows ????
+    &.td-width-50-15-15 {
+      td:nth-of-type(1) {
+        width: 50%;
+      }
+      td:nth-of-type(2),
+      td:nth-of-type(3) {
+        width: 15%;
+      }
     }
   }
-
-  width: 100%;
 }

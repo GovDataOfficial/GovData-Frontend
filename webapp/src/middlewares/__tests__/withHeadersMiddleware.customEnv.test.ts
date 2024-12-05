@@ -26,7 +26,7 @@ describe("middleware Headers with custom env", () => {
 
   test("should add extra CSP headers on response", async () => {
     const response = new NextResponse();
-    const middlewareResponse = withHeadersMiddleware(request, response);
+    const middlewareResponse = await withHeadersMiddleware(request, response);
 
     expect(middlewareResponse).toBeUndefined();
 

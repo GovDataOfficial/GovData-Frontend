@@ -18,10 +18,14 @@ export function useDropDown() {
   const dropdownToggleRef = useRef<HTMLButtonElement>(null);
   const dropdownMenuRef = useRef<HTMLUListElement>(null);
 
+  const closeMenuAndFocus = () => {
+    closeMenu();
+    dropdownToggleRef.current?.focus();
+  };
+
   const closeMenuOnEscape = (event: KeyboardEvent<HTMLUListElement>) => {
     if (event.key === "Escape") {
-      closeMenu();
-      dropdownToggleRef.current?.focus();
+      closeMenuAndFocus()
     }
   };
 
@@ -37,6 +41,7 @@ export function useDropDown() {
     dropdownToggleRef,
     dropdownMenuRef,
     closeMenuOnEscape,
+    closeMenuAndFocus,
     dropDownId,
     isOpen,
     closeMenu,

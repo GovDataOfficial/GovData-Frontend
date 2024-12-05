@@ -10,9 +10,9 @@ describe("middleware Headers", () => {
   const url = new URL("https://test.de/");
   const request = new NextRequest(url);
 
-  test("should set default headers on response", () => {
+  test("should set default headers on response", async () => {
     const response = new NextResponse();
-    const middlewareResponse = withHeadersMiddleware(request, response);
+    const middlewareResponse = await withHeadersMiddleware(request, response);
 
     expect(middlewareResponse).toBeUndefined();
 
@@ -26,9 +26,9 @@ describe("middleware Headers", () => {
     expect(headers.get("X-Permitted-Cross-Domain-Policies")).toBe("none");
   });
 
-  test("should set default script-src CSP headers on response", () => {
+  test("should set default script-src CSP headers on response", async () => {
     const response = new NextResponse();
-    const middlewareResponse = withHeadersMiddleware(request, response);
+    const middlewareResponse = await withHeadersMiddleware(request, response);
 
     expect(middlewareResponse).toBeUndefined();
 

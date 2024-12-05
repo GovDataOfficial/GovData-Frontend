@@ -1,29 +1,23 @@
 .gd-teaser-box {
-  display: flex;
   padding: map-get($spacers, 1) map-get($spacers, 2);
 
-  flex-direction: column;
+  height: 68px;
+  width: 100%;
 
-  height: 112px;
-  width: 210px;
+  @include media-breakpoint-up(sm) {
+    height: 112px;
+    width: 210px;
+  }
 
   * {
     margin: 0;
-  }
-
-  .crop {
-    display: -webkit-box;
-    /* max-width: 330px; */
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 
   &:hover {
     text-decoration: none;
   }
 
-  &.gd-teaser-box-dark {
+  &-dark {
     background: $clr-media-grey-500;
     color: white;
 
@@ -32,7 +26,8 @@
     }
   }
 
-  &.gd-teaser-box-bright {
+  &-bright {
+    height: 112px;
     background: white;
     color: $clr-neutral-grey-800;
     border: 1px solid $clr-neutral-grey-300;
@@ -41,37 +36,57 @@
       background: $clr-neutral-grey-50;
     }
   }
+}
+
+.gd-teaser-box-numbers {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+
+  .gd-icon {
+    margin-right: map-get($spacers, 1);
+  }
+
+  @include media-breakpoint-up(sm) {
+    gap: 0;
+    align-items: normal;
+    flex-direction: column;
+  }
 
   .gd-teaser-box-numbers-heading {
     font-size: 36px;
     line-height: 36px;
+    margin-right: map-get($spacers, 2);
+    @include media-breakpoint-up(sm) {
+      margin-right: 0;
+    }
   }
 }
 
-// not according to our breakpoints but due to their sizes,
-// this feels way more fluid.
+.gd-teaser-box-social {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+
+  .crop {
+    display: -webkit-box;
+    /* max-width: 330px; */
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
 .gd-teaser-box-container {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
-  margin: auto;
+  gap: rem-calc(10);
 
-  @media (max-width: 900px) {
-    gap: map-get($spacers, 1);
-    justify-content: center;
-    width: 70%;
+  @include media-breakpoint-up(sm) {
+    flex-wrap: nowrap;
+    justify-content: space-between;
   }
-
-  @media (max-width: 676px) {
-    justify-content: center;
-    width: 100%;
-  }
-
-  @media (max-width: 480px) {
-    justify-content: center;
-    width: 100%;
-    .gd-teaser-box {
-      width: 65%;
-    }
+  .gd-teaser-box {
   }
 }

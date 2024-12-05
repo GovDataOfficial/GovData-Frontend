@@ -18,6 +18,7 @@ describe("TypeListFilter", () => {
         content: "asdasdas",
         lastModified: "2016-04-11T00:00:00",
         hasHvd: false,
+        created: "2024-10-31T12:47:12",
       },
       {
         id: "7102da0d-ec99-4cec-8758-7ac9902c1e80",
@@ -27,6 +28,7 @@ describe("TypeListFilter", () => {
         content: "sasdf",
         lastModified: "2019-07-11T12:37:03",
         hasHvd: false,
+        created: "2024-10-31T12:47:12",
       },
     ],
     filterMap: {

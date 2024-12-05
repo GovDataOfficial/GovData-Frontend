@@ -4,8 +4,7 @@ import { MetaData } from "@/types/types";
 import { i18n } from "@/i18n";
 import { Time } from "@/app/_components/Time/Time";
 import { Tag } from "@/app/_components/Tag/Tag";
-import { InfoBadge } from "@/app/_components/InfoBadge/InfoBadge";
-import { Button } from "@/app/_components/Button/Button";
+import { InfoBadge } from "@/app/_components/InfoBoxes/InfoBadge";
 import {
   createNoJsLink,
   getTitle,

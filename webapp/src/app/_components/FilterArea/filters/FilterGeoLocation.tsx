@@ -14,7 +14,10 @@ export function FilterGeoLocation({ filterMap }: FilterCommonConsumer) {
   const isActive = isNotNullOrUndefined(filterMap.boundingbox);
 
   return (
-    <Accordion title={i18n.t("search.details.infobox.geoCoding")} open>
+    <Accordion
+      title={<h3>{i18n.t("search.details.infobox.geoCoding")}</h3>}
+      open
+    >
       <a
         href={createLinkToPageWithFilter(PAGES.geosearch)}
         className="fnt-link"

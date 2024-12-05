@@ -25,10 +25,19 @@ describe("MultiCheckBox", () => {
     expect(firstCheckbox).toHaveAttribute("value", "key1");
     expect(firstCheckbox).toHaveAttribute("type", "checkbox");
 
+    // label should have correct for element for input so we can click the label to check
+    const labelFirstCheckbox = screen.getByText("label1");
+    const idFirst = labelFirstCheckbox.getAttribute("for");
+    expect(firstCheckbox).toHaveAttribute("id", idFirst);
+
     const secondCheckbox = within(listItems[1]).getByRole("checkbox");
     expect(secondCheckbox).toHaveAttribute("name", "test");
     expect(secondCheckbox).toHaveAttribute("value", "key2");
     expect(secondCheckbox).toHaveAttribute("type", "checkbox");
+
+    const labelSecondCheckbox = screen.getByText("label2");
+    const idSecond = labelSecondCheckbox.getAttribute("for");
+    expect(secondCheckbox).toHaveAttribute("id", idSecond);
   });
 
   it("should show recommended info", () => {

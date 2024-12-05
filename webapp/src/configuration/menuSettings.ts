@@ -1,5 +1,6 @@
 import { i18n } from "@/i18n";
 import { MenuItem } from "@/app/_components/MenuItem/MenuItem";
+import { MenuItemMobile } from "@/app/_components/MenuItem/MenuItemMobile";
 
 const dataMenuItem: MenuItem = {
   href: "/daten",
@@ -7,7 +8,7 @@ const dataMenuItem: MenuItem = {
   color: "data-green",
 };
 
-const metaDataQuality: MenuItem = {
+const metaDataQuality: MenuItemMobile = {
   href: "/metadatenqualitaet",
   name: i18n.t("header.navigation.metadatenqualitaet"),
   color: "magenta",

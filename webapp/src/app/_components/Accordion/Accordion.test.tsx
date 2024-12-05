@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { act, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Accordion } from "@/app/_components/Accordion/Accordion";
 import userEvent from "@testing-library/user-event";
 
 describe("Accordion", () => {
   it("should render correct.", () => {
-    const { getByRole } = render(<Accordion title="test">content</Accordion>);
+    render(<Accordion title="test">content</Accordion>);
 
-    const detail = getByRole("group");
+    const detail = screen.getByRole("group");
     screen.getByText(/content/i);
 
     expect(detail).toHaveTextContent("test");
@@ -18,19 +18,55 @@ describe("Accordion", () => {
   it("should render correct open state.", async () => {
     const user = userEvent.setup();
 
-    const { getByRole, container } = render(
-      <Accordion title="test">content</Accordion>,
-    );
+    render(<Accordion title="test">content</Accordion>);
 
-    const detail = getByRole("group");
-    const summary = container.querySelector("summary");
+    const detail = screen.getByRole("group");
+    const summary = screen.getByText("test");
 
-    expect(summary).toBeDefined();
-
-    await act(() => user.click(summary!));
+    await user.click(summary);
 
     expect(detail).toHaveTextContent("test");
     expect(detail).toHaveTextContent("content");
     expect(detail).toHaveAttribute("open");
+  });
+
+  it("should render initially open", () => {
+    render(
+      <Accordion open title="test">
+        content
+      </Accordion>,
+    );
+    const detail = screen.getByRole("group");
+    expect(detail).toHaveAttribute("open");
+  });
+
+  it("should render summary with an heading element", () => {
+    render(<Accordion title={<h3>test</h3>}>content</Accordion>);
+    screen.getByRole("heading", { level: 3, name: "test" });
+  });
+
+  it("should render summary with an span element", () => {
+    render(<Accordion title={<span>test</span>}>content</Accordion>);
+    const heading = screen.queryByRole("heading", { level: 3, name: "test" });
+    expect(heading).not.toBeInTheDocument();
+
+    const summary = screen.getByText("test");
+    expect(summary).toBeInstanceOf(HTMLSpanElement);
+  });
+
+  it("should render default with the filter variant", () => {
+    const { container } = render(<Accordion title="test">content</Accordion>);
+    const summary = container.querySelector("summary");
+    expect(summary).toHaveClass("gd-accordion-head gd-accordion-head-filter");
+  });
+
+  it("should render the link variant", () => {
+    const { container } = render(
+      <Accordion variant="link" title="test">
+        content
+      </Accordion>,
+    );
+    const summary = container.querySelector("summary");
+    expect(summary).toHaveClass("gd-accordion-head gd-accordion-head-link");
   });
 });

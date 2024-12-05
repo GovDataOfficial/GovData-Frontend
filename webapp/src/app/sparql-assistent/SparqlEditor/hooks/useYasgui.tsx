@@ -94,12 +94,13 @@ export const useYasgui = (containerId: string, endpoint: string) => {
         if (!isLoading.current && !yasguiRef.current) {
           isLoading.current = true;
 
-          const YasguiDefault = (await import("@triply/yasgui")).default;
+          const YasguiModule = await import("@triply/yasgui");
+          const YasguiDefault =
+            YasguiModule.default as unknown as typeof Yasgui;
           const container = document.getElementById(containerId);
 
           if (container) {
             if (YasguiDefault) {
-              // @ts-ignore
               yasguiRef.current = new YasguiDefault(container, {
                 autofocus: false,
                 requestConfig: {

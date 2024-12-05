@@ -5,10 +5,11 @@ import { MetaDataQualityCharts } from "@/app/metadatenqualitaet/_components/Meta
 import { Top5Info } from "@/app/metadatenqualitaet/_components/Top5Info";
 import { DesignBoxTop5License } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxTop5License";
 import { DesignBoxTop5Formats } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxTop5Formats";
-import { AlertBadge } from "@/app/_components/AlertBadge/AlertBadge";
 import { PageConstructor } from "@/types/types";
 import { ContainerDiv } from "@/app/_components/Container";
 import { notFound } from "next/navigation";
+import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
+import React from "react";
 
 export const metadata: Metadata = {
   title: i18n.t("meta.top5.title"),
@@ -30,7 +31,11 @@ export default async function Page({ searchParams }: PageConstructor) {
         </MetaDataQualityCharts>
       ) : (
         <ContainerDiv containerWidth="lg">
-          <AlertBadge>{i18n.t("error.alert.common")}</AlertBadge>
+          <InfoBox
+            className="mt-3"
+            title={i18n.t("error.alert.common")}
+            variant="error"
+          />
         </ContainerDiv>
       )}
     </>

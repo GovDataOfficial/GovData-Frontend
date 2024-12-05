@@ -109,38 +109,6 @@
   padding: 0 $spacer * 1;
 }
 
-.gd-accordion {
-  @extend .details-reset;
-
-  & + .gd-accordion {
-    margin-top: 20px;
-  }
-
-  .gd-accordion-head {
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #c5c5c5;
-    padding-bottom: 4px;
-
-    &:hover {
-      text-decoration: underline;
-    }
-
-    .gd-icon {
-      display: inline-block;
-      transition: transform 0.2s;
-    }
-  }
-
-  &[open] {
-    .gd-accordion-head .gd-icon {
-      transform: rotate(90deg);
-    }
-  }
-}
-
 .gd-filter-area-open-menu-button {
   @include media-breakpoint-only(xs) {
     width: 100%;

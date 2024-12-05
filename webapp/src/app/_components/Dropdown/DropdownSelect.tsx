@@ -5,7 +5,7 @@ type Dropdown<T> = {
   options: T[];
   title: string;
   label: string;
-  children: (item: T) => ReactNode;
+  children: (item: T, closeMenu: () => void) => ReactNode;
 };
 
 export function DropdownSelect<T>({
@@ -20,6 +20,7 @@ export function DropdownSelect<T>({
     dropdownToggleRef,
     dropdownMenuRef,
     closeMenuOnEscape,
+    closeMenuAndFocus,
     dropDownId,
     isOpen,
     closeMenu,
@@ -52,7 +53,7 @@ export function DropdownSelect<T>({
         onKeyDown={closeMenuOnEscape}
       >
         {options.map((option, index) => (
-          <li key={index}>{children(option)}</li>
+          <li key={index}>{children(option, closeMenuAndFocus)}</li>
         ))}
       </ul>
     </div>

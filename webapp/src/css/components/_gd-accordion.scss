@@ -1,0 +1,48 @@
+.gd-accordion {
+  @extend .details-reset;
+
+  & + .gd-accordion {
+    margin-top: 20px;
+  }
+
+  .gd-accordion-head {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2, h3, h4 {
+      @extend .paragraph;
+      @extend .bold;
+      margin: 0
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    .gd-icon {
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+
+    &-filter {
+      border-bottom: 1px solid #c5c5c5;
+      padding-bottom: 4px;
+    }
+
+    &-link {
+      @extend .fnt-link;
+
+      .gd-icon img {
+        filter: $filter-primary;
+      }
+    }
+  }
+
+  &[open] {
+    .gd-accordion-head .gd-icon {
+      transform: rotate(90deg);
+    }
+  }
+}

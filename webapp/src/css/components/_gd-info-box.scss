@@ -1,19 +1,34 @@
-.success-box {
-  background-color: $clr-success-green-200;
-  border: 1px solid $clr-success-green-500;
-  border-radius: $spacer * 0.5;
-  padding: $spacer * 2;
-
-  .success-box-message {
-    @extend .bold;
-    color: $clr-success-green-500;
-  }
-}
-
 .info-box {
   background-color: $clr-primary-100;
   border: 1px solid $clr-primary-500;
   border-radius: $spacer * 0.5;
-  padding: map-get($spacers, "1_5") map-get($spacers, 2);
-  color: $clr-primary-500;
+  padding: map-get($spacers, 2);
+  color: $clr-neutral-grey-800;
+
+  .info-box-message {
+    @extend .bold;
+    color: $clr-primary-500;
+  }
+
+  a {
+    color: $clr-neutral-grey-800;
+  }
+}
+
+.info-box.info-box-success {
+  background-color: $clr-success-green-200;
+  border-color: $clr-success-green-500;
+
+  .info-box-message {
+    color: $clr-success-green-500;
+  }
+}
+
+.info-box.info-box-error {
+  background-color: $clr-error-red-200;
+  border-color: $clr-error-red-500;
+
+  .info-box-message {
+    color: $clr-error-red-500;
+  }
 }

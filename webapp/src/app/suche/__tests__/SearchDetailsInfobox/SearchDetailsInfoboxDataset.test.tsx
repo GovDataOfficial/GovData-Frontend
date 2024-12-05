@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { SearchDetailsInfoboxDataSet } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxDataset";
 import { metaDataTestProps } from "../props";
 
-vi.mock("@/app/_lib/getDisplayName", () => ({
+vi.mock("@/app/_lib/organization", () => ({
   getOrganizationDisplayName: vi.fn().mockResolvedValue("test"),
 }));
 

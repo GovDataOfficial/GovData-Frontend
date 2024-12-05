@@ -10,7 +10,7 @@ import { SPECIAL_FILTERS, URLHelper } from "@/app/_lib/URLHelper";
 import { Time } from "@/app/_components/Time/Time";
 import { findStateById } from "@/app/_lib/stateList";
 import { findHvdCategory } from "@/app/_lib/hvdCategories";
-import { getOrganizationDisplayName } from "@/app/_lib/getDisplayName";
+import { getOrganizationDisplayName } from "@/app/_lib/organization";
 
 type SearchResultFilterTags = {
   cleanedActiveFilters: CleanedActiveFilters;

@@ -4,11 +4,11 @@ import { fetchMetadata } from "@/app/_lib/getData";
 import { SectionResources } from "@/app/suche/_components/SectionResources";
 import { SectionDataServices } from "@/app/suche/_components/SectionDataServices";
 import { PageConstructor } from "@/types/types";
-import { AlertBadge } from "@/app/_components/AlertBadge/AlertBadge";
 import { i18n } from "@/i18n";
 import { SearchDetailsMetaInfo } from "@/app/suche/_components/SearchDetailsMetaInfo/SearchDetailsMetaInfo";
 import { ContainerDiv } from "@/app/_components/Container";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
+import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 
 export async function generateMetadata({
   params,
@@ -41,9 +41,11 @@ export default async function DatasetPage({
           </div>
         </div>
       ) : (
-        <AlertBadge>
-          {t("error.alert.canRetrieveDataOf", { id: params.id })}
-        </AlertBadge>
+        <InfoBox
+          className="mt-3"
+          variant="error"
+          title={t("error.alert.canRetrieveDataOf", { id: params.id })}
+        />
       )}
     </ContainerDiv>
   );

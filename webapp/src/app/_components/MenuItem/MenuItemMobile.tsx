@@ -3,17 +3,17 @@
 import { usePathname } from "next/navigation";
 import { useRef } from "react";
 
-export type MenuItem = {
+export type MenuItemMobile = {
   href: string;
   name: string;
   color?: string;
-  subMenu?: MenuItem[];
+  subMenu?: MenuItemMobile[];
 };
 
-export function MenuItemMobile({ href, name, subMenu }: MenuItem) {
+export function MenuItemMobile({ href, name, subMenu }: MenuItemMobile) {
   const ref = useRef<HTMLLIElement>(null);
   const path = usePathname();
-  const isActive = path === href || path.includes(href);
+  const isActive = path === href || path.startsWith(href + "/");
   const hasSubMenu = Array.isArray(subMenu) && subMenu.length > 0;
   const linkClasses = [];
 

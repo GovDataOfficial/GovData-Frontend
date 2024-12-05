@@ -205,7 +205,7 @@ function getRedirectPath(request: NextRequest): string | null {
 /**
  * Middleware to redirect all legacy Path urls no new urls.
  */
-export const withRedirectLegacyPaths: MiddlewareFactory = (request) => {
+export const withRedirectLegacyPaths: MiddlewareFactory = async (request) => {
   const newPath = getRedirectPath(request);
 
   if (newPath) {

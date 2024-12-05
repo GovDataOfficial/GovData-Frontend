@@ -71,14 +71,17 @@ button {
     }
   }
 
+  // this is a button that behaves like an <a,
+  // we also have a .fnt-link class that does the same somehow? maybe put into component
   &.gd-button-a {
     @extend .fnt-link;
     border: none;
+    border-radius: 0;
     transition: none;
     padding: 0;
 
-    &:hover,
-    &:focus {
+
+    &:hover {
       text-decoration: underline;
     }
   }

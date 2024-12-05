@@ -1,27 +1,20 @@
-import React, { useState } from "react";
-import { isNotNullOrUndefined } from "@/types/typeGuards";
-import { InputDescription } from "@/app/_components/Inputs/partials/InputDescription";
+import React, { ReactNode } from "react";
 import { InputText } from "@/app/_components/Inputs/InputText";
-import { i18n } from "@/i18n";
+import { InputTextMultipleDescription } from "@/app/_components/Inputs/partials/InputTextMultipleDescription";
 
 type InputTextMultiple = {
   name: string;
   label: string;
   required?: boolean;
-  examples?: string[];
+  examples?: ReactNode[];
   recommended?: boolean;
+  defaultValue?: string[];
+  maxLength?: number;
+  descriptionTitle?: string;
 };
-
-const cleanTagValue = (tag: string) =>
-  tag
-    .toLowerCase()
-    .replace(/[^a-zäöüß0-9 \-_\.]/g, "")
-    .trim();
 
 /**
  * Input text that will comma separate values.
- * Input for extended Search has same logic but is different in style and markup.
- * needs refacotring.
  */
 export function InputTextMultiple({
   label,
@@ -29,29 +22,23 @@ export function InputTextMultiple({
   required,
   examples,
   recommended,
+  defaultValue,
+  maxLength,
+  descriptionTitle,
 }: InputTextMultiple) {
-  const [tags, setTags] = useState<string>("");
-
   return (
     <InputText
-      name={name}
       label={label}
+      name={name}
       required={required}
       recommended={recommended}
-      onChange={(e) => setTags(e.target.value)}
+      defaultValue={defaultValue?.join(", ")}
+      maxLength={maxLength}
     >
-      <InputDescription>
-        {i18n.t("form.input.text.multiple.description")}
-        <br />
-        <strong>Beispiel: {examples?.join(", ")}</strong>
-      </InputDescription>
-      {tags
-        .split(",")
-        .map(cleanTagValue)
-        .filter(isNotNullOrUndefined)
-        .map((tag, index) => (
-          <input key={index + tag} hidden name={name} defaultValue={tag} />
-        ))}
+      <InputTextMultipleDescription
+        descriptionTitle={descriptionTitle}
+        examples={examples}
+      />
     </InputText>
   );
 }

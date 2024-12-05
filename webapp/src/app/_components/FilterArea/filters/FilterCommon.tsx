@@ -106,7 +106,10 @@ export function FilterCommon({
   }
 
   return (
-    <Accordion title={t(`filter.${name}.title`)} open={isAccordionOpen}>
+    <Accordion
+      title={<h3>{t(`filter.${name}.title`)}</h3>}
+      open={isAccordionOpen}
+    >
       <ul className="gd-filterarea-list">
         {filteredFacetList
           .sort((a, b) => sortFacets(a, b, name))

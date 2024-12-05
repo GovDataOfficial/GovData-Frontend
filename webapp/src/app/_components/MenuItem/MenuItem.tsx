@@ -6,13 +6,12 @@ export type MenuItem = {
   href: string;
   name: string;
   color?: string;
-  subMenu?: MenuItem[];
 };
 
 export function MenuItem({ href, name, color }: MenuItem) {
   const path = usePathname();
 
-  const isActive = path === href || path.startsWith(href);
+  const isActive = path === href || path.startsWith(href + "/");
   const linkClasses = ["gd-navbar-link"];
 
   if (isActive) {

@@ -1,8 +1,9 @@
-import { useId } from "react";
+import React, { useId } from "react";
 import { RecommendedInfo } from "@/app/_components/Inputs/partials/RecommendedInfo";
+import { Label } from "@/app/_components/Inputs/partials/Label";
 
 type MultiCheckBox = {
-  data?: { key: string; label: string }[];
+  data?: { key: string; label: string; defaultChecked?: boolean }[];
   legend: string;
   recommended?: boolean;
   name: string;
@@ -32,9 +33,10 @@ export function MultiCheckBox({
                   id={itemId}
                   value={item.key}
                   name={name}
+                  defaultChecked={item.defaultChecked}
                   type="checkbox"
                 />
-                <label htmlFor={itemId}>{item.label}</label>
+                <Label label={item.label} htmlFor={itemId} />
               </li>
             );
           })}

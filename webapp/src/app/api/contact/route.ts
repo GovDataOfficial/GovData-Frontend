@@ -2,6 +2,7 @@
 import nodemailer from "nodemailer";
 import { redirect } from "next/navigation";
 import { i18n } from "@/i18n";
+import { logger } from "@/logger/logger";
 
 const transporter = nodemailer.createTransport({
   host: process.env.mail_smtp_host,
@@ -20,6 +21,8 @@ type ContactMailFormData = {
   name: string | null;
   title: string | null;
 };
+
+const log = logger("contact");
 
 const createContactMailMessage = (data: ContactMailFormData) => {
   const notSpecified = i18n.t("contact.page.form.title.option1");
@@ -44,10 +47,10 @@ function sendContactMail(data: ContactMailFormData) {
       to: process.env.mail_smtp_to_address,
     })
     .then((info: { messageId: string }) => {
-      console.log("Message sent: %s", info.messageId);
+      log.debug("Contact mail sent", info.messageId);
     })
     .catch((error: unknown) => {
-      console.error("Message : %s", error);
+      log.error(error, "Contact mail could not be sent");
     });
 }
 

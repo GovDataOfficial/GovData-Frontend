@@ -1,7 +1,7 @@
 import { MetaDataResource } from "@/types/types";
 
 import { i18n } from "@/i18n";
-import { InfoBadge } from "@/app/_components/InfoBadge/InfoBadge";
+import { InfoBadge } from "@/app/_components/InfoBoxes/InfoBadge";
 import {
   DtDescription,
   DtLicense,

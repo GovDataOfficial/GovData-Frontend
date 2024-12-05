@@ -13,6 +13,7 @@ const mockedHit = {
   type: "dataset",
   lastModified: "never",
   targetLink: "/targetLink",
+  created: "2024-10-31T12:47:12",
 } as SearchResultHitType;
 
 describe("SearchResultHit", () => {

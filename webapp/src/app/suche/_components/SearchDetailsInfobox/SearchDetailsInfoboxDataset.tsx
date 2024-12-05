@@ -2,7 +2,7 @@ import { MetaData } from "@/types/types";
 import { Time } from "@/app/_components/Time/Time";
 import { TimeRange } from "@/app/_components/Time/TimeRange";
 import { i18n } from "@/i18n";
-import { getOrganizationDisplayName } from "@/app/_lib/getDisplayName";
+import { getOrganizationDisplayName } from "@/app/_lib/organization";
 import { SearchDetailsInfoBoxGroup } from "@/app/suche/_components/SearchDetailsInfobox/partials/SearchDetailsInfoBoxGroup";
 import { TermCategories } from "@/app/suche/_components/SearchDetailsInfobox/partials/TermCategories";
 import { DLTags } from "@/app/suche/_components/SearchDetailsInfobox/partials/DLTags";
@@ -12,10 +12,13 @@ import Image from "next/image";
 import { isNotNullOrUndefined } from "@/types/typeGuards";
 import { fetchDataSetShowCaseConnection } from "@/app/_lib/getData";
 import { DtHVD } from "@/app/suche/_components/common/CommonDtDd";
+import { logger } from "@/logger/logger";
 
 type SearchDetailsInfoboxDataset = {
   data: MetaData;
 };
+
+const log = logger("SearchDetailsInfoboxDataset");
 
 function createCKANDatasetUrl(metaDataName: string) {
   try {
@@ -24,7 +27,7 @@ function createCKANDatasetUrl(metaDataName: string) {
     );
     return url.toString();
   } catch (e) {
-    console.error("could not create ckan dataset url for", metaDataName);
+    log.error("could not create ckan dataset url for", metaDataName);
   }
   return "#";
 }

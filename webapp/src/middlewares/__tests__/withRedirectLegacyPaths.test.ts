@@ -97,18 +97,21 @@ describe("middleware Redirect", () => {
   // shuffle before run to make sure paths are mapped correctly
   const shuffledTestCases = redirectTestCases.sort(() => Math.random() - 0.5);
 
-  test.each(shuffledTestCases)("should redirect %s -> %s", (oldUrl, newUrl) => {
-    const base = "https://test.de";
-    const request = new Request(new URL(oldUrl, base));
-    const expectedRedirect = new URL(newUrl, base);
-    const response = withRedirectLegacyPaths(
-      new NextRequest(request),
-      new NextResponse(),
-    );
-    expect(response).not.toBeUndefined();
-    response!();
-    expect(NextResponse.redirect).toHaveBeenCalledWith(expectedRedirect, {
-      status: 308,
-    });
-  });
+  test.each(shuffledTestCases)(
+    "should redirect %s -> %s",
+    async (oldUrl, newUrl) => {
+      const base = "https://test.de";
+      const request = new Request(new URL(oldUrl, base));
+      const expectedRedirect = new URL(newUrl, base);
+      const response = await withRedirectLegacyPaths(
+        new NextRequest(request),
+        new NextResponse(),
+      );
+      expect(response).not.toBeUndefined();
+      response!();
+      expect(NextResponse.redirect).toHaveBeenCalledWith(expectedRedirect, {
+        status: 308,
+      });
+    },
+  );
 });

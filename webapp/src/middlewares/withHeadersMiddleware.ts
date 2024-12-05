@@ -36,7 +36,7 @@ const cspDirectives = CSPBuilder({ directives: defaultCSP });
 /**
  * Middleware for setting CSP and other relevant Headers.
  */
-export const withHeadersMiddleware: MiddlewareFactory = (
+export const withHeadersMiddleware: MiddlewareFactory = async (
   _request,
   response,
 ) => {

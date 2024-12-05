@@ -51,12 +51,16 @@ export const PAGES = {
   metadataquality: "/metadatenqualitaet",
   sparql: "/sparql-assistent",
   dlde: "/dl-de",
+  logout: "/logout",
 };
 
 export const PAGES_AUTH = {
   manage_data: "/datenpflege",
   manage_data_form_add: "/datenpflege/metadaten/erstellen",
   manage_data_form_add_success: "/datenpflege/metadaten/erstellen/erfolgreich",
+  manage_data_form_edit: "/datenpflege/metadaten/bearbeiten",
+  manage_data_form_edit_success:
+    "/datenpflege/metadaten/bearbeiten/erfolgreich",
 };
 
 const createHref = (url: string, searchParams: URLSearchParams): string => {

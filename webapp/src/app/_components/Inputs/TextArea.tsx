@@ -1,7 +1,6 @@
 import React, { useId, useRef } from "react";
 import { useCustomValidation } from "@/app/_components/Inputs/useCustomValidation";
-import { RequiredInfo } from "@/app/_components/Inputs/partials/RequiredInfo";
-import { RecommendedInfo } from "@/app/_components/Inputs/partials/RecommendedInfo";
+import { Label } from "@/app/_components/Inputs/partials/Label";
 
 type TextArea = {
   name: string;
@@ -9,6 +8,7 @@ type TextArea = {
   required?: boolean;
   recommended?: boolean;
   maxLength?: number;
+  defaultValue?: string;
   customValidationMessage?: string;
 };
 export function TextArea({
@@ -16,6 +16,7 @@ export function TextArea({
   label,
   required,
   recommended,
+  defaultValue,
   maxLength,
   customValidationMessage,
 }: TextArea) {
@@ -25,16 +26,18 @@ export function TextArea({
 
   return (
     <div className="gd-input">
-      <label htmlFor={id}>
-        {label}
-        {required && <RequiredInfo />}
-        {recommended && <RecommendedInfo />}
-      </label>
+      <Label
+        label={label}
+        htmlFor={id}
+        recommended={recommended}
+        required={required}
+      />
       <textarea
         ref={textareaRef}
         id={id}
         name={name}
         maxLength={maxLength}
+        defaultValue={defaultValue}
         required={required}
         data-recommended={recommended}
       />

@@ -1,4 +1,4 @@
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { EditorialContent } from "@/app/_components/EditorialContent/EditorialContent";
 import { T3Page } from "@/types/types.typo3";
@@ -29,7 +29,9 @@ describe("EditorialContent", () => {
   } satisfies T3Page;
 
   it("should render the contents of Content Element as html", async () => {
-    render(<EditorialContent pageData={pageData} />);
+    const { container } = render(<EditorialContent pageData={pageData} />);
+
+    expect(container.querySelector(".editoral-content")).toBeInTheDocument();
 
     screen.getByText("hi");
     screen.getByText("bin html");

@@ -1,9 +1,9 @@
-export function FilterResultCount({ count }: { count: number }) {
-  const localCountString = count.toLocaleString();
+import { numberToLocaleString } from "@/app/_lib/number";
 
+export function FilterResultCount({ count }: { count: number }) {
   return (
     <span className="gd-badge">
-      {localCountString}
+      {numberToLocaleString(count)}
       <span className="sr-only"> Treffer</span>
     </span>
   );

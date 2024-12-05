@@ -24,6 +24,8 @@ describe("api/geocoding-suggest", () => {
     vi.mocked(headers).mockReturnValue(new Headers());
     global.fetch = vi.fn().mockResolvedValue({
       status: 200,
+      ok: true,
+      headers: { get: () => "application/json" },
       json: () => "mock",
     });
   });
@@ -49,7 +51,7 @@ describe("api/geocoding-suggest", () => {
     expect(await response.json()).toBe("mock");
     expect(fetchSpy).toHaveBeenCalledWith(
       "test/geosearch.json?count=5&query=123",
-      undefined,
+      { cache: "no-cache" },
     );
   });
 
@@ -65,7 +67,7 @@ describe("api/geocoding-suggest", () => {
     expect(await response.json()).toBe("mock");
     expect(fetchSpy).toHaveBeenCalledWith(
       "https://openstreetmap.org/search?q=mysuggest",
-      undefined,
+      { cache: "no-cache" },
     );
   });
 });

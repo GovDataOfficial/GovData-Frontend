@@ -163,8 +163,20 @@ describe("External Search Filter Test", () => {
 
   it("should set correct param on Datenbereitsteller", async () => {
     const organizationMock: OrganizationSorted = [
-      { id: "0123-456", name: "1", displayName: "Datahub", title: "ein Title" },
-      { id: "999-555", name: "2", displayName: "GovData", title: "ein Title" },
+      {
+        id: "0123-456",
+        name: "1",
+        displayName: "Datahub",
+        title: "ein Title",
+        contributorIds: [],
+      },
+      {
+        id: "999-555",
+        name: "2",
+        displayName: "GovData",
+        title: "ein Title",
+        contributorIds: [],
+      },
     ];
 
     const user = userEvent.setup();

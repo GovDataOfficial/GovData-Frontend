@@ -12,3 +12,8 @@ export function debounce(func: any, wait: number) {
     if (!timeout) func.apply(context, args);
   };
 }
+
+export async function delayBetween(min: number, max: number): Promise<void> {
+  const delay = Math.floor(Math.random() * (max - min + 1)) + min;
+  await new Promise((resolve) => setTimeout(resolve, delay));
+}

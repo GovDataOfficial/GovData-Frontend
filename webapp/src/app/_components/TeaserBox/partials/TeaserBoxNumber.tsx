@@ -1,6 +1,7 @@
 import { TeaserBox } from "@/app/_components/TeaserBox/partials/TeaserBox";
 import { SVG, icons } from "@/app/_components/SVG/SVG";
 import React from "react";
+import { numberToLocaleString } from "@/app/_lib/number";
 
 type TeaserBoxNumber = {
   name: string;
@@ -17,11 +18,13 @@ export function TeaserBoxNumber({
 }: TeaserBoxNumber) {
   return (
     <TeaserBox theme="dark" href={href}>
-      <SVG size="32" icon={icon} />
-      <div className="gd-teaser-box-numbers-heading mt-1">
-        {docCount?.toLocaleString()}
+      <div className="gd-teaser-box-numbers">
+        <SVG size="32" icon={icon} />
+        <div className="gd-teaser-box-numbers-heading mt-1">
+          {docCount && numberToLocaleString(docCount)}
+        </div>
+        <p className="paragraph bold">{name}</p>
       </div>
-      <p className="paragraph bold">{name}</p>
     </TeaserBox>
   );
 }

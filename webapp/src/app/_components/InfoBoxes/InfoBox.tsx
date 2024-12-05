@@ -1,22 +1,42 @@
-import React, { PropsWithChildren } from "react";
-import { icons, SVG } from "@/app/_components/SVG/SVG";
+import React, { forwardRef, PropsWithChildren } from "react";
 
 type InfoBox = {
   title: string;
+  variant?: "info" | "success" | "error";
+  titleId?: string;
+  className?: string;
 };
 
-export function InfoBox({ title, children }: PropsWithChildren<InfoBox>) {
-  return (
-    <div className="info-box">
-      <div className="d-flex flex-nowrap">
-        <SVG icon={icons.infoBlue} className="me-2 align-self-center" />
-        <div>
-          <p className="m-0">
-            <span className="bold">{title}</span>
-          </p>
-          {children}
+const InfoBox = forwardRef<HTMLDivElement, PropsWithChildren<InfoBox>>(
+  (
+    {
+      title,
+      variant = "info",
+      className = "",
+      children,
+    }: PropsWithChildren<InfoBox>,
+    ref,
+  ) => {
+    return (
+      <div
+        className={`info-box info-box-${variant} ${className}`}
+        role={variant === "error" ? "alert" : "status"}
+        tabIndex={-1}
+        ref={ref}
+      >
+        <div className="d-flex flex-nowrap">
+          <div>
+            <p className="m-0">
+              <span className="info-box-message">{title}</span>
+            </p>
+            {children && <p className="mb-0">{children}</p>}
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  },
+);
+
+InfoBox.displayName = "InfoBox";
+
+export { InfoBox };

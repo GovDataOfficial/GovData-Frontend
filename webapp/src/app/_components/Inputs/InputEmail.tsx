@@ -1,7 +1,6 @@
 import React, { useId, useRef } from "react";
 import { useCustomValidation } from "@/app/_components/Inputs/useCustomValidation";
-import { RequiredInfo } from "@/app/_components/Inputs/partials/RequiredInfo";
-import { RecommendedInfo } from "@/app/_components/Inputs/partials/RecommendedInfo";
+import { Label } from "@/app/_components/Inputs/partials/Label";
 
 type InputEmail = {
   name: string;
@@ -9,12 +8,16 @@ type InputEmail = {
   required?: boolean;
   recommended?: boolean;
   customValidationMessage?: string;
+  defaultValue?: string;
+  maxLength?: number;
 };
 export function InputEmail({
   label,
   name,
   required,
   recommended,
+  defaultValue,
+  maxLength,
   customValidationMessage,
 }: InputEmail) {
   const id = useId();
@@ -24,16 +27,19 @@ export function InputEmail({
 
   return (
     <div className="gd-input">
-      <label htmlFor={id}>
-        {label}
-        {required && <RequiredInfo />}
-        {recommended && <RecommendedInfo />}
-      </label>
+      <Label
+        label={label}
+        htmlFor={id}
+        recommended={recommended}
+        required={required}
+      />
       <input
         ref={inputRef}
         id={id}
         type="email"
         name={name}
+        maxLength={maxLength}
+        defaultValue={defaultValue}
         required={required}
         data-recommended={recommended}
       />

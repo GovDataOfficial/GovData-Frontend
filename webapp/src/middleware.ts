@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { withRedirectLegacyPaths } from "@/middlewares/withRedirectLegacyPaths";
-import { withRequestIdMiddleware } from "@/middlewares/withRequestIdMiddleware";
-import { withAuthMiddleware } from "@/middlewares/withAuthMiddleware";
 import { MiddlewareFactory } from "@/middlewares/types";
 import { withHeadersMiddleware } from "@/middlewares/withHeadersMiddleware";
+import { withMetaDataManageFeatureFlagRedirect } from "@/middlewares/withMetaDataManageFeatureFlagRedirect";
+import { logger } from "@/logger/logger";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -16,18 +16,22 @@ export const config = {
   matcher: ["/((?!_next/static|_next/image|images/|favicon.ico).*)"],
 };
 
+const log = logger("middleware.ts");
+
 const middlewareChain: MiddlewareFactory[] = [
-  withRequestIdMiddleware,
-  withAuthMiddleware,
+  withMetaDataManageFeatureFlagRedirect,
   withRedirectLegacyPaths,
   withHeadersMiddleware,
 ];
 
-export function middleware(request: NextRequest): NextResponse {
+export async function middleware(
+  request: NextRequest,
+): Promise<NextResponse | Response> {
+  log.debug(`GET ${request.nextUrl}`);
   const response = new NextResponse();
   for (let i = 0; i < middlewareChain.length; i = i + 1) {
     const middlewareFunc = middlewareChain[i];
-    const nextResponse = middlewareFunc(request, response);
+    const nextResponse = await middlewareFunc(request, response);
     if (nextResponse) {
       return nextResponse();
     }

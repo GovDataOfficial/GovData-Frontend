@@ -4,7 +4,7 @@
   "description": "GovData Frontend Service",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev | pino-pretty -c -S",
     "build": "next build && node prepareBuildDir.mjs",
     "start": "next start",
     "lint": "next lint",
@@ -13,19 +13,23 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
-    "@fontsource/noto-sans": "^5.0.22",
+    "@fontsource/noto-sans": "^5.1.0",
     "@fortawesome/fontawesome-free": "6.6.0",
     "@triply/yasgui": "^4.2.28",
     "bootstrap": "^5.3.3",
     "chart.js": "^2.9.4",
     "content-security-policy-builder": "^2.2.0",
-    "i18next": "^23.14.0",
-    "next": "^14.2.7",
+    "i18next": "^23.15.2",
+    "ioredis": "^5.4.1",
+    "iron-session": "^8.0.3",
+    "next": "^14.2.10",
     "nodemailer": "^6.9.15",
     "normalize.css": "^8.0.1",
+    "openid-client": "^5.7.0",
+    "pino": "^9.5.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sanitize-html": "^2.13.0",
+    "sanitize-html": "^2.13.1",
     "sharp": "^0.33.5",
     "undici": "^6.19.8"
   },
@@ -33,24 +37,23 @@
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^15.0.7",
     "@testing-library/user-event": "^14.5.2",
-    "@types/node": "^22.5.3",
-    "@types/react": "^18.3.5",
+    "@types/node": "^22.7.5",
+    "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "@types/sanitize-html": "^2.13.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "@vitest/coverage-v8": "^2.0.5",
+    "@vitejs/plugin-react": "^4.3.2",
+    "@vitest/coverage-v8": "^2.1.2",
     "eslint": "^8.57.0",
-    "eslint-config-next": "14.2.5",
+    "eslint-config-next": "14.2.14",
     "eslint-config-prettier": "^8.9.0",
-    "jsdom": "^25.0.0",
+    "jsdom": "^25.0.1",
+    "pino-pretty": "^13.0.0",
     "prettier": "^3.3.3",
-    "sass": "^1.78.0",
-    "typescript": "5.5.4",
-    "vitest": "^2.0.5"
+    "sass": "^1.79.4",
+    "typescript": "5.6.2",
+    "vitest": "^2.1.2"
   },
   "overrides": {
-    "jsdom": {
-      "tough-cookie": "^5.0.0-rc.4"
-    }
+    "cross-spawn": "^7.0.5"
   }
 }

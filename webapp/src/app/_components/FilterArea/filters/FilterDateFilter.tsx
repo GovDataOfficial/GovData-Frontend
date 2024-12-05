@@ -32,7 +32,7 @@ export function FilterDateFilter({ filterMap }: FilterCommonConsumer) {
     : undefined;
 
   return (
-    <Accordion title="Zeitbezug" open>
+    <Accordion title={<h3>Zeitbezug</h3>} open>
       <form
         encType="application/x-www-form-urlencoded"
         method="get"

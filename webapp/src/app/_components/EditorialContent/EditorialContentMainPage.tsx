@@ -31,6 +31,7 @@ export function EditorialContentMainPage({ pageData }: EditorialContent) {
         containerWidth="930"
       >
         <div
+          className="editoral-content"
           key={element.id}
           dangerouslySetInnerHTML={{ __html: element.content.bodytext }}
         />

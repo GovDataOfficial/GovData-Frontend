@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import React, { PropsWithChildren, forwardRef } from "react";
 
 type Button = {
   variant?: "primary" | "secondary" | "a" | "icon";
@@ -7,36 +7,51 @@ type Button = {
   onClick?: (e: any) => void;
   className?: string;
   type?: "button" | "submit" | "reset";
+  title?: string;
   ariaExpanded?: HTMLButtonElement["ariaExpanded"];
   ariaControls?: string;
+  ariaLabel?: string;
 };
 
-// need to refactor button and links apart
-export function Button({
-  variant = "primary",
-  className = "",
-  onClick,
-  id,
-  type = "button",
-  ariaExpanded,
-  ariaControls,
-  children,
-}: PropsWithChildren<Button>) {
-  const classes = ["gd-button"];
+const Button = forwardRef<HTMLButtonElement, PropsWithChildren<Button>>(
+  (
+    {
+      variant = "primary",
+      className = "",
+      onClick,
+      id,
+      type = "button",
+      title,
+      ariaLabel,
+      ariaExpanded,
+      ariaControls,
+      children,
+    },
+    ref,
+  ) => {
+    const classes = ["gd-button"];
 
-  classes.push(`gd-button-${variant}`);
+    classes.push(`gd-button-${variant}`);
 
-  return (
-    //@ts-expect-error typing for aria passed props is wrong
-    <button
-      id={id}
-      type={type}
-      className={`${classes.join(" ")} ${className}`}
-      onClick={onClick}
-      aria-expanded={ariaExpanded}
-      aria-controls={ariaControls}
-    >
-      {children}
-    </button>
-  );
-}
+    return (
+      //@ts-expect-error typing for aria passed props is wrong
+      <button
+        ref={ref}
+        id={id}
+        type={type}
+        className={`${classes.join(" ")} ${className}`}
+        onClick={onClick}
+        title={title}
+        aria-expanded={ariaExpanded}
+        aria-controls={ariaControls}
+        aria-label={ariaLabel}
+      >
+        {children}
+      </button>
+    );
+  },
+);
+
+Button.displayName = "Button";
+
+export { Button };

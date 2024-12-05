@@ -77,6 +77,7 @@
     @extend .bold;
     display: block;
     margin-bottom: rem-calc(3);
+    line-height: rem-calc(24)
   }
 
   .gd-dropdown-toggle {

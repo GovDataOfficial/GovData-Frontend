@@ -1,6 +1,5 @@
 import React, { PropsWithChildren, useId } from "react";
-import { RequiredInfo } from "@/app/_components/Inputs/partials/RequiredInfo";
-import { RecommendedInfo } from "@/app/_components/Inputs/partials/RecommendedInfo";
+import { Label } from "@/app/_components/Inputs/partials/Label";
 
 type Select<T> = {
   label: string;
@@ -12,6 +11,7 @@ type Select<T> = {
   name?: string;
   showNoValueOption?: boolean;
   recommended?: boolean;
+  defaultValue?: string;
 };
 
 export function Select<T>({
@@ -20,6 +20,7 @@ export function Select<T>({
   children,
   onChange,
   value,
+  defaultValue,
   required,
   name,
   className = "",
@@ -34,11 +35,13 @@ export function Select<T>({
 
   return (
     <div className={`gd-input ${className}`}>
-      <label className={labelInvisible ? "sr-only" : ""} htmlFor={id}>
-        {label}
-        {required && <RequiredInfo />}
-        {recommended && <RecommendedInfo />}
-      </label>
+      <Label
+        label={label}
+        htmlFor={id}
+        recommended={recommended}
+        required={required}
+        invisible={labelInvisible}
+      />
       <select
         id={id}
         onChange={(e) => {
@@ -48,6 +51,7 @@ export function Select<T>({
         }}
         name={name}
         value={value}
+        defaultValue={defaultValue}
         required={required}
         data-recommended={recommended}
       >

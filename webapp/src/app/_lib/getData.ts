@@ -13,24 +13,27 @@ import {
   ShowCaseData,
   StateList,
 } from "@/types/types";
-import { headers } from "next/headers";
 import { T3Page } from "@/types/types.typo3";
 import { convertToURLSearchParams } from "@/app/_lib/convertToSearchParams";
 import { FILTERS, SPECIAL_FILTERS } from "@/app/_lib/URLHelper";
 import { Agent } from "undici";
+import { logger } from "@/logger/logger";
+const log = logger("getData.ts");
 
 const credentials = `${process.env.BE_GD_AUTH_USER}:${process.env.BE_GD_AUTH_PASSWORD}`;
 const encodedCredentials = Buffer.from(credentials).toString("base64");
-const authHeader = `Basic ${encodedCredentials}`;
+export const authHeader = `Basic ${encodedCredentials}`;
 
 // relax typo3 fetch calls
 const typo3FetchAgentDispatcher = new Agent({
   connect: { rejectUnauthorized: false },
 });
 
+//TODO: Move file to more specific folder
+
 /**
  * Convenience Fetch Method to retrieve data from typo3 and microservices.
- * ⚠ Currently caching is disabled because we use headers() in fetch method.
+ * ⚠ Currently caching is disabled.
  *   Every page load will therefore create a new call to typo3/microservices.
  *   Caching needs still to be implemented.
  *   see:
@@ -42,31 +45,38 @@ export function fetchData<T>(
   opts?: {},
   parseAsText: boolean = false,
 ) {
-  const headersList = headers();
-  if (process.env.LOG_LEVEL === "debug") {
-    console.debug(
-      `[${new Date().toISOString()}][${headersList.get("x-request-id")}] fetching ${url}`,
-    );
-  }
-
+  log.debug(`GET ${url}`);
   if (!url) {
-    console.error("no url provided");
+    log.error("no url provided");
     return undefined;
   }
 
-  return fetch(url, opts)
+  return fetch(url, { ...opts, cache: "no-cache" })
     .then((r) => {
-      if (r.status === 200) {
+      if (r.ok) {
+        // Handle 204 No Content and any other status that might not have a body
+        if (r.status === 204 || r.headers.get("Content-Length") === "0") {
+          return undefined;
+        }
+
         if (parseAsText) {
           return r.text() as T;
         }
-        return r.json() as T;
-      } else {
-        r.text().then((error) => console.error(error));
+
+        // Check if there's a content type header indicating JSON
+        const contentType = r.headers.get("Content-Type");
+        if (contentType && contentType.includes("application/json")) {
+          return r.json() as T;
+        }
+
+        throw new Error(
+          "Expected JSON response but received different content type",
+        );
       }
+      throw new Error(`GET ${url} failed with status ${r.status}`);
     })
     .catch((e) => {
-      console.debug(e);
+      log.error(e);
       return undefined;
     });
 }
@@ -84,51 +94,54 @@ export function fetchMicroData<T>(url?: string, parseAsText: boolean = false) {
 }
 
 export function fetchTypo3Data(typo3Url: string) {
-  return fetchData<T3Page>(process.env.BE_TYPO3_URL + typo3Url, {
+  return fetchData<T3Page>(`${process.env.be_typo3_url}${typo3Url}`, {
     dispatcher: typo3FetchAgentDispatcher,
   });
 }
 
 export function fetchStateList() {
-  return fetchMicroData<StateList>(process.env.BE_GD_DATA_STATES_URL);
+  return fetchMicroData<StateList>(`${process.env.be_gd_data_url}/states`);
 }
 
 export function fetchCategoriesSorted() {
   return fetchMicroData<CategoriesSorted>(
-    process.env.BE_GD_DATA_CATEGORIES_SORTED_URL,
-  );
-}
-export function fetchLicenseActiveSorted() {
-  return fetchMicroData<LicenseActiveSorted>(
-    process.env.BE_GD_DATA_LICENSE_ACTIVE_SORTED,
+    `${process.env.be_gd_data_url}/category-sorted`,
   );
 }
 
-export function fetchMetadata(name: string) {
+export function fetchLicenseActiveSorted() {
+  return fetchMicroData<LicenseActiveSorted>(
+    `${process.env.be_gd_data_url}/license-active-sorted`,
+  );
+}
+
+export function fetchMetadata(nameOrId: string) {
   return fetchMicroData<MetaData>(
-    process.env.BE_GD_DATA_META_DATA + "?name=" + name,
+    `${process.env.be_gd_data_url}/metadata/${nameOrId}`,
   );
 }
 
 export function fetchOrganizationSorted() {
   return fetchMicroData<OrganizationSorted>(
-    process.env.BE_GD_DATA_ORGANIZATION_SORTED,
+    `${process.env.be_gd_data_url}/organization-sorted`,
   );
 }
 
 export function fetchResourceFormatsSorted() {
   return fetchMicroData<ResourceFormatsSorted>(
-    process.env.BE_GD_DATA_RESOURCE_FORMATS_SORTED,
+    `${process.env.be_gd_data_url}/resource-formats-sorted`,
   );
 }
 
 export function fetchSearchSuggestions(q: string) {
-  return fetchMicroData(process.env.BE_GD_DATA_SEARCH_SUGGEST + "/" + q);
+  return fetchMicroData(
+    `${process.env.be_index_app2_url}/search/seach-suggestions/${q}`,
+  );
 }
 
 export function fetchSearchScrollResults(scrollId: string) {
   return fetchMicroData<SearchResults>(
-    process.env.BE_GD_SEARCH_SCROLL_URL + `/${scrollId}`,
+    `${process.env.be_index_app2_url}/search/scroll/${scrollId}`,
   );
 }
 
@@ -148,18 +161,20 @@ export function fetchOSMSuggest(q: string) {
 
 export function fetchSearchMapSessionId() {
   return fetchMicroData<string>(
-    process.env.BE_GD_DATA_SEARCHMAP_SESSION_ID!,
+    `${process.env.be_gd_data_url}/searchmap-sessionid`,
     true,
   );
 }
 
 export function fetchMetaDataQuality() {
-  return fetchMicroData<MetaDataQuality[]>(process.env.BE_GD_DATA_META_QUALITY);
+  return fetchMicroData<MetaDataQuality[]>(
+    `${process.env.be_gd_data_url}/metadata-quality-metrics`,
+  );
 }
 
 export function fetchShowCase(id: string) {
   return fetchMicroData<ShowCaseData>(
-    process.env.BE_GD_DATA_SHOWCASE + `/${id}`,
+    `${process.env.be_gd_db_url}/showcase/${id}`,
   );
 }
 
@@ -174,21 +189,23 @@ export function fetchDataSetShowCaseConnection(id: string) {
     `&searchKey=${id}` +
     "&searchColumns=usedDatasets.url";
   return fetchMicroData<{ items: { id: number; title: string }[] }>(
-    process.env.BE_GD_DATA_SHOWCASE + param,
+    `${process.env.be_gd_data_url}/showcase${param}`,
   );
 }
 
 export function fetchPortalNumbers() {
-  return fetchMicroData<PortalNumbers>(process.env.BE_GD_DATA_NUMBERS);
+  return fetchMicroData<PortalNumbers>(
+    process.env.be_gd_data_url + "/portal-numbers",
+  );
 }
 
 export function fetchMastodonData() {
-  return fetchMicroData<PostDto>(process.env.BE_GD_DATA_MASTADON);
+  return fetchMicroData<PostDto>(process.env.be_gd_data_url + "/mastodon-post");
 }
 
 export function getSearchResults(searchParams: NextJSSearchParams) {
   const params = convertToURLSearchParams(searchParams);
-  const toSend = new URL(process.env.BE_GD_SEARCH_URL!);
+  const toSend = new URL(`${process.env.be_index_app2_url}/search/search`);
 
   const appendIfAvailable = (p: string | null, f: string) => {
     p && toSend.searchParams.append(f, p);
@@ -213,6 +230,38 @@ export function getSearchResults(searchParams: NextJSSearchParams) {
   const [type, order] = sortParam.split("_");
   toSend.searchParams.set("sortType", type);
   toSend.searchParams.set("ascending", order === "asc" ? "true" : "false");
+
+  return fetchMicroData<SearchResults>(toSend.toString());
+}
+
+export function fetchOrganizationsForUser(username?: string) {
+  if (!username) {
+    return undefined;
+  }
+  return fetchMicroData<OrganizationSorted>(
+    `${process.env.be_gd_data_url}/organization-for-editor-user?username=${username}`,
+  );
+}
+
+export async function fetchMetadataForOrganizations(
+  organizations?: OrganizationSorted,
+) {
+  if (!organizations) {
+    return undefined;
+  }
+
+  const toSend = new URL(`${process.env.be_index_app2_url}/search/search`);
+  toSend.searchParams.set(
+    "activeFilters",
+    "onlyEditorMetadata:onlyEditorMetadata",
+  );
+  toSend.searchParams.set("sortType", FILTERS.TITLE);
+  toSend.searchParams.set("ascending", "false");
+  toSend.searchParams.set("numResults", "3000");
+
+  organizations.forEach((org) => {
+    toSend.searchParams.append("editorOrganizationIdList", org.id);
+  });
 
   return fetchMicroData<SearchResults>(toSend.toString());
 }

@@ -9,6 +9,14 @@ import { QuickAccessNavigation } from "@/app/_components/QuickAccesNavigation/Qu
 import { SearchHeaderSwitcher } from "@/app/_components/Search/SearchHeaderSwitcher";
 import { GlobalIds } from "@/app/_lib/globalIds";
 import { MatomoTracking } from "@/app/_components/MatomoTracking/MatomoTracking";
+import { UserHeader } from "@/app/_components/UserHeader/UserHeader";
+
+/**
+ * Ensure every page will be rendered dynamically,
+ * thereby preventing static site generation.
+ * We do not use any static pages for now when using this layout.
+ */
+export const dynamic = "force-dynamic";
 
 // this meta data will be used for every page if no override happens.
 export const metadata: Metadata = {
@@ -46,6 +54,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
           <header role="banner" className="bg-white">
             <QuickAccessNavigation />
             <HeaderNavigation />
+            <UserHeader />
             <SearchHeaderSwitcher />
           </header>
           <main id={GlobalIds.mainContent}>{children}</main>

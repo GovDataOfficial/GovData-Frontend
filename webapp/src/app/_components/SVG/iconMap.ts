@@ -50,6 +50,9 @@ import infoBlue from "./icons/info_blue.svg";
 import arrowRightLongWhite from "./icons/arrow_right_long_white.svg";
 import arrowLeftLongBlue from "./icons/arrow_left_long_blue.svg";
 import plus from "./icons/plus.svg";
+import trash from "./icons/trash.svg";
+import editPencil from "./icons/edit.svg";
+import login from "./icons/login.svg";
 
 const icons = {
   icon_hvdkat_cco,
@@ -104,6 +107,9 @@ const icons = {
   arrowRightLongWhite,
   arrowLeftLongBlue,
   plus,
+  trash,
+  editPencil,
+  login,
 };
 
 export { icons };

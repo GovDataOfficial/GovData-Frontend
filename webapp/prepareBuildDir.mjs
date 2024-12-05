@@ -3,7 +3,7 @@
  * - nextJS standalone output requires these steps
  *   -> https://nextjs.org/docs/pages/api-reference/next-config-js/output
  */
-import { existsSync, mkdirSync, cpSync, copyFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, cpSync, rmSync } from "node:fs";
 import { join } from "node:path";
 
 const rootDir = join(import.meta.dirname);

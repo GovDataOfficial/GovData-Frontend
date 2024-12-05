@@ -13,11 +13,12 @@ import { TypeListFilterMobile } from "@/app/suche/_components/SearchResultTypeFi
 import { SearchResultsEmpty } from "@/app/suche/_components/SearchResults/SearchResultsEmpty";
 import { stripSearchResultHTMLContent } from "@/app/_lib/sanitizer/sanitizeHtml";
 import { ExtendedSearchLink } from "@/app/suche/_components/common/ExtendedSearchLink";
-import { AlertBadge } from "@/app/_components/AlertBadge/AlertBadge";
 import { ContainerDiv } from "@/app/_components/Container";
 import { convertToURLSearchParams } from "@/app/_lib/convertToSearchParams";
 import { isNotNullOrUndefined } from "@/types/typeGuards";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
+import { numberToLocaleString } from "@/app/_lib/number";
+import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 
 function getQueryParam(searchParams: PageConstructor["searchParams"]) {
   const params = convertToURLSearchParams(searchParams);
@@ -49,7 +50,7 @@ function getHeadline(data: SearchResults, q?: string) {
     case !hasHits:
       return i18n.t("search.empty.title");
     default:
-      return `${data.hitsTotal.toLocaleString()} ${i18n.t("search.hits")}`;
+      return `${numberToLocaleString(data.hitsTotal)} ${i18n.t("search.hits")}`;
   }
 }
 
@@ -59,7 +60,11 @@ export default async function Suche({ searchParams }: PageConstructor) {
   if (!data) {
     return (
       <ContainerDiv containerWidth="lg">
-        <AlertBadge>{i18n.t("error.alert.common")}</AlertBadge>
+        <InfoBox
+          className="mt-3"
+          title={i18n.t("error.alert.common")}
+          variant="error"
+        />
       </ContainerDiv>
     );
   }

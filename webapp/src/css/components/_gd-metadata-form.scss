@@ -22,31 +22,66 @@
   }
 }
 
-.metadata-form-geolocation {
-  display: flex;
-  gap: 30px;
-  justify-content: space-between;
-
-  .gd-input {
-    width: 50%;
-
-    textarea {
-      resize: none;
-      height: 250px;
+#metadata-form {
+  .metadata-form-geolocation {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+  
+    .gd-input {
+      width: 50%;
+  
+      textarea {
+        resize: none;
+        height: 250px;
+      }
+    }
+  
+    .metadata-form-geolocation-code-example {
+      @extend .gd-input;
+      strong {
+        @extend label;
+      }
+      code {
+        display: block;
+        @extend textarea;
+        overflow: auto;
+        background: $clr-neutral-grey-0;
+      }
     }
   }
 
-  .metadata-form-geolocation-code-example {
-    @extend .gd-input;
-    strong {
-      @extend label;
+  fieldset {
+    margin-left: 0rem;
+    margin-right: 0rem;
+  }
+
+  fieldset:not(:last-child) {
+    padding-bottom: map-get($spacers, 3);
+    margin-bottom: map-get($spacers, 4);
+  }
+  
+  div:has( > button) + fieldset.contacts {
+    margin-top: map-get($spacers, 5);
+  }
+
+  .add-contact {
+    @extend .border-bottom;
+    padding-bottom: map-get($spacers, 4);
+
+    h3 {
+      margin-bottom: map-get($spacers, 2);
+      margin-top: 0rem;
     }
-    code {
-      display: block;
-      @extend textarea;
-      overflow: auto;
-      background: $clr-neutral-grey-0;
+
+    &:not(:last-child){
+      margin-bottom: map-get($spacers, 5);
     }
+  }
+
+  .metadata-form-fieldset-legend-button {
+    align-self: flex-end;
+    margin-top: -(map-get($spacers, 5));
   }
 }
 

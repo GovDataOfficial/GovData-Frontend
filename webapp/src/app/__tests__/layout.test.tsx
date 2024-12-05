@@ -6,14 +6,21 @@ vi.mock("@/app/_lib/getData", () => ({
   fetchTypo3Data: vi.fn(),
 }));
 
+vi.mock("@/app/api/auth/_session");
+
 vi.mock("next/navigation", () => ({
   usePathname: vi.fn().mockReturnValue(""),
   useSearchParams: vi.fn().mockReturnValue(new URLSearchParams()),
 }));
 
+vi.mock("@/app/_components/UserHeader/UserHeader", () => ({
+  UserHeader: () => null,
+}));
+
 vi.mock("@/app/_components/Footer/Footer", () => ({
   Footer: () => <div>footer</div>,
 }));
+
 vi.mock("@/app/_components/OffCanvasMenu/OffCanvasMenu", () => ({
   OffCanvasMenu: () => <div>offcanvasmenu</div>,
 }));

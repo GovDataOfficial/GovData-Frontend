@@ -73,4 +73,13 @@ describe("EditorialContentMainPage", () => {
       level: 2,
     });
   });
+
+  it("should render with correct css class", async () => {
+    const pageData = pageDataWith(textWithoutHeader);
+    const { container } = render(
+      <EditorialContentMainPage pageData={pageData} />,
+    );
+
+    expect(container.querySelector(".editoral-content")).toBeInTheDocument();
+  });
 });

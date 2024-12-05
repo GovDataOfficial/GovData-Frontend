@@ -33,7 +33,6 @@ export function SectionSparqlEditor({ endpoints }: SectionSparqlEditor) {
     setQuery,
     setPrefixes,
     togglePrefix,
-    loaded,
     execQuery,
     setContentType,
     setEndpoint,
@@ -41,13 +40,6 @@ export function SectionSparqlEditor({ endpoints }: SectionSparqlEditor) {
   } = useYasgui("yasgui", endpoints.ds);
 
   let queryOptions = QUERIES[selectedEndpoint];
-
-  useEffect(() => {
-    if (selectedEndpoint && loaded) {
-      setQuery(queryOptions[0].query);
-      setPrefixes(queryOptions[0].prefixes);
-    }
-  }, [loaded, selectedEndpoint, setQuery, setPrefixes, queryOptions]);
 
   useEffect(() => {
     setContentType(selectedFormat);

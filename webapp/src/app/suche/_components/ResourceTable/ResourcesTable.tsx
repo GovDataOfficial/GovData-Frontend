@@ -38,6 +38,7 @@ export function ResourcesTable({ data }: ResourcesTable) {
             <TableHead
               id="th-title"
               label={i18n.t("resource.table.head.title")}
+              className="ps-3"
             />
             <TableHead
               id="th-modified"

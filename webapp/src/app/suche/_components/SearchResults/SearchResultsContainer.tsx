@@ -9,10 +9,10 @@ import {
 import { i18n } from "@/i18n";
 import { Button } from "@/app/_components/Button/Button";
 import {
-  SearchResultHit,
   focusSearchResultHit,
+  SearchResultHit,
 } from "../SearchResultHit/SearchResultHit";
-import { AlertBadge } from "@/app/_components/AlertBadge/AlertBadge";
+import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 
 type SearchResultsContainer = {
   data: SearchResults;
@@ -66,7 +66,11 @@ export function SearchResultsContainer({ data }: SearchResultsContainer) {
         </div>
       )}
       {fetchState === "error" && (
-        <AlertBadge>{i18n.t("error.alert.commonReload")}</AlertBadge>
+        <InfoBox
+          className="mt-3"
+          variant="error"
+          title={i18n.t("error.alert.commonReload")}
+        />
       )}
       <span className="offscreen" aria-live="polite" role="status">
         {fetchState === "loading" ? i18n.t("search.more.isLoading") : ""}
