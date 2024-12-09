@@ -38,7 +38,7 @@ describe("layout", () => {
 
   it("should export correct meta data valid for all pages", () => {
     expect(metadata).toBeDefined();
-    expect(metadata.manifest).toBeDefined();
+    expect(metadata.manifest).toBe("/manifest.json");
     expect(metadata.applicationName).toBeDefined();
     expect(metadata.openGraph).toBeDefined();
     expect(metadata.icons).toHaveProperty("apple");

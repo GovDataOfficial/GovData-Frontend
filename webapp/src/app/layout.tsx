@@ -19,8 +19,9 @@ import { UserHeader } from "@/app/_components/UserHeader/UserHeader";
 export const dynamic = "force-dynamic";
 
 // this meta data will be used for every page if no override happens.
+// this is based on the old static files. Use nextjs own API to create these files in future.
 export const metadata: Metadata = {
-  manifest: "manifest.json",
+  manifest: "/manifest.json",
   applicationName: "GovData",
   openGraph: {
     locale: "de_DE",

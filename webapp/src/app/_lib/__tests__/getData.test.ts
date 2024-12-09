@@ -1,20 +1,26 @@
 // @vitest-environment node
 
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { getSearchResults, fetchData } from "@/app/_lib/getData";
+import {
+  getSearchResults,
+  fetchData,
+  fetchMetadataForOrganizations,
+} from "@/app/_lib/getData";
 import { headers } from "next/headers";
 import { DefaultSortOption } from "@/types/types";
 
 vi.mock("next/headers");
 
-describe("Get DefaultFormData", () => {
+describe("getData", () => {
   beforeEach(() => {
     vi.mocked(headers).mockReturnValue(new Headers());
     vi.stubEnv("be_index_app2_url", "http://mtest.de");
-    global.fetch = vi.fn().mockResolvedValueOnce({
+    global.fetch = vi.fn().mockResolvedValue({
       json: () => vi.fn(),
       text: vi.fn().mockResolvedValue(""),
       status: 200,
+      ok: true,
+      headers: new Headers([["Content-Type", "application/json"]]),
     });
   });
 
@@ -66,6 +72,22 @@ describe("Get DefaultFormData", () => {
     await fetchData("http://www.test.de", { other: "option" });
     expect(vi.mocked(global.fetch)).toHaveBeenCalledWith(
       expect.anything(),
+      expect.objectContaining({ cache: "no-cache" }),
+    );
+  });
+
+  it("fetchMetadataForOrganizations should create correct url", async () => {
+    const mockOrg1 = {
+      id: "1",
+      name: "test",
+      title: "test",
+      displayName: "test",
+      contributorIds: ["1"],
+    };
+
+    await fetchMetadataForOrganizations([mockOrg1]);
+    expect(vi.mocked(global.fetch)).toHaveBeenCalledWith(
+      "http://mtest.de/search/search?activeFilters=onlyEditorMetadata%3AhidePrivateDataset&sortType=title&ascending=false&numResults=3000&editorOrganizationIdList=1",
       expect.objectContaining({ cache: "no-cache" }),
     );
   });

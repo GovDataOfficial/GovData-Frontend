@@ -189,7 +189,7 @@ export function fetchDataSetShowCaseConnection(id: string) {
     `&searchKey=${id}` +
     "&searchColumns=usedDatasets.url";
   return fetchMicroData<{ items: { id: number; title: string }[] }>(
-    `${process.env.be_gd_data_url}/showcase${param}`,
+    `${process.env.be_gd_db_url}/showcase${param}`,
   );
 }
 
@@ -253,7 +253,7 @@ export async function fetchMetadataForOrganizations(
   const toSend = new URL(`${process.env.be_index_app2_url}/search/search`);
   toSend.searchParams.set(
     "activeFilters",
-    "onlyEditorMetadata:onlyEditorMetadata",
+    "onlyEditorMetadata:hidePrivateDataset",
   );
   toSend.searchParams.set("sortType", FILTERS.TITLE);
   toSend.searchParams.set("ascending", "false");
