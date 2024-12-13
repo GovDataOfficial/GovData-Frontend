@@ -24,6 +24,11 @@
 
   input {
     height: rem-calc(40);
+
+    &:read-only {
+      background-color: $clr-neutral-grey-200;
+      color: $clr-neutral-grey-600;
+    }
   }
 
   textarea {

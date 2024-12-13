@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 type useMetaDataFormStickyNavigation = {
   index: number;
@@ -28,6 +34,14 @@ export function useMetaDataFormStickyNavigation({
     }
   };
 
+  const checkValidityOfCurrentStep = useCallback(() => {
+    if (checkValidityOfStep(index)) {
+      setHasError(false);
+    } else {
+      setHasError(true);
+    }
+  }, [checkValidityOfStep, index]);
+
   const liClass = [];
   isActive && liClass.push("active");
   !notVisited && !isActive && liClass.push("done");
@@ -46,13 +60,16 @@ export function useMetaDataFormStickyNavigation({
   // effect to trigger validation on moving out of a current active step
   useEffect(() => {
     if (isActive && index !== currentStep) {
-      if (checkValidityOfStep(index)) {
-        setHasError(false);
-      } else {
-        setHasError(true);
-      }
+      checkValidityOfCurrentStep();
     }
-  }, [checkValidityOfStep, currentStep, index, isActive]);
+  }, [checkValidityOfCurrentStep, currentStep, index, isActive]);
+
+  // effect to trigger validation once on init if we are in edit mode
+  useEffect(() => {
+    if (editMode) {
+      checkValidityOfCurrentStep();
+    }
+  }, [checkValidityOfCurrentStep, editMode]);
 
   return {
     isActive,

@@ -1,13 +1,14 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
-import { LicenseActiveSorted } from "@/types/types";
-import { MetadataFormStepResources } from "@/app/datenpflege/_components/MetaDataForm/steps/resources/MetadataFormStepResources";
+import userEvent from "@testing-library/user-event";
+
 import {
   METADATA_FORM_INPUTS,
   METADATA_FORM_MAX_LENGTH_LONG,
   METADATA_FORM_MAX_LENGTH_MEDIUM,
 } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
-import userEvent from "@testing-library/user-event";
+import { MetadataFormStepResources } from "@/app/datenpflege/_components/MetaDataForm/steps/resources/MetadataFormStepResources";
+import { LicenseActiveSorted, MetaDataResource } from "@/types/types";
 
 vi.mock("@/app/_components/SVG/SVG", () => ({
   icons: { trash: "trash", plus: "plus" },
@@ -43,7 +44,7 @@ describe("MetadataFormStepResources", () => {
   ] satisfies LicenseActiveSorted;
 
   const createResource = () => ({
-    id: "resourceud" + Math.random(),
+    id: "resourceid" + Math.random(),
     name: "test-resource",
   });
 
@@ -398,5 +399,70 @@ describe("MetadataFormStepResources", () => {
       name: /url der ressource/i,
     });
     expect(firstInput).toHaveFocus();
+  });
+
+  test("should render infobox if non valid resources are provided", async () => {
+    const invalidLicenseInfoTitle = "Ungültige Lizenzinformationen";
+    const oldLicenseTitle = "Alte Lizenz";
+    const newLicenseTitle = "Neue Lizenz";
+    render(
+      <MetadataFormStepResources
+        forStep={0}
+        currentStep={0}
+        licenses={licenses}
+        defaultResources={
+          [
+            // undefined resource should be valid
+            { id: "1", name: "test-res-1", license: undefined },
+            // unknown license should be invalid
+            {
+              id: "2",
+              name: "test-res-2",
+              license: { id: "wef", title: "my-unknown-resource" },
+            },
+          ] as MetaDataResource[]
+        }
+      />,
+    );
+
+    // resource 1 should have valid default license
+    const resource1 = screen.getByRole("group", { name: /ressource 1/i });
+    const licenseSelect1 = within(resource1).getByRole("combobox", {
+      name: "Lizenz",
+    });
+
+    expect(licenseSelect1).toHaveDisplayValue("title-of-cc-zero");
+    expect(licenseSelect1).toBeRequired();
+    // the invalid text here should not be present
+    const invalidText1 = within(resource1).queryByText(invalidLicenseInfoTitle);
+    const selectOldLicense1 = within(resource1).queryByText(oldLicenseTitle);
+    const selectNewLicense1 = within(resource1).queryByText(newLicenseTitle);
+    expect(invalidText1).not.toBeInTheDocument();
+    expect(selectOldLicense1).not.toBeInTheDocument();
+    expect(selectNewLicense1).not.toBeInTheDocument();
+
+    // resource 2 should have invalid license
+    const resource2 = screen.getByRole("group", { name: /ressource 2/i });
+    const invalidText2 = within(resource2).getByText(invalidLicenseInfoTitle);
+    expect(invalidText2).toBeVisible();
+    const licenseSelect2 = within(resource2).queryByRole("combobox", {
+      name: "Lizenz",
+    });
+    // the normal "Lizenz" select is not available here
+    expect(licenseSelect2).not.toBeInTheDocument();
+
+    // a textbox with readonly and no name should be present
+    const oldLicense = within(resource2).getByRole("textbox", {
+      name: oldLicenseTitle,
+    });
+    expect(oldLicense).not.toHaveAttribute("name");
+    expect(oldLicense).toHaveAttribute("readonly");
+    expect(oldLicense).toHaveDisplayValue("my-unknown-resource");
+
+    const selectNewLicense2 = within(resource2).getByRole("combobox", {
+      name: newLicenseTitle,
+    });
+    expect(selectNewLicense2).toHaveDisplayValue(["Bitte wählen"]);
+    expect(selectNewLicense2).toHaveAttribute("name", "resources[1].licenseId");
   });
 });

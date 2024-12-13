@@ -1,41 +1,33 @@
-import { InputText } from "@/app/_components/Inputs/InputText";
-import { TextArea } from "@/app/_components/Inputs/TextArea";
-import { InputCheckbox } from "@/app/_components/Inputs/InputCheckbox";
-import { Fieldset } from "@/app/_components/Inputs/Fieldset";
-import { InputTextMultiple } from "@/app/_components/Inputs/InputTextMultiple";
-import { Select } from "@/app/_components/Inputs/Select";
-import { LicenseActiveSorted, MetaData } from "@/types/types";
-import { InputDate } from "@/app/_components/Inputs/InputDate";
+import { forwardRef } from "react";
 
+import { Button } from "@/app/_components/Button/Button";
+import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
+import { Fieldset } from "@/app/_components/Inputs/Fieldset";
+import { InputCheckbox } from "@/app/_components/Inputs/InputCheckbox";
+import { InputDate } from "@/app/_components/Inputs/InputDate";
+import { InputText } from "@/app/_components/Inputs/InputText";
+import { InputTextMultiple } from "@/app/_components/Inputs/InputTextMultiple";
+import { InputUrl } from "@/app/_components/Inputs/InputUrl";
+import { InputTextMultipleDescription } from "@/app/_components/Inputs/partials/InputTextMultipleDescription";
+import { Select } from "@/app/_components/Inputs/Select";
+import { TextArea } from "@/app/_components/Inputs/TextArea";
+import { icons, SVG } from "@/app/_components/SVG/SVG";
+import { Trans } from "@/app/_components/Trans/Trans";
 import { defaultAvailability } from "@/app/_lib/defaultFormData";
-import { i18n } from "@/i18n";
-import { MetaDataFormStepContainer } from "@/app/datenpflege/_components/MetaDataForm/partials/MetaDataFormStepContainer";
 import {
-  MAX_RESSOURCE_COUNT,
   METADATA_FORM_INPUTS,
   METADATA_FORM_MAX_LENGTH_LONG,
   METADATA_FORM_MAX_LENGTH_MEDIUM,
 } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
-import { InputUrl } from "@/app/_components/Inputs/InputUrl";
-import { Button } from "@/app/_components/Button/Button";
-import { icons, SVG } from "@/app/_components/SVG/SVG";
-import {
-  MetadataRessourceFormInfo,
-  useMetadataFormResources,
-} from "@/app/datenpflege/_components/MetaDataForm/steps/resources/useMetadataFormResources";
-import { forwardRef } from "react";
-import { MetaDataFormStepResourcesPart } from "@/app/datenpflege/_components/MetaDataForm/steps/resources/MetadataFormStepResourcesPart";
+import { MetadataRessourceFormInfo } from "@/app/datenpflege/_components/MetaDataForm/steps/resources/useMetadataFormResources";
+import { i18n } from "@/i18n";
+import { isNotNullOrUndefined } from "@/types/typeGuards";
+import { LicenseActiveSorted, MetaDataResource } from "@/types/types";
 
-type MetadataFormStepResources = Omit<MetaDataFormStepContainer, "headline"> & {
-  licenses?: LicenseActiveSorted;
-  defaultResources?: MetaData["resources"];
-};
-
-type ResourceFormPart = {
-  licenses: MetadataFormStepResources["licenses"];
+type MetaDataFormStepResourcesPart = {
+  licenses: LicenseActiveSorted;
   resourceNumber: number;
   resourceInfo: MetadataRessourceFormInfo;
-  isFirst: boolean;
   deleteResource: (key: string) => void;
   totalResourceCount: number;
 };
@@ -50,6 +42,26 @@ function mapLicensesToOption(licenses: LicenseActiveSorted) {
 
 function OptionDivider() {
   return <option disabled>──────────</option>;
+}
+
+/**
+ * Check if a MetaDataResource has a valid license.
+ * It is possible for resources to have unknown or outdated licenses,
+ * in which case we need to prompt the user to choose a new one from the new dcat-ap list.
+ */
+function hasValidOrNoLicense(
+  activeLicenseList: LicenseActiveSorted,
+  resource?: MetaDataResource,
+) {
+  const resourceLicenseId = resource?.license?.id;
+
+  if (isNotNullOrUndefined(resourceLicenseId)) {
+    return activeLicenseList.some(
+      (activeLicense) => activeLicense.id === resourceLicenseId,
+    );
+  }
+  // no license is a valid license
+  return true;
 }
 
 function getSortedLicenses(licenses?: LicenseActiveSorted) {
@@ -76,18 +88,21 @@ function getSortedLicenses(licenses?: LicenseActiveSorted) {
   ];
 }
 
-const ResourceFormPart = forwardRef<HTMLInputElement, ResourceFormPart>(
+export const MetaDataFormStepResourcesPart = forwardRef<
+  HTMLInputElement,
+  MetaDataFormStepResourcesPart
+>(
   (
     {
       licenses,
       resourceNumber,
       resourceInfo,
-      isFirst,
       deleteResource,
       totalResourceCount: resourceCount,
     },
     ref,
   ) => {
+    const sortedLicenses = getSortedLicenses(licenses);
     const resourceInput = METADATA_FORM_INPUTS.RESSOURCE(resourceNumber);
     const { resource, id } = resourceInfo;
 
@@ -139,7 +154,9 @@ const ResourceFormPart = forwardRef<HTMLInputElement, ResourceFormPart>(
           label={i18n.t("metadataform.field.resource.format.label")}
           defaultValue={resource?.format}
           maxLength={METADATA_FORM_MAX_LENGTH_MEDIUM}
-        />
+        >
+          <InputTextMultipleDescription examples={["CSV", "JSON", "XML"]} />
+        </InputText>
         <InputTextMultiple
           name={resourceInput.language}
           label={i18n.t("metadataform.field.resource.language.label")}
@@ -147,14 +164,45 @@ const ResourceFormPart = forwardRef<HTMLInputElement, ResourceFormPart>(
           defaultValue={resource?.language}
           maxLength={METADATA_FORM_MAX_LENGTH_LONG}
         />
-        <Select
-          label={i18n.t("metadataform.field.resource.license.label")}
-          name={resourceInput.licenseId}
-          required={isFirst}
-          defaultValue={resource?.license?.id}
-        >
-          {getSortedLicenses(licenses)}
-        </Select>
+
+        {hasValidOrNoLicense(licenses, resource) ? (
+          <Select
+            label={i18n.t("metadataform.field.resource.license.label")}
+            name={resourceInput.licenseId}
+            required
+            defaultValue={resource?.license?.id}
+          >
+            {sortedLicenses}
+          </Select>
+        ) : (
+          <>
+            <InfoBox
+              className="mb-2"
+              variant="error"
+              title={i18n.t("metadataform.field.resource.license.help.title")}
+            >
+              <Trans
+                i18nKey={"metadataform.field.resource.license.help.description"}
+                params={{
+                  license: <strong>„{resource?.license?.title}“</strong>,
+                }}
+              />
+            </InfoBox>
+            <InputText
+              label={i18n.t("metadataform.field.resource.license.old.label")}
+              defaultValue={resource?.license?.title}
+              readonly
+            />
+            <Select
+              label={i18n.t("metadataform.field.resource.license.new.label")}
+              name={resourceInput.licenseId}
+              required
+              showNoValueOption
+            >
+              {sortedLicenses}
+            </Select>
+          </>
+        )}
         <InputText
           name={resourceInput.licenseAttributionByText}
           label={i18n.t(
@@ -191,62 +239,4 @@ const ResourceFormPart = forwardRef<HTMLInputElement, ResourceFormPart>(
   },
 );
 
-ResourceFormPart.displayName = "ResourceFormPart";
-
-export { ResourceFormPart };
-
-export function MetadataFormStepResources({
-  licenses,
-  forStep,
-  currentStep,
-  defaultResources,
-}: MetadataFormStepResources) {
-  const {
-    visibleResources,
-    addNewResource,
-    deleteResource,
-    liveRegionMessage,
-    addButtonRef,
-    setFirstInputRef,
-  } = useMetadataFormResources({
-    defaultResources,
-  });
-
-  return (
-    <MetaDataFormStepContainer
-      currentStep={currentStep}
-      forStep={forStep}
-      headline={i18n.t("metadataform.step.resources")}
-    >
-      {licenses &&
-        visibleResources?.map((resourceInfo, index) => (
-          <MetaDataFormStepResourcesPart
-            key={resourceInfo.id}
-            resourceNumber={index}
-            licenses={licenses}
-            resourceInfo={resourceInfo}
-            deleteResource={() => deleteResource(resourceInfo.id, index + 1)}
-            totalResourceCount={visibleResources.length}
-            ref={
-              index === visibleResources.length - 1 ? setFirstInputRef : null
-            }
-          />
-        ))}
-      {visibleResources.length < MAX_RESSOURCE_COUNT && (
-        <Button
-          variant="secondary"
-          onClick={() => addNewResource()}
-          ref={addButtonRef}
-        >
-          <SVG icon={icons.plus} size="14" />
-          <span className="ms-0_5">
-            {i18n.t("metadataform.field.resource.add")}
-          </span>
-        </Button>
-      )}
-      <div aria-live="polite" className="sr-only">
-        {liveRegionMessage}
-      </div>
-    </MetaDataFormStepContainer>
-  );
-}
+MetaDataFormStepResourcesPart.displayName = "ResourceFormPart";

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type useMetadataForm = {
   editMode?: boolean;
@@ -38,13 +38,13 @@ export function useMetadataFormNavigation({ editMode }: useMetadataForm) {
     return getRequiredInputs(container);
   };
 
-  const checkValidityOfStep = (step: number) => {
+  const checkValidityOfStep = useCallback((step: number) => {
     const container = getStepContainer(step);
     const requiredInputs = getRequiredInputs(container);
 
     const hasInvalidInput = requiredInputs.some((i) => !i.checkValidity());
     return !hasInvalidInput;
-  };
+  }, []);
 
   const setStepAndFocusFirstVisibleInput = (step: number) => {
     setCurrentStep(step);
@@ -71,7 +71,7 @@ export function useMetadataFormNavigation({ editMode }: useMetadataForm) {
 
   const addInvalidClass = (input: HTMLInputElement) => {
     input.classList.add("gd-input-invalid");
-    input.addEventListener("blur", (e) => {
+    input.addEventListener("blur", () => {
       if (input.checkValidity()) {
         input.classList.remove("gd-input-invalid");
       }

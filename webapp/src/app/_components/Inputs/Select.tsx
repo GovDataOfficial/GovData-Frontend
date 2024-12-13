@@ -1,5 +1,6 @@
 import React, { PropsWithChildren, useId } from "react";
 import { Label } from "@/app/_components/Inputs/partials/Label";
+import { i18n } from "@/i18n";
 
 type Select<T> = {
   label: string;
@@ -55,8 +56,13 @@ export function Select<T>({
         required={required}
         data-recommended={recommended}
       >
-        {showNoValueOption && <option value="">Keine Angabe</option>}
-
+        {showNoValueOption && (
+          <option value="">
+            {required
+              ? i18n.t("inputs.select.placeholder.required")
+              : i18n.t("inputs.select.placeholder.optional")}
+          </option>
+        )}
         {children}
       </select>
     </div>

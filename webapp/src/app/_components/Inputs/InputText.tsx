@@ -10,6 +10,7 @@ type InputTextProps = {
   defaultValue?: string;
   maxLength?: number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  readonly?: boolean;
 };
 
 const InputText = forwardRef<
@@ -25,6 +26,7 @@ const InputText = forwardRef<
       onChange,
       defaultValue,
       maxLength,
+      readonly,
       children,
     },
     ref,
@@ -43,6 +45,7 @@ const InputText = forwardRef<
           ref={ref}
           id={id}
           type="text"
+          readOnly={readonly}
           name={name}
           required={required}
           data-recommended={recommended}

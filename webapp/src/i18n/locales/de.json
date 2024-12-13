@@ -437,6 +437,10 @@
     "metadataform.field.resource.format.label": "Format",
     "metadataform.field.resource.language.label": "Sprache",
     "metadataform.field.resource.license.label": "Lizenz",
+    "metadataform.field.resource.license.old.label": "Alte Lizenz",
+    "metadataform.field.resource.license.new.label": "Neue Lizenz",
+    "metadataform.field.resource.license.help.title": "Ungültige Lizenzinformationen",
+    "metadataform.field.resource.license.help.description": "Die angegebene Lizenz {{license}} kann nicht zugeordnet werden oder spiegelt eine alte Version der DCAT-AP.de Lizenz wider. Bitte wählen Sie eine neue Lizenz aus.",
     "metadataform.field.resource.licenseAttributionByText.label": "Namensnennungstext für “By”-Clauses",
     "metadataform.field.resource.modified.label": "Aktualisierungsdatum der Ressource",
     "metadataform.field.resource.availability.label": "Verfügbarkeit",
@@ -489,7 +493,9 @@
     "metadataoverview.sortby.lastModified_asc": "letzte Änderung, älteste zuerst",
     "metadataoverview.sortby.lastModified_desc": "letzte Änderung, neueste zuerst",
     "metadataoverview.delete.success.title": "Der Metadatensatz {{title}} wurde erfolgreich gelöscht.",
-    "metadataoverview.delete.error.title": "Der Metadatensatz {{title}} konnte nicht gelöscht werden. Versuchen Sie es erneut."
+    "metadataoverview.delete.error.title": "Der Metadatensatz {{title}} konnte nicht gelöscht werden. Versuchen Sie es erneut.",
+    "inputs.select.placeholder.required": "Bitte wählen",
+    "inputs.select.placeholder.optional": "Keine Angabe"
   },
   "licenses": {
     "http://dcat-ap.de/def/licenses/cc-nc": "Creative Commons Namensnennung-Nicht kommerziell (ältere DCAT-AP.de Version)",

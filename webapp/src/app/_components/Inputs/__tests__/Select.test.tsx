@@ -78,4 +78,26 @@ describe("Select", () => {
     }) as HTMLOptionElement;
     expect(optionB.selected).toBe(true);
   });
+
+  it("should render with no option value for non required selects", () => {
+    render(
+      <Select label="Hallo Welt" showNoValueOption>
+        {mappedOptions}
+      </Select>,
+    );
+    const noValueOption = screen.getByRole("option", { name: "Keine Angabe" });
+    expect(noValueOption).toHaveValue("");
+  });
+
+  it("should render with no option value for required selects", () => {
+    render(
+      <Select label="Hallo Welt" showNoValueOption required>
+        {mappedOptions}
+      </Select>,
+    );
+    const noValueOption = screen.getByRole("option", {
+      name: "Bitte wählen",
+    });
+    expect(noValueOption).toHaveValue("");
+  });
 });
