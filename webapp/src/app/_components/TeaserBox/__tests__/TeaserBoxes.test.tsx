@@ -1,11 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { TeaserBoxes } from "@/app/_components/TeaserBox/TeaserBoxes";
-import { fetchPortalNumbers, fetchMastodonData } from "@/app/_lib/getData";
+
 import {
   mockDataNumbers,
   mockMastodonData,
 } from "@/app/_components/TeaserBox/__tests__/testProps";
+import { TeaserBoxes } from "@/app/_components/TeaserBox/TeaserBoxes";
+import { fetchMastodonData, fetchPortalNumbers } from "@/app/_lib/getData";
 
 vi.mock("@/app/_lib/getData", () => ({
   fetchPortalNumbers: vi.fn(),

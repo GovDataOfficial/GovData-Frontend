@@ -1,10 +1,11 @@
 "use client";
 
-import { Accordion } from "@/app/_components/Accordion/Accordion";
-import { i18n } from "@/i18n";
 import { useSearchParams } from "next/navigation";
+
+import { Accordion } from "@/app/_components/Accordion/Accordion";
 import { FilterCommonConsumer } from "@/app/_components/FilterArea/filters/FilterCommon";
 import { SPECIAL_FILTERS, URLHelper } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
 import { isNotNullOrUndefined } from "@/types/typeGuards";
 
 export function FilterDateFilter({ filterMap }: FilterCommonConsumer) {

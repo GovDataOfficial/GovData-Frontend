@@ -1,12 +1,13 @@
-import { Metadata } from "next";
 import React from "react";
-import { ContactForm } from "@/app/kontakt/ContactForm";
-import { i18n } from "@/i18n";
-import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
+import { Metadata } from "next";
+
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
+import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
+import { ContactForm } from "@/app/kontakt/ContactForm";
+import { i18n } from "@/i18n";
 
 export const metadata: Metadata = {
   title: i18n.t("meta.contact.title"),

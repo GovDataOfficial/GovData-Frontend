@@ -1,7 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import SearchPage from "../page";
+
 import { getSearchResults } from "@/app/_lib/getData";
+
+import SearchPage from "../page";
 
 vi.mock("@/app/_lib/getData", () => ({
   getSearchResults: vi.fn(),

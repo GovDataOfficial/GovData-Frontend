@@ -1,11 +1,12 @@
-import { MiddlewareFactory } from "@/middlewares/types";
 import { NextRequest, NextResponse } from "next/server";
+
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import {
   API_ENDPOINTS_AUTH_BASE,
   API_ENDPOINTS_METADATA_BASE,
 } from "@/app/api/apiEndpoints";
 import { logger } from "@/logger/logger";
+import { MiddlewareFactory } from "@/middlewares/types";
 
 const log = logger("withMetaDataManageFeatureFlagRedirect.ts");
 

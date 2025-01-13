@@ -1,8 +1,7 @@
 import { Select } from "@/app/_components/Inputs/Select";
-import { i18n } from "@/i18n";
 import { endpointOptions } from "@/app/sparql-assistent/SparqlEditor/data";
-
 import { EndpointType } from "@/app/sparql-assistent/SparqlEditor/types";
+import { i18n } from "@/i18n";
 
 type SelectEndpoint = {
   value: string;

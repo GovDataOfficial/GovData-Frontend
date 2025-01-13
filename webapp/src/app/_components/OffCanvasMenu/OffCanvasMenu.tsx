@@ -1,9 +1,9 @@
-import { fetchTypo3Data } from "@/app/_lib/getData";
-import { endpoints } from "@/configuration/endpoints";
-import { findT3ContentElement } from "@/types/typeGuards";
 import { MenuItem } from "@/app/_components/MenuItem/MenuItem";
 import { OffCanvasMenuContainer } from "@/app/_components/OffCanvasMenu/OffCanvasMenuContainer";
+import { fetchTypo3Data } from "@/app/_lib/getData";
+import { endpoints } from "@/configuration/endpoints";
 import { menuSettings } from "@/configuration/menuSettings";
+import { findT3ContentElement } from "@/types/typeGuards";
 
 export async function OffCanvasMenu() {
   const pageData = await fetchTypo3Data(endpoints.T3Api.information);

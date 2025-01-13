@@ -1,7 +1,8 @@
-import { PageConstructor } from "@/types/types";
-import Suche from "@/app/suche/page";
 import { Metadata } from "next";
+
+import Suche from "@/app/suche/page";
 import { i18n } from "@/i18n";
+import { PageConstructor } from "@/types/types";
 
 export const metadata: Metadata = {
   title: i18n.t("meta.daten.title"),

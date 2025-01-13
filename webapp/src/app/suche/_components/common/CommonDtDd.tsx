@@ -1,8 +1,8 @@
-import { i18n } from "@/i18n";
+import { ExternalLink } from "@/app/_components/ExternalLink/ExternalLink";
+import { TagHVD } from "@/app/_components/Tag/TagHVD";
 import { TagLicense } from "@/app/_components/Tag/TagLicense";
 import { Trans } from "@/app/_components/Trans/Trans";
-import { TagHVD } from "@/app/_components/Tag/TagHVD";
-import { ExternalLink } from "@/app/_components/ExternalLink/ExternalLink";
+import { i18n } from "@/i18n";
 
 export function DtDescription({
   description,

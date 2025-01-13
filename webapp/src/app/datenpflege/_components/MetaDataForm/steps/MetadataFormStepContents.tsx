@@ -1,19 +1,19 @@
-import { InputText } from "@/app/_components/Inputs/InputText";
-import { TextArea } from "@/app/_components/Inputs/TextArea";
-import { InputTextMultiple } from "@/app/_components/Inputs/InputTextMultiple";
-import { MultiCheckBox } from "@/app/_components/Inputs/MultiCheckBox";
 import React from "react";
-import { CategoriesSorted, MetaData } from "@/types/types";
-import { defaultHvdCategoriesData } from "@/app/_lib/defaultFormData";
 
-import { i18n } from "@/i18n";
-import { MetaDataFormStepContainer } from "@/app/datenpflege/_components/MetaDataForm/partials/MetaDataFormStepContainer";
+import { InputText } from "@/app/_components/Inputs/InputText";
+import { InputTextMultiple } from "@/app/_components/Inputs/InputTextMultiple";
+import { InputUrl } from "@/app/_components/Inputs/InputUrl";
+import { MultiCheckBox } from "@/app/_components/Inputs/MultiCheckBox";
+import { TextArea } from "@/app/_components/Inputs/TextArea";
+import { defaultHvdCategoriesData } from "@/app/_lib/defaultFormData";
 import {
   METADATA_FORM_INPUTS,
   METADATA_FORM_MAX_LENGTH_LONG,
   METADATA_FORM_MAX_LENGTH_MEDIUM,
 } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
-import { InputUrl } from "@/app/_components/Inputs/InputUrl";
+import { MetaDataFormStepContainer } from "@/app/datenpflege/_components/MetaDataForm/partials/MetaDataFormStepContainer";
+import { i18n } from "@/i18n";
+import { CategoriesSorted, MetaData } from "@/types/types";
 
 type MetadataFormStepContents = Omit<MetaDataFormStepContainer, "headline"> & {
   categories?: CategoriesSorted;

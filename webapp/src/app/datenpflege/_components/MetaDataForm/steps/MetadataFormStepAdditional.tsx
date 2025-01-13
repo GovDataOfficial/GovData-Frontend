@@ -1,10 +1,10 @@
 import { InputTextMultiple } from "@/app/_components/Inputs/InputTextMultiple";
-import { i18n } from "@/i18n";
-import { MetaDataFormStepContainer } from "@/app/datenpflege/_components/MetaDataForm/partials/MetaDataFormStepContainer";
 import {
   METADATA_FORM_INPUTS,
   METADATA_FORM_MAX_LENGTH_LONG,
 } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
+import { MetaDataFormStepContainer } from "@/app/datenpflege/_components/MetaDataForm/partials/MetaDataFormStepContainer";
+import { i18n } from "@/i18n";
 
 type MetadataFormStepAdditional = Omit<
   MetaDataFormStepContainer,

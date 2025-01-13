@@ -1,5 +1,6 @@
-import { i18n } from "@/i18n";
 import { useSearchParams } from "next/navigation";
+
+import { i18n } from "@/i18n";
 
 export function FilterTemporalCoverage() {
   const fromId = "filter-date-from";

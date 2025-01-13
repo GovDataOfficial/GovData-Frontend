@@ -1,8 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { MetaData } from "@/types/types";
-import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { render, screen } from "@testing-library/react";
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+
 import { ResourcesTable } from "@/app/suche/_components/ResourceTable/ResourcesTable";
+import { MetaData } from "@/types/types";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),

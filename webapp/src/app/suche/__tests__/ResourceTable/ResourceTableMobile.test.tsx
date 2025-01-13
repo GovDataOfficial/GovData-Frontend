@@ -1,9 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ResourceTableMobile } from "../../_components/ResourceTable/ResourceTableMobile";
 import { act, render, screen } from "@testing-library/react";
-import { MetaData } from "@/types/types";
-import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import userEvent from "@testing-library/user-event";
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+
+import { MetaData } from "@/types/types";
+
+import { ResourceTableMobile } from "../../_components/ResourceTable/ResourceTableMobile";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),

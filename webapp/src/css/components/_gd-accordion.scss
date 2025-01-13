@@ -6,15 +6,16 @@
   }
 
   .gd-accordion-head {
-
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    h2, h3, h4 {
+    h2,
+    h3,
+    h4 {
       @extend .paragraph;
       @extend .bold;
-      margin: 0
+      margin: 0;
     }
 
     &:hover {
@@ -43,6 +44,18 @@
   &[open] {
     .gd-accordion-head .gd-icon {
       transform: rotate(90deg);
+    }
+  }
+
+  &.gd-accordion-rotate-arrows {
+    .gd-accordion-head .gd-icon {
+      transform: rotate(90deg);
+    }
+
+    &[open] {
+      .gd-accordion-head .gd-icon {
+        transform: rotate(-90deg);
+      }
     }
   }
 }

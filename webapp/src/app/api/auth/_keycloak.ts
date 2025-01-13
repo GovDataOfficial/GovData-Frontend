@@ -4,10 +4,11 @@
  * Authorization Code Flow.
  * -> https://github.com/panva/node-openid-client
  */
-import { BaseClient, Issuer } from "openid-client";
-import { NextRequest } from "next/server";
-import { PAGES } from "@/app/_lib/URLHelper";
 import { redirect } from "next/navigation";
+import { NextRequest } from "next/server";
+import { BaseClient, Issuer } from "openid-client";
+
+import { PAGES } from "@/app/_lib/URLHelper";
 import { API_ENDPOINTS } from "@/app/api/apiEndpoints";
 import { logger } from "@/logger/logger";
 

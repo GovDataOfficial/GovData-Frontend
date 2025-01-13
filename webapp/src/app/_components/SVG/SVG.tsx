@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import { icons } from "@/app/_components/SVG/iconMap";
 
 export { icons };

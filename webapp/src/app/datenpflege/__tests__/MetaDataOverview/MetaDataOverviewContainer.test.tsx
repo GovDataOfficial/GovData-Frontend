@@ -1,10 +1,13 @@
-import React from "react";
 import { render, screen, within } from "@testing-library/react";
+import React from "react";
+
 import "@testing-library/jest-dom";
-import { describe, it, expect, vi } from "vitest";
+
+import { describe, expect, it, vi } from "vitest";
+import userEvent from "@testing-library/user-event";
+
 import { MetaDataOverviewContainer } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewContainer";
 import { MetaDataRecord } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewTypes";
-import userEvent from "@testing-library/user-event";
 
 vi.mock("@/app/_components/Time/TimeWithDate", () => ({
   TimeWithDate: ({ date }: { date: string }) => <span>{date}</span>,
@@ -15,14 +18,14 @@ describe("MetaDataOverviewContainer", () => {
     {
       id: "1",
       title: "Test Title 1",
-      created: "2023-01-01",
-      lastModified: "2023-02-01",
+      created: "2022-03-01",
+      metadataModified: "2022-04-01",
     },
     {
       id: "2",
       title: "Test Title 2",
-      created: "2022-03-01",
-      lastModified: "2022-04-01",
+      created: "2022-03-02",
+      metadataModified: "2023-02-01",
     },
   ];
 
@@ -34,6 +37,14 @@ describe("MetaDataOverviewContainer", () => {
     });
   });
 
+  it("should sort data by last modiefied date as default", async () => {
+    render(<MetaDataOverviewContainer data={testData} />);
+
+    const table = screen.getByRole("table");
+    const firstTitle = within(table).getAllByRole("cell")[0];
+    expect(firstTitle.textContent).toEqual(testData[1].title);
+  });
+
   it("should sort the dates", async () => {
     const user = userEvent.setup();
 
@@ -41,12 +52,12 @@ describe("MetaDataOverviewContainer", () => {
 
     const table = screen.getByRole("table");
     const firstTitleBeforeSort = within(table).getAllByRole("cell")[0];
-    expect(firstTitleBeforeSort.textContent).toEqual(testData[0].title);
+    expect(firstTitleBeforeSort.textContent).toEqual(testData[1].title);
 
     const createdButton = screen.getByRole("button", { name: /erstellt/i });
     await user.click(createdButton);
 
     const firstTitleAfterSort = within(table).getAllByRole("cell")[0];
-    expect(firstTitleAfterSort.textContent).toEqual(testData[1].title);
+    expect(firstTitleAfterSort.textContent).toEqual(testData[0].title);
   });
 });

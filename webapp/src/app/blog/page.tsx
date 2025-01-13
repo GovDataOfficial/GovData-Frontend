@@ -1,12 +1,13 @@
-import { i18n } from "@/i18n";
-import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
+import React from "react";
+
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
-import React from "react";
+import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 import { HomePageLink } from "@/app/_components/HomePageLink/HomePageLink";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
+import { i18n } from "@/i18n";
 
 export const metadata = metaDataGenerator({
   title: i18n.t("meta.blog.title"),

@@ -1,8 +1,10 @@
 // @vitest-environment node
 
-import { POST } from "./route";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { postMetadata } from "@/app/api/metadata/_lib/postMetadata";
+
+import { POST } from "./route";
 
 vi.mock("@/app/api/metadata/_lib/postMetadata");
 

@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { InputText } from "@/app/_components/Inputs/InputText";
-import { InputEmail } from "@/app/_components/Inputs/InputEmail";
 import userEvent from "@testing-library/user-event";
+
+import { InputEmail } from "@/app/_components/Inputs/InputEmail";
+import { InputText } from "@/app/_components/Inputs/InputText";
 
 describe("InputEmail", () => {
   it("should render correct email input", async () => {

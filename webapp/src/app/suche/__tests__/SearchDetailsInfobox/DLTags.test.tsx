@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { act, render, screen, within } from "@testing-library/react";
-import { DLTags } from "@/app/suche/_components/SearchDetailsInfobox/partials/DLTags";
 import userEvent from "@testing-library/user-event";
+
+import { DLTags } from "@/app/suche/_components/SearchDetailsInfobox/partials/DLTags";
 
 describe("DLTags", () => {
   it("should render a list with 3 items", () => {

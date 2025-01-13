@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+
 import { hideOffCanvas } from "@/app/_components/OffCanvasMenu/offCanvasHelper";
 
 export function OffCanvasOverlayExit() {

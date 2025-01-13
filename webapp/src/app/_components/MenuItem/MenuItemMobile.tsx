@@ -1,7 +1,7 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useRef } from "react";
+import { usePathname } from "next/navigation";
 
 export type MenuItemMobile = {
   href: string;

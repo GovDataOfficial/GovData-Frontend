@@ -1,22 +1,22 @@
 "use client";
 
-import { MetaData } from "@/types/types";
-import { i18n } from "@/i18n";
-import { Time } from "@/app/_components/Time/Time";
-import { Tag } from "@/app/_components/Tag/Tag";
+import { ButtonLink } from "@/app/_components/Button/ButtonLink";
 import { InfoBadge } from "@/app/_components/InfoBoxes/InfoBadge";
+import { Tag } from "@/app/_components/Tag/Tag";
+import { Time } from "@/app/_components/Time/Time";
+import {
+  DtDescription,
+  DtLicense,
+  DtShortendAvailability,
+} from "@/app/suche/_components/common/CommonDtDd";
 import {
   createNoJsLink,
   getTitle,
   removeSearchParameters,
 } from "@/app/suche/_components/ResourceTable/ResourcesTableRowTop";
 import { useResourceTable } from "@/app/suche/_components/ResourceTable/useResourceTable";
-import {
-  DtDescription,
-  DtLicense,
-  DtShortendAvailability,
-} from "@/app/suche/_components/common/CommonDtDd";
-import { ButtonLink } from "@/app/_components/Button/ButtonLink";
+import { i18n } from "@/i18n";
+import { MetaData } from "@/types/types";
 
 export function ResourceTableMobile({ data }: { data: MetaData }) {
   const { handleOnClick, openIds, paramsIds, searchParams, router, pathname } =

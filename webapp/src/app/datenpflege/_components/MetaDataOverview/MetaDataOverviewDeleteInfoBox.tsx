@@ -1,9 +1,10 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 import { ContainerSection } from "@/app/_components/Container/ContainerSection";
 import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 import { i18n } from "@/i18n";
-import { useEffect, useRef } from "react";
 import { NextJSSearchParams } from "@/types/types";
 
 type MetaDataOverviewDeleteInfoBox = {

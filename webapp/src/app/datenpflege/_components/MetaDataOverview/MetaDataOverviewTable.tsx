@@ -1,17 +1,14 @@
-import { i18n } from "@/i18n";
-import { MetaDataOverviewButtonDelete } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewButtonDelete";
-import { MetaDataOverviewButtonEdit } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewButtonEdit";
-import { TimeWithDate } from "@/app/_components/Time/TimeWithDate";
 import {
   Direction,
-  SortConfig,
   SortableData,
+  SortConfig,
 } from "@/app/_lib/hooks/useSortableData";
+import { MetaDataOverviewTableRow } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewTableRow";
 import {
-  MetaDataRecord,
   MetaDataOption,
+  MetaDataRecord,
 } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewTypes";
-import { PAGES_AUTH } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
 
 export type MetaDataOverviewTable = {
   data: MetaDataRecord[];
@@ -65,34 +62,7 @@ export function MetaDataOverviewTable({
         </thead>
         <tbody className="td-width-50-15-15">
           {data.map((row) => (
-            <tr key={row.id}>
-              <td>
-                <a
-                  className="anchor-dark"
-                  href={PAGES_AUTH.manage_data_form_edit + "/" + row.id}
-                >
-                  {row.title}
-                </a>
-              </td>
-              <td>
-                <TimeWithDate date={row.created} />
-              </td>
-              <td>
-                <TimeWithDate date={row.lastModified} />
-              </td>
-              <td>
-                <div className="d-flex">
-                  <MetaDataOverviewButtonEdit
-                    id={row.id}
-                    dataTitle={row.title}
-                  />
-                  <MetaDataOverviewButtonDelete
-                    dataTitle={row.title}
-                    id={row.id}
-                  />
-                </div>
-              </td>
-            </tr>
+            <MetaDataOverviewTableRow key={row.id} item={row} />
           ))}
         </tbody>
       </table>

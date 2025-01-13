@@ -1,7 +1,8 @@
-import { i18n } from "@/i18n";
 import { PropsWithChildren } from "react";
-import { FilterAreaResetButton } from "@/app/_components/FilterArea/FilterAreaResetButton";
+
 import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
+import { FilterAreaResetButton } from "@/app/_components/FilterArea/FilterAreaResetButton";
+import { i18n } from "@/i18n";
 
 type FilterArea = {
   showResetBottomButton?: boolean;

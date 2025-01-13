@@ -1,12 +1,13 @@
-import { Metadata } from "next";
 import React from "react";
-import { i18n } from "@/i18n";
-import { PAGES } from "@/app/_lib/URLHelper";
+import { Metadata } from "next";
+
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
 import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
+import { PAGES } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
 
 export const metadata: Metadata = {
   title: i18n.t("meta.contact.ok.title"),

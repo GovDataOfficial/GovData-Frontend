@@ -1,4 +1,5 @@
 import { FocusEvent, KeyboardEvent, useId, useRef, useState } from "react";
+
 import { useOutsideClick } from "@/app/_lib/hooks/useOutsideClick";
 
 export function useDropDown() {
@@ -14,7 +15,7 @@ export function useDropDown() {
     setIsOpen(false);
   };
 
-  const dropdownRef = useOutsideClick(closeMenu);
+  const dropdownRef = useOutsideClick<HTMLDivElement>(closeMenu);
   const dropdownToggleRef = useRef<HTMLButtonElement>(null);
   const dropdownMenuRef = useRef<HTMLUListElement>(null);
 
@@ -25,7 +26,7 @@ export function useDropDown() {
 
   const closeMenuOnEscape = (event: KeyboardEvent<HTMLUListElement>) => {
     if (event.key === "Escape") {
-      closeMenuAndFocus()
+      closeMenuAndFocus();
     }
   };
 

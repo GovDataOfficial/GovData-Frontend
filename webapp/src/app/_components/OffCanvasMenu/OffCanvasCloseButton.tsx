@@ -1,9 +1,9 @@
 "use client";
 
-import { i18n } from "@/i18n";
-import { hideOffCanvas } from "@/app/_components/OffCanvasMenu/offCanvasHelper";
-import { SVG, icons } from "@/app/_components/SVG/SVG";
 import { Button } from "@/app/_components/Button/Button";
+import { hideOffCanvas } from "@/app/_components/OffCanvasMenu/offCanvasHelper";
+import { icons, SVG } from "@/app/_components/SVG/SVG";
+import { i18n } from "@/i18n";
 
 export function OffCanvasCloseButton() {
   return (

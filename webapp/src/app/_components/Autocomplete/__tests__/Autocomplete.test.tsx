@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { AutocompleteListItem } from "@/app/_components/Autocomplete/AutocompleteListItem";
-import { Autocomplete } from "@/app/_components/Autocomplete/Autocomplete";
 import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
+import { Autocomplete } from "@/app/_components/Autocomplete/Autocomplete";
+import { AutocompleteListItem } from "@/app/_components/Autocomplete/AutocompleteListItem";
 
 describe("Autocomplete", () => {
   const mockSuggestions = ["hallo", "wie", "geht"];

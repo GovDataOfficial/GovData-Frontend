@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { render, within } from "@testing-library/react";
-import { T3ContentElements, T3Page } from "@/types/types.typo3";
+
 import { EditorialContentMainPage } from "@/app/_components/EditorialContent/EditorialContentMainPage";
+import { T3ContentElements, T3Page } from "@/types/types.typo3";
 
 describe("EditorialContentMainPage", () => {
   const pageDataWith = (...elements: T3ContentElements[]) =>

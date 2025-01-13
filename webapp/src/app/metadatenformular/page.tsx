@@ -1,12 +1,13 @@
+import React from "react";
 import { Metadata } from "next";
-import { i18n } from "@/i18n";
+
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
-import React from "react";
-import { PAGES } from "@/app/_lib/URLHelper";
 import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
+import { PAGES } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
 
 export const metadata: Metadata = {
   title: i18n.t("meta.metaDataForm.title"),

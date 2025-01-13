@@ -1,10 +1,11 @@
 "use client";
 
-import { i18n } from "@/i18n";
 import React from "react";
-import { SearchResultSuggestion } from "@/types/types";
 import { useSearchParams } from "next/navigation";
+
 import { SPECIAL_FILTERS, URLHelper } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
+import { SearchResultSuggestion } from "@/types/types";
 
 type SearchResultsEmpty = {
   suggestions?: SearchResultSuggestion[];

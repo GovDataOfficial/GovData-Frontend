@@ -1,9 +1,9 @@
-import { i18n } from "@/i18n";
+import { useState } from "react";
 
 import { MetaDataFormStepContainer } from "@/app/datenpflege/_components/MetaDataForm/partials/MetaDataFormStepContainer";
-import { MetaDataContactRole, MetaData, MetaDataContact } from "@/types/types";
 import { MetadataFormContactFormPart } from "@/app/datenpflege/_components/MetaDataForm/steps/contacts/MetadataFormContactFormPart";
-import { useState } from "react";
+import { i18n } from "@/i18n";
+import { MetaData, MetaDataContact, MetaDataContactRole } from "@/types/types";
 
 const findContactByRole = (
   contacts: MetaDataContact[] | undefined,

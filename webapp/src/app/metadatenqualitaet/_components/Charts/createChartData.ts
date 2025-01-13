@@ -1,4 +1,3 @@
-import { MetaDataQuality } from "@/types/types";
 import {
   ALL_PUBLISHERS,
   CHART_TYPE_HORIZONTAL_BAR,
@@ -17,6 +16,7 @@ import {
   ChartJsData,
   ChartTypes,
 } from "@/app/metadatenqualitaet/_components/Charts/types";
+import { MetaDataQuality } from "@/types/types";
 
 export function createChartData(
   data: MetaDataQuality[],

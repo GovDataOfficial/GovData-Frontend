@@ -1,8 +1,8 @@
-import { MetaData } from "@/types/types";
+import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 import { ResourcesTable } from "@/app/suche/_components/ResourceTable/ResourcesTable";
 import { ResourceTableMobile } from "@/app/suche/_components/ResourceTable/ResourceTableMobile";
 import { i18n } from "@/i18n";
-import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
+import { MetaData } from "@/types/types";
 
 type SectionResources = {
   data: MetaData;

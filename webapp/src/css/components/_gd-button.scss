@@ -11,7 +11,7 @@
 @mixin gd-button-icon-primary-filter() {
   .gd-icon img {
     transition: filter var(--transitionTime) ease-in-out;
-    filter: $filter-white
+    filter: $filter-white;
   }
   &:hover .gd-icon img {
     filter: $filter-primary;
@@ -79,7 +79,6 @@ button {
     border-radius: 0;
     transition: none;
     padding: 0;
-
 
     &:hover {
       text-decoration: underline;

@@ -1,6 +1,7 @@
 import React, { useId } from "react";
-import { RecommendedInfo } from "@/app/_components/Inputs/partials/RecommendedInfo";
+
 import { Label } from "@/app/_components/Inputs/partials/Label";
+import { RecommendedInfo } from "@/app/_components/Inputs/partials/RecommendedInfo";
 
 type MultiCheckBox = {
   data?: { key: string; label: string; defaultChecked?: boolean }[];

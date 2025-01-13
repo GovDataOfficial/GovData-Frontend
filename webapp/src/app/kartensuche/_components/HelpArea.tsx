@@ -1,6 +1,6 @@
-import { i18n } from "@/i18n";
-import { Trans } from "@/app/_components/Trans/Trans";
 import { ContainerDiv } from "@/app/_components/Container";
+import { Trans } from "@/app/_components/Trans/Trans";
+import { i18n } from "@/i18n";
 
 export function HelpArea() {
   const { t } = i18n;

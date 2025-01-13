@@ -1,5 +1,5 @@
-import { i18n } from "@/i18n";
 import { icons, SVG } from "@/app/_components/SVG/SVG";
+import { i18n } from "@/i18n";
 
 const getIcon = (type: string) => {
   switch (type) {

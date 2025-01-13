@@ -1,11 +1,12 @@
 "use client";
 
-import { i18n } from "@/i18n";
+import { KeyboardEvent, useEffect } from "react";
+
 import { MenuItem } from "@/app/_components/MenuItem/MenuItem";
-import { OffCanvasCloseButton } from "@/app/_components/OffCanvasMenu/OffCanvasCloseButton";
-import { useEffect, KeyboardEvent } from "react";
-import { hideOffCanvas } from "@/app/_components/OffCanvasMenu/offCanvasHelper";
 import { MenuItemMobile } from "@/app/_components/MenuItem/MenuItemMobile";
+import { OffCanvasCloseButton } from "@/app/_components/OffCanvasMenu/OffCanvasCloseButton";
+import { hideOffCanvas } from "@/app/_components/OffCanvasMenu/offCanvasHelper";
+import { i18n } from "@/i18n";
 
 type OffCanvasMenuContainer = {
   menuItem?: MenuItem[];

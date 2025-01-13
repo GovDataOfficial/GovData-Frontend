@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render } from "@testing-library/react";
-import { MatomoTracking } from "@/app/_components/MatomoTracking/MatomoTracking";
 import { renderToStaticMarkup } from "react-dom/server";
+
+import { MatomoTracking } from "@/app/_components/MatomoTracking/MatomoTracking";
 
 describe("Matomo Tracking", () => {
   const matomo_tracker_url = "matomo_tracker_url";

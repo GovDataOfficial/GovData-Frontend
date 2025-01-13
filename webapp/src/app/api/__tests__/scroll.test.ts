@@ -1,8 +1,10 @@
 // @vitest-environment node
 
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { GET } from "../scroll/route";
+
 import { fetchSearchScrollResults } from "@/app/_lib/getData";
+
+import { GET } from "../scroll/route";
 
 vi.mock("@/app/_lib/getData");
 

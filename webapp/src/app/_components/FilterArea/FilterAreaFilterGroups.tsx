@@ -1,14 +1,15 @@
-import { i18n } from "@/i18n";
 import {
   FilterCommon,
   FilterCommonConsumer,
 } from "@/app/_components/FilterArea/filters/FilterCommon";
-import { FilterMap } from "@/types/types";
-import { FilterArea } from "./FilterArea";
 import { findHvdCategory } from "@/app/_lib/hvdCategories";
-import { FilterOrganization } from "./filters/FilterOrganization";
-import { FilterGeoLocation } from "./filters/FilterGeoLocation";
+import { i18n } from "@/i18n";
+import { FilterMap } from "@/types/types";
+
+import { FilterArea } from "./FilterArea";
 import { FilterDateFilter } from "./filters/FilterDateFilter";
+import { FilterGeoLocation } from "./filters/FilterGeoLocation";
+import { FilterOrganization } from "./filters/FilterOrganization";
 
 // map a facetlist with a displayName
 const mapFacetList = (

@@ -1,11 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
+import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
 import {
   BaseMapSuggestResponse,
   LocationSearch,
   OSMSuggestResponse,
 } from "@/app/kartensuche/_components/LocationSearch";
-import { render, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 
 describe("LocationSearch", () => {
   const mockOSMSuggestResponse = [

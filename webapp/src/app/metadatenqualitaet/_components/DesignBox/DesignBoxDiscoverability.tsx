@@ -1,12 +1,13 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+
 import { InfoIcon } from "@/app/_components/InfoIcon/InfoIcon";
 import { Chart } from "@/app/metadatenqualitaet/_components/Charts/Chart";
-import { MetaDataQuality } from "@/types/types";
+import { createChartData } from "@/app/metadatenqualitaet/_components/Charts/createChartData";
 import { MetaDataQualityDesignBox } from "@/app/metadatenqualitaet/_components/DesignBox/MetaDataQualityDesignBox";
 import { i18n } from "@/i18n";
-import { createChartData } from "@/app/metadatenqualitaet/_components/Charts/createChartData";
-import { useSearchParams } from "next/navigation";
+import { MetaDataQuality } from "@/types/types";
 
 type DesignBoxDiscoverability = {
   data: MetaDataQuality[];

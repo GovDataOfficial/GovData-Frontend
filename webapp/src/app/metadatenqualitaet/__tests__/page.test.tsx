@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import Page from "@/app/metadatenqualitaet/page";
 import { notFound, redirect } from "next/navigation";
+
+import Page from "@/app/metadatenqualitaet/page";
 
 vi.mock("next/navigation", () => ({
   redirect: vi.fn(),

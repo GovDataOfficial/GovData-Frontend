@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
+
 import { mockMastodonData } from "@/app/_components/TeaserBox/__tests__/testProps";
 import { TeaserBoxMastodon } from "@/app/_components/TeaserBox/partials/TeaserBoxMastodon";
 

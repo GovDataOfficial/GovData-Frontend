@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
-import { MetadataFormStickyNavigation } from "@/app/datenpflege/_components/MetaDataForm/stickNav/MetadataFormStickyNavigation";
+
 import { METADATA_FORM_ID } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
+import { MetadataFormStickyNavigation } from "@/app/datenpflege/_components/MetaDataForm/stickNav/MetadataFormStickyNavigation";
 
 describe("MetaDataForm Sticky Navigation", () => {
   const mockSetCurrentStep = vi.fn();
   const mockCheckValdityOfStep = vi.fn();
 
-  const mobileClass = "mobile";
   beforeEach(() => {
     vi.resetAllMocks();
   });
@@ -24,7 +24,6 @@ describe("MetaDataForm Sticky Navigation", () => {
     const navigation = screen.getByRole("navigation");
     expect(navigation).toHaveAttribute("aria-label", "Formular Abschnitte");
     expect(navigation).toHaveClass("metadata-sticky-form-navigation");
-    expect(navigation).not.toHaveClass(mobileClass);
 
     const ul = within(navigation).getByRole("list");
     const listItems = within(ul).getAllByRole("listitem");
@@ -33,7 +32,9 @@ describe("MetaDataForm Sticky Navigation", () => {
     expect(listItems[0]).toHaveTextContent("Datenbereitsteller");
     expect(listItems[1]).toHaveTextContent("Angaben zum Inhalt");
     expect(listItems[2]).toHaveTextContent("Kontakte");
-    expect(listItems[3]).toHaveTextContent("Abdeckung und Raumbezug");
+    expect(listItems[3]).toHaveTextContent(
+      "Abdeckung und Raumbezug des Metadatensatzes",
+    );
     expect(listItems[4]).toHaveTextContent("Zeitangaben");
     expect(listItems[5]).toHaveTextContent("Ressourcen");
     expect(listItems[6]).toHaveTextContent("Weitere Angaben");
@@ -104,20 +105,6 @@ describe("MetaDataForm Sticky Navigation", () => {
       name: "Zusammenfassung Abschnitt aktiv",
     });
     expect(button).toHaveAttribute("aria-controls", METADATA_FORM_ID);
-  });
-
-  test("mobile version should have correct class", () => {
-    render(
-      <MetadataFormStickyNavigation
-        currentStep={0}
-        setCurrentStep={mockSetCurrentStep}
-        checkValidityOfStep={mockCheckValdityOfStep}
-        mobile
-      />,
-    );
-    const navigation = screen.getByRole("navigation");
-    expect(navigation).toHaveClass("metadata-sticky-form-navigation");
-    expect(navigation).toHaveClass(mobileClass);
   });
 
   test("should show alert if a step does not validate", () => {

@@ -1,9 +1,9 @@
 "use client";
 
 import { DropdownSelect } from "@/app/_components/Dropdown/DropdownSelect";
-import { NextJSSearchParams, SearchResults } from "@/types/types";
-import { i18n } from "@/i18n";
 import { URLHelper } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
+import { NextJSSearchParams, SearchResults } from "@/types/types";
 
 type TypeListFilterMobile = {
   data: SearchResults;

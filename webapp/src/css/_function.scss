@@ -21,8 +21,8 @@
   $remValues: ();
   @for $i from 1 through $max {
     $remValues: append(
-        $remValues,
-        convert-to-rem(nth($values, $i), $base-value)
+      $remValues,
+      convert-to-rem(nth($values, $i), $base-value)
     );
   }
   @return $remValues;

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { RegionSearch } from "@/app/_components/RegionSearch/RegionSearch";
 import { render, screen } from "@testing-library/react";
+
+import { RegionSearch } from "@/app/_components/RegionSearch/RegionSearch";
 import { SVGGermany } from "@/app/_components/RegionSearch/SVGGermany";
 import { stateListMap } from "@/app/_lib/stateList";
 

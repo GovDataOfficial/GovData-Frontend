@@ -1,9 +1,10 @@
-import { DefaultSortOption } from "@/types/types";
 import { ReadonlyURLSearchParams } from "next/navigation";
+
 import {
   convertToURLSearchParams,
   ValidSearchParamsForConversion,
 } from "@/app/_lib/convertToSearchParams";
+import { DefaultSortOption } from "@/types/types";
 
 export const FILTERS = {
   SHOWCASE_TYPES: "showcase_types",
@@ -22,6 +23,7 @@ export const FILTERS = {
   PUBLISHER: "publisher",
   MAINTAINER: "maintainer",
   NOTES: "notes",
+  LAST_MODIFICATION: "lastmodification",
 };
 
 // not in preparedParams, only one may be active at a time.

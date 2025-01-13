@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { SectionResources } from "@/app/suche/_components/SectionResources";
+
 import { metaDataTestProps } from "@/app/suche/__tests__/props";
+import { SectionResources } from "@/app/suche/_components/SectionResources";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn().mockReturnValue(new URLSearchParams()),

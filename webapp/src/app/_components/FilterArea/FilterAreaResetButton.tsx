@@ -1,9 +1,10 @@
 "use client";
 
-import { i18n } from "@/i18n";
-import { SVG, icons } from "@/app/_components/SVG/SVG";
 import { useSearchParams } from "next/navigation";
+
+import { icons, SVG } from "@/app/_components/SVG/SVG";
 import { SPECIAL_FILTERS } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
 
 export function FilterAreaResetButton() {
   const searchParams = useSearchParams();

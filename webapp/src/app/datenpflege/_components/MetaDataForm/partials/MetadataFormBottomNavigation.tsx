@@ -1,8 +1,9 @@
-import { Button } from "@/app/_components/Button/Button";
 import React from "react";
+
+import { Button } from "@/app/_components/Button/Button";
+import { icons, SVG } from "@/app/_components/SVG/SVG";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import { i18n } from "@/i18n";
-import { icons, SVG } from "@/app/_components/SVG/SVG";
 
 type MetadataFormBottomNavigation = {
   currentStep: number;

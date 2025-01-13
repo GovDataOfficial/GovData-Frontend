@@ -38,8 +38,8 @@
       margin-left: 0;
       margin-right: rem-calc(8);
       transition: transform 0.2s;
-      -webkit-transition: -webkit-transform .2s;
-      -ms-transition: -ms-transform .2s;
+      -webkit-transition: -webkit-transform 0.2s;
+      -ms-transition: -ms-transform 0.2s;
       display: inline-block;
     }
   }
@@ -52,7 +52,7 @@
   &[open] .gd-a-button-icon-summary::before,
   &[aria-expanded="true"] .gd-a-button-icon-summary::before {
     transform: rotate(90deg);
-    -ms-transform:rotate(90deg);
-    -webkit-transform:rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
   }
 }

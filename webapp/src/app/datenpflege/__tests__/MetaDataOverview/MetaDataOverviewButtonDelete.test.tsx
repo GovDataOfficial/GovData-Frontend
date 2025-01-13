@@ -1,10 +1,11 @@
-import { describe, expect, vi, beforeEach, test } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { MetaDataOverviewButtonDelete } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewButtonDelete";
 import userEvent from "@testing-library/user-event";
+
 import { SVG } from "@/app/_components/SVG/SVG";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import { API_ENDPOINTS } from "@/app/api/apiEndpoints";
+import { MetaDataOverviewButtonDelete } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewButtonDelete";
 
 vi.mock("@/app/_components/SVG/SVG", () => ({
   icons: { trash: "trash" },

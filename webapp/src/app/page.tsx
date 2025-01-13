@@ -1,10 +1,11 @@
 import React from "react";
-import { RegionSearch } from "@/app/_components/RegionSearch/RegionSearch";
-import { fetchTypo3Data } from "@/app/_lib/getData";
-import { endpoints } from "@/configuration/endpoints";
+
 import { EditorialContentMainPage } from "@/app/_components/EditorialContent/EditorialContentMainPage";
+import { RegionSearch } from "@/app/_components/RegionSearch/RegionSearch";
 import { TeaserBoxes } from "@/app/_components/TeaserBox/TeaserBoxes";
+import { fetchTypo3Data } from "@/app/_lib/getData";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
+import { endpoints } from "@/configuration/endpoints";
 import { i18n } from "@/i18n";
 
 export const metadata = metaDataGenerator({

@@ -1,6 +1,7 @@
+import { redirect } from "next/navigation";
 // @ts-expect-error no typings for nodemailer
 import nodemailer from "nodemailer";
-import { redirect } from "next/navigation";
+
 import { i18n } from "@/i18n";
 import { logger } from "@/logger/logger";
 

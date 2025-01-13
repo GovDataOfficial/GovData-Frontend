@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+
 import { FilterAreaResetButton } from "../FilterAreaResetButton";
 
 vi.mock("next/navigation", () => ({

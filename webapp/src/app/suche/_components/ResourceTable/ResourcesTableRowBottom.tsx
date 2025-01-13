@@ -1,12 +1,11 @@
-import { MetaDataResource } from "@/types/types";
-
-import { i18n } from "@/i18n";
 import { InfoBadge } from "@/app/_components/InfoBoxes/InfoBadge";
 import {
   DtDescription,
   DtLicense,
   DtShortendAvailability,
 } from "@/app/suche/_components/common/CommonDtDd";
+import { i18n } from "@/i18n";
+import { MetaDataResource } from "@/types/types";
 
 export function ResourcesTableRowBottom({
   resource,

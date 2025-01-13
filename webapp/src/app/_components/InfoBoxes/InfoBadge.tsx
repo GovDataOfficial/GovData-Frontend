@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
-import InfoIcon from "../../../../public/images/info-blue.svg";
 import Image from "next/image";
+
+import InfoIcon from "../../../../public/images/info-blue.svg";
 
 type InfoBadge = PropsWithChildren<{
   className?: string;

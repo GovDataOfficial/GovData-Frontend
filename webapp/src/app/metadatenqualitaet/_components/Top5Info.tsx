@@ -1,8 +1,8 @@
-import { i18n } from "@/i18n";
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
+import { i18n } from "@/i18n";
 
 export function Top5Info() {
   return (

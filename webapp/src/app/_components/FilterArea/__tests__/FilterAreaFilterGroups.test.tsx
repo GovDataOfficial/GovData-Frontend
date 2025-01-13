@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
+
 import { FilterAreaFilterGroups } from "@/app/_components/FilterArea";
 
 vi.mock("next/navigation", () => ({

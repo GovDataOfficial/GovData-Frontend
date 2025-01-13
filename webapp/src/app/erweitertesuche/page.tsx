@@ -1,6 +1,10 @@
+import React from "react";
 import { Metadata } from "next";
-import { i18n } from "@/i18n";
-import { ExtendedSearchFields } from "@/app/erweitertesuche/ExtendedSearchFields";
+
+import {
+  ContainerSection,
+  ContainerWrapperModifier,
+} from "@/app/_components/Container";
 import {
   fetchCategoriesSorted,
   fetchLicenseActiveSorted,
@@ -8,13 +12,10 @@ import {
   fetchResourceFormatsSorted,
   fetchStateList,
 } from "@/app/_lib/getData";
-import { PageConstructor } from "@/types/types";
-import React from "react";
-import {
-  ContainerSection,
-  ContainerWrapperModifier,
-} from "@/app/_components/Container";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
+import { ExtendedSearchFields } from "@/app/erweitertesuche/ExtendedSearchFields";
+import { i18n } from "@/i18n";
+import { PageConstructor } from "@/types/types";
 
 export const metadata: Metadata = metaDataGenerator({
   title: i18n.t("meta.erweitertesuche.title"),

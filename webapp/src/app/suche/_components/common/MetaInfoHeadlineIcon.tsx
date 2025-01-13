@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { i18n } from "@/i18n";
+
 import { icons } from "@/app/_components/SVG/iconMap";
+import { i18n } from "@/i18n";
 
 type MetaInfoHeadlineIcon = {
   type: string;

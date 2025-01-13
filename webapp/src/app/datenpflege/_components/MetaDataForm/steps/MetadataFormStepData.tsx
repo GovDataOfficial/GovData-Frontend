@@ -1,9 +1,10 @@
-import { i18n } from "@/i18n";
-import { MetaDataFormStepContainer } from "@/app/datenpflege/_components/MetaDataForm/partials/MetaDataFormStepContainer";
-import { METADATA_FORM_INPUTS } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
-import { OrganizationSorted } from "@/types/types";
-import { Select } from "@/app/_components/Inputs/Select";
 import { useEffect, useState } from "react";
+
+import { Select } from "@/app/_components/Inputs/Select";
+import { METADATA_FORM_INPUTS } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
+import { MetaDataFormStepContainer } from "@/app/datenpflege/_components/MetaDataForm/partials/MetaDataFormStepContainer";
+import { i18n } from "@/i18n";
+import { OrganizationSorted } from "@/types/types";
 
 type MetadataFormStepData = Omit<MetaDataFormStepContainer, "headline"> & {
   organizations: OrganizationSorted;

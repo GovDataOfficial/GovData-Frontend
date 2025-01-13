@@ -1,12 +1,13 @@
 // @vitest-environment node
 
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { headers } from "next/headers";
+
 import {
-  getSearchResults,
   fetchData,
   fetchMetadataForOrganizations,
+  getSearchResults,
 } from "@/app/_lib/getData";
-import { headers } from "next/headers";
 import { DefaultSortOption } from "@/types/types";
 
 vi.mock("next/headers");
@@ -87,7 +88,7 @@ describe("getData", () => {
 
     await fetchMetadataForOrganizations([mockOrg1]);
     expect(vi.mocked(global.fetch)).toHaveBeenCalledWith(
-      "http://mtest.de/search/search?activeFilters=onlyEditorMetadata%3AhidePrivateDataset&sortType=title&ascending=false&numResults=3000&editorOrganizationIdList=1",
+      "http://mtest.de/search/search?activeFilters=onlyEditorMetadata%3AhidePrivateDataset&sortType=lastmodification&ascending=false&numResults=3000&editorOrganizationIdList=1",
       expect.objectContaining({ cache: "no-cache" }),
     );
   });

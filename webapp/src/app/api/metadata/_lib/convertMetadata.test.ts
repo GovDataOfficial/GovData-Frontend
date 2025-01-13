@@ -1,7 +1,7 @@
+import { describe, expect, it } from "vitest";
+
 import { convertMetadataFormData } from "@/app/api/metadata/_lib/convertMetadata";
 import { METADATA_FORM_INPUTS } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
-
-import { describe, expect, it } from "vitest";
 import { MetaDataContactRole } from "@/types/types";
 
 describe("Convert metadata", () => {

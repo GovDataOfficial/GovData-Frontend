@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FilterListItem } from "@/app/erweitertesuche/filter/FilterListItem";
+
+import { Dropdown } from "@/app/_components/Dropdown/Dropdown";
+import { convertToURLSearchParams } from "@/app/_lib/convertToSearchParams";
 import {
   defaultDataserviceData,
   defaultHvdCategoriesData,
@@ -12,13 +14,13 @@ import {
   defaultTypeData,
   normalizeData,
 } from "@/app/_lib/defaultFormData";
-import { i18n } from "@/i18n";
-import { CommonSelect } from "@/app/erweitertesuche/inputs/CommonSelect";
+import { FilterListItem } from "@/app/erweitertesuche/filter/FilterListItem";
 import { CommonInputText } from "@/app/erweitertesuche/inputs/CommonInputText";
-import { FilterTemporalCoverage } from "@/app/erweitertesuche/inputs/FilterTemporalCoverage";
-import { FilterTags } from "@/app/erweitertesuche/inputs/FilterTags";
+import { CommonSelect } from "@/app/erweitertesuche/inputs/CommonSelect";
 import { FilterMultiBox } from "@/app/erweitertesuche/inputs/FilterMultiBox";
-import { Dropdown } from "@/app/_components/Dropdown/Dropdown";
+import { FilterTags } from "@/app/erweitertesuche/inputs/FilterTags";
+import { FilterTemporalCoverage } from "@/app/erweitertesuche/inputs/FilterTemporalCoverage";
+import { i18n } from "@/i18n";
 import {
   CategoriesSorted,
   LicenseActiveSorted,
@@ -27,7 +29,6 @@ import {
   ResourceFormatsSorted,
   StateList,
 } from "@/types/types";
-import { convertToURLSearchParams } from "@/app/_lib/convertToSearchParams";
 
 const filterItems: string[] = [
   "q",

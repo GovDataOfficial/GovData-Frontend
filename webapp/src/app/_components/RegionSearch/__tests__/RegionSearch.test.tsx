@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { RegionSearch } from "@/app/_components/RegionSearch/RegionSearch";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
+import { RegionSearch } from "@/app/_components/RegionSearch/RegionSearch";
 
 describe("RegionSearch", () => {
   it("should render correct h2", () => {

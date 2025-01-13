@@ -1,5 +1,6 @@
-import { NextJSSearchParams } from "@/types/types";
 import { ReadonlyURLSearchParams } from "next/navigation";
+
+import { NextJSSearchParams } from "@/types/types";
 
 export type ValidSearchParamsForConversion =
   | NextJSSearchParams

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { render, screen, within } from "@testing-library/react";
+
 import { MultiCheckBox } from "@/app/_components/Inputs/MultiCheckBox";
 
 describe("MultiCheckBox", () => {

@@ -1,9 +1,10 @@
-import { TeaserBox } from "@/app/_components/TeaserBox/partials/TeaserBox";
-import { SVG, icons } from "@/app/_components/SVG/SVG";
 import React from "react";
-import { PostDto } from "@/types/types";
+
+import { icons, SVG } from "@/app/_components/SVG/SVG";
+import { TeaserBox } from "@/app/_components/TeaserBox/partials/TeaserBox";
 import { Time } from "@/app/_components/Time/Time";
 import { i18n } from "@/i18n";
+import { PostDto } from "@/types/types";
 
 export function TeaserBoxMastodon({ data }: { data: PostDto }) {
   return (

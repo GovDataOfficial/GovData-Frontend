@@ -1,4 +1,4 @@
-import { PropsWithChildren, Children } from "react";
+import { Children, PropsWithChildren } from "react";
 
 type SearchDetailsInfoBoxGroup = {
   inline?: boolean;

@@ -1,6 +1,7 @@
-import { SiteNavigationItem } from "@/app/_components/SiteNavBar/SiteNavigationItem";
 import { usePathname } from "next/navigation";
+
 import { ContainerDiv } from "@/app/_components/Container";
+import { SiteNavigationItem } from "@/app/_components/SiteNavBar/SiteNavigationItem";
 
 export type SiteNavigation = {
   items: SiteNavigationItem[] | undefined;

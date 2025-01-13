@@ -1,8 +1,9 @@
 // @vitest-environment node
 
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { GET } from "../geocoding-suggest/route";
 import { headers } from "next/headers";
+
+import { GET } from "../geocoding-suggest/route";
 
 vi.mock("next/headers");
 

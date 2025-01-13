@@ -1,12 +1,13 @@
 "use client";
-import { i18n } from "@/i18n";
-import { Trans } from "@/app/_components/Trans/Trans";
+
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
-import { PAGES } from "@/app/_lib/URLHelper";
 import { ExternalLink } from "@/app/_components/ExternalLink/ExternalLink";
+import { Trans } from "@/app/_components/Trans/Trans";
+import { PAGES } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
 
 export function SectionSchnittstellen() {
   return (

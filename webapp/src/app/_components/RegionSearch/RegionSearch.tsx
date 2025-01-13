@@ -1,10 +1,11 @@
-import { SVGGermany } from "@/app/_components/RegionSearch/SVGGermany";
 import React from "react";
-import { RegionSearchBox } from "@/app/_components/RegionSearch/RegionSearchBox";
+
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
+import { RegionSearchBox } from "@/app/_components/RegionSearch/RegionSearchBox";
+import { SVGGermany } from "@/app/_components/RegionSearch/SVGGermany";
 import { i18n } from "@/i18n";
 
 export function RegionSearch() {

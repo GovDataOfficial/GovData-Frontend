@@ -1,9 +1,10 @@
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { MetadataFormStepData } from "@/app/datenpflege/_components/MetaDataForm/steps/MetadataFormStepData";
-import { METADATA_FORM_INPUTS } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
-import { OrganizationSorted } from "@/types/types";
 import userEvent from "@testing-library/user-event";
+
+import { METADATA_FORM_INPUTS } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
+import { MetadataFormStepData } from "@/app/datenpflege/_components/MetaDataForm/steps/MetadataFormStepData";
+import { OrganizationSorted } from "@/types/types";
 
 describe("MetadataFormStepData", () => {
   const organizations = [

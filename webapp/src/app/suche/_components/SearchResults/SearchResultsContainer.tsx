@@ -1,18 +1,20 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+
+import { Button } from "@/app/_components/Button/Button";
+import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
+import { i18n } from "@/i18n";
 import {
   LoadMoreResults,
   SearchResultHit as SearchResultHitType,
   SearchResults,
 } from "@/types/types";
-import { i18n } from "@/i18n";
-import { Button } from "@/app/_components/Button/Button";
+
 import {
   focusSearchResultHit,
   SearchResultHit,
 } from "../SearchResultHit/SearchResultHit";
-import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 
 type SearchResultsContainer = {
   data: SearchResults;

@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { render, screen, within } from "@testing-library/react";
+
 import { MetaDataFormNavigationError } from "@/app/datenpflege/_components/MetaDataForm/partials/MetaDataFormNavigationError";
 
 describe("MetaDataFormNavigationError", () => {
@@ -11,9 +12,7 @@ describe("MetaDataFormNavigationError", () => {
     const srOnlyText = within(alert).getByText("Abschnitt 3");
     expect(srOnlyText).toHaveClass("sr-only");
 
-    const visualText = within(alert).getByText(
-      "noch nicht alle Pflichtfelder ausgefüllt.",
-    );
+    const visualText = within(alert).getByText("Angaben enthalten Fehler");
     expect(visualText).toBeVisible();
   });
 });

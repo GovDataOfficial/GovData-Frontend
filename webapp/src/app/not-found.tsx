@@ -1,12 +1,13 @@
 import React from "react";
-import { i18n } from "@/i18n";
-import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 import { Metadata } from "next";
+
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
+import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 import { HomePageLink } from "@/app/_components/HomePageLink/HomePageLink";
+import { i18n } from "@/i18n";
 
 export const metadata: Metadata = {
   title: i18n.t("meta.notFound.title"),

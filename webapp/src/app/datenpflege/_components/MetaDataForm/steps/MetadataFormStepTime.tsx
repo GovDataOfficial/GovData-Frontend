@@ -1,9 +1,8 @@
-import { InputDate } from "@/app/_components/Inputs/InputDate";
 import { FormRow } from "@/app/_components/Inputs/FormRow";
-
-import { i18n } from "@/i18n";
-import { MetaDataFormStepContainer } from "@/app/datenpflege/_components/MetaDataForm/partials/MetaDataFormStepContainer";
+import { InputDate } from "@/app/_components/Inputs/InputDate";
 import { METADATA_FORM_INPUTS } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
+import { MetaDataFormStepContainer } from "@/app/datenpflege/_components/MetaDataForm/partials/MetaDataFormStepContainer";
+import { i18n } from "@/i18n";
 
 type MetadataFormStepTime = Omit<MetaDataFormStepContainer, "headline"> & {
   defaultTemporalCoverageFrom?: string;

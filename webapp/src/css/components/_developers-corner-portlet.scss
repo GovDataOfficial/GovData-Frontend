@@ -82,7 +82,8 @@
 
   .formatselectarea {
     select {
-      background: url($theme-image-path + "/select-arrow-down-gray.png") no-repeat right center $clr-media-grey-500;
+      background: url($theme-image-path + "/select-arrow-down-gray.png")
+        no-repeat right center $clr-media-grey-500;
       background-color: $white;
       color: $clr-media-grey-500;
       font-family: "Source Sans Pro";

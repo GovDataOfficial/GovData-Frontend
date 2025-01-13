@@ -1,5 +1,6 @@
-import { i18n } from "@/i18n";
 import { ReactNode } from "react";
+
+import { i18n } from "@/i18n";
 
 type InputTextMultipleDescription = {
   descriptionTitle?: string;

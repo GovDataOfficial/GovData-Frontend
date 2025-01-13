@@ -1,9 +1,10 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+
+import { MetaDataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
 import { Chart } from "@/app/metadatenqualitaet/_components/Charts/Chart";
 import { createChartData } from "@/app/metadatenqualitaet/_components/Charts/createChartData";
-import { MetaDataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
-import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
 vi.mock("chart.js");
 vi.mock("next/navigation", () => ({

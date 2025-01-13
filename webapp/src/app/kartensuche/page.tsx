@@ -1,15 +1,18 @@
-import Script from "next/script";
 import { Metadata } from "next";
-import { i18n } from "@/i18n";
+import Script from "next/script";
+
 import { fetchSearchMapSessionId } from "@/app/_lib/getData";
 import { HelpArea } from "@/app/kartensuche/_components/HelpArea";
 import { LocationSearch } from "@/app/kartensuche/_components/LocationSearch";
+import { i18n } from "@/i18n";
+
 import "../../../public/vendor/ol/ol.css";
-import { isOSMActive } from "@/app/_lib/environment";
-import { PageConstructor } from "@/types/types";
-import { SPECIAL_FILTERS, URLHelper } from "@/app/_lib/URLHelper";
+
 import { ContainerDiv } from "@/app/_components/Container";
+import { isOSMActive } from "@/app/_lib/environment";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
+import { SPECIAL_FILTERS, URLHelper } from "@/app/_lib/URLHelper";
+import { PageConstructor } from "@/types/types";
 
 export const metadata: Metadata = metaDataGenerator({
   title: i18n.t("meta.kartensuche.title"),

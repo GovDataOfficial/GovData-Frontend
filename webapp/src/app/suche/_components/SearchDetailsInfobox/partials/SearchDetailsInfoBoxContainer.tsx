@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+
 import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 
 type SearchDetailsInfoBoxContainer = {

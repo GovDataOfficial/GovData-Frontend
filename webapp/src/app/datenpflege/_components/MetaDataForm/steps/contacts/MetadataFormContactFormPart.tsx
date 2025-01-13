@@ -1,19 +1,20 @@
+import { useRef } from "react";
+
 import { Button } from "@/app/_components/Button/Button";
+import { Fieldset } from "@/app/_components/Inputs/Fieldset";
+import { FormRow } from "@/app/_components/Inputs/FormRow";
+import { InputEmail } from "@/app/_components/Inputs/InputEmail";
+import { InputText } from "@/app/_components/Inputs/InputText";
+import { InputUrl } from "@/app/_components/Inputs/InputUrl";
+import { icons, SVG } from "@/app/_components/SVG/SVG";
 import {
   METADATA_FORM_INPUTS,
   METADATA_FORM_MAX_LENGTH_MEDIUM,
   METADATA_FORM_MAX_LENGTH_SMALL,
 } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
-import { i18n } from "@/i18n";
-import { MetaDataContactRole, MetaDataContact } from "@/types/types";
-import { useRef } from "react";
-import { icons, SVG } from "@/app/_components/SVG/SVG";
-import { Fieldset } from "@/app/_components/Inputs/Fieldset";
-import { InputText } from "@/app/_components/Inputs/InputText";
-import { InputEmail } from "@/app/_components/Inputs/InputEmail";
-import { InputUrl } from "@/app/_components/Inputs/InputUrl";
-import { FormRow } from "@/app/_components/Inputs/FormRow";
 import { useMetadataFormContact } from "@/app/datenpflege/_components/MetaDataForm/steps/contacts/useMetadataFormContact";
+import { i18n } from "@/i18n";
+import { MetaDataContact, MetaDataContactRole } from "@/types/types";
 
 export type MetadataFormContactFormPart = {
   type: MetaDataContactRole;

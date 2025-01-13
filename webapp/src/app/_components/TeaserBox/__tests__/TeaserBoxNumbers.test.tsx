@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { TeaserBoxNumber } from "@/app/_components/TeaserBox/partials/TeaserBoxNumber";
+
 import { icons } from "@/app/_components/SVG/SVG";
+import { TeaserBoxNumber } from "@/app/_components/TeaserBox/partials/TeaserBoxNumber";
 
 describe("TeaserBoxNumbers", () => {
   const testProps = {

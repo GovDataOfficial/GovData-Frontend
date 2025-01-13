@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { act, render, screen } from "@testing-library/react";
-import { InfoIcon } from "@/app/_components/InfoIcon/InfoIcon";
 import userEvent from "@testing-library/user-event";
+
+import { InfoIcon } from "@/app/_components/InfoIcon/InfoIcon";
 
 describe("InfoIcon", () => {
   it("should correctly set attributes on opening and closing", async () => {

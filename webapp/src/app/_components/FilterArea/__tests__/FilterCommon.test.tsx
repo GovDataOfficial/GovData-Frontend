@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { act, render, screen, within } from "@testing-library/react";
-import { FilterCommon } from "@/app/_components/FilterArea/filters/FilterCommon";
 import userEvent from "@testing-library/user-event";
+
+import { FilterCommon } from "@/app/_components/FilterArea/filters/FilterCommon";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn().mockReturnValue(new URLSearchParams()),

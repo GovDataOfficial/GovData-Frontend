@@ -6,7 +6,7 @@ export function MetaDataFormNavigationError({ step }: { step: number }) {
       <span className={"sr-only"}>
         {i18n.t("metadataform.stepInfo.stepNumber", { step })}
       </span>
-      {i18n.t("metadataform.errors.missingRequiredFields")}
+      {i18n.t("metadataform.errors.fieldValidation")}
     </span>
   );
 }

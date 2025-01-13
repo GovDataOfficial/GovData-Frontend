@@ -1,8 +1,9 @@
 // @vitest-environment node
 
 import { beforeAll, describe, expect, test, vi } from "vitest";
-import { cookies } from "next/headers";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
+import { cookies } from "next/headers";
+
 import { getRedisClient } from "@/app/api/auth/_redis";
 
 vi.mock("next/headers");

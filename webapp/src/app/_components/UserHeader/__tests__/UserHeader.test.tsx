@@ -1,7 +1,8 @@
 import { describe, expect, test, vi } from "vitest";
-import { UserHeader } from "@/app/_components/UserHeader/UserHeader";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
+import { UserHeader } from "@/app/_components/UserHeader/UserHeader";
 import { getUserInformation } from "@/app/api/auth/_session";
 
 vi.mock("ioredis");
@@ -43,5 +44,25 @@ describe("UserHeader", () => {
 
     expect(linkMeta).toBeVisible();
     expect(linkLogout).toBeVisible();
+  });
+
+  test("should close details on outside click", async () => {
+    vi.mocked(getUserInformation).mockResolvedValue({
+      username: "TestName",
+    });
+    const user = userEvent.setup();
+
+    render(await UserHeader());
+
+    const details = screen.getByRole("group");
+    expect(details).not.toHaveAttribute("open");
+
+    const summary = screen.getByText("TestName");
+
+    await user.click(summary);
+    expect(details).toHaveAttribute("open");
+
+    await user.click(document.body);
+    expect(details).not.toHaveAttribute("open");
   });
 });

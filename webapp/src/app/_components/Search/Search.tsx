@@ -1,8 +1,9 @@
-import { i18n } from "@/i18n";
-import { SearchField } from "@/app/_components/Search/SearchField";
-import { Background } from "@/app/_components/Background/Background";
-import { SearchSecondaryLinks } from "@/app/_components/Search/SearchSecondaryLinks";
 import { Suspense } from "react";
+
+import { Background } from "@/app/_components/Background/Background";
+import { SearchField } from "@/app/_components/Search/SearchField";
+import { SearchSecondaryLinks } from "@/app/_components/Search/SearchSecondaryLinks";
+import { i18n } from "@/i18n";
 
 type SearchProps = {
   withTeaser?: boolean;

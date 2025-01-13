@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useRef } from "react";
-import { i18n } from "@/i18n";
-import { Select } from "@/app/_components/Inputs/Select";
-import { InputText } from "@/app/_components/Inputs/InputText";
-import { InputEmail } from "@/app/_components/Inputs/InputEmail";
-import { TextArea } from "@/app/_components/Inputs/TextArea";
+
 import { Button } from "@/app/_components/Button/Button";
+import { InputEmail } from "@/app/_components/Inputs/InputEmail";
+import { InputText } from "@/app/_components/Inputs/InputText";
 import { RequiredAsteriskInfo } from "@/app/_components/Inputs/partials/RequiredAsteriskInfo";
+import { Select } from "@/app/_components/Inputs/Select";
+import { TextArea } from "@/app/_components/Inputs/TextArea";
+import { i18n } from "@/i18n";
 
 export function ContactForm() {
   const { t } = i18n;

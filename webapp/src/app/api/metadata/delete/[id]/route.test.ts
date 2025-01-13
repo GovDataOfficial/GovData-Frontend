@@ -1,8 +1,9 @@
 // @vitest-environment node
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { DELETE } from "@/app/api/metadata/delete/[id]/route";
+
 import { sendAuthorizedRequest } from "@/app/api/_lib/sendAuthorizedRequest";
+import { DELETE } from "@/app/api/metadata/delete/[id]/route";
 
 vi.mock("@/app/api/_lib/sendAuthorizedRequest");
 

@@ -41,7 +41,7 @@
   .gd-table-head {
     th {
       background: #f5f5f5;
-      padding: 8px;
+      padding: map-get($spacers, 1);
 
       &:first-child {
         border-radius: 5px 0 0 5px;
@@ -55,30 +55,38 @@
         @extend .button-reset;
       }
 
-      .gd-table-sort-button {
-        &:hover {
-          text-decoration: underline;
-        }
+      &:has(.gd-table-sort-button) {
+        padding: 0;
+      }
 
+      .gd-table-sort-button {
+        width: 100%;
+        text-align: left;
+        padding: map-get($spacers, 1);
+        text-decoration: underline;
+
+        &:hover {
+          background-color: $clr-neutral-grey-200;
+        }
         &::after {
           font-family: "Font Awesome 6 Free";
 
           display: inline-block;
-          margin-left: rem-calc(4);
+          margin-left: rem-calc(8);
           font-size: rem-calc(14);
           text-decoration: none;
           // hiding it here but calculating it with button width
           // so complete table wont jump when button appears
           visibility: hidden;
-          content: "\f077";
+          content: "\f0d8";
         }
         &.ascending::after {
           visibility: visible;
-          content: "\f077";
+          content: "\f0d8";
         }
         &.descending::after {
           visibility: visible;
-          content: "\f078";
+          content: "\f0d7";
         }
       }
     }

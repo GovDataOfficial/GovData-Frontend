@@ -1,9 +1,10 @@
 "use client";
 
-import { i18n } from "@/i18n";
 import { usePathname } from "next/navigation";
+
 import { GlobalIds } from "@/app/_lib/globalIds";
 import { PAGES, PAGES_AUTH } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
 
 function SkipLink({ id, name }: { id: string; name: string }) {
   return <a href={`#${id}`}>{name}</a>;

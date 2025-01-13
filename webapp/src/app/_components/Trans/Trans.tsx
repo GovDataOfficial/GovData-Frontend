@@ -1,5 +1,6 @@
-import { i18n } from "@/i18n";
 import { Fragment, ReactNode } from "react";
+
+import { i18n } from "@/i18n";
 
 export type Trans = {
   id?: string;

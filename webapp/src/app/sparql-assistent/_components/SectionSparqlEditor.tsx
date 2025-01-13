@@ -1,18 +1,21 @@
 "use client";
 
-import { SelectEndpoint } from "@/app/sparql-assistent/SparqlEditor/components/SelectEndpoint";
 import { useEffect, useState } from "react";
+
+import { EndpointInfo } from "@/app/sparql-assistent/SparqlEditor/components/EndpointInfo";
+import { SelectEndpoint } from "@/app/sparql-assistent/SparqlEditor/components/SelectEndpoint";
+import { SelectFormat } from "@/app/sparql-assistent/SparqlEditor/components/SelectFormat";
 import {
   endpointOptions,
   formatOptions,
   PREFIXES,
   QUERIES,
 } from "@/app/sparql-assistent/SparqlEditor/data";
-import { i18n } from "@/i18n";
-import { EndpointInfo } from "@/app/sparql-assistent/SparqlEditor/components/EndpointInfo";
 import { useYasgui } from "@/app/sparql-assistent/SparqlEditor/hooks/useYasgui";
-import { SelectFormat } from "@/app/sparql-assistent/SparqlEditor/components/SelectFormat";
+import { i18n } from "@/i18n";
+
 import "@triply/yasgui/build/yasgui.min.css";
+
 import { ContainerDiv } from "@/app/_components/Container";
 
 const initialEndpoint = endpointOptions[0].key;

@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { withRedirectLegacyPaths } from "@/middlewares/withRedirectLegacyPaths";
+
+import { logger } from "@/logger/logger";
 import { MiddlewareFactory } from "@/middlewares/types";
 import { withHeadersMiddleware } from "@/middlewares/withHeadersMiddleware";
 import { withMetaDataManageFeatureFlagRedirect } from "@/middlewares/withMetaDataManageFeatureFlagRedirect";
-import { logger } from "@/logger/logger";
+import { withRedirectLegacyPaths } from "@/middlewares/withRedirectLegacyPaths";
 
 /*
  * Match all request paths except for the ones starting with:

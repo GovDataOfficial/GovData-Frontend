@@ -1,10 +1,11 @@
 "use client";
 
-import { SortOptions } from "@/types/types";
-import { i18n } from "@/i18n";
-import { DropdownSelect } from "@/app/_components/Dropdown/DropdownSelect";
 import { useSearchParams } from "next/navigation";
+
+import { DropdownSelect } from "@/app/_components/Dropdown/DropdownSelect";
 import { URLHelper } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
+import { SortOptions } from "@/types/types";
 
 export function SearchResultSortBy() {
   const { t } = i18n;

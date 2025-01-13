@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { CommonInputText } from "@/app/erweitertesuche/inputs/CommonInputText";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+
+import { CommonInputText } from "@/app/erweitertesuche/inputs/CommonInputText";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),

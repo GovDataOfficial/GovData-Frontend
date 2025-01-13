@@ -2,6 +2,7 @@
 
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { NextRequest, NextResponse } from "next/server";
+
 import { withRedirectLegacyPaths } from "@/middlewares/withRedirectLegacyPaths";
 
 vi.spyOn(NextResponse, "redirect");

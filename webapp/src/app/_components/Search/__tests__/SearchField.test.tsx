@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render } from "@testing-library/react";
-import { SearchField } from "@/app/_components/Search/SearchField";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+
+import { SearchField } from "@/app/_components/Search/SearchField";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),

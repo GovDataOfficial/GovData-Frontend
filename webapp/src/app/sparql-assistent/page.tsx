@@ -1,9 +1,10 @@
 import { Metadata } from "next";
-import { i18n } from "@/i18n";
+
+import { metaDataGenerator } from "@/app/_lib/getMetaData";
 import { SectionSchnittstellen } from "@/app/sparql-assistent/_components/SectionSchnittstellen";
 import { SectionSparqlAssistent } from "@/app/sparql-assistent/_components/SectionSparqlAssistent";
 import { SectionSparqlEditor } from "@/app/sparql-assistent/_components/SectionSparqlEditor";
-import { metaDataGenerator } from "@/app/_lib/getMetaData";
+import { i18n } from "@/i18n";
 
 export const metadata: Metadata = metaDataGenerator({
   title: i18n.t("meta.sparql.title"),

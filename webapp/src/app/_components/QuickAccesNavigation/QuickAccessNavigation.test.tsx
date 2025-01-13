@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
-import { QuickAccessNavigation } from "@/app/_components/QuickAccesNavigation/QuickAccessNavigation";
 import { usePathname } from "next/navigation";
+
+import { QuickAccessNavigation } from "@/app/_components/QuickAccesNavigation/QuickAccessNavigation";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 
 vi.mock("next/navigation", () => ({

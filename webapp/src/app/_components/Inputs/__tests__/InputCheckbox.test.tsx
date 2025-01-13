@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { InputText } from "@/app/_components/Inputs/InputText";
+
 import { InputCheckbox } from "@/app/_components/Inputs/InputCheckbox";
+import { InputText } from "@/app/_components/Inputs/InputText";
 
 describe("InputCheckbox", () => {
   it("should render correct text input", async () => {

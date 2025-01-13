@@ -1,6 +1,4 @@
-
 .time-with-date {
-
   time {
     display: flex;
     flex-direction: column;
@@ -17,7 +15,6 @@
     span:last-of-type {
       @extend .paragraph-small;
       color: $clr-neutral-grey-500;
-
     }
   }
 }

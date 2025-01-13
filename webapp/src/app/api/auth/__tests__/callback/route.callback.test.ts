@@ -1,7 +1,9 @@
 import { beforeAll, describe, expect, test, vi } from "vitest";
-import { getCodeVerifierSession, setSession } from "@/app/api/auth/_session";
-import { getKeyCloakClient, KeycloakClient } from "@/app/api/auth/_keycloak";
 import { redirect } from "next/navigation";
+import { NextRequest } from "next/server.js";
+
+import { getKeyCloakClient, KeycloakClient } from "@/app/api/auth/_keycloak";
+import { getCodeVerifierSession, setSession } from "@/app/api/auth/_session";
 
 vi.mock("ioredis");
 vi.mock("openid-client");
@@ -28,8 +30,9 @@ describe("auth / callback", () => {
     vi.mocked(redirect).mockReset();
     vi.mocked(getCodeVerifierSession).mockResolvedValue(null);
 
-    const request = new Request("https://www.foo.de");
+    const request = new NextRequest("https://www.foo.de");
     const { GET } = await import("../../callback/route.js");
+
     await GET(request);
 
     expect(redirect).toHaveBeenCalledWith("/error");
@@ -43,7 +46,7 @@ describe("auth / callback", () => {
       mockCodeVerifierSession as any,
     );
 
-    const request = new Request("https://www.foo.de");
+    const request = new NextRequest("https://www.foo.de");
     const { GET } = await import("../../callback/route.js");
     await GET(request);
 

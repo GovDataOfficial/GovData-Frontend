@@ -1,5 +1,6 @@
 import { describe, it } from "vitest";
 import { render } from "@testing-library/react";
+
 import { TypeListFilter } from "@/app/suche/_components/SearchResultTypeFilter/TypeListFilter";
 import { NextJSSearchParams, SearchResults } from "@/types/types";
 
@@ -19,6 +20,7 @@ describe("TypeListFilter", () => {
         lastModified: "2016-04-11T00:00:00",
         hasHvd: false,
         created: "2024-10-31T12:47:12",
+        metadataModified: "2024-10-31T12:47:12",
       },
       {
         id: "7102da0d-ec99-4cec-8758-7ac9902c1e80",
@@ -29,6 +31,7 @@ describe("TypeListFilter", () => {
         lastModified: "2019-07-11T12:37:03",
         hasHvd: false,
         created: "2024-10-31T12:47:12",
+        metadataModified: "2024-10-31T12:47:12",
       },
     ],
     filterMap: {

@@ -1,12 +1,14 @@
-import Page, { metadata } from "../page";
 import { beforeAll, describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
+
 import {
   fetchMetadataForOrganizations,
   fetchOrganizationsForUser,
 } from "@/app/_lib/getData";
 import { getSessionOrRedirect } from "@/app/api/auth/_session";
 import { OrganizationSorted, SearchResults } from "@/types/types";
+
+import Page, { metadata } from "../page";
 
 vi.mock("ioredis");
 vi.mock("@/app/api/auth/_session");
@@ -22,13 +24,13 @@ const searchResults = {
       id: "1",
       title: "Test Title 1",
       created: "2023-01-01",
-      lastModified: "2023-02-01",
+      metadataModified: "2023-02-01",
     },
     {
       id: "2",
       title: "Test Title 2",
       created: "2022-03-01",
-      lastModified: "2022-04-01",
+      metadataModified: "2022-04-01",
     },
   ],
 } as unknown as SearchResults;

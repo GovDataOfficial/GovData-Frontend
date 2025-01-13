@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { render, screen, within } from "@testing-library/react";
+
 import { SearchResultFilterTags } from "@/app/suche/_components/SearchResultFilterTags/SearchResultFilterTags";
 
 describe("SearchResultFilterTags", () => {

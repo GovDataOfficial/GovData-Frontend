@@ -1,6 +1,6 @@
 import { icons, SVG } from "@/app/_components/SVG/SVG";
-import { i18n } from "@/i18n";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
 
 type MetaDataOverviewButtonEdit = {
   id: string;

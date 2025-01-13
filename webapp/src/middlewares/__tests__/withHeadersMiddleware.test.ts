@@ -2,6 +2,7 @@
 
 import { describe, expect, test, vi } from "vitest";
 import { NextRequest, NextResponse } from "next/server";
+
 import { withHeadersMiddleware } from "@/middlewares/withHeadersMiddleware";
 
 vi.spyOn(NextResponse, "redirect");

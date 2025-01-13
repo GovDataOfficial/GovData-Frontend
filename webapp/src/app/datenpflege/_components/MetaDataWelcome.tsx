@@ -1,5 +1,6 @@
-import { ExternalLink } from "@/app/_components/ExternalLink/ExternalLink";
 import React from "react";
+
+import { ExternalLink } from "@/app/_components/ExternalLink/ExternalLink";
 import { i18n } from "@/i18n";
 
 export function MetaDataWelcome() {
@@ -19,12 +20,12 @@ export function MetaDataWelcome() {
           {t("metadata.welcome.desc.5")}
           <br />
           {t("metadata.welcome.desc.6")}&nbsp;
-          <ExternalLink href={link} title={t("metadata.welcome.desc.7")} />
-          {t("metadata.welcome.desc.8")}&nbsp;
+          <ExternalLink href={link} title={t("metadataform.help.guideLink")} />
+          {t("metadata.welcome.desc.7")}&nbsp;
         </li>
         <li>
-          <strong>{t("metadata.welcome.desc.9")}</strong>&nbsp;
-          {t("metadata.welcome.desc.10")}
+          <strong>{t("metadata.welcome.desc.8")}</strong>&nbsp;
+          {t("metadata.welcome.desc.9")}
         </li>
       </ul>
     </div>

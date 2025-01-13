@@ -1,12 +1,16 @@
-import type { SearchResultHit as SearchResultHitType } from "@/types/types";
-import { MetaInfoHeadline } from "@/app/suche/_components/common/MetaInfoHeadlineIcon";
-import { Truncate } from "@/app/_components/Truncate/Truncate";
 import Image from "next/image";
-import { SearchResultHitDetailInfo } from "./SearchResultHitDetailInfo";
-import { isNotNullOrUndefined } from "@/types/typeGuards";
-import { PAGES } from "@/app/_lib/URLHelper";
+
 import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 import { icons } from "@/app/_components/SVG/SVG";
+import { Time } from "@/app/_components/Time/Time";
+import { Trans } from "@/app/_components/Trans/Trans";
+import { Truncate } from "@/app/_components/Truncate/Truncate";
+import { PAGES } from "@/app/_lib/URLHelper";
+import { MetaInfoHeadline } from "@/app/suche/_components/common/MetaInfoHeadlineIcon";
+import { isNotNullOrUndefined } from "@/types/typeGuards";
+import type { SearchResultHit as SearchResultHitType } from "@/types/types";
+
+import { SearchResultHitDetailInfo } from "./SearchResultHitDetailInfo";
 
 const createHitLink = (hit: SearchResultHitType) => {
   switch (hit.type) {
@@ -84,8 +88,19 @@ export function SearchResultHit({ hit }: { hit: SearchResultHitType }) {
             <Image alt="" width={200} height={200} src={displayImage} />
           </div>
         )}
-        <div>
-          <MetaInfoHeadline type={hit.primaryShowcaseType || hit.type} />
+        <div className="d-flex flex-column flex-grow-1">
+          <div className="d-flex justify-content-between">
+            <MetaInfoHeadline type={hit.primaryShowcaseType || hit.type} />
+            <span className="paragraph-small">
+              <Trans
+                className="paragraph-small"
+                i18nKey="search.hits.hit.lastModifiedDate"
+                params={{
+                  date: <Time date={hit.lastModified} />,
+                }}
+              />
+            </span>
+          </div>
           <h3 className="mb-1 mt-0 text-break">
             <a title={hit.title} href={hitLink}>
               {hit.title}

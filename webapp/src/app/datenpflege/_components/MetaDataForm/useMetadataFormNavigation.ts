@@ -24,23 +24,25 @@ export function useMetadataFormNavigation({ editMode }: useMetadataForm) {
   };
 
   // needs better logic to query fields
-  const getRequiredInputs = (element: Element | null) => {
-    const requiredInputs = element?.querySelectorAll(
-      'input[required=""], textarea[required=""], select[required=""]',
-    );
-    return requiredInputs
-      ? (Array.from(requiredInputs) as HTMLInputElement[])
-      : [];
+  const getAllFieldsInContainer = (container: Element | null) => {
+    const inputs = container?.querySelectorAll("input, textarea, select");
+
+    if (inputs) {
+      return Array.from(inputs) as Array<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >;
+    }
+    return [];
   };
 
-  const getVisibleRequiredInputs = () => {
+  const getVisibleInputs = () => {
     const container = getVisibleStepContainer();
-    return getRequiredInputs(container);
+    return getAllFieldsInContainer(container);
   };
 
   const checkValidityOfStep = useCallback((step: number) => {
     const container = getStepContainer(step);
-    const requiredInputs = getRequiredInputs(container);
+    const requiredInputs = getAllFieldsInContainer(container);
 
     const hasInvalidInput = requiredInputs.some((i) => !i.checkValidity());
     return !hasInvalidInput;
@@ -52,11 +54,9 @@ export function useMetadataFormNavigation({ editMode }: useMetadataForm) {
   };
 
   const reportValidity = (): boolean => {
-    const requiredInputs = getVisibleRequiredInputs();
+    const inputs = getVisibleInputs();
     // check validity for all so we can set gd-input-invalid on all inputs
-    const invalidInputs = requiredInputs.filter(
-      (input) => !input.checkValidity(),
-    );
+    const invalidInputs = inputs.filter((input) => !input.checkValidity());
 
     invalidInputs.forEach(addInvalidClass);
 
@@ -69,7 +69,9 @@ export function useMetadataFormNavigation({ editMode }: useMetadataForm) {
     return true;
   };
 
-  const addInvalidClass = (input: HTMLInputElement) => {
+  const addInvalidClass = (
+    input: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
+  ) => {
     input.classList.add("gd-input-invalid");
     input.addEventListener("blur", () => {
       if (input.checkValidity()) {

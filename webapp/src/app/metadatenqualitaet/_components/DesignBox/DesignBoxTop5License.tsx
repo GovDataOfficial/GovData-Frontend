@@ -1,13 +1,14 @@
 "use client";
 
-import { InfoIcon } from "@/app/_components/InfoIcon/InfoIcon";
-import { Chart } from "@/app/metadatenqualitaet/_components/Charts/Chart";
-import { MetaDataQuality } from "@/types/types";
-import { MetaDataQualityDesignBox } from "@/app/metadatenqualitaet/_components/DesignBox/MetaDataQualityDesignBox";
-import { createChartData } from "@/app/metadatenqualitaet/_components/Charts/createChartData";
-import { i18n } from "@/i18n";
 import { useSearchParams } from "next/navigation";
+
+import { InfoIcon } from "@/app/_components/InfoIcon/InfoIcon";
 import { Trans } from "@/app/_components/Trans/Trans";
+import { Chart } from "@/app/metadatenqualitaet/_components/Charts/Chart";
+import { createChartData } from "@/app/metadatenqualitaet/_components/Charts/createChartData";
+import { MetaDataQualityDesignBox } from "@/app/metadatenqualitaet/_components/DesignBox/MetaDataQualityDesignBox";
+import { i18n } from "@/i18n";
+import { MetaDataQuality } from "@/types/types";
 
 type MetaDataQualityBoxTop5License = {
   data: MetaDataQuality[];

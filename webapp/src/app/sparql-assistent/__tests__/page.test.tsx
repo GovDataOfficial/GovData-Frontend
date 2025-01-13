@@ -1,7 +1,8 @@
 import { beforeEach, describe, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import Page from "../page";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+
+import Page from "../page";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),

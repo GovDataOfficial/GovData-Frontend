@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ChartJsData } from "@/app/metadatenqualitaet/_components/Charts/types";
 import { useSearchParams } from "next/navigation";
+
 import { ChartJSDataTable } from "@/app/metadatenqualitaet/_components/Charts/ChartJSDataTable";
+import { ChartJsData } from "@/app/metadatenqualitaet/_components/Charts/types";
 
 type Chart = {
   data: ChartJsData;

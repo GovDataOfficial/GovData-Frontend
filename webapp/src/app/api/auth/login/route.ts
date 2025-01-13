@@ -1,11 +1,12 @@
+import { redirect } from "next/navigation";
+import { NextRequest } from "next/server";
+import { generators } from "openid-client";
+
 import {
   getCallbackUriFromRequest,
   getKeyCloakClient,
 } from "@/app/api/auth/_keycloak";
 import { setCodeVerifierSession } from "@/app/api/auth/_session";
-import { generators } from "openid-client";
-import { redirect } from "next/navigation";
-import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 

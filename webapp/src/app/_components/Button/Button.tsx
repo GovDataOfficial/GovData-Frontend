@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, forwardRef } from "react";
+import React, { forwardRef, PropsWithChildren } from "react";
 
 type Button = {
   variant?: "primary" | "secondary" | "a" | "icon";

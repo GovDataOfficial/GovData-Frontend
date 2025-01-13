@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
+
 import { RegionSearchBox } from "@/app/_components/RegionSearch/RegionSearchBox";
 
 describe("RegionSearchBox", () => {

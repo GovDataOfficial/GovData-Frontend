@@ -1,10 +1,11 @@
+import { redirect } from "next/navigation";
+import { NextRequest } from "next/server";
+
 import {
   getKeyCloakClient,
   getPostLogoutUriFromRequest,
 } from "@/app/api/auth/_keycloak";
 import { deleteSession, getSession } from "@/app/api/auth/_session";
-import { redirect } from "next/navigation";
-import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 

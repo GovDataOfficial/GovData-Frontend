@@ -1,9 +1,10 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+
+import { Background } from "@/app/_components/Background/Background";
 import Search from "@/app/_components/Search/Search";
 import { PAGES, PAGES_AUTH } from "@/app/_lib/URLHelper";
-import { Background } from "@/app/_components/Background/Background";
 
 export function SearchHeaderSwitcher() {
   const pathName = usePathname();

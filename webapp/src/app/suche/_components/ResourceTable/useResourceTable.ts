@@ -1,5 +1,5 @@
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export function useResourceTable() {
   const searchParams = useSearchParams();

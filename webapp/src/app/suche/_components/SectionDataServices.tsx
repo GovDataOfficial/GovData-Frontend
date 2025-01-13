@@ -1,13 +1,14 @@
-import { MetaData } from "@/types/types";
-import { i18n } from "@/i18n";
 import { Fragment } from "react";
+
+import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 import {
   DtDescription,
   DtLicense,
   DtShortendAvailability,
   DtWithExternalLinks,
 } from "@/app/suche/_components/common/CommonDtDd";
-import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
+import { i18n } from "@/i18n";
+import { MetaData } from "@/types/types";
 
 type SectionDataServices = {
   data: MetaData;

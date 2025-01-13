@@ -37,7 +37,8 @@
 .fieldcontentarea select {
   -webkit-appearance: none;
   -moz-appearance: none;
-  background: url($theme-image-path + "/select-arrow-down-gray.png") no-repeat right center $clr-media-grey-500;
+  background: url($theme-image-path + "/select-arrow-down-gray.png") no-repeat
+    right center $clr-media-grey-500;
   width: 100%;
 }
 

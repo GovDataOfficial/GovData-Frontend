@@ -1,14 +1,15 @@
+import React from "react";
 import { Metadata } from "next";
+
+import { ButtonLink } from "@/app/_components/Button/ButtonLink";
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
-import React from "react";
-import { PAGES_AUTH } from "@/app/_lib/URLHelper";
-import { ButtonLink } from "@/app/_components/Button/ButtonLink";
-import { i18n } from "@/i18n";
-import { icons, SVG } from "@/app/_components/SVG/SVG";
 import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
+import { icons, SVG } from "@/app/_components/SVG/SVG";
+import { PAGES_AUTH } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
 
 export const metadata: Metadata = {
   title: i18n.t("meta.managedata.create.success"),

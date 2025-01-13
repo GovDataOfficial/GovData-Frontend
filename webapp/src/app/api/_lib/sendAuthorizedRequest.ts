@@ -1,8 +1,8 @@
-import { HttpMethod } from "@/types/types";
-
 import { authHeader } from "@/app/_lib/getData";
 import { getSessionNameOrThrow } from "@/app/api/metadata/_lib/getSessionNameOrThrow";
 import { logger } from "@/logger/logger";
+import { HttpMethod } from "@/types/types";
+
 const log = logger("sendAuthorizedRequest");
 
 export async function sendAuthorizedRequest(

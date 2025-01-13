@@ -57,6 +57,7 @@ export type SearchResultHit = {
   id: string;
   name: string;
   lastModified: string;
+  metadataModified: string;
   created: string;
   title: string;
   content: string;

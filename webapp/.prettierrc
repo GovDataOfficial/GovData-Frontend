@@ -1,1 +1,35 @@
-{}
+{
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "^react$",
+    "<BUILTIN_MODULES>",
+    "<THIRD_PARTY_MODULES>",
+    "",
+    "^@/*/(.*)$",
+    "",
+    "^(?!.*[.](css|scss)$)[./].*$",
+    ".(css|scss)$",
+    "^@/css/(.*)$",
+    "",
+    "^[./]"
+  ],
+  "importOrderTypeScriptVersion": "5.6.2",
+  "importOrderCaseSensitive": false,
+  "overrides": [
+    {
+      "files": "**/*.test.(ts|tsx)",
+      "options": {
+        "importOrder": [
+          "^vitest",
+          "^@testing-library",
+          "<BUILTIN_MODULES>",
+          "<THIRD_PARTY_MODULES>",
+          "",
+          "^@/*/(.*)$",
+          "",
+          "^[.]"
+        ]
+      }
+    }
+  ]
+}

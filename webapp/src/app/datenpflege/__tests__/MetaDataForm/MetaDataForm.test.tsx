@@ -1,13 +1,14 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MetadataForm } from "@/app/datenpflege/_components/MetaDataForm/MetadataForm";
+
+import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import {
   METADATA_FORM_ID,
   METADATA_FORM_INPUTS,
 } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
+import { MetadataForm } from "@/app/datenpflege/_components/MetaDataForm/MetadataForm";
 import { OrganizationSorted } from "@/types/types";
-import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 
 describe("MetaDataForm", () => {
   const { useRouter, mockedRouterPush } = vi.hoisted(() => {
@@ -46,6 +47,12 @@ describe("MetaDataForm", () => {
     { id: "license1", title: "license1", url: "http://example.com" },
   ];
 
+  const commonLinks = {
+    metadataDcatapLink: "http://example.com#dcatap",
+    metadataGuideLink: "http://example.com#leitfaden",
+    mailFitko: "mail:fit@ko.de",
+  };
+
   const validMetaData = {} as any;
   validMetaData[METADATA_FORM_INPUTS.ID] = "test";
   validMetaData[METADATA_FORM_INPUTS.ORGANIZATION_ID] = organizations[0].id;
@@ -83,6 +90,7 @@ describe("MetaDataForm", () => {
         categories={[]}
         licenses={[]}
         organizations={organizations}
+        {...commonLinks}
       />,
     );
     const form = container.querySelector("form");
@@ -98,6 +106,7 @@ describe("MetaDataForm", () => {
         categories={[]}
         licenses={[]}
         organizations={organizations}
+        {...commonLinks}
       />,
     );
 
@@ -139,15 +148,13 @@ describe("MetaDataForm", () => {
         categories={[]}
         licenses={[]}
         organizations={organizations}
+        {...commonLinks}
       />,
     );
 
-    const nav = screen.getAllByRole("navigation");
-    // we have two navs, for desk and mobile, hidden via css
-    expect(nav).toHaveLength(2);
-
-    // getting all items in first list
-    const listItems = within(nav[0]).getAllByRole("listitem");
+    const nav = screen.getByRole("navigation");
+    // getting all items in nav
+    const listItems = within(nav).getAllByRole("listitem");
 
     //first is active
     expect(listItems[0]).toHaveClass("active");
@@ -167,6 +174,7 @@ describe("MetaDataForm", () => {
         licenses={[]}
         organizations={organizations}
         metaData={{ id: "test" } as any}
+        {...commonLinks}
       />,
     );
 
@@ -175,12 +183,9 @@ describe("MetaDataForm", () => {
     expect(form).toHaveAttribute("id", METADATA_FORM_ID);
     expect(form).toHaveAttribute("action", "/api/metadata/edit");
 
-    const nav = screen.getAllByRole("navigation");
-    // we have two navs, for desk and mobile, hidden via css
-    expect(nav).toHaveLength(2);
-
+    const nav = screen.getByRole("navigation");
     // getting all items in first list
-    const listItems = within(nav[0]).getAllByRole("listitem");
+    const listItems = within(nav).getAllByRole("listitem");
 
     // all sticky navs are done and last is active in edit mode
     expect(listItems[0]).toHaveClass("done");
@@ -207,6 +212,7 @@ describe("MetaDataForm", () => {
         ]}
         organizations={organizations}
         metaData={validMetaData}
+        {...commonLinks}
       />,
     );
 
@@ -230,6 +236,7 @@ describe("MetaDataForm", () => {
         ]}
         organizations={organizations}
         metaData={validMetaData}
+        {...commonLinks}
       />,
     );
 
@@ -254,6 +261,7 @@ describe("MetaDataForm", () => {
         ]}
         organizations={organizations}
         metaData={validMetaData}
+        {...commonLinks}
       />,
     );
 
@@ -278,6 +286,7 @@ describe("MetaDataForm", () => {
         ]}
         organizations={organizations}
         metaData={validMetaData}
+        {...commonLinks}
       />,
     );
 

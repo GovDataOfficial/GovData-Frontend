@@ -1,4 +1,4 @@
-import { MetaDataContactRole, MetaDataContact } from "@/types/types";
+import { MetaDataContact, MetaDataContactRole } from "@/types/types";
 
 export const METADATA_FORM_ID = "metadata-form";
 

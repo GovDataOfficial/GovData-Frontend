@@ -1,13 +1,14 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
-import Page from "@/app/metadatenqualitaet/qualitaetsmerkmale/page";
-import { fetchMetaDataQuality } from "@/app/_lib/getData";
-import { MetaDataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
 import { render, screen } from "@testing-library/react";
 import {
   notFound,
   ReadonlyURLSearchParams,
   useSearchParams,
 } from "next/navigation";
+
+import { fetchMetaDataQuality } from "@/app/_lib/getData";
+import { MetaDataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
+import Page from "@/app/metadatenqualitaet/qualitaetsmerkmale/page";
 
 vi.mock("@/app/_lib/getData", () => ({
   fetchMetaDataQuality: vi.fn(),

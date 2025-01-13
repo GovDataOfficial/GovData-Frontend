@@ -1,9 +1,10 @@
-import { i18n } from "@/i18n";
 import React, { ReactNode, useRef, useState } from "react";
-import { useOutsideClick } from "@/app/_lib/hooks/useOutsideClick";
+
 import { PassedListItemProps } from "@/app/_components/Autocomplete/AutocompleteListItem";
 import { debounce } from "@/app/_lib/debounce";
 import { GlobalIds } from "@/app/_lib/globalIds";
+import { useOutsideClick } from "@/app/_lib/hooks/useOutsideClick";
+import { i18n } from "@/i18n";
 
 type Autocomplete<T> = {
   label: string;
@@ -40,7 +41,7 @@ export function Autocomplete<T>({
   const hasActiveItem = activeItem !== undefined;
   const openWithSuggestions = open && hasSuggestions;
 
-  const ref = useOutsideClick(() => setOpen(false));
+  const ref = useOutsideClick<HTMLDivElement>(() => setOpen(false));
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
 

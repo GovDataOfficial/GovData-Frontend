@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { PAGES, SPECIAL_FILTERS } from "@/app/_lib/URLHelper";
 import { MiddlewareFactory } from "@/middlewares/types";
 

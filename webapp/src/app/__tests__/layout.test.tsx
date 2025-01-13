@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import Layout, { metadata } from "../layout";
 import { renderToStaticMarkup } from "react-dom/server";
+
+import Layout, { metadata } from "../layout";
 
 vi.mock("@/app/_lib/getData", () => ({
   fetchTypo3Data: vi.fn(),

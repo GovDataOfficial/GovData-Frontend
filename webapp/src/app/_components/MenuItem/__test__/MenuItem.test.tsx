@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { MenuItem } from "@/app/_components/MenuItem/MenuItem";
 import { usePathname } from "next/navigation";
+
+import { MenuItem } from "@/app/_components/MenuItem/MenuItem";
 
 vi.mock("next/navigation");
 

@@ -1,8 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
-import { FilterMultiBox } from "@/app/erweitertesuche/inputs/FilterMultiBox";
+
 import { defaultPlatformData } from "@/app/_lib/defaultFormData";
+import { FilterMultiBox } from "@/app/erweitertesuche/inputs/FilterMultiBox";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),

@@ -1,24 +1,25 @@
+import React from "react";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
+
 import {
   ContainerDiv,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
-import React from "react";
+import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 import {
   fetchCategoriesSorted,
   fetchLicenseActiveSorted,
   fetchMetadata,
   fetchOrganizationsForUser,
 } from "@/app/_lib/getData";
-import { i18n } from "@/i18n";
-import { MetadataForm } from "@/app/datenpflege/_components/MetaDataForm/MetadataForm";
-import { getSessionOrRedirect } from "@/app/api/auth/_session";
-import { redirect } from "next/navigation";
-import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import { hasContributorId } from "@/app/_lib/organization";
-import { PageConstructor } from "@/types/types";
-import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
+import { PAGES_AUTH } from "@/app/_lib/URLHelper";
+import { getSessionOrRedirect } from "@/app/api/auth/_session";
+import { MetadataForm } from "@/app/datenpflege/_components/MetaDataForm/MetadataForm";
+import { i18n } from "@/i18n";
 import { logger } from "@/logger/logger";
+import { PageConstructor } from "@/types/types";
 
 export const metadata: Metadata = {
   title: i18n.t("meta.managedata.edit"),
@@ -68,6 +69,9 @@ export default async function Page({
           licenses={licenses}
           organizations={organizations!}
           metaData={data}
+          mailFitko={process.env.mail_fitko!}
+          metadataGuideLink={process.env.metadata_guide_link!}
+          metadataDcatapLink={process.env.metadata_dcatap_link!}
         />
       </ContainerDiv>
     </>

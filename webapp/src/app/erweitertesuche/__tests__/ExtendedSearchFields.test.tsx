@@ -1,9 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ExtendedSearchFields } from "../ExtendedSearchFields";
 import { act, render, screen, within } from "@testing-library/react";
 import userEvent, { UserEvent } from "@testing-library/user-event";
-import { OrganizationSorted, StateList } from "@/types/types";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+
+import { OrganizationSorted, StateList } from "@/types/types";
+
+import { ExtendedSearchFields } from "../ExtendedSearchFields";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),

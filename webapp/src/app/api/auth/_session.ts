@@ -1,12 +1,14 @@
 "server-only";
-import { logger } from "@/logger/logger";
-import { API_ENDPOINTS } from "@/app/api/apiEndpoints";
-import { cookies } from "next/headers";
-import { generators, TokenSet } from "openid-client";
+
 import { getIronSession } from "iron-session";
-import { getRedisClient } from "@/app/api/auth/_redis";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { generators, TokenSet } from "openid-client";
+
+import { API_ENDPOINTS } from "@/app/api/apiEndpoints";
 import { getKeyCloakClient } from "@/app/api/auth/_keycloak";
+import { getRedisClient } from "@/app/api/auth/_redis";
+import { logger } from "@/logger/logger";
 
 const password = process.env.session_secret;
 const SESSION_COOKIE = "gd_session";

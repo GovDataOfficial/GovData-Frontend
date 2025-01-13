@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
-import { SearchResultSortBy } from "@/app/suche/_components/SearchResultSortBy/SearchResultSortBy";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+
+import { SearchResultSortBy } from "@/app/suche/_components/SearchResultSortBy/SearchResultSortBy";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),

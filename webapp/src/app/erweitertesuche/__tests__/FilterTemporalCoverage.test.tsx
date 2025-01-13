@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { FilterTemporalCoverage } from "@/app/erweitertesuche/inputs/FilterTemporalCoverage";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+
+import { FilterTemporalCoverage } from "@/app/erweitertesuche/inputs/FilterTemporalCoverage";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),

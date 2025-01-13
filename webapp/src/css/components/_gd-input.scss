@@ -67,12 +67,11 @@
     width: map-get($spacers, 3);
   }
 
-  +.gd-input-checkbox,
+  + .gd-input-checkbox,
   .gd-input-multi-checkbox-item {
     @include transparent-border();
     display: flex;
     align-items: center;
-
 
     &:has(:focus-visible) {
       @extend .focus-outline-common;

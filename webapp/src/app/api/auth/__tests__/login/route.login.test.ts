@@ -1,8 +1,10 @@
 import { beforeAll, describe, expect, test, vi } from "vitest";
+import { redirect } from "next/navigation";
+import { NextRequest } from "next/server.js";
+import { generators } from "openid-client";
+
 import { getKeyCloakClient, KeycloakClient } from "@/app/api/auth/_keycloak";
 import { setCodeVerifierSession } from "@/app/api/auth/_session";
-import { generators } from "openid-client";
-import { redirect } from "next/navigation";
 
 vi.mock("ioredis");
 vi.mock("openid-client");
@@ -27,7 +29,7 @@ describe("auth / login", () => {
 
   test("should return a redirect response", async () => {
     const { GET } = await import("../../login/route.js");
-    await GET();
+    await GET(new NextRequest("https://www.foo.de"));
 
     // checking that cookie has been set with code challenge verifier
     expect(setCodeVerifierSession).toHaveBeenCalledWith("codeVerifierTest");

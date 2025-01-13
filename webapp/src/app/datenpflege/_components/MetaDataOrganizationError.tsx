@@ -1,7 +1,8 @@
-import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 import React from "react";
-import { i18n } from "@/i18n";
+
+import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 import { Trans } from "@/app/_components/Trans/Trans";
+import { i18n } from "@/i18n";
 
 export function MetaDataOrganizationError() {
   const { t } = i18n;

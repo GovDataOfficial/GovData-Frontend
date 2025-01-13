@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+
 import { i18n } from "@/i18n";
 
 type FilterListItem = {

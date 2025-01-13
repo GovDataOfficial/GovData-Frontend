@@ -1,6 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
-import { generateMetadata } from "./page";
+
 import { fetchTypo3Data } from "@/app/_lib/getData";
+
+import { generateMetadata } from "./page";
 
 vi.mock("@/app/_lib/getData", () => ({
   fetchTypo3Data: vi.fn(),

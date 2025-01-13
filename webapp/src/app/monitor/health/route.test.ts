@@ -1,6 +1,7 @@
 // @vitest-environment node
 
 import { describe, expect, it, vi } from "vitest";
+
 import { GET } from "./route";
 
 vi.mock("next/headers");

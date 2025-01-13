@@ -1,10 +1,10 @@
 // @vitest-environment node
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { POST } from "../contact/route";
 import { redirect } from "next/navigation";
-
 // @ts-expect-error no typings for nodemailer
 import nodemailer from "nodemailer";
+
+import { POST } from "../contact/route";
 
 vi.mock("next/navigation", () => ({
   redirect: vi.fn(),

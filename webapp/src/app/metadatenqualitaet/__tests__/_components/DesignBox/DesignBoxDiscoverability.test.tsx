@@ -1,10 +1,11 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
-import { MetaDataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
 import { render, screen } from "@testing-library/react";
-import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
-import { DesignBoxDiscoverability } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxDiscoverability";
 import userEvent from "@testing-library/user-event";
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+
+import { MetaDataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
 import * as createChartData from "@/app/metadatenqualitaet/_components/Charts/createChartData";
+import { DesignBoxDiscoverability } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxDiscoverability";
 
 vi.mock("chart.js");
 vi.mock("next/navigation", () => ({

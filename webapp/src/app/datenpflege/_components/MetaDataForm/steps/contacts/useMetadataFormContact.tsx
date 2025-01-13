@@ -1,6 +1,7 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import { i18n } from "@/i18n";
 import { MetaDataContact, MetaDataContactRole } from "@/types/types";
-import { useCallback, useEffect, useRef, useState } from "react";
 
 const generateEmptyContact = (role: MetaDataContactRole): MetaDataContact => {
   return {

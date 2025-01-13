@@ -1,4 +1,4 @@
-import { MetaData, ShowCaseData } from "@/types/types";
+import { MetaData, MetaDataContactRole, ShowCaseData } from "@/types/types";
 
 export const metaDataTestProps = {
   id: "dc5bd01d-8872-4a95-8c36-3e2342bc517c",
@@ -164,7 +164,7 @@ export const metaDataTestProps = {
       name: "Behörde für Umwelt und Energie (BUE), Amt für Umweltschutz",
       url: "http://www.hamburg-3 .de/bue/",
       address: {},
-      role: "PUBLISHER",
+      role: MetaDataContactRole.publisher,
     },
     {
       name: "Peter Schröder",
@@ -176,7 +176,7 @@ export const metaDataTestProps = {
         zip: "12345",
         country: "DE",
       },
-      role: "MAINTAINER",
+      role: MetaDataContactRole.maintainer,
     },
   ],
   lastModifiedDate: "2024-01-25T13:52:20",

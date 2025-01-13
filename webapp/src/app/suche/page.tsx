@@ -1,24 +1,25 @@
 import React from "react";
 import { Metadata } from "next";
-import { getSearchResults } from "@/app/_lib/getData";
-import { PageConstructor, SearchResults } from "@/types/types";
-import { i18n } from "@/i18n";
-import { SearchResultsFilterArea } from "@/app/suche/_components/SearchResultsFilterArea/SearchResultsFilterArea";
-import { SearchResultsContainer } from "@/app/suche/_components/SearchResults/SearchResultsContainer";
-import { FilterAreaOpenMenuButton } from "@/app/_components/FilterArea";
-import { TypeListFilter } from "@/app/suche/_components/SearchResultTypeFilter/TypeListFilter";
-import { SearchResultFilterTags } from "@/app/suche/_components/SearchResultFilterTags/SearchResultFilterTags";
-import { SearchResultSortBy } from "@/app/suche/_components/SearchResultSortBy/SearchResultSortBy";
-import { TypeListFilterMobile } from "@/app/suche/_components/SearchResultTypeFilter/TypeListFilterMobile";
-import { SearchResultsEmpty } from "@/app/suche/_components/SearchResults/SearchResultsEmpty";
-import { stripSearchResultHTMLContent } from "@/app/_lib/sanitizer/sanitizeHtml";
-import { ExtendedSearchLink } from "@/app/suche/_components/common/ExtendedSearchLink";
+
 import { ContainerDiv } from "@/app/_components/Container";
+import { FilterAreaOpenMenuButton } from "@/app/_components/FilterArea";
+import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 import { convertToURLSearchParams } from "@/app/_lib/convertToSearchParams";
-import { isNotNullOrUndefined } from "@/types/typeGuards";
+import { getSearchResults } from "@/app/_lib/getData";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
 import { numberToLocaleString } from "@/app/_lib/number";
-import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
+import { stripSearchResultHTMLContent } from "@/app/_lib/sanitizer/sanitizeHtml";
+import { ExtendedSearchLink } from "@/app/suche/_components/common/ExtendedSearchLink";
+import { SearchResultFilterTags } from "@/app/suche/_components/SearchResultFilterTags/SearchResultFilterTags";
+import { SearchResultsContainer } from "@/app/suche/_components/SearchResults/SearchResultsContainer";
+import { SearchResultsEmpty } from "@/app/suche/_components/SearchResults/SearchResultsEmpty";
+import { SearchResultsFilterArea } from "@/app/suche/_components/SearchResultsFilterArea/SearchResultsFilterArea";
+import { SearchResultSortBy } from "@/app/suche/_components/SearchResultSortBy/SearchResultSortBy";
+import { TypeListFilter } from "@/app/suche/_components/SearchResultTypeFilter/TypeListFilter";
+import { TypeListFilterMobile } from "@/app/suche/_components/SearchResultTypeFilter/TypeListFilterMobile";
+import { i18n } from "@/i18n";
+import { isNotNullOrUndefined } from "@/types/typeGuards";
+import { PageConstructor, SearchResults } from "@/types/types";
 
 function getQueryParam(searchParams: PageConstructor["searchParams"]) {
   const params = convertToURLSearchParams(searchParams);

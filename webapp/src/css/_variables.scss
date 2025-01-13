@@ -27,7 +27,6 @@ $fnt-paragraph-extra-small: rem-calc(12);
 $line-height-heading: 125%;
 $line-height-paragraph: 150%;
 
-
 //*******************************
 // Breakpoints
 //*******************************
@@ -70,7 +69,7 @@ $grid-gutter-width: 30px;
 $container-max-widths: (
   sm: $small-breakpoint,
   md: $medium-breakpoint,
-  lg: $large-breakpoint
+  lg: $large-breakpoint,
 );
 
 //*******************************
@@ -104,7 +103,6 @@ $spacers: (
 
 $grid-gutter-width: 32px;
 $gutters: $spacers;
-
 
 // previously found in _mixins.scss
 $breakpoint_phone: 767px !default;

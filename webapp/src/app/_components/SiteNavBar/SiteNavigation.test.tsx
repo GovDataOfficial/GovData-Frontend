@@ -1,8 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
+import { usePathname } from "next/navigation";
+
 import { SiteNavigationT3 } from "@/app/_components/SiteNavBar/SiteNavigationT3";
 import { T3MenuSubPages } from "@/types/types.typo3";
-import { usePathname } from "next/navigation";
 
 vi.mock("next/navigation", () => ({
   usePathname: vi.fn(),

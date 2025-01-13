@@ -1,11 +1,12 @@
 "use client";
 
-import { MetaData } from "@/types/types";
 import { Fragment } from "react";
-import { ResourcesTableRowTop } from "@/app/suche/_components/ResourceTable/ResourcesTableRowTop";
+
 import { ResourcesTableRowBottom } from "@/app/suche/_components/ResourceTable/ResourcesTableRowBottom";
-import { i18n } from "@/i18n";
+import { ResourcesTableRowTop } from "@/app/suche/_components/ResourceTable/ResourcesTableRowTop";
 import { useResourceTable } from "@/app/suche/_components/ResourceTable/useResourceTable";
+import { i18n } from "@/i18n";
+import { MetaData } from "@/types/types";
 
 type ResourcesTable = {
   data?: MetaData;

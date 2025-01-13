@@ -1,5 +1,6 @@
-import { RecommendedInfo } from "@/app/_components/Inputs/partials/RecommendedInfo";
 import React from "react";
+
+import { RecommendedInfo } from "@/app/_components/Inputs/partials/RecommendedInfo";
 
 type Label = {
   label: string;

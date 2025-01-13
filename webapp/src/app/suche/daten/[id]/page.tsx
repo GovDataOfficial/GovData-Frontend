@@ -1,14 +1,15 @@
 import { Metadata } from "next";
-import { SearchDetailsInfoboxDataSet } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxDataset";
-import { fetchMetadata } from "@/app/_lib/getData";
-import { SectionResources } from "@/app/suche/_components/SectionResources";
-import { SectionDataServices } from "@/app/suche/_components/SectionDataServices";
-import { PageConstructor } from "@/types/types";
-import { i18n } from "@/i18n";
-import { SearchDetailsMetaInfo } from "@/app/suche/_components/SearchDetailsMetaInfo/SearchDetailsMetaInfo";
+
 import { ContainerDiv } from "@/app/_components/Container";
-import { metaDataGenerator } from "@/app/_lib/getMetaData";
 import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
+import { fetchMetadata } from "@/app/_lib/getData";
+import { metaDataGenerator } from "@/app/_lib/getMetaData";
+import { SearchDetailsInfoboxDataSet } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxDataset";
+import { SearchDetailsMetaInfo } from "@/app/suche/_components/SearchDetailsMetaInfo/SearchDetailsMetaInfo";
+import { SectionDataServices } from "@/app/suche/_components/SectionDataServices";
+import { SectionResources } from "@/app/suche/_components/SectionResources";
+import { i18n } from "@/i18n";
+import { PageConstructor } from "@/types/types";
 
 export async function generateMetadata({
   params,

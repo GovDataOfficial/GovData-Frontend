@@ -1,13 +1,14 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
-import { MetadataFormStepContacts } from "@/app/datenpflege/_components/MetaDataForm/steps/contacts/MetadataFormStepContacts";
+import userEvent from "@testing-library/user-event";
+
 import {
   METADATA_FORM_INPUTS,
   METADATA_FORM_MAX_LENGTH_MEDIUM,
   METADATA_FORM_MAX_LENGTH_SMALL,
 } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
+import { MetadataFormStepContacts } from "@/app/datenpflege/_components/MetaDataForm/steps/contacts/MetadataFormStepContacts";
 import { MetaDataContact, MetaDataContactRole } from "@/types/types";
-import userEvent from "@testing-library/user-event";
 
 vi.mock("@/app/_components/SVG/SVG", () => ({
   icons: { trash: "trash", plus: "plus" },

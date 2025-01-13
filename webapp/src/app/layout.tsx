@@ -1,15 +1,17 @@
-import type { Metadata, Viewport } from "next";
-import "@/css/main.scss";
-import { HeaderNavigation } from "@/app/_components/Header/HeaderNavigation";
 import React, { PropsWithChildren } from "react";
+import type { Metadata, Viewport } from "next";
+
 import { Footer } from "@/app/_components/Footer/Footer";
+import { HeaderNavigation } from "@/app/_components/Header/HeaderNavigation";
+import { MatomoTracking } from "@/app/_components/MatomoTracking/MatomoTracking";
 import { OffCanvasMenu } from "@/app/_components/OffCanvasMenu/OffCanvasMenu";
 import { OffCanvasOverlayExit } from "@/app/_components/OffCanvasMenu/OffCanvasOverlayExit";
 import { QuickAccessNavigation } from "@/app/_components/QuickAccesNavigation/QuickAccessNavigation";
 import { SearchHeaderSwitcher } from "@/app/_components/Search/SearchHeaderSwitcher";
-import { GlobalIds } from "@/app/_lib/globalIds";
-import { MatomoTracking } from "@/app/_components/MatomoTracking/MatomoTracking";
 import { UserHeader } from "@/app/_components/UserHeader/UserHeader";
+import { GlobalIds } from "@/app/_lib/globalIds";
+
+import "@/css/main.scss";
 
 /**
  * Ensure every page will be rendered dynamically,

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
-import Layout from "@/app/metadatenqualitaet/layout";
 import { render, screen } from "@testing-library/react";
+
+import Layout from "@/app/metadatenqualitaet/layout";
 
 describe("MetaDatenQualität - Layout", () => {
   it("should render correct elements", () => {

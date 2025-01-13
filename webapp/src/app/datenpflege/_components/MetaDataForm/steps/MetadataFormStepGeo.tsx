@@ -1,15 +1,15 @@
-import { TextArea } from "@/app/_components/Inputs/TextArea";
 import { ExternalLink } from "@/app/_components/ExternalLink/ExternalLink";
 import { InputTextMultiple } from "@/app/_components/Inputs/InputTextMultiple";
 import { Select } from "@/app/_components/Inputs/Select";
-import { defaultPoliciticalGeocodingLevel } from "@/app/_lib/defaultFormData";
-import { i18n } from "@/i18n";
+import { TextArea } from "@/app/_components/Inputs/TextArea";
 import { Trans } from "@/app/_components/Trans/Trans";
+import { defaultPoliciticalGeocodingLevel } from "@/app/_lib/defaultFormData";
 import {
   METADATA_FORM_INPUTS,
   METADATA_FORM_MAX_LENGTH_LONG,
 } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
 import { MetaDataFormStepContainer } from "@/app/datenpflege/_components/MetaDataForm/partials/MetaDataFormStepContainer";
+import { i18n } from "@/i18n";
 import { MetaData } from "@/types/types";
 
 const exampleCode = `{

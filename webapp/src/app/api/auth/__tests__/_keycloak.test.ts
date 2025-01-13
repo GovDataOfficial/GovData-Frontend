@@ -1,7 +1,8 @@
-import { describe, test, vi, expect, beforeAll } from "vitest";
-import { Issuer } from "openid-client";
-import { getKeyCloakClient } from "../_keycloak";
+import { beforeAll, describe, expect, test, vi } from "vitest";
 import { redirect } from "next/navigation";
+import { Issuer } from "openid-client";
+
+import { getKeyCloakClient } from "../_keycloak";
 
 vi.mock("openid-client");
 vi.mock("next/navigation");

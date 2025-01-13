@@ -1,6 +1,7 @@
+import React from "react";
+
 import { PAGES } from "@/app/_lib/URLHelper";
 import { i18n } from "@/i18n";
-import React from "react";
 
 export function HomePageLink() {
   return (

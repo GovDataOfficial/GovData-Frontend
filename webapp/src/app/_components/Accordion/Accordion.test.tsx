@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { Accordion } from "@/app/_components/Accordion/Accordion";
 import userEvent from "@testing-library/user-event";
+
+import { Accordion } from "@/app/_components/Accordion/Accordion";
 
 describe("Accordion", () => {
   it("should render correct.", () => {

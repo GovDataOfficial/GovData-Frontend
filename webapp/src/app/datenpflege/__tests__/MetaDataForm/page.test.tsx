@@ -1,12 +1,13 @@
-import Page from "@/app/datenpflege/metadaten/erstellen/page";
 import { beforeAll, describe, expect, test, vi } from "vitest";
 import { render } from "@testing-library/react";
-import { fetchOrganizationsForUser } from "@/app/_lib/getData";
-import { getSessionOrRedirect } from "@/app/api/auth/_session";
-import { OrganizationSorted } from "@/types/types";
-import { METADATA_FORM_ID } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
-import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import { redirect } from "next/navigation";
+
+import { fetchOrganizationsForUser } from "@/app/_lib/getData";
+import { PAGES_AUTH } from "@/app/_lib/URLHelper";
+import { getSessionOrRedirect } from "@/app/api/auth/_session";
+import { METADATA_FORM_ID } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
+import Page from "@/app/datenpflege/metadaten/erstellen/page";
+import { OrganizationSorted } from "@/types/types";
 
 vi.mock("ioredis");
 vi.mock("@/app/api/auth/_session");

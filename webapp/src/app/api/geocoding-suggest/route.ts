@@ -1,5 +1,5 @@
-import { fetchGeocodingSuggest, fetchOSMSuggest } from "@/app/_lib/getData";
 import { isOSMActive } from "@/app/_lib/environment";
+import { fetchGeocodingSuggest, fetchOSMSuggest } from "@/app/_lib/getData";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

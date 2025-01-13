@@ -9,10 +9,6 @@
     @extend .bold;
     color: $clr-primary-500;
   }
-
-  a {
-    color: $clr-neutral-grey-800;
-  }
 }
 
 .info-box.info-box-success {
@@ -30,5 +26,9 @@
 
   .info-box-message {
     color: $clr-error-red-500;
+  }
+  // anchors inside error will get another color due to contrast issues.
+  a {
+    color: $clr-neutral-grey-800;
   }
 }

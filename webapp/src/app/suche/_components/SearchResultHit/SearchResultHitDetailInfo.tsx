@@ -1,6 +1,6 @@
 import { Tag } from "@/app/_components/Tag/Tag";
-import { i18n } from "@/i18n";
 import { TagHVD } from "@/app/_components/Tag/TagHVD";
+import { i18n } from "@/i18n";
 import { MetaDataResource } from "@/types/types";
 
 type SearchResultHitDetailInfo = {

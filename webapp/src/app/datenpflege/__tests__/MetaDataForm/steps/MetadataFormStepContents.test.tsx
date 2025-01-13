@@ -1,11 +1,12 @@
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { MetadataFormStepContents } from "@/app/datenpflege/_components/MetaDataForm/steps/MetadataFormStepContents";
+
 import {
   METADATA_FORM_INPUTS,
   METADATA_FORM_MAX_LENGTH_LONG,
   METADATA_FORM_MAX_LENGTH_MEDIUM,
 } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
+import { MetadataFormStepContents } from "@/app/datenpflege/_components/MetaDataForm/steps/MetadataFormStepContents";
 
 describe("MetadataFormStepContents", () => {
   const getTitle = () => screen.getByRole("textbox", { name: /titel/i });

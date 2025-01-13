@@ -1,7 +1,8 @@
 "use client";
-import { showOffCanvas } from "@/app/_components/OffCanvasMenu";
+
 import { Button } from "@/app/_components/Button/Button";
-import { SVG, icons } from "@/app/_components/SVG/SVG";
+import { showOffCanvas } from "@/app/_components/OffCanvasMenu";
+import { icons, SVG } from "@/app/_components/SVG/SVG";
 import { i18n } from "@/i18n";
 
 type FilterAreaOpenMenuButton = {

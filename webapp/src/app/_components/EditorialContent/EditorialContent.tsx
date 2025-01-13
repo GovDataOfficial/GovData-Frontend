@@ -1,10 +1,10 @@
-import { T3Page } from "@/types/types.typo3";
-import { filterT3ContentElements } from "@/types/typeGuards";
-import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
+import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
+import { filterT3ContentElements } from "@/types/typeGuards";
+import { T3Page } from "@/types/types.typo3";
 
 type EditorialContent = {
   pageData: T3Page | null | undefined;

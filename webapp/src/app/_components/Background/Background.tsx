@@ -1,6 +1,5 @@
 import { PropsWithChildren } from "react";
 
-import connectionmap from "./images/connectionmap.jpg";
 import connectionmap_mini_blog from "./images/connectionmap_mini_blog.jpg";
 import connectionmap_mini_data from "./images/connectionmap_mini_data.jpg";
 import connectionmap_mini_devcorner from "./images/connectionmap_mini_devcorner.jpg";
@@ -8,6 +7,7 @@ import connectionmap_mini_document from "./images/connectionmap_mini_document.jp
 import connectionmap_mini_info from "./images/connectionmap_mini_info.jpg";
 import connectionmap_mini_metadataquality from "./images/connectionmap_mini_metadataquality.jpg";
 import connectionmap_mini_showroom from "./images/connectionmap_mini_showroom.jpg";
+import connectionmap from "./images/connectionmap.jpg";
 
 type BackgroundImage =
   | "blog"

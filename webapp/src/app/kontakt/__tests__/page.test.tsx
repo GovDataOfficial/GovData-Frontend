@@ -1,6 +1,7 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
-import ContactPage from "../page";
 import { render, screen } from "@testing-library/react";
+
+import ContactPage from "../page";
 
 describe("Contact Page", () => {
   beforeAll(() => {

@@ -1,6 +1,7 @@
 // @vitest-environment node
 
 import { describe, expect, it } from "vitest";
+
 import {
   ALLOWLIST_METADATA_NOTES,
   sanitizeHTML,

@@ -26,7 +26,7 @@
 
 .details-reset {
   summary {
-    list-style: none
+    list-style: none;
   }
 
   summary::-webkit-details-marker {
@@ -37,7 +37,6 @@
 figure {
   margin: 0;
 }
-
 
 // remove cross sign in search fields to remove the content in Internet Explorer
 input[type="search"]::-ms-clear,

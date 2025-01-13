@@ -1,13 +1,14 @@
 "use client";
 
-import { i18n } from "@/i18n";
+import { useSearchParams } from "next/navigation";
+
 import {
   Autocomplete,
   AutocompleteHighlightedSuggestion,
   AutocompleteListItem,
 } from "@/app/_components/Autocomplete";
-import { useSearchParams } from "next/navigation";
 import { SPECIAL_FILTERS, URLHelper } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
 
 type SearchField = {
   keepFiltersForSearch?: boolean;

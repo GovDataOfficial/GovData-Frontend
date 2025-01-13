@@ -1,9 +1,10 @@
 "use client";
 
-import { i18n } from "@/i18n";
 import { useState } from "react";
+
 import { Button } from "@/app/_components/Button/Button";
 import { SearchDetailsInfoBoxGroup } from "@/app/suche/_components/SearchDetailsInfobox/partials/SearchDetailsInfoBoxGroup";
+import { i18n } from "@/i18n";
 
 type TermCategories = {
   tags: string[];

@@ -1,6 +1,6 @@
-import { i18n } from "@/i18n";
 import { MenuItem } from "@/app/_components/MenuItem/MenuItem";
 import { MenuItemMobile } from "@/app/_components/MenuItem/MenuItemMobile";
+import { i18n } from "@/i18n";
 
 const dataMenuItem: MenuItem = {
   href: "/daten",

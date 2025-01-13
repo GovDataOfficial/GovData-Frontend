@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { SearchResultsEmpty } from "@/app/suche/_components/SearchResults/SearchResultsEmpty";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+
+import { SearchResultsEmpty } from "@/app/suche/_components/SearchResults/SearchResultsEmpty";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),

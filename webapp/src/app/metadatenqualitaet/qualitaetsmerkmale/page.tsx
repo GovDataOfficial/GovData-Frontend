@@ -1,15 +1,16 @@
+import React from "react";
 import { Metadata } from "next";
-import { i18n } from "@/i18n";
-import { QualitaetsmerkmaleInfo } from "@/app/metadatenqualitaet/_components/QualitaetsmerkmaleInfo";
-import { MetaDataQualityCharts } from "@/app/metadatenqualitaet/_components/MetaDataQualityCharts";
+import { notFound } from "next/navigation";
+
+import { ContainerDiv } from "@/app/_components/Container";
+import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
+import { fetchMetaDataQuality } from "@/app/_lib/getData";
 import { DesignBoxDiscoverability } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxDiscoverability";
 import { DesignBoxUsability } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxUsability";
-import { fetchMetaDataQuality } from "@/app/_lib/getData";
+import { MetaDataQualityCharts } from "@/app/metadatenqualitaet/_components/MetaDataQualityCharts";
+import { QualitaetsmerkmaleInfo } from "@/app/metadatenqualitaet/_components/QualitaetsmerkmaleInfo";
+import { i18n } from "@/i18n";
 import { PageConstructor } from "@/types/types";
-import { ContainerDiv } from "@/app/_components/Container";
-import { notFound } from "next/navigation";
-import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
-import React from "react";
 
 export const metadata: Metadata = {
   title: i18n.t("meta.qualitaetsmerkmale.title"),

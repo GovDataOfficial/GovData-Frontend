@@ -1,18 +1,19 @@
+import React from "react";
+
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
-import { TeaserBoxNumber } from "@/app/_components/TeaserBox/partials/TeaserBoxNumber";
-import { TeaserBoxMastodon } from "@/app/_components/TeaserBox/partials/TeaserBoxMastodon";
-import React from "react";
-import { fetchMastodonData, fetchPortalNumbers } from "@/app/_lib/getData";
-import { i18n } from "@/i18n";
 import { icons } from "@/app/_components/SVG/iconMap";
-import { PortalNumbers } from "@/types/types";
+import { TeaserBoxMastodon } from "@/app/_components/TeaserBox/partials/TeaserBoxMastodon";
+import { TeaserBoxNumber } from "@/app/_components/TeaserBox/partials/TeaserBoxNumber";
+import { fetchMastodonData, fetchPortalNumbers } from "@/app/_lib/getData";
 import {
   createLinkToSearchWithHVD,
   createLinkToSearchWithType,
 } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
+import { PortalNumbers } from "@/types/types";
 
 function findTypeByName(name: string, data?: PortalNumbers) {
   return data?.filterMap?.type?.facetList?.find((type) => type.name === name);

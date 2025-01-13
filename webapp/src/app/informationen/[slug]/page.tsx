@@ -1,13 +1,14 @@
-import { PageConstructor } from "@/types/types";
-import { fetchMetadata, fetchTypo3Data } from "@/app/_lib/getData";
-import { endpoints } from "@/configuration/endpoints";
-import { findT3ContentElement } from "@/types/typeGuards";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+
 import { EditorialContent } from "@/app/_components/EditorialContent/EditorialContent";
 import { SiteNavigationT3 } from "@/app/_components/SiteNavBar/SiteNavigationT3";
-import { notFound } from "next/navigation";
-import { Metadata } from "next";
-import { i18n } from "@/i18n";
+import { fetchMetadata, fetchTypo3Data } from "@/app/_lib/getData";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
+import { endpoints } from "@/configuration/endpoints";
+import { i18n } from "@/i18n";
+import { findT3ContentElement } from "@/types/typeGuards";
+import { PageConstructor } from "@/types/types";
 
 async function getPageData(params: PageConstructor["params"]) {
   return fetchTypo3Data(endpoints.T3.informationen + `/${params.slug}`);

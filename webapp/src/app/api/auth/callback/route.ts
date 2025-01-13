@@ -1,11 +1,12 @@
+import { redirect } from "next/navigation";
+import { NextRequest } from "next/server";
+
+import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import {
   getCallbackUriFromRequest,
   getKeyCloakClient,
 } from "@/app/api/auth/_keycloak";
 import { getCodeVerifierSession, setSession } from "@/app/api/auth/_session";
-import { PAGES_AUTH } from "@/app/_lib/URLHelper";
-import { redirect } from "next/navigation";
-import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 

@@ -1,6 +1,7 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import { i18n } from "@/i18n";
 import { MetaDataResource } from "@/types/types";
-import { useCallback, useEffect, useRef, useState } from "react";
 
 export type MetadataRessourceFormInfo = {
   id: string;

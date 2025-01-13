@@ -1,13 +1,13 @@
-import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 import { Dispatch, SetStateAction } from "react";
-import { i18n } from "@/i18n";
+
+import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 import { MetaDataFormStickyNavigationItem } from "@/app/datenpflege/_components/MetaDataForm/stickNav/partials/MetaDataFormStickyNavigationItem";
+import { i18n } from "@/i18n";
 
 type MetadataFormStickyNavigation = {
   setCurrentStep: Dispatch<SetStateAction<number>>;
   currentStep: number;
   checkValidityOfStep: (step: number) => boolean;
-  mobile?: boolean;
   editMode?: boolean;
 };
 
@@ -15,7 +15,6 @@ export function MetadataFormStickyNavigation({
   setCurrentStep,
   currentStep,
   checkValidityOfStep,
-  mobile,
   editMode,
 }: MetadataFormStickyNavigation) {
   const { t } = i18n;
@@ -31,40 +30,29 @@ export function MetadataFormStickyNavigation({
     t("metadataform.step.summary"),
   ];
 
-  const NavigationList = (
-    <ul>
-      {items.map((item, index) => (
-        <MetaDataFormStickyNavigationItem
-          key={item}
-          index={index}
-          stepName={item}
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-          checkValidityOfStep={checkValidityOfStep}
-          editMode={editMode}
-        />
-      ))}
-    </ul>
-  );
-
-  if (mobile) {
-    return (
-      <nav
-        className="metadata-sticky-form-navigation mobile"
-        aria-label={i18n.t("metadataform.navigation.sticky.label")}
-      >
-        {NavigationList}
-        {/*<MetaDataFormStickyNavMobileErrors currentStep={currentStep} />*/}
-      </nav>
-    );
-  }
-
   return (
     <nav
       className="metadata-sticky-form-navigation"
       aria-label={i18n.t("metadataform.navigation.sticky.label")}
     >
-      <DesignBox noPadding>{NavigationList}</DesignBox>
+      <h2 className="sr-only">
+        {i18n.t("metadataform.navigation.sticky.label")}
+      </h2>
+      <DesignBox noPadding>
+        <ul>
+          {items.map((item, index) => (
+            <MetaDataFormStickyNavigationItem
+              key={item}
+              index={index}
+              stepName={item}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              checkValidityOfStep={checkValidityOfStep}
+              editMode={editMode}
+            />
+          ))}
+        </ul>
+      </DesignBox>
     </nav>
   );
 }

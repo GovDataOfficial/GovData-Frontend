@@ -51,7 +51,6 @@ fieldset {
   padding: 0;
 }
 
-
 input {
   @include outline-base();
   @extend .paragraph;
@@ -75,9 +74,9 @@ input {
 // Fix FF outline on button elements
 // We have reset the style from normalize.css
 button:-moz-focusring,
-[type=button]:-moz-focusring,
-[type=reset]:-moz-focusring,
-[type=submit]:-moz-focusring {
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
   @include outline-base();
 }
 
@@ -99,7 +98,6 @@ a,
   }
 }
 
-
 strong {
   font-family: inherit;
   font-size: inherit;
@@ -120,7 +118,8 @@ dd,
   @extend .paragraph;
 }
 
-th, .th {
+th,
+.th {
   @extend .paragraph;
   @extend .bold;
 }

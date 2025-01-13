@@ -1,3 +1,40 @@
+.metadata-form-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: map-get($spacers, 4);
+
+  .metadata-form-header-container {
+    grid-column-start: 2;
+  }
+
+  form {
+    display: flex;
+    flex-direction: row;
+
+    .metadata-form-sticky-nav-container {
+      margin-right: map-get($spacers, 3);
+    }
+
+    .metadata-form-step-container {
+      width: 100%;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    display: flex;
+    flex-direction: column;
+
+    .metadata-form-header-container {
+      margin-left: 0;
+    }
+
+    form {
+      flex-direction: column;
+    }
+  }
+}
+
 .step-container {
   h2,
   h3 {
@@ -16,10 +53,10 @@
   .gd-input:not(:last-of-type) {
     margin-bottom: map-get($spacers, 3);
   }
+}
 
-  &:has(+ .step-container[aria-hidden="false"]) {
-    //margin-bottom: map-get($spacers, 5);
-  }
+.edit-description-title {
+  color: $clr-neutral-grey-600;
 }
 
 #metadata-form {
@@ -27,16 +64,16 @@
     display: flex;
     gap: 30px;
     justify-content: space-between;
-  
+
     .gd-input {
       width: 50%;
-  
+
       textarea {
         resize: none;
         height: 250px;
       }
     }
-  
+
     .metadata-form-geolocation-code-example {
       @extend .gd-input;
       strong {
@@ -60,8 +97,8 @@
     padding-bottom: map-get($spacers, 3);
     margin-bottom: map-get($spacers, 4);
   }
-  
-  div:has( > button) + fieldset.contacts {
+
+  div:has(> button) + fieldset.contacts {
     margin-top: map-get($spacers, 5);
   }
 
@@ -74,7 +111,7 @@
       margin-top: 0rem;
     }
 
-    &:not(:last-child){
+    &:not(:last-child) {
       margin-bottom: map-get($spacers, 5);
     }
   }
@@ -86,41 +123,14 @@
 }
 
 .metadata-sticky-form-navigation {
-  position: fixed;
-  transform: translateY(35%);
-
-  &.mobile {
-    display: block;
-    transform: translate(0);
-    position: relative;
-
-    ul {
-      display: inline-flex;
-      margin: 0;
-      li {
-        width: 56px;
-        height: 56px;
-        padding: 0;
-        &:before {
-          height: 1px;
-          width: 21px;
-          transform: translate(-21px, 22px);
-        }
-      }
-    }
-
-    .sticky-nav-button {
-      .sticky-nav-button-text-container {
-        display: none
-      }
-    }
-  }
+  position: sticky;
+  top: 40px;
 
   .sticky-nav-error {
     @extend .paragraph-small;
+    display: block;
     color: $clr-error-red-400;
     margin: 0;
-    display: inline-block;
     text-align: left;
   }
 
@@ -131,9 +141,11 @@
     @extend .paragraph;
     @extend .bold;
 
-    .sticky-nav-button-text-container:hover {
-      cursor: pointer;
-      text-decoration: underline;
+    &:hover {
+      .sticky-nav-button-text-container-stepName {
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
   }
 
@@ -234,8 +246,44 @@
       background: $clr-neutral-grey-100;
       border-color: $clr-primary-400;
     }
-    .sticky-nav-button-text-container {
+    .sticky-nav-button-text-container-stepName {
       text-decoration: underline;
+    }
+  }
+
+  // mobile rewrites.
+  // TODO review @kblanken check if this is ok
+  @include media-breakpoint-down(sm) {
+    display: block;
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: translate(0);
+    background: transparent;
+
+    .design-box {
+      @include design-box-transparent;
+    }
+
+    ul {
+      display: inline-flex;
+      margin: 0;
+
+      li {
+        width: 56px;
+        height: 56px;
+        padding: 0;
+      }
+      li:not(:first-of-type):before {
+        height: 1px;
+        width: 21px;
+        transform: translate(-21px, 22px);
+      }
+    }
+    .sticky-nav-button {
+      .sticky-nav-button-text-container {
+        display: none;
+      }
     }
   }
 }

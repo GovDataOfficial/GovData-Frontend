@@ -1,3 +1,8 @@
+import { Agent } from "undici";
+
+import { convertToURLSearchParams } from "@/app/_lib/convertToSearchParams";
+import { FILTERS, SPECIAL_FILTERS } from "@/app/_lib/URLHelper";
+import { logger } from "@/logger/logger";
 import {
   CategoriesSorted,
   DefaultSortOption,
@@ -14,10 +19,7 @@ import {
   StateList,
 } from "@/types/types";
 import { T3Page } from "@/types/types.typo3";
-import { convertToURLSearchParams } from "@/app/_lib/convertToSearchParams";
-import { FILTERS, SPECIAL_FILTERS } from "@/app/_lib/URLHelper";
-import { Agent } from "undici";
-import { logger } from "@/logger/logger";
+
 const log = logger("getData.ts");
 
 const credentials = `${process.env.BE_GD_AUTH_USER}:${process.env.BE_GD_AUTH_PASSWORD}`;
@@ -255,7 +257,9 @@ export async function fetchMetadataForOrganizations(
     "activeFilters",
     "onlyEditorMetadata:hidePrivateDataset",
   );
-  toSend.searchParams.set("sortType", FILTERS.TITLE);
+
+  //result is subsequently sorted on the client-side within the MetaDataOverviewContainer component
+  toSend.searchParams.set("sortType", FILTERS.LAST_MODIFICATION);
   toSend.searchParams.set("ascending", "false");
   toSend.searchParams.set("numResults", "3000");
 

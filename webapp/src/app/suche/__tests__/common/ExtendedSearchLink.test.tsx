@@ -1,7 +1,8 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { ExtendedSearchLink } from "@/app/suche/_components/common/ExtendedSearchLink";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+
+import { ExtendedSearchLink } from "@/app/suche/_components/common/ExtendedSearchLink";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),

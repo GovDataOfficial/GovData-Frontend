@@ -1,14 +1,14 @@
 "use client";
 
 import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
-import { i18n } from "@/i18n";
+import { Direction, useSortableData } from "@/app/_lib/hooks/useSortableData";
 import { MetaDataOverviewMobile } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewMobile";
+import { MetaDataOverviewTable } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewTable";
 import {
   MetaDataOption,
   MetaDataRecord,
 } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewTypes";
-import { Direction, useSortableData } from "@/app/_lib/hooks/useSortableData";
-import { MetaDataOverviewTable } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewTable";
+import { i18n } from "@/i18n";
 
 const sortDateString = (a: string, b: string, direction?: Direction) => {
   const aDate = new Date(a as string).getTime();
@@ -27,8 +27,8 @@ const metaDataOptions: MetaDataOption[] = [
     sort: sortDateString,
   },
   {
-    key: "lastModified",
-    labelKey: "metadataoverview.table.lastModified",
+    key: "metadataModified",
+    labelKey: "metadataoverview.table.metadataModified",
     sort: sortDateString,
   },
 ];
@@ -41,8 +41,8 @@ export function MetaDataOverviewContainer({ data }: MetaDataOverviewContainer) {
   const { t } = i18n;
   const { sortByKeyAndDirection, sortedData, sortConfig } =
     useSortableData<MetaDataRecord>(data, metaDataOptions, {
-      key: "title",
-      direction: "ascending",
+      key: "metadataModified",
+      direction: "descending",
     });
 
   return (

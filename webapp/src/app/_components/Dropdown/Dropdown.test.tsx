@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { Dropdown } from "@/app/_components/Dropdown/Dropdown";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
+import { Dropdown } from "@/app/_components/Dropdown/Dropdown";
 
 describe("Dropdown", () => {
   const options = ["some", "new", "bla"];

@@ -40,7 +40,6 @@ $rem-base: 16px;
   @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
 }
 
-
 $focus-common-outline: 3px solid #0073a8;
 $focus-common-outline-offset: 2px;
 $focus-common-box-shadow: none;

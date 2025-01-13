@@ -1,7 +1,9 @@
 import { describe, expect, test, vi } from "vitest";
+import { redirect } from "next/navigation";
+import { NextRequest } from "next/server.js";
+
 import { getKeyCloakClient, KeycloakClient } from "@/app/api/auth/_keycloak";
 import { deleteSession, getSession } from "@/app/api/auth/_session";
-import { redirect } from "next/navigation";
 
 vi.mock("ioredis");
 vi.mock("next/headers");
@@ -26,7 +28,7 @@ describe("auth / logout", () => {
     vi.mocked(getSession).mockResolvedValue(mockSession);
     vi.mocked(getKeyCloakClient).mockResolvedValue(keyCloakClientMock);
     const { GET } = await import("../../logout/route.js");
-    await GET();
+    await GET(new NextRequest("https://www.foo.de"));
 
     expect(keyCloakClientMock.endSessionUrl).toHaveBeenCalledWith({
       id_token_hint: mockSession.id_token,

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
+
 import { EditorialContent } from "@/app/_components/EditorialContent/EditorialContent";
 import { T3Page } from "@/types/types.typo3";
 

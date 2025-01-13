@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
+
 import { HeaderNavigation } from "@/app/_components/Header/HeaderNavigation";
 
 describe("HeaderNavigation", () => {

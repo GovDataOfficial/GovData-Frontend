@@ -1,4 +1,5 @@
 import sanitize from "sanitize-html";
+
 import { SearchResults } from "@/types/types";
 
 export const ALLOWLIST_METADATA_NOTES = {

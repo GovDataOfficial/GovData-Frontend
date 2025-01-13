@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { AutocompleteHighlightedSuggestion } from "@/app/_components/Autocomplete/AutocompleteHighlightedSuggestion";
 import { render } from "@testing-library/react";
+
+import { AutocompleteHighlightedSuggestion } from "@/app/_components/Autocomplete/AutocompleteHighlightedSuggestion";
 
 describe("AutocompleteHighlightedSuggestion", () => {
   it("should correctly highlight inputvalue if given", () => {

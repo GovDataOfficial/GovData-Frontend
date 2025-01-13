@@ -1,6 +1,8 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
+
 import { SearchDetailsInfoboxDataSet } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxDataset";
+
 import { metaDataTestProps } from "../props";
 
 vi.mock("@/app/_lib/organization", () => ({

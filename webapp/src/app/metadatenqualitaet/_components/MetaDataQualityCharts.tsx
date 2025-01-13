@@ -1,12 +1,13 @@
-import { MetaDataQuality, NextJSSearchParams } from "@/types/types";
-import { MetaDataQualityFilterArea } from "@/app/metadatenqualitaet/_components/MetaDataQualityFilterArea";
-import { FilterAreaOpenMenuButton } from "@/app/_components/FilterArea/FilterAreaOpenMenuButton";
 import { PropsWithChildren } from "react";
-import { OffCanvasPortal } from "@/app/_components/OffCanvasMenu/OffCanvasPortal";
+
 import {
   ContainerDiv,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
+import { FilterAreaOpenMenuButton } from "@/app/_components/FilterArea/FilterAreaOpenMenuButton";
+import { OffCanvasPortal } from "@/app/_components/OffCanvasMenu/OffCanvasPortal";
+import { MetaDataQualityFilterArea } from "@/app/metadatenqualitaet/_components/MetaDataQualityFilterArea";
+import { MetaDataQuality, NextJSSearchParams } from "@/types/types";
 
 export function MetaDataQualityCharts({
   data,

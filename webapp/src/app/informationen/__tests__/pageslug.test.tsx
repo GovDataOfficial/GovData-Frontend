@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import InformationSlugPage from "../[slug]/page";
 import { notFound } from "next/navigation";
+
+import InformationSlugPage from "../[slug]/page";
 
 vi.mock("@/app/_lib/getData", () => ({
   fetchTypo3Data: vi.fn().mockResolvedValue(undefined),

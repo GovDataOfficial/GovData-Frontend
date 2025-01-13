@@ -1,9 +1,12 @@
-import React from "react";
 import { render, screen, waitFor, within } from "@testing-library/react";
+import React from "react";
+
 import "@testing-library/jest-dom";
-import { describe, it, expect, vi } from "vitest";
-import { MetaDataOverviewMobile } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewMobile";
+
+import { describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
+
+import { MetaDataOverviewMobile } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewMobile";
 
 vi.mock("@/app/_components/Time/TimeWithDate", () => ({
   TimeWithDate: ({ date }: { date: string }) => <span>{date}</span>,
@@ -16,13 +19,13 @@ describe("MetaDataOverviewMobile", () => {
         id: "1",
         title: "Test Title 1",
         created: "2023-01-01",
-        lastModified: "2023-02-01",
+        metadataModified: "2023-02-01",
       },
       {
         id: "2",
         title: "Test Title 2",
         created: "2023-03-01",
-        lastModified: "2023-04-01",
+        metadataModified: "2023-04-01",
       },
     ],
     options: [
@@ -39,7 +42,7 @@ describe("MetaDataOverviewMobile", () => {
     defaultProps.data.forEach((d) => {
       screen.getByText(d.title);
       screen.getByText(d.created!);
-      screen.getByText(d.lastModified!);
+      screen.getByText(d.metadataModified!);
     });
   });
 

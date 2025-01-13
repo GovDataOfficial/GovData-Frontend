@@ -1,7 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { MetadataFormStepAdditional } from "@/app/datenpflege/_components/MetaDataForm/steps/MetadataFormStepAdditional";
+
 import { METADATA_FORM_MAX_LENGTH_LONG } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
+import { MetadataFormStepAdditional } from "@/app/datenpflege/_components/MetaDataForm/steps/MetadataFormStepAdditional";
 
 describe("MetadataFormStepAdditional", () => {
   const commonStepProps = {

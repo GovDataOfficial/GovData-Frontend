@@ -1,9 +1,11 @@
-import Page, { metadata } from "./page";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { hasSessionCookie } from "@/app/api/auth/_session";
 import { redirect } from "next/navigation";
+
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
+import { hasSessionCookie } from "@/app/api/auth/_session";
+
+import Page, { metadata } from "./page";
 
 vi.mock("ioredis");
 vi.mock("@/app/api/auth/_session");

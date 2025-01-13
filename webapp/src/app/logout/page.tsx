@@ -1,16 +1,17 @@
+import React from "react";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
+
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
-import React from "react";
-import { hasSessionCookie } from "@/app/api/auth/_session";
-import { redirect } from "next/navigation";
 import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 import { HomePageLink } from "@/app/_components/HomePageLink/HomePageLink";
-import { i18n } from "@/i18n";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import { API_ENDPOINTS } from "@/app/api/apiEndpoints";
+import { hasSessionCookie } from "@/app/api/auth/_session";
+import { i18n } from "@/i18n";
 
 export const metadata: Metadata = {
   title: i18n.t("meta.logout.title"),

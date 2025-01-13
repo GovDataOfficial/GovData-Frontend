@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { HomePageLink } from "@/app/_components/HomePageLink/HomePageLink";
 import { render, screen } from "@testing-library/react";
+
+import { HomePageLink } from "@/app/_components/HomePageLink/HomePageLink";
 
 describe("Homepagelink", () => {
   it("should render correct markup", () => {

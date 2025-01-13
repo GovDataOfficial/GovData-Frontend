@@ -1,6 +1,7 @@
-import { i18n } from "@/i18n";
-import { SVG, icons } from "@/app/_components/SVG/SVG";
 import { PropsWithChildren } from "react";
+
+import { icons, SVG } from "@/app/_components/SVG/SVG";
+import { i18n } from "@/i18n";
 
 type SearchResultFilterTag = {
   type: string;

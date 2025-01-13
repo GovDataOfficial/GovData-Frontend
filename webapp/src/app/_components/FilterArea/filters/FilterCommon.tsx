@@ -1,14 +1,15 @@
 "use client";
 
-import { i18n } from "@/i18n";
-import { FilterResultCount } from "@/app/_components/FilterArea/FilterResultCount";
 import { useEffect, useMemo, useState } from "react";
-import { SVG, icons } from "@/app/_components/SVG/SVG";
-import { Accordion } from "@/app/_components/Accordion/Accordion";
 import { useSearchParams } from "next/navigation";
-import { RecordFilterMap } from "@/types/types";
+
+import { Accordion } from "@/app/_components/Accordion/Accordion";
+import { FilterResultCount } from "@/app/_components/FilterArea/FilterResultCount";
+import { icons, SVG } from "@/app/_components/SVG/SVG";
 import { URLHelper } from "@/app/_lib/URLHelper";
+import { i18n } from "@/i18n";
 import { isNotNullOrUndefined } from "@/types/typeGuards";
+import { RecordFilterMap } from "@/types/types";
 
 export type FilterCommonConsumer = {
   filterMap: RecordFilterMap;

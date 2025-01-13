@@ -1,11 +1,12 @@
-import { MetaData, ShowCaseData } from "@/types/types";
-import { MetaInfoHeadlineIcon } from "@/app/suche/_components/common/MetaInfoHeadlineIcon";
+import Image from "next/image";
+
+import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 import {
   ALLOWLIST_METADATA_NOTES,
   sanitizeHTML,
 } from "@/app/_lib/sanitizer/sanitizeHtml";
-import Image from "next/image";
-import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
+import { MetaInfoHeadlineIcon } from "@/app/suche/_components/common/MetaInfoHeadlineIcon";
+import { MetaData, ShowCaseData } from "@/types/types";
 
 type SearchDetailsMetaInfo = {
   data: MetaData | ShowCaseData;

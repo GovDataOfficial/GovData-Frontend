@@ -1,4 +1,5 @@
 import { createInstance, InitOptions } from "i18next";
+
 import de from "@/i18n/locales/de.json";
 
 const options: InitOptions = {

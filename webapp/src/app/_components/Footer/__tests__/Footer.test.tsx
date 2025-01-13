@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
+
 import { Footer } from "@/app/_components/Footer/Footer";
 
 vi.mock("@/app/_lib/getData", () => ({

@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+
 import { metadata } from "../page";
 
 describe("Kartensuche Page", () => {

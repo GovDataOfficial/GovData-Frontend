@@ -1,16 +1,16 @@
+import { Time } from "@/app/_components/Time/Time";
+import { findHvdCategory } from "@/app/_lib/hvdCategories";
+import { getOrganizationDisplayName } from "@/app/_lib/organization";
+import { findStateById } from "@/app/_lib/stateList";
+import { SPECIAL_FILTERS, URLHelper } from "@/app/_lib/URLHelper";
+import { SearchResultFilterTag } from "@/app/suche/_components/SearchResultFilterTags/partials/SearchResultFilterTag";
+import { i18n } from "@/i18n";
+import { isNotNullOrUndefined } from "@/types/typeGuards";
 import {
   CleanedActiveFilters,
   NextJSSearchParams,
   RecordFilterMap,
 } from "@/types/types";
-import { i18n } from "@/i18n";
-import { SearchResultFilterTag } from "@/app/suche/_components/SearchResultFilterTags/partials/SearchResultFilterTag";
-import { isNotNullOrUndefined } from "@/types/typeGuards";
-import { SPECIAL_FILTERS, URLHelper } from "@/app/_lib/URLHelper";
-import { Time } from "@/app/_components/Time/Time";
-import { findStateById } from "@/app/_lib/stateList";
-import { findHvdCategory } from "@/app/_lib/hvdCategories";
-import { getOrganizationDisplayName } from "@/app/_lib/organization";
 
 type SearchResultFilterTags = {
   cleanedActiveFilters: CleanedActiveFilters;

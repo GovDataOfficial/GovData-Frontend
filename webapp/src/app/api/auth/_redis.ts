@@ -1,6 +1,9 @@
 "server-only";
+
 import Redis from "ioredis";
+
 import { logger } from "@/logger/logger";
+
 const log = logger("_redis.ts");
 
 let redisClient: Redis | null = null;

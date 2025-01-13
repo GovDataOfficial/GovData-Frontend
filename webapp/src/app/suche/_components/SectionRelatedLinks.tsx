@@ -1,7 +1,7 @@
-import { ShowCaseData } from "@/types/types";
-import { i18n } from "@/i18n";
 import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 import { ExternalLink } from "@/app/_components/ExternalLink/ExternalLink";
+import { i18n } from "@/i18n";
+import { ShowCaseData } from "@/types/types";
 
 type SectionRelatedLinks = {
   data: ShowCaseData;

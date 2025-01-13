@@ -1,8 +1,8 @@
-import { icons, SVG } from "@/app/_components/SVG/SVG";
 import { Button } from "@/app/_components/Button/Button";
-import { i18n } from "@/i18n";
-import { API_ENDPOINTS } from "@/app/api/apiEndpoints";
+import { icons, SVG } from "@/app/_components/SVG/SVG";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
+import { API_ENDPOINTS } from "@/app/api/apiEndpoints";
+import { i18n } from "@/i18n";
 
 type MetaDataOverviewButtonDelete = {
   dataTitle: string;

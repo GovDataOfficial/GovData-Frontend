@@ -1,4 +1,5 @@
 import CSPBuilder from "content-security-policy-builder";
+
 import { MiddlewareFactory } from "@/middlewares/types";
 
 // Default CSP directives based on helmet js.

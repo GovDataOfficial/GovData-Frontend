@@ -1,11 +1,11 @@
-import { i18n } from "@/i18n";
 import { DropdownSelect } from "@/app/_components/Dropdown/DropdownSelect";
 import {
   Direction,
-  SortConfig,
   SortableData,
+  SortConfig,
 } from "@/app/_lib/hooks/useSortableData";
 import { MetaDataOption } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewTypes";
+import { i18n } from "@/i18n";
 
 export type MetaDataOverviewMobileSort = {
   options: MetaDataOption[];

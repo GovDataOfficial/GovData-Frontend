@@ -1,7 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { render, screen, within } from "@testing-library/react";
-import { RequestError } from "@/app/datenpflege/_components/MetaDataForm/useMetadataForm";
+
 import { MetaDataFormRequestError } from "@/app/datenpflege/_components/MetaDataForm/partials/MetadataFormRequestError";
+import { RequestError } from "@/app/datenpflege/_components/MetaDataForm/useMetadataForm";
 
 describe("MetaDataFormRequestError", () => {
   test("should render correct alert for general error", () => {

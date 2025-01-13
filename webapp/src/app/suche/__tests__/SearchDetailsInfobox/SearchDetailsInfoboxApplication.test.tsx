@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { showCaseTestData } from "../props";
+
 import { SearchDetailsInfoboxApplication } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxApplication";
+
+import { showCaseTestData } from "../props";
 
 describe("SearchDetailsInfoboxApplication", () => {
   it("should render correct headline", async () => {

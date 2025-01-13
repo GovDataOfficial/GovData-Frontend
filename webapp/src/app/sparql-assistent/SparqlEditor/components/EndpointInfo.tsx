@@ -1,6 +1,6 @@
-import { Trans } from "@/app/_components/Trans/Trans";
-import { InfoIcon } from "@/app/_components/InfoIcon/InfoIcon";
 import { ExternalLink } from "@/app/_components/ExternalLink/ExternalLink";
+import { InfoIcon } from "@/app/_components/InfoIcon/InfoIcon";
+import { Trans } from "@/app/_components/Trans/Trans";
 
 export function EndpointInfo() {
   return (

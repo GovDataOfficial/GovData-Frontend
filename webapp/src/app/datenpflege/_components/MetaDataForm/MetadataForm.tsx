@@ -1,38 +1,45 @@
 "use client";
 
 import { useRef } from "react";
-import { MetadataFormStepData } from "./steps/MetadataFormStepData";
-import { MetadataFormStepContents } from "./steps/MetadataFormStepContents";
-import { MetadataFormStepGeo } from "./steps/MetadataFormStepGeo";
-import { MetadataFormStepTime } from "./steps/MetadataFormStepTime";
-import { MetadataFormStepResources } from "./steps/resources/MetadataFormStepResources";
-import { MetadataFormStepAdditional } from "./steps/MetadataFormStepAdditional";
-import { MetadataFormBottomNavigation } from "./partials/MetadataFormBottomNavigation";
+
+import { RequiredAsteriskInfo } from "@/app/_components/Inputs/partials/RequiredAsteriskInfo";
+import { icons, SVG } from "@/app/_components/SVG/SVG";
+import { Trans } from "@/app/_components/Trans/Trans";
+import { PAGES_AUTH } from "@/app/_lib/URLHelper";
+import {
+  METADATA_FORM_ID,
+  METADATA_FORM_INPUTS,
+} from "@/app/datenpflege/_components/MetaDataForm/formConstants";
+import { MetadataFormHelpBox } from "@/app/datenpflege/_components/MetaDataForm/partials/MetadataFormHelpBox";
+import { MetaDataFormRequestError } from "@/app/datenpflege/_components/MetaDataForm/partials/MetadataFormRequestError";
+import { MetadataFormStepContacts } from "@/app/datenpflege/_components/MetaDataForm/steps/contacts/MetadataFormStepContacts";
+import { MetadataFormStickyNavigation } from "@/app/datenpflege/_components/MetaDataForm/stickNav/MetadataFormStickyNavigation";
+import { useMetadataForm } from "@/app/datenpflege/_components/MetaDataForm/useMetadataForm";
+import { useMetadataFormNavigation } from "@/app/datenpflege/_components/MetaDataForm/useMetadataFormNavigation";
+import { i18n } from "@/i18n";
 import {
   CategoriesSorted,
   LicenseActiveSorted,
   MetaData,
   OrganizationSorted,
 } from "@/types/types";
-import { RequiredAsteriskInfo } from "@/app/_components/Inputs/partials/RequiredAsteriskInfo";
-import { i18n } from "@/i18n";
-import { useMetadataForm } from "@/app/datenpflege/_components/MetaDataForm/useMetadataForm";
-import { MetadataFormStickyNavigation } from "@/app/datenpflege/_components/MetaDataForm/stickNav/MetadataFormStickyNavigation";
-import {
-  METADATA_FORM_ID,
-  METADATA_FORM_INPUTS,
-} from "@/app/datenpflege/_components/MetaDataForm/formConstants";
-import { MetadataFormStepContacts } from "@/app/datenpflege/_components/MetaDataForm/steps/contacts/MetadataFormStepContacts";
-import { Trans } from "@/app/_components/Trans/Trans";
-import { MetaDataFormRequestError } from "@/app/datenpflege/_components/MetaDataForm/partials/MetadataFormRequestError";
-import { useMetadataFormNavigation } from "@/app/datenpflege/_components/MetaDataForm/useMetadataFormNavigation";
+
+import { MetadataFormBottomNavigation } from "./partials/MetadataFormBottomNavigation";
+import { MetadataFormStepAdditional } from "./steps/MetadataFormStepAdditional";
+import { MetadataFormStepContents } from "./steps/MetadataFormStepContents";
+import { MetadataFormStepData } from "./steps/MetadataFormStepData";
+import { MetadataFormStepGeo } from "./steps/MetadataFormStepGeo";
+import { MetadataFormStepTime } from "./steps/MetadataFormStepTime";
+import { MetadataFormStepResources } from "./steps/resources/MetadataFormStepResources";
 
 type MetadataForm = {
   categories?: CategoriesSorted;
   licenses?: LicenseActiveSorted;
   organizations: OrganizationSorted;
   metaData?: MetaData;
-  mailFitko?: string;
+  mailFitko: string;
+  metadataGuideLink: string;
+  metadataDcatapLink: string;
 };
 
 export function MetadataForm({
@@ -41,6 +48,8 @@ export function MetadataForm({
   organizations,
   metaData,
   mailFitko,
+  metadataGuideLink,
+  metadataDcatapLink,
 }: MetadataForm) {
   const editMode = !!metaData;
   const infoRef = useRef<HTMLDivElement>(null);
@@ -59,16 +68,16 @@ export function MetadataForm({
   const { t } = i18n;
 
   return (
-    <div className="row">
-      <div className="d-none d-md-block col-md-3">
-        <MetadataFormStickyNavigation
-          setCurrentStep={setCurrentStep}
-          currentStep={currentStep}
-          checkValidityOfStep={checkValidityOfStep}
-          editMode={editMode}
-        />
-      </div>
-      <div className="col">
+    <div className="metadata-form-container">
+      <div className="metadata-form-header-container">
+        <div className="mb-2_5">
+          <a href={PAGES_AUTH.manage_data}>
+            <SVG icon={icons.arrowLeftLongBlue} size={"big"} />
+            <span className="ms-1_5">
+              {i18n.t("metadataform.navigation.myDatasets")}
+            </span>
+          </a>
+        </div>
         <div ref={infoRef}>
           {isSummary && requestError && (
             <MetaDataFormRequestError
@@ -77,27 +86,36 @@ export function MetadataForm({
             />
           )}
         </div>
-        <h1 className="mt-0">
-          {editMode ? t("metadataform.edit") : t("metadataform.create")}
-        </h1>
-
+        <h1>{editMode ? t("metadataform.edit") : t("metadataform.create")}</h1>
         {editMode && (
           <Trans
             i18nKey="metadataform.edit.current"
-            params={{ name: <strong>„{metaData?.title}”</strong> }}
+            params={{
+              name: (
+                <strong className="edit-description-title">
+                  „{metaData?.title}”
+                </strong>
+              ),
+            }}
             htmlElement="paragraph"
+            className="paragraph-small"
           />
         )}
-        <div className="d-md-none">
-          <MetadataFormStickyNavigation
-            setCurrentStep={setCurrentStep}
-            currentStep={currentStep}
-            checkValidityOfStep={checkValidityOfStep}
-            mobile
-            editMode={editMode}
+      </div>
+      <div className="metadata-form-sticky-nav-container">
+        <MetadataFormStickyNavigation
+          setCurrentStep={setCurrentStep}
+          currentStep={currentStep}
+          checkValidityOfStep={checkValidityOfStep}
+          editMode={editMode}
+        />
+      </div>
+      <form id={METADATA_FORM_ID} {...formProps}>
+        <div className="metadata-form-step-container">
+          <MetadataFormHelpBox
+            metadataGuideLink={metadataGuideLink}
+            metadataDcatapLink={metadataDcatapLink}
           />
-        </div>
-        <form id={METADATA_FORM_ID} {...formProps}>
           {isSummary && (
             <>
               <h2 className="mb-1">{i18n.t("metadataform.step.summary")}</h2>
@@ -106,8 +124,7 @@ export function MetadataForm({
               </p>
             </>
           )}
-
-          <RequiredAsteriskInfo className="mb-5" />
+          <RequiredAsteriskInfo className="mt-2" />
 
           {editMode && metaData && (
             <input
@@ -179,8 +196,8 @@ export function MetadataForm({
                 : t("metadataform.navigation.submit.create")
             }
           />
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 }

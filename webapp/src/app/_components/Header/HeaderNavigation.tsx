@@ -1,11 +1,11 @@
+import React from "react";
 import Image from "next/image";
 
+import { NavbarToggleButton } from "@/app/_components/Header/NavbarToggleButton";
 import { MenuItem } from "@/app/_components/MenuItem/MenuItem";
+import { GlobalIds } from "@/app/_lib/globalIds";
 import { menuSettings } from "@/configuration/menuSettings";
 import { i18n } from "@/i18n";
-import { NavbarToggleButton } from "@/app/_components/Header/NavbarToggleButton";
-import React from "react";
-import { GlobalIds } from "@/app/_lib/globalIds";
 
 export function HeaderNavigation() {
   return (

@@ -1,24 +1,25 @@
-import { i18n } from "@/i18n";
+import React from "react";
+import { Metadata } from "next";
+
+import { ButtonLink } from "@/app/_components/Button/ButtonLink";
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
-import React from "react";
-import { PAGES_AUTH } from "@/app/_lib/URLHelper";
-import { ButtonLink } from "@/app/_components/Button/ButtonLink";
 import { icons, SVG } from "@/app/_components/SVG/SVG";
-import { getSessionOrRedirect } from "@/app/api/auth/_session";
-import { MetaDataOverviewContainer } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewContainer";
-import { MetaDataWelcome } from "@/app/datenpflege/_components/MetaDataWelcome";
-import { Metadata } from "next";
 import {
   fetchMetadataForOrganizations,
   fetchOrganizationsForUser,
 } from "@/app/_lib/getData";
 import { hasContributorId } from "@/app/_lib/organization";
+import { PAGES_AUTH } from "@/app/_lib/URLHelper";
+import { getSessionOrRedirect } from "@/app/api/auth/_session";
 import { MetaDataOrganizationError } from "@/app/datenpflege/_components/MetaDataOrganizationError";
-import { PageConstructor } from "@/types/types";
+import { MetaDataOverviewContainer } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewContainer";
 import { MetaDataOverviewDeleteInfoBox } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewDeleteInfoBox";
+import { MetaDataWelcome } from "@/app/datenpflege/_components/MetaDataWelcome";
+import { i18n } from "@/i18n";
+import { PageConstructor } from "@/types/types";
 
 export const metadata: Metadata = {
   title: i18n.t("meta.managedata.title"),

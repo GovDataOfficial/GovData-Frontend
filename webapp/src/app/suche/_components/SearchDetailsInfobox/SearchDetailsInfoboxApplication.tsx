@@ -1,10 +1,10 @@
-import { ShowCaseData } from "@/types/types";
-import { i18n } from "@/i18n";
-import { SearchDetailsInfoBoxGroup } from "@/app/suche/_components/SearchDetailsInfobox/partials/SearchDetailsInfoBoxGroup";
-import { TermCategories } from "@/app/suche/_components/SearchDetailsInfobox/partials/TermCategories";
+import { ExternalLink } from "@/app/_components/ExternalLink/ExternalLink";
 import { DLTags } from "@/app/suche/_components/SearchDetailsInfobox/partials/DLTags";
 import { SearchDetailsInfoBoxContainer } from "@/app/suche/_components/SearchDetailsInfobox/partials/SearchDetailsInfoBoxContainer";
-import { ExternalLink } from "@/app/_components/ExternalLink/ExternalLink";
+import { SearchDetailsInfoBoxGroup } from "@/app/suche/_components/SearchDetailsInfobox/partials/SearchDetailsInfoBoxGroup";
+import { TermCategories } from "@/app/suche/_components/SearchDetailsInfobox/partials/TermCategories";
+import { i18n } from "@/i18n";
+import { ShowCaseData } from "@/types/types";
 
 type SearchDetailsInfoboxDataset = {
   data: ShowCaseData;

@@ -1,7 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import InformationPage from "../page";
 import { notFound, redirect } from "next/navigation";
+
 import { fetchTypo3Data } from "@/app/_lib/getData";
+
+import InformationPage from "../page";
 
 vi.mock("@/app/_lib/getData", () => ({
   fetchTypo3Data: vi.fn(),

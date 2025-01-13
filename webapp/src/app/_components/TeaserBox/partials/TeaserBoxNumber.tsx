@@ -1,6 +1,7 @@
-import { TeaserBox } from "@/app/_components/TeaserBox/partials/TeaserBox";
-import { SVG, icons } from "@/app/_components/SVG/SVG";
 import React from "react";
+
+import { icons, SVG } from "@/app/_components/SVG/SVG";
+import { TeaserBox } from "@/app/_components/TeaserBox/partials/TeaserBox";
 import { numberToLocaleString } from "@/app/_lib/number";
 
 type TeaserBoxNumber = {

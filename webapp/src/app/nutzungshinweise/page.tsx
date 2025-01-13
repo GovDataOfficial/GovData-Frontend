@@ -1,7 +1,7 @@
-import { fetchTypo3Data } from "@/app/_lib/getData";
 import { EditorialContent } from "@/app/_components/EditorialContent/EditorialContent";
-import { endpoints } from "@/configuration/endpoints";
+import { fetchTypo3Data } from "@/app/_lib/getData";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
+import { endpoints } from "@/configuration/endpoints";
 import { i18n } from "@/i18n";
 
 export async function generateMetadata() {

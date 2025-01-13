@@ -1,8 +1,9 @@
 // @vitest-environment node
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getUserInformation } from "@/app/api/auth/_session";
+
 import { sendAuthorizedRequest } from "@/app/api/_lib/sendAuthorizedRequest";
+import { getUserInformation } from "@/app/api/auth/_session";
 
 vi.mock("ioredis");
 vi.mock("@/app/api/auth/_session");

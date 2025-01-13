@@ -1,10 +1,10 @@
-import { i18n } from "@/i18n";
-import { Trans } from "@/app/_components/Trans/Trans";
-import { ExternalLink } from "@/app/_components/ExternalLink/ExternalLink";
 import {
   ContainerSection,
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
+import { ExternalLink } from "@/app/_components/ExternalLink/ExternalLink";
+import { Trans } from "@/app/_components/Trans/Trans";
+import { i18n } from "@/i18n";
 
 export function QualitaetsmerkmaleInfo() {
   return (

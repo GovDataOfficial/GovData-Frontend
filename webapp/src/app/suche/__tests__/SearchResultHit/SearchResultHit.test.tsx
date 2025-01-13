@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
+
 import { SearchResultHit } from "@/app/suche/_components/SearchResultHit/SearchResultHit";
 import { SearchResultHit as SearchResultHitType } from "@/types/types";
 
@@ -14,6 +15,7 @@ const mockedHit = {
   lastModified: "never",
   targetLink: "/targetLink",
   created: "2024-10-31T12:47:12",
+  metadataModified: "2024-10-31T12:47:12",
 } as SearchResultHitType;
 
 describe("SearchResultHit", () => {

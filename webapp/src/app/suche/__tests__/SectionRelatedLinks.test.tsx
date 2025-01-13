@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { SectionRelatedLinks } from "@/app/suche/_components/SectionRelatedLinks";
+
 import { showCaseTestData } from "@/app/suche/__tests__/props";
+import { SectionRelatedLinks } from "@/app/suche/_components/SectionRelatedLinks";
 import { ShowCaseData } from "@/types/types";
 
 describe("SectionRelatedLinks", () => {

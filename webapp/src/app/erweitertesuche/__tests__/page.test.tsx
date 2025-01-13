@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { metadata } from "../page";
 
 describe("Extended Search Page", () => {

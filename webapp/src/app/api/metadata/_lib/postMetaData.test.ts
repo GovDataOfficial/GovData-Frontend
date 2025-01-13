@@ -2,8 +2,9 @@
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { postMetadata } from "./postMetadata";
 import { sendAuthorizedRequest } from "@/app/api/_lib/sendAuthorizedRequest";
+
+import { postMetadata } from "./postMetadata";
 
 vi.mock("@/app/api/_lib/sendAuthorizedRequest");
 

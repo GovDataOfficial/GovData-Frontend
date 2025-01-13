@@ -1,9 +1,9 @@
 import { FilterArea } from "@/app/_components/FilterArea/FilterArea";
-import { MetaDataQuality, NextJSSearchParams } from "@/types/types";
-import { ALL_PUBLISHERS } from "@/app/metadatenqualitaet/_components/Charts/common";
-import { SVG, icons } from "@/app/_components/SVG/SVG";
-import { i18n } from "@/i18n";
+import { icons, SVG } from "@/app/_components/SVG/SVG";
 import { FILTERS, URLHelper } from "@/app/_lib/URLHelper";
+import { ALL_PUBLISHERS } from "@/app/metadatenqualitaet/_components/Charts/common";
+import { i18n } from "@/i18n";
+import { MetaDataQuality, NextJSSearchParams } from "@/types/types";
 
 type MetaDataQualityFilterArea = {
   data: MetaDataQuality[];
