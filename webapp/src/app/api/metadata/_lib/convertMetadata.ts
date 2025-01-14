@@ -1,9 +1,9 @@
-import { METADATA_FORM_INPUTS } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
-import { MetaDataContactRole } from "@/types/types";
+import { METADATA_FORM_INPUTS } from "@/app/datenpflege/_components/MetadataForm/formConstants";
+import { MetadataContactRole } from "@/types/types";
 
 const extractContactDataByType = (
   formData: FormData,
-  type: MetaDataContactRole,
+  type: MetadataContactRole,
 ) => {
   const contact = METADATA_FORM_INPUTS.CONTACTS(type);
   return {
@@ -23,7 +23,7 @@ const extractContactDataByType = (
 
 const extractContacts = (formData: FormData) => {
   const contacts: any = {};
-  Object.values(MetaDataContactRole).forEach((role) => {
+  Object.values(MetadataContactRole).forEach((role) => {
     contacts[role.toLowerCase()] = extractContactDataByType(formData, role);
   });
   return contacts;

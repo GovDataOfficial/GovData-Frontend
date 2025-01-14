@@ -80,17 +80,21 @@ button:-moz-focusring,
   @include outline-base();
 }
 
-a,
-.link {
+a {
+  @include outline-base();
   @extend .paragraph;
   @extend .noto-sans-bold;
-
   color: $clr-primary-400;
   text-decoration: none;
-
+  align-items: center;
   &:hover {
     cursor: pointer;
     text-decoration: underline;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: rem-calc(16);
+    line-height: rem-calc(24);
   }
 
   &.anchor-dark {

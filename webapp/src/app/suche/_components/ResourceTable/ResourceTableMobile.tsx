@@ -1,9 +1,12 @@
 "use client";
 
-import { ButtonLink } from "@/app/_components/Button/ButtonLink";
+import { AnchorButton } from "@/app/_components/Button/AnchorButton";
+import { Button } from "@/app/_components/Button/Button";
 import { InfoBadge } from "@/app/_components/InfoBoxes/InfoBadge";
+import { icons, SVG } from "@/app/_components/SVG/SVG";
 import { Tag } from "@/app/_components/Tag/Tag";
 import { Time } from "@/app/_components/Time/Time";
+import { useCopyToClipboard } from "@/app/_lib/hooks/useCopyToClipboard";
 import {
   DtDescription,
   DtLicense,
@@ -14,11 +17,12 @@ import {
   getTitle,
   removeSearchParameters,
 } from "@/app/suche/_components/ResourceTable/ResourcesTableRowTop";
+import { ResurceTableCopyToClipboardButton } from "@/app/suche/_components/ResourceTable/ResourceTableCopyToClipboardButton";
 import { useResourceTable } from "@/app/suche/_components/ResourceTable/useResourceTable";
 import { i18n } from "@/i18n";
-import { MetaData } from "@/types/types";
+import { Metadata } from "@/types/types";
 
-export function ResourceTableMobile({ data }: { data: MetaData }) {
+export function ResourceTableMobile({ data }: { data: Metadata }) {
   const { handleOnClick, openIds, paramsIds, searchParams, router, pathname } =
     useResourceTable();
 
@@ -62,14 +66,14 @@ export function ResourceTableMobile({ data }: { data: MetaData }) {
                 </InfoBadge>
               )}
 
-              <ButtonLink
+              <AnchorButton
                 variant="secondary"
                 className="d-block mb-2"
                 href={url}
               >
                 {i18n.t("resources.table.row.resource.button")}
-              </ButtonLink>
-
+              </AnchorButton>
+              <ResurceTableCopyToClipboardButton url={url} />
               <dl
                 id={id}
                 className={isOpen ? "gd-common-dl d-block" : "d-none"}
@@ -82,11 +86,10 @@ export function ResourceTableMobile({ data }: { data: MetaData }) {
                 <DtLicense license={license} />
                 <DtShortendAvailability availability={shortendAvailability} />
               </dl>
-
               <a
                 aria-expanded={isOpen}
                 aria-controls={id}
-                className={`fnt-link mb-2 ${isOpen ? "mt-3" : ""}`}
+                className={`d-inline-block mb-1 ${isOpen ? "mt-3" : ""}`}
                 onClick={(e) => {
                   e.preventDefault();
                   removeSearchParameters(searchParams, router, pathname);

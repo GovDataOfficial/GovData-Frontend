@@ -7,8 +7,8 @@ import {
   CategoriesSorted,
   DefaultSortOption,
   LicenseActiveSorted,
-  MetaData,
-  MetaDataQuality,
+  Metadata,
+  MetadataQuality,
   NextJSSearchParams,
   OrganizationSorted,
   PortalNumbers,
@@ -118,7 +118,7 @@ export function fetchLicenseActiveSorted() {
 }
 
 export function fetchMetadata(nameOrId: string) {
-  return fetchMicroData<MetaData>(
+  return fetchMicroData<Metadata>(
     `${process.env.be_gd_data_url}/metadata/${nameOrId}`,
   );
 }
@@ -168,8 +168,8 @@ export function fetchSearchMapSessionId() {
   );
 }
 
-export function fetchMetaDataQuality() {
-  return fetchMicroData<MetaDataQuality[]>(
+export function fetchMetadataQuality() {
+  return fetchMicroData<MetadataQuality[]>(
     `${process.env.be_gd_data_url}/metadata-quality-metrics`,
   );
 }
@@ -258,7 +258,7 @@ export async function fetchMetadataForOrganizations(
     "onlyEditorMetadata:hidePrivateDataset",
   );
 
-  //result is subsequently sorted on the client-side within the MetaDataOverviewContainer component
+  //result is subsequently sorted on the client-side within the MetadataOverviewContainer component
   toSend.searchParams.set("sortType", FILTERS.LAST_MODIFICATION);
   toSend.searchParams.set("ascending", "false");
   toSend.searchParams.set("numResults", "3000");

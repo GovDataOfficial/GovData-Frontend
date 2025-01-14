@@ -19,10 +19,7 @@ export function FilterGeoLocation({ filterMap }: FilterCommonConsumer) {
       title={<h3>{i18n.t("search.details.infobox.geoCoding")}</h3>}
       open
     >
-      <a
-        href={createLinkToPageWithFilter(PAGES.geosearch)}
-        className="fnt-link"
-      >
+      <a href={createLinkToPageWithFilter(PAGES.geosearch)}>
         {i18n.t(
           isActive ? "filter.geoLocation.change" : "filter.geoLocation.set",
         )}

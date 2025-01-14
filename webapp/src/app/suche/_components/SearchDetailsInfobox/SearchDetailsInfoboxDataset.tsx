@@ -12,12 +12,12 @@ import { TermCategories } from "@/app/suche/_components/SearchDetailsInfobox/par
 import { i18n } from "@/i18n";
 import { logger } from "@/logger/logger";
 import { isNotNullOrUndefined } from "@/types/typeGuards";
-import { MetaData } from "@/types/types";
+import { Metadata } from "@/types/types";
 
 import downloadIcon from "../../../_components/SVG/icons/icon_download.svg";
 
 type SearchDetailsInfoboxDataset = {
-  data: MetaData;
+  data: Metadata;
 };
 
 const log = logger("SearchDetailsInfoboxDataset");
@@ -91,7 +91,7 @@ export async function SearchDetailsInfoboxDataSet({
           <dt>{t("search.details.infobox.metaDataDownloadLink")}</dt>
           <dd>
             <a
-              className="fnt-link fnt-link-download"
+              className="d-flex"
               target="_blank"
               href={createCKANDatasetUrl(data.name)}
             >
@@ -159,9 +159,7 @@ export async function SearchDetailsInfoboxDataSet({
           <dt>{t("search.details.infobox.datasetShowCaseConnection")}</dt>
           {showCaseConnection.items.map((item) => (
             <dd key={item.id}>
-              <a className="fnt-link " href={`/suche/anwendung/${item.id}`}>
-                {item.title}
-              </a>
+              <a href={`/suche/anwendung/${item.id}`}>{item.title}</a>
             </dd>
           ))}
         </dl>

@@ -4,10 +4,10 @@ import { notFound } from "next/navigation";
 
 import { ContainerDiv } from "@/app/_components/Container";
 import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
-import { fetchMetaDataQuality } from "@/app/_lib/getData";
+import { fetchMetadataQuality } from "@/app/_lib/getData";
 import { DesignBoxTop5Formats } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxTop5Formats";
 import { DesignBoxTop5License } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxTop5License";
-import { MetaDataQualityCharts } from "@/app/metadatenqualitaet/_components/MetaDataQualityCharts";
+import { MetadataQualityCharts } from "@/app/metadatenqualitaet/_components/MetadataQualityCharts";
 import { Top5Info } from "@/app/metadatenqualitaet/_components/Top5Info";
 import { i18n } from "@/i18n";
 import { PageConstructor } from "@/types/types";
@@ -21,15 +21,15 @@ export default async function Page({ searchParams }: PageConstructor) {
     notFound();
   }
 
-  const data = await fetchMetaDataQuality();
+  const data = await fetchMetadataQuality();
   return (
     <>
       <Top5Info />
       {data ? (
-        <MetaDataQualityCharts data={data} searchParams={searchParams}>
+        <MetadataQualityCharts data={data} searchParams={searchParams}>
           <DesignBoxTop5License data={data} />
           <DesignBoxTop5Formats data={data} />
-        </MetaDataQualityCharts>
+        </MetadataQualityCharts>
       ) : (
         <ContainerDiv containerWidth="lg">
           <InfoBox

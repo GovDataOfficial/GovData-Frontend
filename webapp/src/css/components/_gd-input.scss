@@ -82,7 +82,7 @@
       margin-right: map-get($spacers, 1);
     }
     label {
-      @extend .link;
+      @extend a;
       @extend .paragraph;
       //noto-sans-normal, need better css decoupling for checkboxes here
       font-weight: 400;

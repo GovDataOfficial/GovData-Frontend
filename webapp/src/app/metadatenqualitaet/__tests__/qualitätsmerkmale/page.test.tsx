@@ -6,12 +6,12 @@ import {
   useSearchParams,
 } from "next/navigation";
 
-import { fetchMetaDataQuality } from "@/app/_lib/getData";
-import { MetaDataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
+import { fetchMetadataQuality } from "@/app/_lib/getData";
+import { MetadataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
 import Page from "@/app/metadatenqualitaet/qualitaetsmerkmale/page";
 
 vi.mock("@/app/_lib/getData", () => ({
-  fetchMetaDataQuality: vi.fn(),
+  fetchMetadataQuality: vi.fn(),
 }));
 
 vi.mock("next/navigation", () => ({
@@ -23,7 +23,7 @@ describe("MetaDatenQualität - Qualitätsmerkmale - Page", () => {
   beforeAll(() => {
     vi.resetAllMocks();
     vi.stubEnv("metadata_quality_dashboard_active", "1");
-    vi.mocked(fetchMetaDataQuality).mockResolvedValue(MetaDataQualityTestProps);
+    vi.mocked(fetchMetadataQuality).mockResolvedValue(MetadataQualityTestProps);
     const searchParams = new URLSearchParams() as ReadonlyURLSearchParams;
     vi.mocked(useSearchParams).mockReturnValue(searchParams);
   });

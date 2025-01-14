@@ -52,7 +52,7 @@ export function SearchResultsContainer({ data }: SearchResultsContainer) {
   return (
     <>
       <h2 className="sr-only">{i18n.t("search.hits.list")}</h2>
-      <ul className="p-0">
+      <ul id="search-result-list" className="p-0">
         {hits.map((hit) => (
           <SearchResultHit key={hit.id} hit={hit} />
         ))}

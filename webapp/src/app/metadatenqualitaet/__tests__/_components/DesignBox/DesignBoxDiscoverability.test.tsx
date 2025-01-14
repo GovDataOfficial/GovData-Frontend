@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
-import { MetaDataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
+import { MetadataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
 import * as createChartData from "@/app/metadatenqualitaet/_components/Charts/createChartData";
 import { DesignBoxDiscoverability } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxDiscoverability";
 
@@ -22,7 +22,7 @@ describe("DesignBoxDiscoverability", () => {
   });
 
   it("should render correct headline", async () => {
-    render(<DesignBoxDiscoverability data={MetaDataQualityTestProps} />);
+    render(<DesignBoxDiscoverability data={MetadataQualityTestProps} />);
     screen.getByRole("heading", {
       name: /übersicht auffindbarkeit/i,
       level: 2,
@@ -31,7 +31,7 @@ describe("DesignBoxDiscoverability", () => {
 
   it("should render info icon", async () => {
     const user = userEvent.setup();
-    render(<DesignBoxDiscoverability data={MetaDataQualityTestProps} />);
+    render(<DesignBoxDiscoverability data={MetadataQualityTestProps} />);
     const button = screen.getByRole("button", {
       name: /erklärungen zu den kennzahlen einblenden/i,
       expanded: false,
@@ -44,10 +44,10 @@ describe("DesignBoxDiscoverability", () => {
   it("should call createChartData without publisher param", async () => {
     const createChartDataSpy = vi.spyOn(createChartData, "createChartData");
 
-    render(<DesignBoxDiscoverability data={MetaDataQualityTestProps} />);
+    render(<DesignBoxDiscoverability data={MetadataQualityTestProps} />);
     await screen.findByRole("img", { name: /auffindbarkeit/i });
     expect(createChartDataSpy).toHaveBeenLastCalledWith(
-      MetaDataQualityTestProps,
+      MetadataQualityTestProps,
       "discoverability",
       undefined,
     );
@@ -57,11 +57,11 @@ describe("DesignBoxDiscoverability", () => {
     const createChartDataSpy = vi.spyOn(createChartData, "createChartData");
     vi.mocked(useSearchParams).mockReturnValue(paramsFilter);
 
-    render(<DesignBoxDiscoverability data={MetaDataQualityTestProps} />);
+    render(<DesignBoxDiscoverability data={MetadataQualityTestProps} />);
     await screen.findByRole("img", { name: /auffindbarkeit/i });
 
     expect(createChartDataSpy).toHaveBeenLastCalledWith(
-      MetaDataQualityTestProps,
+      MetadataQualityTestProps,
       "discoverability",
       "pubId",
     );

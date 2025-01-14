@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 
 import Layout from "@/app/metadatenqualitaet/layout";
 
-describe("MetaDatenQualität - Layout", () => {
+describe("MetadatenQualität - Layout", () => {
   it("should render correct elements", () => {
     render(
       <Layout>

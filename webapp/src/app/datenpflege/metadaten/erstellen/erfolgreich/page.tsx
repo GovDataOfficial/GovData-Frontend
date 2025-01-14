@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 
-import { ButtonLink } from "@/app/_components/Button/ButtonLink";
+import { AnchorButton } from "@/app/_components/Button/AnchorButton";
 import {
   ContainerSection,
   ContainerWrapperModifier,
@@ -31,20 +31,20 @@ export default function Page() {
         </InfoBox>
         <div className="d-flex flex-column flex-sm-row justify-content-between">
           <a
-            className="fnt-link fnt-link-download mt-2 text-center"
+            className="d-flex mt-2 text-center"
             href={PAGES_AUTH.manage_data_form_add}
           >
             <SVG icon={icons.plus} size={"14"} />
             {i18n.t("metadataform.navigation.createAnother")}
           </a>
 
-          <ButtonLink
+          <AnchorButton
             className="mt-2 text-center"
             variant="primary"
             href={PAGES_AUTH.manage_data}
           >
             {i18n.t("metadataform.navigation.myDatasets")}
-          </ButtonLink>
+          </AnchorButton>
         </div>
       </ContainerSection>
     </>

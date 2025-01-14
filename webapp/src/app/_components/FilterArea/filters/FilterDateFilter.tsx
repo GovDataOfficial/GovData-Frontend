@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 
 import { Accordion } from "@/app/_components/Accordion/Accordion";
+import { Button } from "@/app/_components/Button/Button";
 import { FilterCommonConsumer } from "@/app/_components/FilterArea/filters/FilterCommon";
 import { SPECIAL_FILTERS, URLHelper } from "@/app/_lib/URLHelper";
 import { i18n } from "@/i18n";
@@ -66,11 +67,10 @@ export function FilterDateFilter({ filterMap }: FilterCommonConsumer) {
             />
           </div>
         </div>
-
         <div className="d-flex justify-content-end">
-          <button type="submit" className="fnt-link button-reset">
+          <Button variant="a" type="submit">
             {i18n.t("search.filter.date.submit.label")}
-          </button>
+          </Button>
         </div>
       </form>
     </Accordion>

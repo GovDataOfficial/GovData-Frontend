@@ -6,12 +6,12 @@ import {
   useSearchParams,
 } from "next/navigation";
 
-import { Button } from "@/app/_components/Button/Button";
-import { ButtonLink } from "@/app/_components/Button/ButtonLink";
+import { AnchorButton } from "@/app/_components/Button/AnchorButton";
+import { CopyToClipboardButton } from "@/app/_components/Button/CopyToClipboardButton";
 import { Tag } from "@/app/_components/Tag/Tag";
 import { Time } from "@/app/_components/Time/Time";
 import { i18n } from "@/i18n";
-import { MetaDataResource } from "@/types/types";
+import { MetadataResource } from "@/types/types";
 
 export const getTitle = (nameOnlyText = "", formatShort = "") => {
   if (!nameOnlyText || nameOnlyText == "") {
@@ -52,7 +52,7 @@ export function ResourcesTableRowTop({
   open,
   onClick,
 }: {
-  resource: MetaDataResource;
+  resource: MetadataResource;
   open: boolean;
   onClick: (id: string) => void;
 }) {
@@ -88,9 +88,12 @@ export function ResourcesTableRowTop({
         </Tag>
       </td>
       <td>
-        <ButtonLink href={url} variant="secondary">
-          {i18n.t("resources.table.row.resource.button")}
-        </ButtonLink>
+        <div className="d-flex align-items-center">
+          <AnchorButton href={url} variant="secondary">
+            {i18n.t("resources.table.row.resource.button")}
+          </AnchorButton>
+          <CopyToClipboardButton url={url} />
+        </div>
       </td>
     </tr>
   );

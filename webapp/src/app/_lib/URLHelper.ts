@@ -77,8 +77,12 @@ const createHref = (url: string, searchParams: URLSearchParams): string => {
 export const createLinkToSearchForState = (id: string) =>
   PAGES.search + `?${FILTERS.STATE}=${id}`;
 
-export const createLinkToSearchWithHVD = () =>
-  PAGES.search + `?${FILTERS.HVD}=has_hvd`;
+export const createLinkToSearchWithHVD = () => {
+  const searchParams = new URLSearchParams();
+  searchParams.set(FILTERS.HVD, "has_hvd");
+  searchParams.set(SPECIAL_FILTERS.TYPE, "dataset");
+  return createHref(PAGES.search, searchParams);
+};
 
 export const createLinkToSearchWithType = (type: string) =>
   PAGES.search + `?${SPECIAL_FILTERS.TYPE}=${type}`;

@@ -33,7 +33,7 @@
     }
 
     &-link {
-      @extend .fnt-link;
+      @extend a;
 
       .gd-icon img {
         filter: $filter-primary;

@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
-import { MetaDataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
+import { MetadataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
 import * as createChartData from "@/app/metadatenqualitaet/_components/Charts/createChartData";
 import { DesignBoxTop5Formats } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxTop5Formats";
 
@@ -23,7 +23,7 @@ describe("DesignBoxTop5Formats", () => {
   });
 
   it("should render correct headline", async () => {
-    render(<DesignBoxTop5Formats data={MetaDataQualityTestProps} />);
+    render(<DesignBoxTop5Formats data={MetadataQualityTestProps} />);
     screen.getByRole("heading", {
       name: /top 5 formate/i,
       level: 2,
@@ -32,7 +32,7 @@ describe("DesignBoxTop5Formats", () => {
 
   it("should render info icon", async () => {
     const user = userEvent.setup();
-    render(<DesignBoxTop5Formats data={MetaDataQualityTestProps} />);
+    render(<DesignBoxTop5Formats data={MetadataQualityTestProps} />);
     const button = screen.getByRole("button", {
       name: /erklärungen zu den kennzahlen einblenden/i,
       expanded: false,
@@ -45,10 +45,10 @@ describe("DesignBoxTop5Formats", () => {
   it("should call createChartData without publisher param", async () => {
     const createChartDataSpy = vi.spyOn(createChartData, "createChartData");
 
-    render(<DesignBoxTop5Formats data={MetaDataQualityTestProps} />);
+    render(<DesignBoxTop5Formats data={MetadataQualityTestProps} />);
     await screen.findByRole("img");
     expect(createChartDataSpy).toHaveBeenLastCalledWith(
-      MetaDataQualityTestProps,
+      MetadataQualityTestProps,
       "top_formats",
       undefined,
     );
@@ -58,11 +58,11 @@ describe("DesignBoxTop5Formats", () => {
     vi.mocked(useSearchParams).mockReturnValue(paramsFilter);
     const createChartDataSpy = vi.spyOn(createChartData, "createChartData");
 
-    render(<DesignBoxTop5Formats data={MetaDataQualityTestProps} />);
+    render(<DesignBoxTop5Formats data={MetadataQualityTestProps} />);
     await screen.findByRole("img");
 
     expect(createChartDataSpy).toHaveBeenLastCalledWith(
-      MetaDataQualityTestProps,
+      MetadataQualityTestProps,
       "top_formats",
       "pubId",
     );

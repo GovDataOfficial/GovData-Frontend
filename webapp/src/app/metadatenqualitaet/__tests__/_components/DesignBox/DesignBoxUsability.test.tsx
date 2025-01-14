@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
-import { MetaDataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
+import { MetadataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
 import * as createChartData from "@/app/metadatenqualitaet/_components/Charts/createChartData";
 import { DesignBoxUsability } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxUsability";
 
@@ -23,7 +23,7 @@ describe("DesignBoxUsability", () => {
   });
 
   it("should render correct headline", async () => {
-    render(<DesignBoxUsability data={MetaDataQualityTestProps} />);
+    render(<DesignBoxUsability data={MetadataQualityTestProps} />);
     screen.getByRole("heading", {
       name: /übersicht weiterverwendbarkeit/i,
       level: 2,
@@ -32,7 +32,7 @@ describe("DesignBoxUsability", () => {
 
   it("should render info icon", async () => {
     const user = userEvent.setup();
-    render(<DesignBoxUsability data={MetaDataQualityTestProps} />);
+    render(<DesignBoxUsability data={MetadataQualityTestProps} />);
     const button = screen.getByRole("button", {
       name: /erklärungen zu den kennzahlen einblenden/i,
       expanded: false,
@@ -44,10 +44,10 @@ describe("DesignBoxUsability", () => {
 
   it("should call createChartData without publisher param", async () => {
     const createChartDataSpy = vi.spyOn(createChartData, "createChartData");
-    render(<DesignBoxUsability data={MetaDataQualityTestProps} />);
+    render(<DesignBoxUsability data={MetadataQualityTestProps} />);
     await screen.findByRole("img");
     expect(createChartDataSpy).toHaveBeenLastCalledWith(
-      MetaDataQualityTestProps,
+      MetadataQualityTestProps,
       "usability",
       undefined,
     );
@@ -57,10 +57,10 @@ describe("DesignBoxUsability", () => {
     const createChartDataSpy = vi.spyOn(createChartData, "createChartData");
     vi.mocked(useSearchParams).mockReturnValue(paramsFilter);
 
-    render(<DesignBoxUsability data={MetaDataQualityTestProps} />);
+    render(<DesignBoxUsability data={MetadataQualityTestProps} />);
     await screen.findByRole("img");
     expect(createChartDataSpy).toHaveBeenLastCalledWith(
-      MetaDataQualityTestProps,
+      MetadataQualityTestProps,
       "usability",
       "pubId",
     );

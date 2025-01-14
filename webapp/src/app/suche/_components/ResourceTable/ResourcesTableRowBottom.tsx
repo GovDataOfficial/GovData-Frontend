@@ -5,14 +5,14 @@ import {
   DtShortendAvailability,
 } from "@/app/suche/_components/common/CommonDtDd";
 import { i18n } from "@/i18n";
-import { MetaDataResource } from "@/types/types";
+import { MetadataResource } from "@/types/types";
 
 export function ResourcesTableRowBottom({
   resource,
   open,
   available = true,
 }: {
-  resource: MetaDataResource;
+  resource: MetadataResource;
   open: boolean;
   available: boolean;
 }) {

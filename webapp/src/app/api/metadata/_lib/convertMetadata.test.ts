@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
 
 import { convertMetadataFormData } from "@/app/api/metadata/_lib/convertMetadata";
-import { METADATA_FORM_INPUTS } from "@/app/datenpflege/_components/MetaDataForm/formConstants";
-import { MetaDataContactRole } from "@/types/types";
+import { METADATA_FORM_INPUTS } from "@/app/datenpflege/_components/MetadataForm/formConstants";
+import { MetadataContactRole } from "@/types/types";
 
 describe("Convert metadata", () => {
   it("should convert metadata form data to json", () => {
     const creatorObject = METADATA_FORM_INPUTS.CONTACTS(
-      MetaDataContactRole.creator,
+      MetadataContactRole.creator,
     );
     const resourcesObject = METADATA_FORM_INPUTS.RESSOURCE(0);
     // Arrange
@@ -70,7 +70,7 @@ describe("Convert metadata", () => {
 
     ["maintainer", "publisher", "originator"].forEach((role) => {
       const roleObject = METADATA_FORM_INPUTS.CONTACTS(
-        role as MetaDataContactRole,
+        role as MetadataContactRole,
       );
       formData.append(roleObject.name, "");
       formData.append(roleObject.email, "");

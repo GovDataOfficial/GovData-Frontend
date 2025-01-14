@@ -8,10 +8,10 @@ import {
   DtWithExternalLinks,
 } from "@/app/suche/_components/common/CommonDtDd";
 import { i18n } from "@/i18n";
-import { MetaData } from "@/types/types";
+import { Metadata } from "@/types/types";
 
 type SectionDataServices = {
-  data: MetaData;
+  data: Metadata;
 };
 
 export function SectionDataServices({ data }: SectionDataServices) {

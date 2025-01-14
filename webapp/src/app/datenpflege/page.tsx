@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 
-import { ButtonLink } from "@/app/_components/Button/ButtonLink";
+import { AnchorButton } from "@/app/_components/Button/AnchorButton";
 import {
   ContainerSection,
   ContainerWrapperModifier,
@@ -14,10 +14,10 @@ import {
 import { hasContributorId } from "@/app/_lib/organization";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import { getSessionOrRedirect } from "@/app/api/auth/_session";
-import { MetaDataOrganizationError } from "@/app/datenpflege/_components/MetaDataOrganizationError";
-import { MetaDataOverviewContainer } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewContainer";
-import { MetaDataOverviewDeleteInfoBox } from "@/app/datenpflege/_components/MetaDataOverview/MetaDataOverviewDeleteInfoBox";
-import { MetaDataWelcome } from "@/app/datenpflege/_components/MetaDataWelcome";
+import { MetadataOrganizationError } from "@/app/datenpflege/_components/MetadataOrganizationError";
+import { MetadataOverviewContainer } from "@/app/datenpflege/_components/MetadataOverview/MetadataOverviewContainer";
+import { MetadataOverviewDeleteInfoBox } from "@/app/datenpflege/_components/MetadataOverview/MetadataOverviewDeleteInfoBox";
+import { MetadataWelcome } from "@/app/datenpflege/_components/MetadataWelcome";
 import { i18n } from "@/i18n";
 import { PageConstructor } from "@/types/types";
 
@@ -39,7 +39,7 @@ export default async function Page({ searchParams }: PageConstructor) {
 
   return (
     <>
-      <MetaDataOverviewDeleteInfoBox searchParams={searchParams} />
+      <MetadataOverviewDeleteInfoBox searchParams={searchParams} />
       <ContainerSection
         containerWidth="lg"
         headline={t("metadata.welcome.title", {
@@ -48,19 +48,19 @@ export default async function Page({ searchParams }: PageConstructor) {
         modifier={[ContainerWrapperModifier.MARGIN_TOP]}
       >
         {!hasOrganization ? (
-          <MetaDataOrganizationError />
+          <MetadataOrganizationError />
         ) : (
           <>
-            <MetaDataWelcome />
-            <ButtonLink
+            <MetadataWelcome />
+            <AnchorButton
               href={PAGES_AUTH.manage_data_form_add}
               variant="primary"
             >
               <SVG icon={icons.plus} size="14" />
               <span className="ms-0_5">{t("metadataform.create")}</span>
-            </ButtonLink>
+            </AnchorButton>
             {data && data.length > 0 && (
-              <MetaDataOverviewContainer data={data} />
+              <MetadataOverviewContainer data={data} />
             )}
           </>
         )}

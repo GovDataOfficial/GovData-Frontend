@@ -24,6 +24,7 @@ import icon_kat_soci from "./icons/categories/icon_kat_soci.svg";
 import icon_kat_tech from "./icons/categories/icon_kat_tech.svg";
 import icon_kat_tran from "./icons/categories/icon_kat_tran.svg";
 import check from "./icons/check.svg";
+import copy from "./icons/copy.svg";
 import editPencil from "./icons/edit.svg";
 import filter from "./icons/filter.svg";
 import icon_download from "./icons/icon_download.svg";
@@ -78,6 +79,7 @@ const icons = {
   arrow_right,
   alert,
   check,
+  copy,
   filter,
   icon_download,
   icon_upload,

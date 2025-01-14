@@ -61,4 +61,17 @@ describe("TeaserBox", () => {
     expect(teaserBoxes[1]).toHaveTextContent(/HVD Datensätze/);
     expect(teaserBoxes[2]).toHaveTextContent(/Anwendungen/);
   });
+
+  it("teaserbox HVD should have correct href", async () => {
+    vi.mocked(fetchPortalNumbers).mockResolvedValue(mockDataNumbers);
+
+    const Component = await TeaserBoxes();
+    render(Component);
+
+    const teaserBoxHVD = screen.getByRole("link", { name: /hvd datensätze/i });
+    expect(teaserBoxHVD).toHaveAttribute(
+      "href",
+      "/suche?hvd=has_hvd&type=dataset",
+    );
+  });
 });

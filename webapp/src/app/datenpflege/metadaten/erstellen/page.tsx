@@ -14,7 +14,7 @@ import {
 import { hasContributorId } from "@/app/_lib/organization";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import { getSessionOrRedirect } from "@/app/api/auth/_session";
-import { MetadataForm } from "@/app/datenpflege/_components/MetaDataForm/MetadataForm";
+import { MetadataForm } from "@/app/datenpflege/_components/MetadataForm/MetadataForm";
 import { i18n } from "@/i18n";
 
 export const metadata: Metadata = {

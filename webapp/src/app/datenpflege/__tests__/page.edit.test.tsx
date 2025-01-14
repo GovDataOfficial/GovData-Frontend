@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { fetchMetadata, fetchOrganizationsForUser } from "@/app/_lib/getData";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import { getSessionOrRedirect } from "@/app/api/auth/_session";
-import { MetadataForm } from "@/app/datenpflege/_components/MetaDataForm/MetadataForm";
+import { MetadataForm } from "@/app/datenpflege/_components/MetadataForm/MetadataForm";
 import Page from "@/app/datenpflege/metadaten/bearbeiten/[id]/page";
 
 import { metadata } from "../metadaten/bearbeiten/[id]/page";
@@ -14,7 +14,7 @@ vi.mock("ioredis");
 vi.mock("@/app/api/auth/_session");
 vi.mock("@/app/_lib/getData");
 vi.mock("next/navigation");
-vi.mock("@/app/datenpflege/_components/MetaDataForm/MetadataForm");
+vi.mock("@/app/datenpflege/_components/MetadataForm/MetadataForm");
 
 describe("Metadata Edit Page", () => {
   const orgsWithoutContributorId = [
@@ -94,7 +94,7 @@ describe("Metadata Edit Page", () => {
     );
   });
 
-  test("should render MetaDataForm", async () => {
+  test("should render MetadataForm", async () => {
     vi.mocked(fetchOrganizationsForUser).mockResolvedValue(
       orgsWithContributorId,
     );

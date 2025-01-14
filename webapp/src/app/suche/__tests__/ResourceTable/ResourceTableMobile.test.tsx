@@ -3,7 +3,7 @@ import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
-import { MetaData } from "@/types/types";
+import { Metadata } from "@/types/types";
 
 import { ResourceTableMobile } from "../../_components/ResourceTable/ResourceTableMobile";
 
@@ -38,7 +38,7 @@ const getMockedData = () => {
     ],
     open: true,
     url: "/test",
-  } as MetaData;
+  } as Metadata;
 };
 
 describe("ResourceTableMobile", () => {
@@ -48,13 +48,12 @@ describe("ResourceTableMobile", () => {
     );
   });
 
-  // todo
-  it.skip("should render correctly", () => {
+  it("should render correctly", () => {
     const mockedData = getMockedData();
 
     render(<ResourceTableMobile data={mockedData} />);
 
-    screen.getByRole("heading", { name: /nameOnlyText/i });
+    screen.getByText(/nameOnlyText/i);
     screen.getByRole("link", { name: /mehr informationen anzeigen/i });
 
     screen.getByText(/letzte änderung/i);
@@ -71,6 +70,8 @@ describe("ResourceTableMobile", () => {
 
     screen.getByText(/lizenz/i);
     screen.getByText(/freie nutzung/i);
+
+    screen.getByText(/ressourcenlink in zwischenablage kopieren/i);
   });
 
   it("should behave correctly on expand", async () => {
@@ -171,15 +172,11 @@ describe("ResourceTableMobile", () => {
     screen.getByRole("alert");
   });
 
-  // todo
-  it.skip("should render a fallback for the title", () => {
+  it("should render a fallback for the title", () => {
     const mockedData = getMockedData();
 
     mockedData.resources[0].nameOnlyText = "";
     render(<ResourceTableMobile data={mockedData} />);
-
-    screen.getByRole("heading", {
-      name: /JSON-Ressource/,
-    });
+    screen.getByText("JSON-Ressource");
   });
 });

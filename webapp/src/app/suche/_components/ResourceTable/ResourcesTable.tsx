@@ -6,10 +6,10 @@ import { ResourcesTableRowBottom } from "@/app/suche/_components/ResourceTable/R
 import { ResourcesTableRowTop } from "@/app/suche/_components/ResourceTable/ResourcesTableRowTop";
 import { useResourceTable } from "@/app/suche/_components/ResourceTable/useResourceTable";
 import { i18n } from "@/i18n";
-import { MetaData } from "@/types/types";
+import { Metadata } from "@/types/types";
 
 type ResourcesTable = {
-  data?: MetaData;
+  data?: Metadata;
 };
 
 function TableHead({
@@ -59,7 +59,7 @@ export function ResourcesTable({ data }: ResourcesTable) {
 
         <tbody>
           {data?.resources.map((resource) => {
-            const isOpen = openIds[resource.id];
+            const isOpen = openIds[resource.id] || false;
             const isAvailable = !data?.notAvailableResourceLinks?.includes(
               resource.url,
             );

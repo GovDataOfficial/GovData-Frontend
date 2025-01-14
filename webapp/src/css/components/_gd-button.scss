@@ -39,11 +39,10 @@ button {
   padding: 12px 24px;
 
   --transitionTime: 0.1s;
-  transition:
-    color var(--transitionTime) ease-in-out,
-    background-color var(--transitionTime) ease-in-out,
-    border-color var(--transitionTime) ease-in-out,
-    box-shadow var(--transitionTime) ease-in-out;
+  transition: color var(--transitionTime) ease-in-out,
+  background-color var(--transitionTime) ease-in-out,
+  border-color var(--transitionTime) ease-in-out,
+  box-shadow var(--transitionTime) ease-in-out;
 
   &.gd-button-primary {
     @include gd-button-icon-primary-filter();
@@ -72,9 +71,8 @@ button {
   }
 
   // this is a button that behaves like an <a,
-  // we also have a .fnt-link class that does the same somehow? maybe put into component
   &.gd-button-a {
-    @extend .fnt-link;
+    @extend a;
     border: none;
     border-radius: 0;
     transition: none;
@@ -83,6 +81,10 @@ button {
     &:hover {
       text-decoration: underline;
     }
+
+    .gd-icon img {
+      filter: $filter-primary;
+    }
   }
 
   &.gd-button-icon {
@@ -90,14 +92,17 @@ button {
     margin-left: rem-calc(4);
     border: none;
     padding: 0;
+  }
 
-    &:focus,
+  &.gd-button-copy-to-clipboard {
+    background-color: #fff;
+    color: $clr-primary-400; 
+    margin-left: rem-calc(8);
     &:hover {
-      background-color: $clr-primary-400;
-
-      img {
-        filter: invert(100%);
-      }
+        background-color: $clr-neutral-grey-100;
+        img {
+            filter: brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(4842%) hue-rotate(172deg) brightness(96%) contrast(101%);
+        }
     }
   }
 }

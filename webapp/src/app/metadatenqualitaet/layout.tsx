@@ -1,13 +1,13 @@
 import { PropsWithChildren } from "react";
 
-import { MetaDataQualityInfo } from "@/app/metadatenqualitaet/_components/MetaDataQualityInfo";
-import { MetaDataQualitySiteNavigation } from "@/app/metadatenqualitaet/_components/MetaDataQualitySiteNavigation";
+import { MetadataQualityInfo } from "@/app/metadatenqualitaet/_components/MetadataQualityInfo";
+import { MetadataQualitySiteNavigation } from "@/app/metadatenqualitaet/_components/MetadataQualitySiteNavigation";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
     <>
-      <MetaDataQualityInfo />
-      <MetaDataQualitySiteNavigation />
+      <MetadataQualityInfo />
+      <MetadataQualitySiteNavigation />
       {children}
     </>
   );

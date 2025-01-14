@@ -28,13 +28,12 @@
       }
     }
 
-    tbody tr.hidden + tr {
-      border-top: 1px solid $grey-light;
+    tbody tr:has(+.d-none) {
+      border-bottom: 1px solid $clr-neutral-grey-300;
     }
 
-    tbody,
-    tbody tr + tr[id] {
-      border-bottom: 1px solid $grey-light;
+    tbody tr[id] {
+      border-bottom: 1px solid  $clr-neutral-grey-300;
     }
   }
 

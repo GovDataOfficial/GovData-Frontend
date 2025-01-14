@@ -16,7 +16,7 @@ import {
 import { hasContributorId } from "@/app/_lib/organization";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import { getSessionOrRedirect } from "@/app/api/auth/_session";
-import { MetadataForm } from "@/app/datenpflege/_components/MetaDataForm/MetadataForm";
+import { MetadataForm } from "@/app/datenpflege/_components/MetadataForm/MetadataForm";
 import { i18n } from "@/i18n";
 import { logger } from "@/logger/logger";
 import { PageConstructor } from "@/types/types";
@@ -68,7 +68,7 @@ export default async function Page({
           categories={categories}
           licenses={licenses}
           organizations={organizations!}
-          metaData={data}
+          metadata={data}
           mailFitko={process.env.mail_fitko!}
           metadataGuideLink={process.env.metadata_guide_link!}
           metadataDcatapLink={process.env.metadata_dcatap_link!}

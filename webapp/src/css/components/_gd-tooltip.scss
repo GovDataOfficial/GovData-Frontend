@@ -1,0 +1,20 @@
+.tippy-box[data-theme~="gd-theme"] {
+  @extend .paragraph;
+  @extend .noto-sans-normal;
+  background-color: $clr-primary-500;
+  padding: rem-calc(8) rem-calc(12);
+  text-align: center;
+
+  &[data-placement^="top"] > .tippy-arrow::before {
+    border-top-color: $clr-primary-500;
+  }
+  &[data-placement^="bottom"] > .tippy-arrow::before {
+    border-bottom-color: $clr-primary-500;
+  }
+  &[data-placement^="left"] > .tippy-arrow::before {
+    border-left-color: $clr-primary-500;
+  }
+  &[data-placement^="right"] > .tippy-arrow::before {
+    border-right-color: $clr-primary-500;
+  }
+}

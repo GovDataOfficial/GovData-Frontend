@@ -6,10 +6,10 @@ import {
   sanitizeHTML,
 } from "@/app/_lib/sanitizer/sanitizeHtml";
 import { MetaInfoHeadlineIcon } from "@/app/suche/_components/common/MetaInfoHeadlineIcon";
-import { MetaData, ShowCaseData } from "@/types/types";
+import { Metadata, ShowCaseData } from "@/types/types";
 
 type SearchDetailsMetaInfo = {
-  data: MetaData | ShowCaseData;
+  data: Metadata | ShowCaseData;
 };
 
 const getShowcaseType = (data: ShowCaseData): string => {

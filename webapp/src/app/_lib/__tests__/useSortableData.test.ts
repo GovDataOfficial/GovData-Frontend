@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { renderHook } from "@testing-library/react";
-import { act } from "react";
+import { act, renderHook } from "@testing-library/react";
 
 import {
   SortableData,

@@ -70,7 +70,7 @@
     display: none;
     margin-left: rem-calc(8);
 
-    @media only screen and (min-width: 1380px) {
+    @include media-breakpoint-up(lg) {
       display: inline-block;
     }
   }

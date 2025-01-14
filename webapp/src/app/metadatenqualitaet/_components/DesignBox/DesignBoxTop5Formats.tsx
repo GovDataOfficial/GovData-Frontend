@@ -6,12 +6,12 @@ import { InfoIcon } from "@/app/_components/InfoIcon/InfoIcon";
 import { Trans } from "@/app/_components/Trans/Trans";
 import { Chart } from "@/app/metadatenqualitaet/_components/Charts/Chart";
 import { createChartData } from "@/app/metadatenqualitaet/_components/Charts/createChartData";
-import { MetaDataQualityDesignBox } from "@/app/metadatenqualitaet/_components/DesignBox/MetaDataQualityDesignBox";
+import { MetadataQualityDesignBox } from "@/app/metadatenqualitaet/_components/DesignBox/MetadataQualityDesignBox";
 import { i18n } from "@/i18n";
-import { MetaDataQuality } from "@/types/types";
+import { MetadataQuality } from "@/types/types";
 
 type DesignBoxTop5Formats = {
-  data: MetaDataQuality[];
+  data: MetadataQuality[];
 };
 
 export function DesignBoxTop5Formats({ data }: DesignBoxTop5Formats) {
@@ -22,7 +22,7 @@ export function DesignBoxTop5Formats({ data }: DesignBoxTop5Formats) {
   const chartJsData = createChartData(data, "top_formats", publisher);
 
   return (
-    <MetaDataQualityDesignBox
+    <MetadataQualityDesignBox
       title={t("metadataquality.charts.topformats.title")}
     >
       <p className="d-inline">
@@ -49,6 +49,6 @@ export function DesignBoxTop5Formats({ data }: DesignBoxTop5Formats) {
         data={chartJsData}
         ariaLabel={t("metadataquality.charts.topformats.title")}
       />
-    </MetaDataQualityDesignBox>
+    </MetadataQualityDesignBox>
   );
 }

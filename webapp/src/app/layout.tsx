@@ -8,6 +8,7 @@ import { OffCanvasMenu } from "@/app/_components/OffCanvasMenu/OffCanvasMenu";
 import { OffCanvasOverlayExit } from "@/app/_components/OffCanvasMenu/OffCanvasOverlayExit";
 import { QuickAccessNavigation } from "@/app/_components/QuickAccesNavigation/QuickAccessNavigation";
 import { SearchHeaderSwitcher } from "@/app/_components/Search/SearchHeaderSwitcher";
+import { UmbrellaBrandHeader } from "@/app/_components/UmbrellaBrandHeader/UmbrellaBrandHeader";
 import { UserHeader } from "@/app/_components/UserHeader/UserHeader";
 import { GlobalIds } from "@/app/_lib/globalIds";
 
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <div className="off-canvas-wrap d-flex flex-column min-vh-100">
           <header role="banner" className="bg-white">
             <QuickAccessNavigation />
+            <UmbrellaBrandHeader />
             <HeaderNavigation />
             <UserHeader />
             <SearchHeaderSwitcher />

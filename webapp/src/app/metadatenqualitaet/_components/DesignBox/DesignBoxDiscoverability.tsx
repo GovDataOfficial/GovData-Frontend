@@ -5,12 +5,12 @@ import { useSearchParams } from "next/navigation";
 import { InfoIcon } from "@/app/_components/InfoIcon/InfoIcon";
 import { Chart } from "@/app/metadatenqualitaet/_components/Charts/Chart";
 import { createChartData } from "@/app/metadatenqualitaet/_components/Charts/createChartData";
-import { MetaDataQualityDesignBox } from "@/app/metadatenqualitaet/_components/DesignBox/MetaDataQualityDesignBox";
+import { MetadataQualityDesignBox } from "@/app/metadatenqualitaet/_components/DesignBox/MetadataQualityDesignBox";
 import { i18n } from "@/i18n";
-import { MetaDataQuality } from "@/types/types";
+import { MetadataQuality } from "@/types/types";
 
 type DesignBoxDiscoverability = {
-  data: MetaDataQuality[];
+  data: MetadataQuality[];
 };
 
 export function DesignBoxDiscoverability({ data }: DesignBoxDiscoverability) {
@@ -21,7 +21,7 @@ export function DesignBoxDiscoverability({ data }: DesignBoxDiscoverability) {
   const chartJsData = createChartData(data, "discoverability", publisher);
 
   return (
-    <MetaDataQualityDesignBox
+    <MetadataQualityDesignBox
       title={t("metadataquality.charts.discoverability.title")}
     >
       <p className="d-inline">
@@ -36,6 +36,6 @@ export function DesignBoxDiscoverability({ data }: DesignBoxDiscoverability) {
         data={chartJsData}
         ariaLabel={t("metadataquality.charts.discoverability.chart.title")}
       />
-    </MetaDataQualityDesignBox>
+    </MetadataQualityDesignBox>
   );
 }

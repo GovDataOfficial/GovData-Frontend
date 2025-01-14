@@ -16,10 +16,10 @@ import {
   ChartJsData,
   ChartTypes,
 } from "@/app/metadatenqualitaet/_components/Charts/types";
-import { MetaDataQuality } from "@/types/types";
+import { MetadataQuality } from "@/types/types";
 
 export function createChartData(
-  data: MetaDataQuality[],
+  data: MetadataQuality[],
   type?: ChartTypes,
   filterByPublisher?: string,
 ): ChartJsData {
@@ -37,10 +37,10 @@ export function createChartData(
 }
 
 const byNameAndPublisher =
-  (name: string, publisher: string) => (d: MetaDataQuality) =>
+  (name: string, publisher: string) => (d: MetadataQuality) =>
     d.name === name && d.publisher === publisher;
 
-const getPublisherDisplayName = (publisher: string, data?: MetaDataQuality) => {
+const getPublisherDisplayName = (publisher: string, data?: MetadataQuality) => {
   const name = publisher === ALL_PUBLISHERS ? "GovData" : null;
 
   if (data) {
@@ -50,7 +50,7 @@ const getPublisherDisplayName = (publisher: string, data?: MetaDataQuality) => {
 };
 
 function createDiscoverabilityConfig(
-  data: MetaDataQuality[],
+  data: MetadataQuality[],
   publisher: string = ALL_PUBLISHERS,
 ) {
   if (publisher === ALL_PUBLISHERS) {
@@ -82,7 +82,7 @@ function createDiscoverabilityConfig(
 }
 
 function createUsabilityConfig(
-  data: MetaDataQuality[],
+  data: MetadataQuality[],
   publisher: string = ALL_PUBLISHERS,
 ) {
   if (publisher === ALL_PUBLISHERS) {
@@ -108,7 +108,7 @@ function createUsabilityConfig(
 }
 
 function createTop5LicenseConfig(
-  data: MetaDataQuality[],
+  data: MetadataQuality[],
   publisher: string = ALL_PUBLISHERS,
 ) {
   const topData = data.find(byNameAndPublisher(TOP_LICENSES, publisher));
@@ -122,7 +122,7 @@ function createTop5LicenseConfig(
 }
 
 function createTop5FormatsConfig(
-  data: MetaDataQuality[],
+  data: MetadataQuality[],
   publisher: string = ALL_PUBLISHERS,
 ) {
   const topData = data.find(byNameAndPublisher(TOP_FORMATS, publisher));

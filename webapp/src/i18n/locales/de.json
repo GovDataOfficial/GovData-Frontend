@@ -1,5 +1,6 @@
 {
   "govdata": {
+    "button.copyToClipboard.success": "Kopiert",
     "meta.home.title": "GovData - Das Datenportal für Deutschland",
     "meta.home.description": "Auf GovData, dem Datenportal für Deutschland sind Daten aller Verwaltungsebenen zentral zugänglich.",
     "meta.search.title": "Suche - GovData",
@@ -25,6 +26,8 @@
     "meta.managedata.edit.success": "Metadatensatz gespeichert - GovData",
 
     "meta.logout.title": "Erfolgreich abgemeldet - GovData",
+    "umbrellabrand.text": "Eine offizielle Website der Bundesrepublik Deutschland",
+    "umbrellabrand.image": "Flagge der Bundesrepublik Deutschland",
     "category.label.soci": "Bevölkerung und Gesellschaft",
     "category.label.educ": "Bildung, Kultur und Sport",
     "category.label.ener": "Energie",
@@ -321,6 +324,7 @@
     "resource.table.head.format": "Dateiformat",
     "resource.table.head.resource": "Zur Ressource",
     "resources.table.row.resource.button": "zur Ressource",
+    "resources.table.row.resource.copy": "Ressourcenlink in Zwischenablage kopieren",
     "resource.table.panel.unavailable": "Bei der letzten Überprüfung war der Link zu dieser Ressource nicht erreichbar.",
     "resources.table.panel.description": "Beschreibung",
     "resources.table.panel.license": "Lizenz",

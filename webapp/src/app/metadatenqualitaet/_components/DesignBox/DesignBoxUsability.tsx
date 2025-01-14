@@ -7,12 +7,12 @@ import { InfoIcon } from "@/app/_components/InfoIcon/InfoIcon";
 import { Trans } from "@/app/_components/Trans/Trans";
 import { Chart } from "@/app/metadatenqualitaet/_components/Charts/Chart";
 import { createChartData } from "@/app/metadatenqualitaet/_components/Charts/createChartData";
-import { MetaDataQualityDesignBox } from "@/app/metadatenqualitaet/_components/DesignBox/MetaDataQualityDesignBox";
+import { MetadataQualityDesignBox } from "@/app/metadatenqualitaet/_components/DesignBox/MetadataQualityDesignBox";
 import { i18n } from "@/i18n";
-import { MetaDataQuality } from "@/types/types";
+import { MetadataQuality } from "@/types/types";
 
 type DesignBoxUsability = {
-  data: MetaDataQuality[];
+  data: MetadataQuality[];
 };
 
 export function DesignBoxUsability({ data }: DesignBoxUsability) {
@@ -30,7 +30,7 @@ export function DesignBoxUsability({ data }: DesignBoxUsability) {
   );
 
   return (
-    <MetaDataQualityDesignBox
+    <MetadataQualityDesignBox
       title={t("metadataquality.charts.usability.title")}
     >
       <p className="d-inline">
@@ -63,6 +63,6 @@ export function DesignBoxUsability({ data }: DesignBoxUsability) {
         data={chartJsData}
         ariaLabel={t("metadataquality.charts.usability.chart.title")}
       />
-    </MetaDataQualityDesignBox>
+    </MetadataQualityDesignBox>
   );
 }

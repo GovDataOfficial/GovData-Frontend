@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
-import { MetaDataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
+import { MetadataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
 import { Chart } from "@/app/metadatenqualitaet/_components/Charts/Chart";
 import { createChartData } from "@/app/metadatenqualitaet/_components/Charts/createChartData";
 
@@ -12,7 +12,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 describe("Chart", () => {
-  const chartData = createChartData(MetaDataQualityTestProps, "usability");
+  const chartData = createChartData(MetadataQualityTestProps, "usability");
 
   beforeAll(() => {
     const paramsEmpty = new URLSearchParams() as ReadonlyURLSearchParams;

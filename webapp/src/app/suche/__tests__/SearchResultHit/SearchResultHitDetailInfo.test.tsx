@@ -2,12 +2,12 @@ import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 import { SearchResultHitDetailInfo } from "@/app/suche/_components/SearchResultHit/SearchResultHitDetailInfo";
-import { MetaDataResource } from "@/types/types";
+import { MetadataResource } from "@/types/types";
 
 const mockedData = [
   { format: "_mock.csv" },
   { format: "_mock.json" },
-] as MetaDataResource[];
+] as MetadataResource[];
 
 describe("SearchResultHitDetailInfo", () => {
   it("should render empty", () => {

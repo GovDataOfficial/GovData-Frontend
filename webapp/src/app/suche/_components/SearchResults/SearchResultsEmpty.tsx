@@ -26,7 +26,7 @@ export function SearchResultsEmpty({ suggestions = [] }: SearchResultsEmpty) {
               {suggestions.map((suggestion) => (
                 <li key={suggestion.name}>
                   <a
-                    className="fnt-link d-inline"
+                    className="d-inline"
                     href={createLinkToSearchWithSuggestion(suggestion.name)}
                   >
                     {suggestion.name}

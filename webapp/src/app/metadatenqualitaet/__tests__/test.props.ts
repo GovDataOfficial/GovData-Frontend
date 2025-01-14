@@ -1,4 +1,4 @@
-export const MetaDataQualityTestProps = [
+export const MetadataQualityTestProps = [
   {
     name: "discoverable_yes",
     publisher: "govdata",

@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
-import { MetaDataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
+import { MetadataQualityTestProps } from "@/app/metadatenqualitaet/__tests__/test.props";
 import * as createChartData from "@/app/metadatenqualitaet/_components/Charts/createChartData";
 import { DesignBoxTop5License } from "@/app/metadatenqualitaet/_components/DesignBox/DesignBoxTop5License";
 
@@ -23,7 +23,7 @@ describe("DesignBoxTop5License", () => {
   });
 
   it("should render correct headline", async () => {
-    render(<DesignBoxTop5License data={MetaDataQualityTestProps} />);
+    render(<DesignBoxTop5License data={MetadataQualityTestProps} />);
     screen.getByRole("heading", {
       name: /top 5 lizenzen/i,
       level: 2,
@@ -32,7 +32,7 @@ describe("DesignBoxTop5License", () => {
 
   it("should render info icon", async () => {
     const user = userEvent.setup();
-    render(<DesignBoxTop5License data={MetaDataQualityTestProps} />);
+    render(<DesignBoxTop5License data={MetadataQualityTestProps} />);
     const button = screen.getByRole("button", {
       name: /erklärungen zu den kennzahlen einblenden/i,
       expanded: false,
@@ -44,11 +44,11 @@ describe("DesignBoxTop5License", () => {
 
   it("should call createChartData without publisher param", async () => {
     const createChartDataSpy = vi.spyOn(createChartData, "createChartData");
-    render(<DesignBoxTop5License data={MetaDataQualityTestProps} />);
+    render(<DesignBoxTop5License data={MetadataQualityTestProps} />);
     await screen.findByRole("img");
 
     expect(createChartDataSpy).toHaveBeenLastCalledWith(
-      MetaDataQualityTestProps,
+      MetadataQualityTestProps,
       "top_licenses",
       undefined,
     );
@@ -58,11 +58,11 @@ describe("DesignBoxTop5License", () => {
     const createChartDataSpy = vi.spyOn(createChartData, "createChartData");
     vi.mocked(useSearchParams).mockReturnValue(paramsFilter);
 
-    render(<DesignBoxTop5License data={MetaDataQualityTestProps} />);
+    render(<DesignBoxTop5License data={MetadataQualityTestProps} />);
     await screen.findByRole("img");
 
     expect(createChartDataSpy).toHaveBeenLastCalledWith(
-      MetaDataQualityTestProps,
+      MetadataQualityTestProps,
       "top_licenses",
       "pubId",
     );

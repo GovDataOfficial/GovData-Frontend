@@ -56,7 +56,7 @@ export function SectionSparqlEditor({ endpoints }: SectionSparqlEditor) {
     <ContainerDiv containerWidth="lg">
       <div id="devcorner" className="column developers-corner-portlet">
         <div className="col-12">
-          <div className="d-flex flex-wrap">
+          <div id="devcorner-endpoint-container" className="d-flex flex-wrap">
             <h3 className="w-100">{i18n.t("sparql.endpoint.headline")}</h3>
             <SelectEndpoint
               className="w-90 w-sm-25"
@@ -67,7 +67,7 @@ export function SectionSparqlEditor({ endpoints }: SectionSparqlEditor) {
           </div>
         </div>
 
-        <div className="col-12">
+        <div id="devcorner-examples-container" className="col-12">
           <h3>{i18n.t("sparql.examples.headline")}</h3>
           <div className="filter-tags">
             {queryOptions.map(({ name, query, prefixes }) => (
@@ -85,7 +85,7 @@ export function SectionSparqlEditor({ endpoints }: SectionSparqlEditor) {
           </div>
         </div>
 
-        <div className="col-12">
+        <div id="devcorner-prefixes-container" className="col-12">
           <h3>{i18n.t("sparql.prefixes.headline")}</h3>
           <div className="filter-tags">
             {Object.values(PREFIXES).map((prefix) => (
@@ -100,7 +100,10 @@ export function SectionSparqlEditor({ endpoints }: SectionSparqlEditor) {
           </div>
         </div>
 
-        <div className="d-flex flex-wrap justify-content-between mb-4">
+        <div
+          id="devcorner-format-container"
+          className="d-flex flex-wrap justify-content-between mb-4"
+        >
           <h3 className="w-100">{i18n.t("sparql.ergebnisformat.headline")}</h3>
           <SelectFormat
             className="w-100 w-sm-25"

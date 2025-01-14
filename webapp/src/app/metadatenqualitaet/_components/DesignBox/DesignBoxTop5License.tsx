@@ -6,15 +6,15 @@ import { InfoIcon } from "@/app/_components/InfoIcon/InfoIcon";
 import { Trans } from "@/app/_components/Trans/Trans";
 import { Chart } from "@/app/metadatenqualitaet/_components/Charts/Chart";
 import { createChartData } from "@/app/metadatenqualitaet/_components/Charts/createChartData";
-import { MetaDataQualityDesignBox } from "@/app/metadatenqualitaet/_components/DesignBox/MetaDataQualityDesignBox";
+import { MetadataQualityDesignBox } from "@/app/metadatenqualitaet/_components/DesignBox/MetadataQualityDesignBox";
 import { i18n } from "@/i18n";
-import { MetaDataQuality } from "@/types/types";
+import { MetadataQuality } from "@/types/types";
 
-type MetaDataQualityBoxTop5License = {
-  data: MetaDataQuality[];
+type MetadataQualityBoxTop5License = {
+  data: MetadataQuality[];
 };
 
-export function DesignBoxTop5License({ data }: MetaDataQualityBoxTop5License) {
+export function DesignBoxTop5License({ data }: MetadataQualityBoxTop5License) {
   const { t } = i18n;
 
   const params = useSearchParams();
@@ -26,7 +26,7 @@ export function DesignBoxTop5License({ data }: MetaDataQualityBoxTop5License) {
   });
 
   return (
-    <MetaDataQualityDesignBox title={t("metadataquality.charts.license.title")}>
+    <MetadataQualityDesignBox title={t("metadataquality.charts.license.title")}>
       <p className="d-inline">
         {t("metadataquality.charts.license.description")}&nbsp;
         {t("metadataquality.charts.info.dataInPercent")}
@@ -44,6 +44,6 @@ export function DesignBoxTop5License({ data }: MetaDataQualityBoxTop5License) {
         />
       </InfoIcon>
       <Chart data={chartJsData} ariaLabel="TOP 5 Lizenzen" />
-    </MetaDataQualityDesignBox>
+    </MetadataQualityDesignBox>
   );
 }

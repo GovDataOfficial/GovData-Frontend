@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { logger } from "@/logger/logger";
 import { MiddlewareFactory } from "@/middlewares/types";
 import { withHeadersMiddleware } from "@/middlewares/withHeadersMiddleware";
-import { withMetaDataManageFeatureFlagRedirect } from "@/middlewares/withMetaDataManageFeatureFlagRedirect";
+import { withMetaDataManageFeatureFlagRedirect } from "@/middlewares/withMetadataManageFeatureFlagRedirect";
 import { withRedirectLegacyPaths } from "@/middlewares/withRedirectLegacyPaths";
 
 /*

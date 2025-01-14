@@ -64,7 +64,7 @@ export type SearchResultHit = {
   type: string;
   primaryShowcaseType?: string;
   hasHvd: boolean;
-  resources?: MetaDataResource[];
+  resources?: MetadataResource[];
   displayImage?: string;
   targetLink?: string;
   contact?: string;
@@ -118,7 +118,7 @@ export type OrganizationSorted = {
 
 export type ResourceFormatsSorted = string[];
 
-export type MetaDataQuality = {
+export type MetadataQuality = {
   name: string;
   publisher: string;
   publisherDisplayName?: string;
@@ -129,7 +129,7 @@ export type MetaDataQuality = {
   labels: string[];
 };
 
-export type MetaDataResourceLicense = {
+export type MetadataResourceLicense = {
   id: string;
   title?: string;
   url?: string;
@@ -139,7 +139,7 @@ export type MetaDataResourceLicense = {
   active?: boolean;
 };
 
-export type MetaDataResource = {
+export type MetadataResource = {
   id: string;
   name: string;
   nameOnlyText: string;
@@ -151,7 +151,7 @@ export type MetaDataResource = {
   language: string[];
   issued: string;
   modified: string;
-  license?: MetaDataResourceLicense;
+  license?: MetadataResourceLicense;
   open: boolean;
   licenseAttributionByText: string;
   plannedAvailability: string;
@@ -169,7 +169,7 @@ export type MetaDataResource = {
     endpointUrls: string[];
     endpointDescription: string;
     servesDataset: string[];
-    license: MetaDataResourceLicense;
+    license: MetadataResourceLicense;
     licenseAttributionByText: string;
     availability: string;
     shortendAvailability: string;
@@ -179,14 +179,14 @@ export type MetaDataResource = {
   hvd: boolean;
 };
 
-export enum MetaDataContactRole {
+export enum MetadataContactRole {
   creator = "CREATOR",
   maintainer = "MAINTAINER",
   publisher = "PUBLISHER",
   originator = "ORIGINATOR",
 }
 
-export type MetaDataContact = {
+export type MetadataContact = {
   name: string;
   email?: string;
   url: string;
@@ -198,24 +198,24 @@ export type MetaDataContact = {
     zip: string;
     country: string;
   }>;
-  role: MetaDataContactRole;
+  role: MetadataContactRole;
 };
 
-export type MetaData = {
+export type Metadata = {
   id: string;
   title: string;
   type: string;
   name: string;
   notes: string;
   url: string;
-  resources: MetaDataResource[];
+  resources: MetadataResource[];
   notAvailableResourceLinks?: string[];
   tags: {
     name: string;
     count: number;
     description: string;
   }[];
-  contacts: MetaDataContact[];
+  contacts: MetadataContact[];
   averageRating: number;
   categories: {
     name: string;

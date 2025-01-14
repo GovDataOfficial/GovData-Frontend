@@ -1,0 +1,13 @@
+.gd-umbrella-brand-header-container {
+  line-height: rem-calc(24);
+  background-color: #f0f0f0;
+
+  @include media-breakpoint-down(sm) {
+    line-height: rem-calc(16);
+    font-size: rem-calc(12);
+    img {
+      width: rem-calc(18);
+      height: rem-calc(12);
+    }
+  }
+}
