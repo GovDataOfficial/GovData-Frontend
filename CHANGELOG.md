@@ -1,5 +1,13 @@
 # Changelog
 
+
+## 7.4.0 2025-02-11
+
+- Update vitest to 2.1.9. Fixes CVE-2025-24964
+- Removed the X (Twitter) social media link.
+- Fixed path redirect for high value dataset information
+- Updated undici to 7.3.0. Fixes CVE-2025-22150
+
 ## 7.3.0 2025-01-13
 
 - Added umbrella brand header

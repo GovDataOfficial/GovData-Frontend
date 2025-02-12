@@ -5,7 +5,6 @@ describe("SocialMediaLinks", () => {
   let Component: any;
 
   beforeAll(async () => {
-    vi.stubEnv("twitter_url", "http://twitter.test");
     vi.stubEnv("mastodon_url", "http://mastodon.test");
     vi.stubEnv("linkedin_url", "http://linkedin.test");
     vi.stubEnv("gitlab_url", "http://gitlab.test");
@@ -23,19 +22,16 @@ describe("SocialMediaLinks", () => {
     const lists = screen.getAllByRole("list");
     const allLinks = within(lists[0]).getAllByRole("link");
 
-    expect(allLinks).toHaveLength(4);
+    expect(allLinks).toHaveLength(3);
 
-    expect(allLinks[0]).toHaveTextContent("X (ehemals Twitter)");
-    expect(allLinks[0]).toHaveAttribute("href", "http://twitter.test");
+    expect(allLinks[0]).toHaveTextContent("Mastodon");
+    expect(allLinks[0]).toHaveAttribute("href", "http://mastodon.test");
 
-    expect(allLinks[1]).toHaveTextContent("Mastodon");
-    expect(allLinks[1]).toHaveAttribute("href", "http://mastodon.test");
+    expect(allLinks[1]).toHaveTextContent("LinkedIn");
+    expect(allLinks[1]).toHaveAttribute("href", "http://linkedin.test");
 
-    expect(allLinks[2]).toHaveTextContent("LinkedIn");
-    expect(allLinks[2]).toHaveAttribute("href", "http://linkedin.test");
-
-    expect(allLinks[3]).toHaveTextContent("GitLab");
-    expect(allLinks[3]).toHaveAttribute("href", "http://gitlab.test");
+    expect(allLinks[2]).toHaveTextContent("GitLab");
+    expect(allLinks[2]).toHaveAttribute("href", "http://gitlab.test");
   });
 
   it("should set all links to target blank", async () => {
@@ -52,7 +48,7 @@ describe("SocialMediaLinks", () => {
     const { container } = render(Component);
 
     const allFaIcons = container.querySelectorAll("i");
-    expect(allFaIcons).toHaveLength(4);
+    expect(allFaIcons).toHaveLength(3);
     allFaIcons.forEach((icon) =>
       expect(icon).toHaveAttribute("aria-hidden", "true"),
     );

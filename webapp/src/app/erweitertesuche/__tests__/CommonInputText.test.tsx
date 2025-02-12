@@ -18,24 +18,24 @@ describe("CommonInputText", () => {
   it("should correctly label input", () => {
     render(<CommonInputText type={"showcase_types"} />);
 
-    const label = screen.getByText("in Anwendungstyp");
+    const label = screen.getByText("in Anwendungstypen");
     const idFor = label.getAttribute("for");
 
-    const input = screen.getByRole("textbox", { name: /in anwendungstyp/i });
+    const input = screen.getByRole("textbox", { name: /in anwendungstypen/i });
     expect(input.getAttribute("id")).toEqual(idFor);
   });
 
   it("should set offscreen label", () => {
     render(<CommonInputText type={"showcase_types"} />);
 
-    const label = screen.getByText("in Anwendungstyp");
+    const label = screen.getByText("in Anwendungstypen");
     expect(label.classList).toContain("offscreen");
   });
 
   it("should have correct placeholder", () => {
     render(<CommonInputText type={"showcase_types"} />);
 
-    const input = screen.getByRole("textbox", { name: /in anwendungstyp/i });
+    const input = screen.getByRole("textbox", { name: /in anwendungstypen/i });
     const placeHolder = input.getAttribute("placeholder");
     expect(placeHolder).toEqual("Bitte geben Sie einen Suchbegriff ein");
   });
@@ -46,7 +46,7 @@ describe("CommonInputText", () => {
     vi.mocked(useSearchParams).mockReturnValue(params);
 
     render(<CommonInputText type={"showcase_types"} />);
-    const input = screen.getByRole("textbox", { name: /in anwendungstyp/i });
+    const input = screen.getByRole("textbox", { name: /in anwendungstypen/i });
     expect(input.getAttribute("value")).toBe("123");
   });
 });

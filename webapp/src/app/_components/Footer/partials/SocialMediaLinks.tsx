@@ -3,11 +3,6 @@ import { isNotNullOrUndefined } from "@/types/typeGuards";
 
 const links = [
   {
-    url: process.env.twitter_url,
-    title: i18n.t("footer.social.twitter"),
-    icon: "fa-x-twitter",
-  },
-  {
     url: process.env.mastodon_url,
     title: i18n.t("footer.social.mastodon"),
     icon: "fa-mastodon",

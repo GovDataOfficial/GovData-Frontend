@@ -85,6 +85,11 @@ describe("middleware Redirect", () => {
       "informationen/datenbereitstellungaufgovdata",
     ],
     [
+      "/web/guest/hochwertige-datensaetze",
+      "informationen/hochwertige-datensaetze",
+    ],
+    ["/hochwertige-datensaetze", "informationen/hochwertige-datensaetze"],
+    [
       "/daten/-/details/govdata-metadatenkatalog",
       "/suche/daten/govdata-metadatenkatalog",
     ],

@@ -76,12 +76,12 @@ describe("External Search Filter Test", () => {
     expect(formData.get("q")).toEqual("test123");
   });
 
-  it("should set correct param on Typ", async () => {
+  it("should set correct param on Typen", async () => {
     const user = userEvent.setup();
     const { container } = render(<ExtendedSearchFields searchParams={{}} />);
-    const filterName = "Typ";
+    const filterName = "Typen";
 
-    await addFilter("Typ", user);
+    await addFilter("Typen", user);
     const select = screen.getByRole("combobox", { name: "in " + filterName });
     expect(document.activeElement).toBe(select);
 

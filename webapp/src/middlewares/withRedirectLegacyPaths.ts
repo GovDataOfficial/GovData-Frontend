@@ -179,6 +179,8 @@ function getRedirectPath(request: NextRequest): string | null {
     case "/ogd-dachli":
     case "/web/guest/datenbereitstellungaufgovdata":
     case "/datenbereitstellungaufgovdata":
+    case "/web/guest/hochwertige-datensaetze":
+    case "/hochwertige-datensaetze":
       return redirectToInformationPage(path);
     default:
       break;

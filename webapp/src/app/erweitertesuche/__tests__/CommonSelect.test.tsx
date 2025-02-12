@@ -23,17 +23,17 @@ describe("CommonSelect", () => {
 
   it("should correctly label input", () => {
     render(<CommonSelect data={mockData} type={"licence"} />);
-    const label = screen.getByText("in Lizenz");
+    const label = screen.getByText("in Lizenzen");
     const idFor = label.getAttribute("for");
 
-    const select = screen.getByRole("combobox", { name: "in Lizenz" });
+    const select = screen.getByRole("combobox", { name: "in Lizenzen" });
     expect(select.getAttribute("id")).toEqual(idFor);
   });
 
   it("should set offscreen label", () => {
     render(<CommonSelect data={mockData} type={"licence"} />);
 
-    const label = screen.getByText("in Lizenz");
+    const label = screen.getByText("in Lizenzen");
     expect(label.classList).toContain("offscreen");
   });
 
@@ -44,7 +44,7 @@ describe("CommonSelect", () => {
 
     render(<CommonSelect data={mockData} type={"licence"} />);
 
-    const select = screen.getByRole("combobox", { name: "in Lizenz" });
+    const select = screen.getByRole("combobox", { name: "in Lizenzen" });
     within(select).getByRole("option", { name: "second", selected: true });
   });
 });
