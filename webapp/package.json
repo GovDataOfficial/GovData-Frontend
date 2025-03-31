@@ -23,7 +23,7 @@
     "i18next": "^23.15.2",
     "ioredis": "^5.4.1",
     "iron-session": "^8.0.3",
-    "next": "^14.2.20",
+    "next": "^14.2.26",
     "nodemailer": "^6.9.15",
     "normalize.css": "^8.0.1",
     "openid-client": "^5.7.0",

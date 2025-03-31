@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.4.1 2025-03-27
+
+- Updated next.js to 14.2.26. Fixes CVE-2025-29927
 
 ## 7.4.0 2025-02-11
 
