@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 
 import { showCaseTestData } from "@/app/suche/__tests__/props";
 import { SectionRelatedLinks } from "@/app/suche/_components/SectionRelatedLinks";
-import { ShowCaseData } from "@/types/types";
+import { ShowcaseData } from "@/types/types";
 
 describe("SectionRelatedLinks", () => {
   const linksToShowcase = [{ id: 9, name: "A1", url: "http://www.test.de" }];
@@ -21,7 +21,7 @@ describe("SectionRelatedLinks", () => {
       linkToSourcesName,
       website,
     },
-  } satisfies ShowCaseData;
+  } satisfies ShowcaseData;
 
   const showCaseDataWitNoRelatedProps = {
     ...showCaseTestData,

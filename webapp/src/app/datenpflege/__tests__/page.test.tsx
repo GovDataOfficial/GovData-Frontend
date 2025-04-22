@@ -6,7 +6,11 @@ import {
   fetchOrganizationsForUser,
 } from "@/app/_lib/getData";
 import { getSessionOrRedirect } from "@/app/api/auth/_session";
-import { OrganizationSorted, SearchResults } from "@/types/types";
+import {
+  MetadataSearchResultHit,
+  OrganizationSorted,
+  SearchResults,
+} from "@/types/types";
 
 import Page, { metadata } from "../page";
 
@@ -33,7 +37,7 @@ const searchResults = {
       metadataModified: "2022-04-01",
     },
   ],
-} as unknown as SearchResults;
+} as unknown as SearchResults<MetadataSearchResultHit>;
 
 const organizations = [
   {

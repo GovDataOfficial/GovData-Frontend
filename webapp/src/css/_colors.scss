@@ -182,14 +182,7 @@ $mediatypes: (
   "article": $clr-media-grey-500,
   "blog": $blog-red,
   "dataset": $clr-media-green-500,
-  "dokument": $dokument-violett,
-  "concept": $showcase-blue,
-  "publication": $showcase-blue,
-  "visualization": $showcase-blue,
-  "website": $showcase-blue,
-  "tool": $showcase-blue,
-  "mobile_app": $showcase-blue,
-  "other": $showcase-blue,
+  "showcase": $clr-media-blue-500,
 );
 
 @each $suffix, $typeColor in $mediatypes {

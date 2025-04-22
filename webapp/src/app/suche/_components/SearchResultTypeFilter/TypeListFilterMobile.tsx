@@ -3,10 +3,14 @@
 import { DropdownSelect } from "@/app/_components/Dropdown/DropdownSelect";
 import { URLHelper } from "@/app/_lib/URLHelper";
 import { i18n } from "@/i18n";
-import { NextJSSearchParams, SearchResults } from "@/types/types";
+import {
+  NextJSSearchParams,
+  SearchResults,
+  UnknownSearchResultHit,
+} from "@/types/types";
 
 type TypeListFilterMobile = {
-  data: SearchResults;
+  data: SearchResults<UnknownSearchResultHit>;
   searchParams: NextJSSearchParams;
 };
 

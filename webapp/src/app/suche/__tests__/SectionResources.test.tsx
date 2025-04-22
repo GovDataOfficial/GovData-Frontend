@@ -13,6 +13,8 @@ vi.mock("next/navigation", () => ({
 }));
 
 describe("SectionResources", () => {
+  const tileUrl = "https://tile.url";
+
   const emptyResourceData = Object.assign({}, metaDataTestProps, {
     resources: [],
   });
@@ -22,20 +24,24 @@ describe("SectionResources", () => {
   });
 
   it("should render null if resources are empty", () => {
-    const { container } = render(<SectionResources data={emptyResourceData} />);
+    const { container } = render(
+      <SectionResources data={emptyResourceData} tileUrl={tileUrl} />,
+    );
     expect(container).toBeEmptyDOMElement();
   });
 
   it("should render null if resources undefined", () => {
     const { container } = render(
-      <SectionResources data={undefinedResourceData} />,
+      <SectionResources data={undefinedResourceData} tileUrl={tileUrl} />,
     );
     expect(container).toBeEmptyDOMElement();
   });
 
   //todo
   it.skip("should render table for desktop and mobile view", () => {
-    const { container } = render(<SectionResources data={metaDataTestProps} />);
+    const { container } = render(
+      <SectionResources data={metaDataTestProps} tileUrl={tileUrl} />,
+    );
     screen.getByRole("heading", {
       name: /ressourcen und datenlinks/i,
       level: 2,

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import {
   ReadonlyURLSearchParams,
@@ -10,6 +11,7 @@ import { AnchorButton } from "@/app/_components/Button/AnchorButton";
 import { CopyToClipboardButton } from "@/app/_components/Button/CopyToClipboardButton";
 import { Tag } from "@/app/_components/Tag/Tag";
 import { Time } from "@/app/_components/Time/Time";
+import { ResourcePreviewIcon } from "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewIcon";
 import { i18n } from "@/i18n";
 import { MetadataResource } from "@/types/types";
 
@@ -51,15 +53,46 @@ export function ResourcesTableRowTop({
   resource,
   open,
   onClick,
+  scrollToResourcePreview,
 }: {
   resource: MetadataResource;
   open: boolean;
   onClick: (id: string) => void;
+  scrollToResourcePreview: () => void;
 }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { id, nameOnlyText, modified, url, formatShort } = resource;
+
+  const handleOnClick = (
+    e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
+    removeSearchParameters(searchParams, router, pathname);
+    onClick(id);
+  };
+
+  const onPreviewIconClick = (
+    e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
+    removeSearchParameters(searchParams, router, pathname);
+
+    // if the preview already exists in the DOM, scroll to it
+    if (open) {
+      scrollToResourcePreview();
+    } else {
+      onClick(id);
+    }
+  };
+
+  // wait for the preview to be rendered, then scroll to it
+  useEffect(() => {
+    if (open) {
+      scrollToResourcePreview();
+    }
+  }, [open, scrollToResourcePreview]);
 
   return (
     <tr key={id}>
@@ -67,11 +100,7 @@ export function ResourcesTableRowTop({
         <a
           role="button"
           className="gd-a-button-icon"
-          onClick={(e) => {
-            e.preventDefault();
-            removeSearchParameters(searchParams, router, pathname);
-            onClick(id);
-          }}
+          onClick={handleOnClick}
           aria-controls={id}
           aria-expanded={open}
           href={createNoJsLink(searchParams, id)}
@@ -83,9 +112,15 @@ export function ResourcesTableRowTop({
       </td>
       <td>{modified ? <Time date={modified} /> : "-"}</td>
       <td>
-        <Tag truncate uppercase title={formatShort}>
-          {formatShort}
-        </Tag>
+        <span className="d-flex">
+          <Tag truncate uppercase title={formatShort}>
+            {formatShort}
+          </Tag>
+          <ResourcePreviewIcon
+            formatShort={formatShort}
+            onClick={onPreviewIconClick}
+          />
+        </span>
       </td>
       <td>
         <div className="d-flex align-items-center">

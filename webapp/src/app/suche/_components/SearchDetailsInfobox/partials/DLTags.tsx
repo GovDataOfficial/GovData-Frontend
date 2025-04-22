@@ -3,7 +3,9 @@
 import { useState } from "react";
 
 import { Button } from "@/app/_components/Button/Button";
+import { FILTERS } from "@/app/_lib/URLHelper";
 import { SearchDetailsInfoBoxGroup } from "@/app/suche/_components/SearchDetailsInfobox/partials/SearchDetailsInfoBoxGroup";
+import { SearchDetailsInfoboxFilterTagAnchor } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxFilterTagAnchor";
 import { i18n } from "@/i18n";
 
 type TermCategories = {
@@ -33,8 +35,28 @@ export function DLTags({ tags }: TermCategories) {
       <SearchDetailsInfoBoxGroup inline>
         <dl>
           <dt>{t("search.details.infobox.tags")}</dt>
-          {hasInitialTags && initialTags.map((t) => <dd key={t}>{t}</dd>)}
-          {more && showMoreTags.map((t) => <dd key={t}>{t}</dd>)}
+          {hasInitialTags &&
+            initialTags.map((t) => (
+              <dd key={t}>
+                <SearchDetailsInfoboxFilterTagAnchor
+                  searchCriteria={FILTERS.TAGS}
+                  searchCriteriaValue={t}
+                >
+                  {t}
+                </SearchDetailsInfoboxFilterTagAnchor>
+              </dd>
+            ))}
+          {more &&
+            showMoreTags.map((t) => (
+              <dd key={t}>
+                <SearchDetailsInfoboxFilterTagAnchor
+                  searchCriteria={FILTERS.TAGS}
+                  searchCriteriaValue={t}
+                >
+                  {t}
+                </SearchDetailsInfoboxFilterTagAnchor>
+              </dd>
+            ))}
         </dl>
       </SearchDetailsInfoBoxGroup>
       {hasShowMoreTags && (

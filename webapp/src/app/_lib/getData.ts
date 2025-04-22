@@ -9,14 +9,16 @@ import {
   LicenseActiveSorted,
   Metadata,
   MetadataQuality,
+  MetadataSearchResultHit,
   NextJSSearchParams,
   OrganizationSorted,
   PortalNumbers,
   PostDto,
   ResourceFormatsSorted,
   SearchResults,
-  ShowCaseData,
+  ShowcaseData,
   StateList,
+  UnknownSearchResultHit,
 } from "@/types/types";
 import { T3Page } from "@/types/types.typo3";
 
@@ -142,7 +144,7 @@ export function fetchSearchSuggestions(q: string) {
 }
 
 export function fetchSearchScrollResults(scrollId: string) {
-  return fetchMicroData<SearchResults>(
+  return fetchMicroData<SearchResults<UnknownSearchResultHit>>(
     `${process.env.be_index_app2_url}/search/scroll/${scrollId}`,
   );
 }
@@ -174,8 +176,8 @@ export function fetchMetadataQuality() {
   );
 }
 
-export function fetchShowCase(id: string) {
-  return fetchMicroData<ShowCaseData>(
+export function fetchShowcase(id: string) {
+  return fetchMicroData<ShowcaseData>(
     `${process.env.be_gd_db_url}/showcase/${id}`,
   );
 }
@@ -223,7 +225,7 @@ export function getSearchResults(searchParams: NextJSSearchParams) {
   const allFilters = Object.values(FILTERS)
     .map((filter) => params.getAll(filter).map((key) => filter + ":" + key))
     .flat()
-    .join(",");
+    .join("|");
 
   appendIfAvailable(allFilters, "activeFilters");
 
@@ -233,7 +235,9 @@ export function getSearchResults(searchParams: NextJSSearchParams) {
   toSend.searchParams.set("sortType", type);
   toSend.searchParams.set("ascending", order === "asc" ? "true" : "false");
 
-  return fetchMicroData<SearchResults>(toSend.toString());
+  return fetchMicroData<SearchResults<UnknownSearchResultHit>>(
+    toSend.toString(),
+  );
 }
 
 export function fetchOrganizationsForUser(username?: string) {
@@ -267,5 +271,7 @@ export async function fetchMetadataForOrganizations(
     toSend.searchParams.append("editorOrganizationIdList", org.id);
   });
 
-  return fetchMicroData<SearchResults>(toSend.toString());
+  return fetchMicroData<SearchResults<MetadataSearchResultHit>>(
+    toSend.toString(),
+  );
 }

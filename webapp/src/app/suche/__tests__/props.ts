@@ -1,4 +1,4 @@
-import { Metadata, MetadataContactRole, ShowCaseData } from "@/types/types";
+import { Metadata, MetadataContactRole, ShowcaseData } from "@/types/types";
 
 export const metaDataTestProps = {
   id: "dc5bd01d-8872-4a95-8c36-3e2342bc517c",
@@ -225,9 +225,9 @@ export const showCaseTestData = {
   title: "Mein Test Showcase",
   notes: "Test Notes",
   showcaseTypes: [
-    { id: 1, name: "tool", primaryShowcase: false },
-    { id: 3, name: "concept", primaryShowcase: true },
-    { id: 2, name: "visualization", primaryShowcase: false },
+    { id: 1, name: "tool" },
+    { id: 3, name: "concept" },
+    { id: 2, name: "visualization" },
   ],
   images: [],
   linksToShowcase: [
@@ -250,10 +250,12 @@ export const showCaseTestData = {
   ],
   website: "",
   manualShowcaseCreatedDate: 1622505600000,
+  manualShowcaseModifiedDate: 1622505600000,
   usecasePublisher: "",
   usecaseSourceUrl: "",
   creatorUserId: "10401",
   modifyDate: 1682496806974,
   hidden: false,
   createDate: 1623676691225,
-} satisfies ShowCaseData;
+  spatial: "",
+} satisfies ShowcaseData;

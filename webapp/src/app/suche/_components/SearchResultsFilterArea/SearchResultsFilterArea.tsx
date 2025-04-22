@@ -1,10 +1,10 @@
 import { FilterAreaFilterGroups } from "@/app/_components/FilterArea/FilterAreaFilterGroups";
 import { OffCanvasPortal } from "@/app/_components/OffCanvasMenu/OffCanvasPortal";
 import { ExtendedSearchLink } from "@/app/suche/_components/common/ExtendedSearchLink";
-import { SearchResults } from "@/types/types";
+import { SearchResults, UnknownSearchResultHit } from "@/types/types";
 
 type SearchResultsFilterArea = {
-  data: SearchResults;
+  data: SearchResults<UnknownSearchResultHit>;
 };
 
 export function SearchResultsFilterArea({ data }: SearchResultsFilterArea) {

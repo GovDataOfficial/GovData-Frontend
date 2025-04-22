@@ -1,10 +1,10 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
 import { ResourcesTable } from "@/app/suche/_components/ResourceTable/ResourcesTable";
-import { Metadata } from "@/types/types";
+import { Metadata, ResourceFormatShort } from "@/types/types";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),
@@ -13,6 +13,14 @@ vi.mock("next/navigation", () => ({
   }),
   useRouter: vi.fn(),
 }));
+
+vi.mock(
+  "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreview",
+  () => {
+    const DtResourcePreview = () => <div tabIndex={0}>ResourcePreview</div>;
+    return { DtResourcePreview };
+  },
+);
 
 const getMockedData = () => {
   return {
@@ -41,6 +49,12 @@ const getMockedData = () => {
 };
 
 describe("ResourceTable", () => {
+  const tileUrl = "https://tile.url";
+
+  beforeAll(() => {
+    window.HTMLElement.prototype.scrollIntoView = vi.fn();
+  });
+
   beforeEach(() => {
     vi.mocked(useSearchParams).mockReturnValue(
       new URLSearchParams() as ReadonlyURLSearchParams,
@@ -48,7 +62,7 @@ describe("ResourceTable", () => {
   });
 
   it("should render correctly", () => {
-    render(<ResourcesTable data={getMockedData()} />);
+    render(<ResourcesTable data={getMockedData()} tileUrl={tileUrl} />);
 
     screen.getByRole("columnheader", { name: /titel und details/i });
     screen.getByRole("columnheader", { name: /Letzte Änderung/i });
@@ -60,20 +74,24 @@ describe("ResourceTable", () => {
     screen.getByRole("cell", { name: /json/i });
     screen.getByRole("cell", { name: /zur ressource/i });
 
-    screen.getByText(/beschreibung/i);
-    screen.getByText(/descriptiononlytext/i);
+    expect(screen.queryByText(/beschreibung/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/descriptiononlytext/i)).not.toBeInTheDocument();
 
-    screen.getByText(/lizenz/i);
-    screen.getByText(/freie nutzung/i);
+    expect(screen.queryByText(/lizenz/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/freie nutzung/i)).not.toBeInTheDocument();
 
-    screen.getByText(/verfügbarkeit/i);
-    screen.getByText(/daten werden langfristig erhältlich bleiben \(stable\)/i);
+    expect(screen.queryByText(/verfügbarkeit/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(
+        /daten werden langfristig erhältlich bleiben \(stable\)/i,
+      ),
+    ).not.toBeInTheDocument();
   });
 
   it("should behave correctly on expand", async () => {
     const user = userEvent.setup();
 
-    render(<ResourcesTable data={getMockedData()} />);
+    render(<ResourcesTable data={getMockedData()} tileUrl={tileUrl} />);
     const toggleRowButton = screen.getByRole("button", {
       name: /nameonlytext/i,
     });
@@ -85,6 +103,63 @@ describe("ResourceTable", () => {
     await user.click(toggleRowButton);
 
     expect(toggleRowButton.getAttribute("aria-expanded")).toBe("true");
+
+    screen.getByText(/beschreibung/i);
+    screen.getByText(/descriptiononlytext/i);
+
+    screen.getByText(/lizenz/i);
+    screen.getByText(/freie nutzung/i);
+
+    screen.getByText(/verfügbarkeit/i);
+    screen.getByText(/daten werden langfristig erhältlich bleiben \(stable\)/i);
+  });
+
+  it("should behave correctly on preview icon click", async () => {
+    const user = userEvent.setup();
+
+    const data = getMockedData();
+    data.resources[0] = {
+      ...data.resources[0],
+      formatShort: ResourceFormatShort.geojson,
+    };
+
+    render(<ResourcesTable data={data} tileUrl={tileUrl} />);
+
+    const toggleRowButton = screen.getByRole("button", {
+      name: /nameonlytext/i,
+    });
+    const previewIcon = screen.getAllByRole("button")[1];
+
+    expect(toggleRowButton.getAttribute("aria-expanded")).toBe("false");
+    expect(toggleRowButton).toHaveAttribute("href", "?ids=id");
+    await user.click(previewIcon);
+    expect(toggleRowButton.getAttribute("aria-expanded")).toBe("true");
+    const preview = screen.getByText(/resourcepreview/i);
+    expect(preview).toBeInTheDocument();
+  });
+
+  it("should behave correctly on preview icon click twice", async () => {
+    const user = userEvent.setup();
+
+    const data = getMockedData();
+    data.resources[0] = {
+      ...data.resources[0],
+      formatShort: ResourceFormatShort.geojson,
+    };
+
+    render(<ResourcesTable data={data} tileUrl={tileUrl} />);
+
+    const toggleRowButton = screen.getByRole("button", {
+      name: /nameonlytext/i,
+    });
+    const previewIcon = screen.getAllByRole("button")[1];
+
+    expect(toggleRowButton.getAttribute("aria-expanded")).toBe("false");
+    await user.click(previewIcon);
+    await user.click(previewIcon);
+    expect(toggleRowButton.getAttribute("aria-expanded")).toBe("true");
+    const preview = screen.getByText(/resourcepreview/i);
+    expect(preview).toBeInTheDocument();
   });
 
   it.todo("should not render a description if not available");

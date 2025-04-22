@@ -9,7 +9,9 @@ export function debounce(func: any, wait: number) {
       timeout = null;
       func.apply(context, args);
     }, wait);
-    if (!timeout) func.apply(context, args);
+    if (!timeout) {
+      func.apply(context, args);
+    }
   };
 }
 

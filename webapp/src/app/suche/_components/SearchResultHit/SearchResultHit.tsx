@@ -8,18 +8,20 @@ import { Truncate } from "@/app/_components/Truncate/Truncate";
 import { PAGES } from "@/app/_lib/URLHelper";
 import { MetaInfoHeadline } from "@/app/suche/_components/common/MetaInfoHeadlineIcon";
 import { isNotNullOrUndefined } from "@/types/typeGuards";
-import type { SearchResultHit as SearchResultHitType } from "@/types/types";
+import {
+  HitType,
+  type UnknownSearchResultHit as SearchResultHitType,
+} from "@/types/types";
 
 import { SearchResultHitDetailInfo } from "./SearchResultHitDetailInfo";
 
 const createHitLink = (hit: SearchResultHitType) => {
   switch (hit.type) {
-    case "showcase":
+    case HitType.showcase:
       return `${PAGES.search_details_showcase}/${hit.name}`;
-    case "dataset":
+    case HitType.dataset:
       return `${PAGES.search_details_dataset}/${hit.name}`;
-    case "article":
-    case "information":
+    case HitType.article:
       return hit.targetLink;
     default:
       return undefined;
@@ -44,38 +46,27 @@ export function focusSearchResultHit(id: string) {
   }
 }
 
-function getDisplayImage(hit: SearchResultHitType) {
-  if (isNotNullOrUndefined(hit.displayImage)) {
+function getDisplayImage(
+  hit: SearchResultHitType,
+  hasDisplayImage: boolean,
+  isShowcase: boolean,
+) {
+  if (hasDisplayImage) {
     return hit.displayImage;
   }
 
-  if (hit.type === "showcase") {
-    switch (hit.primaryShowcaseType) {
-      case "concept":
-        return icons.mediatype_concept_blue;
-      case "website":
-        return icons.mediatype_website_blue;
-      case "tool":
-        return icons.mediatype_tool_blue;
-      case "publication":
-        return icons.mediatype_publication_blue;
-      case "mobile_app":
-        return icons.mediatype_mobile_app_blue;
-      case "other":
-        return icons.mediatype_other_blue;
-      case "visualization":
-        return icons.mediatype_visualization_blue;
-      default:
-        return "";
-    }
+  if (isShowcase) {
+    return icons.mediatype_showcase_blue;
   }
+
   return null;
 }
 
 export function SearchResultHit({ hit }: { hit: SearchResultHitType }) {
   const hitLink = createHitLink(hit);
-
-  const displayImage = getDisplayImage(hit);
+  const hasDisplayImage = isNotNullOrUndefined(hit.displayImage);
+  const isShowcase = hit.type === HitType.showcase;
+  const displayImage = getDisplayImage(hit, hasDisplayImage, isShowcase);
 
   return (
     <li
@@ -84,13 +75,15 @@ export function SearchResultHit({ hit }: { hit: SearchResultHitType }) {
     >
       <DesignBox extraClasses={["d-flex"]}>
         {displayImage && (
-          <div className="resultentry-display-image me-5">
+          <div
+            className={`resultentry-display-image me-5 ${!hasDisplayImage && isShowcase ? "showcase" : ""}`}
+          >
             <Image alt="" width={200} height={200} src={displayImage} />
           </div>
         )}
         <div className="d-flex flex-column flex-grow-1">
           <div className="d-flex justify-content-between">
-            <MetaInfoHeadline type={hit.primaryShowcaseType || hit.type} />
+            <MetaInfoHeadline type={hit.type} />
             <span className="paragraph-small">
               <Trans
                 className="paragraph-small"
@@ -110,9 +103,10 @@ export function SearchResultHit({ hit }: { hit: SearchResultHitType }) {
             <Truncate text={hit.content} maxLength={300} />
           </p>
           <SearchResultHitDetailInfo
-            hasHvd={hit.hasHvd}
+            hasHvd={!!hit.hasHvd}
             resources={hit.resources}
             contact={hit.contact}
+            allShowcaseTypes={hit.allShowcaseTypes}
           />
         </div>
       </DesignBox>

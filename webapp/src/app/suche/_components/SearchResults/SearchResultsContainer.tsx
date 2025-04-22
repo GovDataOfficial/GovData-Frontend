@@ -7,7 +7,7 @@ import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 import { i18n } from "@/i18n";
 import {
   LoadMoreResults,
-  SearchResultHit as SearchResultHitType,
+  UnknownSearchResultHit as SearchResultHitType,
   SearchResults,
 } from "@/types/types";
 
@@ -17,7 +17,7 @@ import {
 } from "../SearchResultHit/SearchResultHit";
 
 type SearchResultsContainer = {
-  data: SearchResults;
+  data: SearchResults<SearchResultHitType>;
 };
 
 export function SearchResultsContainer({ data }: SearchResultsContainer) {
@@ -41,7 +41,7 @@ export function SearchResultsContainer({ data }: SearchResultsContainer) {
     fetch("/api/scroll?scrollId=" + scrollId)
       .then((res) => res.json())
       .then((r) => {
-        const result = r as LoadMoreResults;
+        const result = r as LoadMoreResults<SearchResultHitType>;
         setHits((p) => [...p, ...result.hits]);
         setFocusTo(result.hits[0].id);
         setFetchState("ready");

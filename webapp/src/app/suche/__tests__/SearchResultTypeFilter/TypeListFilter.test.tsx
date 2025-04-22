@@ -2,7 +2,11 @@ import { describe, it } from "vitest";
 import { render } from "@testing-library/react";
 
 import { TypeListFilter } from "@/app/suche/_components/SearchResultTypeFilter/TypeListFilter";
-import { NextJSSearchParams, SearchResults } from "@/types/types";
+import {
+  NextJSSearchParams,
+  SearchResults,
+  UnknownSearchResultHit,
+} from "@/types/types";
 
 describe("TypeListFilter", () => {
   const mockedData = {
@@ -50,7 +54,7 @@ describe("TypeListFilter", () => {
     },
     hitsTotal: 2,
     cleanedActiveFilters: {},
-  } as SearchResults;
+  } as SearchResults<UnknownSearchResultHit>;
 
   const mockedSearchParams = {
     q: "test",

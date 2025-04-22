@@ -18,12 +18,6 @@
   dd {
     display: inline;
   }
-  // Add a comma between the DD elements
-  dd:not(:last-child) {
-    &:after {
-      content: ", ";
-    }
-  }
 }
 
 .search-details-showcase-images-box {
@@ -38,4 +32,45 @@
     width: rem-calc(200);
     height: rem-calc(200);
   }
+}
+
+.search-details-preview-loading {
+  border: 1px solid $clr-neutral-grey-400;
+  border-radius: rem-calc(4);
+  background-color: rgba($clr-primary-100, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1/0.5;
+  width: auto;
+
+  .spinner {
+    width: rem-calc(48);
+    height: rem-calc(48);
+    border: 6px solid $clr-primary-400;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+}
+
+.search-details-preview-error {
+  background-color: $clr-primary-100;
+  color: $clr-primary-500;
+  border-radius: 0.25rem;
+  @extend .paragraph-extra-small;
+  display: flex;
+  align-items: center;
+  padding: map-get($spacers, "0_5") map-get($spacers, 1);
 }

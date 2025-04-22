@@ -49,6 +49,24 @@ describe("SearchResultHitDetailInfo", () => {
     expect(dd).toHaveTextContent("TolleStelle");
   });
 
+  it("should render with showcase types", () => {
+    render(
+      <SearchResultHitDetailInfo
+        hasHvd={false}
+        allShowcaseTypes={[ 'mobile_app', 'website', 'visualization' ]}
+      />
+    );
+
+    const dt = screen.getByRole("term");
+    expect(dt).toHaveTextContent("Anwendungstypen");
+    expect(dt).toHaveClass("sr-only");
+
+    const dds = screen.getAllByRole("definition");
+    expect(dds[0]).toHaveTextContent("Mobile App");
+    expect(dds[1]).toHaveTextContent("Webseite");
+    expect(dds[2]).toHaveTextContent("Visualisierung");
+  });
+
   it("should render all information", () => {
     render(
       <SearchResultHitDetailInfo

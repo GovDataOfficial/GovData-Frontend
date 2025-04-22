@@ -1,6 +1,6 @@
 import sanitize from "sanitize-html";
 
-import { SearchResults } from "@/types/types";
+import { SearchResults, UnknownSearchResultHit } from "@/types/types";
 
 export const ALLOWLIST_METADATA_NOTES = {
   allowedTags: ["a", "li", "ol", "p", "ul", "br", "b", "i", "u"],
@@ -37,8 +37,8 @@ export function sanitizeHTML(
 }
 
 export function stripSearchResultHTMLContent(
-  data: SearchResults,
-): SearchResults {
+  data: SearchResults<UnknownSearchResultHit>,
+): SearchResults<UnknownSearchResultHit> {
   const sanitizedHits = data.hits.map((hit) => {
     const sanitizedContent = sanitizeHTML(hit.content);
     return { ...hit, content: sanitizedContent || "" };

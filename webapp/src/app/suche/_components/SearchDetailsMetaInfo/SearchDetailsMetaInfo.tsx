@@ -6,20 +6,15 @@ import {
   sanitizeHTML,
 } from "@/app/_lib/sanitizer/sanitizeHtml";
 import { MetaInfoHeadlineIcon } from "@/app/suche/_components/common/MetaInfoHeadlineIcon";
-import { Metadata, ShowCaseData } from "@/types/types";
+import { HitType, Metadata, ShowcaseData } from "@/types/types";
 
 type SearchDetailsMetaInfo = {
-  data: Metadata | ShowCaseData;
-};
-
-const getShowcaseType = (data: ShowCaseData): string => {
-  const primaryShowcase = data.showcaseTypes.find((s) => s.primaryShowcase);
-  return primaryShowcase ? primaryShowcase.name : "other";
+  data: Metadata | ShowcaseData;
 };
 
 export function SearchDetailsMetaInfo({ data }: SearchDetailsMetaInfo) {
   const sanitizedNotes = sanitizeHTML(data.notes, ALLOWLIST_METADATA_NOTES);
-  const type = "type" in data ? data.type : getShowcaseType(data);
+  const type = "type" in data ? HitType.dataset : HitType.showcase;
   const hasImages = "images" in data && data.images.length > 0;
 
   return (

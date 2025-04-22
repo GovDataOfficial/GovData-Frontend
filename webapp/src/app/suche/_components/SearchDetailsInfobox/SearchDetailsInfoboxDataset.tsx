@@ -4,11 +4,13 @@ import { Time } from "@/app/_components/Time/Time";
 import { TimeRange } from "@/app/_components/Time/TimeRange";
 import { fetchDataSetShowCaseConnection } from "@/app/_lib/getData";
 import { getOrganizationDisplayName } from "@/app/_lib/organization";
+import { FILTERS } from "@/app/_lib/URLHelper";
 import { DtHVD } from "@/app/suche/_components/common/CommonDtDd";
 import { DLTags } from "@/app/suche/_components/SearchDetailsInfobox/partials/DLTags";
 import { SearchDetailsInfoBoxContainer } from "@/app/suche/_components/SearchDetailsInfobox/partials/SearchDetailsInfoBoxContainer";
 import { SearchDetailsInfoBoxGroup } from "@/app/suche/_components/SearchDetailsInfobox/partials/SearchDetailsInfoBoxGroup";
 import { TermCategories } from "@/app/suche/_components/SearchDetailsInfobox/partials/TermCategories";
+import { SearchDetailsInfoboxFilterTagAnchor } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxFilterTagAnchor";
 import { i18n } from "@/i18n";
 import { logger } from "@/logger/logger";
 import { isNotNullOrUndefined } from "@/types/typeGuards";
@@ -103,11 +105,25 @@ export async function SearchDetailsInfoboxDataSet({
 
         <SearchDetailsInfoBoxGroup>
           <dt>{t("search.details.infobox.owner")}</dt>
-          <dd>{ownerDisplayName}</dd>
+          <dd>
+            <SearchDetailsInfoboxFilterTagAnchor
+              searchCriteria={FILTERS.SOURCEPORTAL}
+              searchCriteriaValue={owner_org}
+            >
+              {ownerDisplayName}
+            </SearchDetailsInfoboxFilterTagAnchor>
+          </dd>
           {publisher && (
             <>
               <dt>{t("search.details.infobox.publisher")}</dt>
-              <dd>{publisher}</dd>
+              <dd>
+                <SearchDetailsInfoboxFilterTagAnchor
+                  searchCriteria={FILTERS.PUBLISHER}
+                  searchCriteriaValue={publisher}
+                >
+                  {publisher}
+                </SearchDetailsInfoboxFilterTagAnchor>
+              </dd>
             </>
           )}
         </SearchDetailsInfoBoxGroup>
@@ -125,6 +141,7 @@ export async function SearchDetailsInfoboxDataSet({
           <SearchDetailsInfoBoxGroup>
             <DtHVD />
             <TermCategories
+              isHVD={isHVD}
               title={t("search.details.infobox.categoriesHvd")}
               categories={hvdCategories}
             />

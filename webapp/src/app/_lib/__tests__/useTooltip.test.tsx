@@ -24,31 +24,17 @@ describe("useTooltip", () => {
     const element = screen.getByText("Hover over me");
     expect(element).toBeVisible();
 
-    // element has title and no tooltip is shown
-    expect(element).toHaveAttribute("title", "Test Tooltip");
+    // elements title is removed and no tooltip is shown
+    expect(element).not.toHaveAttribute("title");
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
 
     // hover over element to trigger tooltip
     await user.hover(element);
 
-    // element has no title to avoid showing default browser tooltip
-    expect(element).not.toHaveAttribute("title", "Test Tooltip");
-
     // tooltip is now visible with contents of title attribute
     const tooltip = screen.getByRole("tooltip");
     expect(tooltip).toBeVisible();
     expect(tooltip).toHaveTextContent("Test Tooltip");
-
-    // hover away from element to hide tooltip
-    await user.unhover(element);
-
-    // element should have title again
-    await waitFor(() =>
-      expect(element).toHaveAttribute("title", "Test Tooltip"),
-    );
-
-    // tooltip not visible anymore
-    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
   });
 
   it("should update the tooltip content when the title attribute changes", async () => {
@@ -72,8 +58,5 @@ describe("useTooltip", () => {
     // tooltip still must be visible with new content
     expect(tooltip).toBeVisible();
     expect(tooltip).toHaveTextContent("Updated Tooltip");
-
-    // element should still have no title attributes
-    await waitFor(() => expect(element).not.toHaveAttribute("title"));
   });
 });

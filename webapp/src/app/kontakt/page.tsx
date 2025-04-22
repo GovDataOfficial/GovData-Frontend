@@ -27,7 +27,10 @@ export default function Page() {
         <DesignBox>
           {t("contact.page.info.description")}&nbsp;
           <a href={mailto}>{t("contact.page.info.mailto")}</a>
-          {process.env.mail_enabled === "true" && <ContactForm />}
+          {process.env.mail_enabled &&
+            process.env.mail_enabled.toLowerCase() === "true" && (
+              <ContactForm />
+            )}
         </DesignBox>
       </ContainerSection>
     </>

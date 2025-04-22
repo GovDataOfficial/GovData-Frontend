@@ -20,12 +20,14 @@ describe("MetadataOverviewContainer", () => {
       title: "Test Title 1",
       created: "2022-03-01",
       metadataModified: "2022-04-01",
+      name: "test-title-1",
     },
     {
       id: "2",
       title: "Test Title 2",
       created: "2022-03-02",
       metadataModified: "2023-02-01",
+      name: "test-title-2",
     },
   ];
 

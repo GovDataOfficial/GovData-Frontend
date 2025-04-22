@@ -20,12 +20,14 @@ describe("MetadataOverviewMobile", () => {
         title: "Test Title 1",
         created: "2023-01-01",
         metadataModified: "2023-02-01",
+        name: "test-title-1",
       },
       {
         id: "2",
         title: "Test Title 2",
         created: "2023-03-01",
         metadataModified: "2023-04-01",
+        name: "test-title-2",
       },
     ],
     options: [
@@ -51,9 +53,11 @@ describe("MetadataOverviewMobile", () => {
 
     const editButtons = screen.getAllByRole("link", { name: /bearbeiten/i });
     const deleteButtons = screen.getAllByRole("button", { name: /löschen/i });
+    const showButton = screen.getAllByRole("link", { name: /ansehen/i });
 
     expect(editButtons).toHaveLength(defaultProps.data.length);
     expect(deleteButtons).toHaveLength(defaultProps.data.length);
+    expect(showButton).toHaveLength(defaultProps.data.length);
   });
 
   it("should handle sort with keyboard", async () => {

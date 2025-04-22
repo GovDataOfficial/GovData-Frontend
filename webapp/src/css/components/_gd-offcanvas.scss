@@ -62,12 +62,12 @@
 
   &:focus,
   &:hover {
-      background-color: $clr-primary-400;
+    background-color: $clr-primary-400;
 
-      img {
-        filter: invert(100%);
-      }
+    img {
+      filter: invert(100%);
     }
+  }
 }
 
 // hide the off-canvas area if a bigger breakpoint is reached

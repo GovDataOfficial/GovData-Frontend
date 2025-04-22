@@ -19,7 +19,11 @@ import { TypeListFilter } from "@/app/suche/_components/SearchResultTypeFilter/T
 import { TypeListFilterMobile } from "@/app/suche/_components/SearchResultTypeFilter/TypeListFilterMobile";
 import { i18n } from "@/i18n";
 import { isNotNullOrUndefined } from "@/types/typeGuards";
-import { PageConstructor, SearchResults } from "@/types/types";
+import {
+  PageConstructor,
+  SearchResults,
+  UnknownSearchResultHit,
+} from "@/types/types";
 
 function getQueryParam(searchParams: PageConstructor["searchParams"]) {
   const params = convertToURLSearchParams(searchParams);
@@ -41,9 +45,10 @@ export async function generateMetadata({
   });
 }
 
-const dataHasHits = (data?: SearchResults) => data && data.hitsTotal > 0;
+const dataHasHits = (data?: SearchResults<UnknownSearchResultHit>) =>
+  data && data.hitsTotal > 0;
 
-function getHeadline(data: SearchResults, q?: string) {
+function getHeadline(data: SearchResults<UnknownSearchResultHit>, q?: string) {
   const hasHits = dataHasHits(data);
   switch (true) {
     case !hasHits && isNotNullOrUndefined(q):

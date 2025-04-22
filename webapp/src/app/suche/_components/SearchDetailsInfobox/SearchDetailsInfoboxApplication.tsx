@@ -1,13 +1,15 @@
 import { ExternalLink } from "@/app/_components/ExternalLink/ExternalLink";
+import { FILTERS } from "@/app/_lib/URLHelper";
 import { DLTags } from "@/app/suche/_components/SearchDetailsInfobox/partials/DLTags";
 import { SearchDetailsInfoBoxContainer } from "@/app/suche/_components/SearchDetailsInfobox/partials/SearchDetailsInfoBoxContainer";
 import { SearchDetailsInfoBoxGroup } from "@/app/suche/_components/SearchDetailsInfobox/partials/SearchDetailsInfoBoxGroup";
 import { TermCategories } from "@/app/suche/_components/SearchDetailsInfobox/partials/TermCategories";
+import { SearchDetailsInfoboxFilterTagAnchor } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxFilterTagAnchor";
 import { i18n } from "@/i18n";
-import { ShowCaseData } from "@/types/types";
+import { ShowcaseData } from "@/types/types";
 
 type SearchDetailsInfoboxDataset = {
-  data: ShowCaseData;
+  data: ShowcaseData;
 };
 
 export function SearchDetailsInfoboxApplication({
@@ -16,7 +18,6 @@ export function SearchDetailsInfoboxApplication({
   const { t } = i18n;
 
   const { showcaseTypes, contact, categories, keywords, platforms } = data;
-
   const hasCategories = categories?.length > 0;
   const hasPlatforms = platforms?.length > 0;
   return (
@@ -27,7 +28,14 @@ export function SearchDetailsInfoboxApplication({
         <SearchDetailsInfoBoxGroup inline>
           <dt>{t("filter.showcase_types.title")}</dt>
           {showcaseTypes.map((a) => (
-            <dd key={a.name}>{t("filter.showcase_types." + a.name)}</dd>
+            <dd key={a.name}>
+              <SearchDetailsInfoboxFilterTagAnchor
+                searchCriteria={FILTERS.SHOWCASE_TYPES}
+                searchCriteriaValue={a.name}
+              >
+                {t("filter.showcase_types." + a.name)}
+              </SearchDetailsInfoboxFilterTagAnchor>
+            </dd>
           ))}
         </SearchDetailsInfoBoxGroup>
 
@@ -36,7 +44,12 @@ export function SearchDetailsInfoboxApplication({
             <dt>{t("filter.platforms.title")}</dt>
             {platforms.map((platform) => (
               <dd key={platform.id}>
-                {t("filter.platforms." + platform.name)}
+                <SearchDetailsInfoboxFilterTagAnchor
+                  searchCriteria={FILTERS.PLATFORMS}
+                  searchCriteriaValue={platform.name}
+                >
+                  {t("filter.platforms." + platform.name)}
+                </SearchDetailsInfoboxFilterTagAnchor>
               </dd>
             ))}
           </SearchDetailsInfoBoxGroup>

@@ -1,5 +1,16 @@
 # Changelog
 
+## 7.5.0 2025-04-15
+
+- Replaced comma with pipe as the separator for active filters
+- Added resource loading and error handling
+- Removed primary showcase type
+- Added map preview for GeoJSON resources on search details page
+- Updated OpenLayers to 10.4.0
+- Updated map search
+- Added search via tag to metadata detail view
+- Added link to metadata in metadata overview
+
 ## 7.4.1 2025-03-27
 
 - Updated next.js to 14.2.26. Fixes CVE-2025-29927

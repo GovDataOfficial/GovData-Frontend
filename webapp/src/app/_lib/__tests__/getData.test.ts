@@ -37,7 +37,7 @@ describe("getData", () => {
     };
     await getSearchResults(nextJsSearchParams);
     expect(vi.mocked(global.fetch)).toHaveBeenCalledWith(
-      "http://mtest.de/search/search?queryString=ku&activeFilters=groups%3Aeduc%2Cgroups%3Atech%2Ctags%3Abauleitplan&sortType=relevance&ascending=false",
+      "http://mtest.de/search/search?queryString=ku&activeFilters=groups%3Aeduc%7Cgroups%3Atech%7Ctags%3Abauleitplan&sortType=relevance&ascending=false",
       expect.anything(),
     );
   });

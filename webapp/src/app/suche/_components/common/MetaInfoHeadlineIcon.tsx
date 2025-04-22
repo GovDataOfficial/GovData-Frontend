@@ -2,68 +2,37 @@ import Image from "next/image";
 
 import { icons } from "@/app/_components/SVG/iconMap";
 import { i18n } from "@/i18n";
+import { HitType } from "@/types/types";
 
 type MetaInfoHeadlineIcon = {
-  type: string;
+  type: HitType;
 };
 
-const knownTypes = [
-  "dataset",
-  "concept",
-  "visualization",
-  "mobile_app",
-  "tool",
-  "other",
-  "website",
-  "article",
-  "blog",
-];
-
-const getMediaType = (type: string) => {
-  const toLower = type.toLowerCase();
-  return knownTypes.includes(toLower) ? toLower : "other";
-};
-
-const getIcon = (type: string) => {
+const getIcon = (type: HitType) => {
   switch (type) {
-    case "dataset":
+    case HitType.dataset:
       return icons.mediatype_dataset_inverted;
-    case "concept":
-      return icons.mediatype_typ_concept_inverted;
-    case "visualization":
-      return icons.mediatype_typ_visualization_inverted;
-    case "mobile_app":
-      return icons.mediatype_typ_mobile_app_inverted;
-    case "tool":
-      return icons.mediatype_typ_tool_inverted;
-    case "website":
-      return icons.mediatype_typ_website_inverted;
-    case "article":
-      return icons.mediatype_typ_article_inverted;
-    case "blog":
-      return icons.mediatype_typ_blog_inverted;
+    case HitType.showcase:
+      return icons.mediatype_showcase_inverted;
     default:
-    case "other":
-      return icons.mediatype_typ_other_inverted;
+      return icons.mediatype_dataset_inverted;
   }
 };
 
-export function MetaInfoHeadline({ type }: { type: string }) {
+export function MetaInfoHeadline({ type }: { type: HitType }) {
   const { t } = i18n;
-  const mediaType = getMediaType(type);
   return (
     <span className="paragraph-small bold">
-      {t("filter.showcase_types." + mediaType)}
+      {t("filter.showcase_types." + type)}
     </span>
   );
 }
 
 export function MetaInfoHeadlineIcon({ type }: MetaInfoHeadlineIcon) {
-  const mediaType = getMediaType(type);
-  const iconSrc = getIcon(mediaType);
+  const iconSrc = getIcon(type);
   return (
     <div className="metainfo">
-      <div className={`mediatype-icon mediatype-${mediaType}`}>
+      <div className={`mediatype-icon mediatype-${type}`}>
         <Image width={0} height={0} src={iconSrc} alt="" />
       </div>
       <MetaInfoHeadline type={type} />

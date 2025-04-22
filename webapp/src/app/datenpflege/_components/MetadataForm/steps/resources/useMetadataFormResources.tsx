@@ -64,7 +64,9 @@ export function useMetadataFormResources({
 
   const deleteResource = async (id: string, count: number) => {
     const resource = resources.find((resource) => resource.id === id);
-    if (!resource) return;
+    if (!resource) {
+      return;
+    }
 
     const userConfirmed = window.confirm(
       i18n.t("metadataform.field.resource.deleteConfirm", { count }),

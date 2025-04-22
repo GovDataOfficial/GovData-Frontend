@@ -45,7 +45,9 @@ function labelSplitter(str: string, l: number) {
     pos = pos <= 0 ? l : pos;
     strs.push(str.substring(0, pos));
     var i = str.indexOf(" ", pos) + 1;
-    if (i < pos || i > pos + l) i = pos;
+    if (i < pos || i > pos + l) {
+      i = pos;
+    }
     str = str.substring(i);
   }
   strs.push(str);

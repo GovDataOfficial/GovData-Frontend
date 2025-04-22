@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -25,9 +25,12 @@ describe("MetadataForm", () => {
     };
   });
 
+  beforeAll(() => {
+    window.HTMLElement.prototype.scrollIntoView = vi.fn();
+  });
+
   beforeEach(() => {
     globalThis.fetch = vi.fn();
-    window.HTMLElement.prototype.scrollIntoView = vi.fn();
   });
 
   const organizations = [

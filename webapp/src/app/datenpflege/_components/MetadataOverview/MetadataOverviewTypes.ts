@@ -8,6 +8,7 @@ export type MetadataRecord = SortableData & {
   title: string;
   created: string;
   metadataModified: string;
+  name: string;
 };
 
 export type MetadataOption = SortableDataOption<MetadataRecord> & {

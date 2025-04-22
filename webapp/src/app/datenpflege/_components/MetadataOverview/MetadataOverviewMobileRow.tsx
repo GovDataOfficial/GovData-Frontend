@@ -4,6 +4,7 @@ import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
 import { TimeWithDate } from "@/app/_components/Time/TimeWithDate";
 import { MetadataOverviewButtonDelete } from "@/app/datenpflege/_components/MetadataOverview/MetadataOverviewButtonDelete";
 import { MetadataOverviewButtonEdit } from "@/app/datenpflege/_components/MetadataOverview/MetadataOverviewButtonEdit";
+import { MetadataOverviewShowDetailsAnchor } from "@/app/datenpflege/_components/MetadataOverview/MetadataOverviewShowDetailsAnchor";
 import { MetadataRecord } from "@/app/datenpflege/_components/MetadataOverview/MetadataOverviewTypes";
 import { i18n } from "@/i18n";
 
@@ -33,6 +34,7 @@ export const MetadataOverviewMobileRow = memo(
               {i18n.t("metadataoverview.table.actions")}
             </span>
             <MetadataOverviewButtonEdit dataTitle={item.title} id={item.id} />
+            <MetadataOverviewShowDetailsAnchor name={item.name} />
             <MetadataOverviewButtonDelete dataTitle={item.title} id={item.id} />
           </div>
         </DesignBox>

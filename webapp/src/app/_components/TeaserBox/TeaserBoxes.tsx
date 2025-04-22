@@ -65,7 +65,7 @@ export async function TeaserBoxes() {
           <TeaserBoxNumber
             docCount={showcase.docCount}
             name={i18n.t(`home.teaserbox.numbers.showcase`)}
-            icon={icons.tool}
+            icon={icons.mediatype_showcase_inverted}
             href={createLinkToSearchWithType("showcase")}
           />
         )}

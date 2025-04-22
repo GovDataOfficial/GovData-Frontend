@@ -44,4 +44,21 @@ describe("middleware Headers", () => {
     expect(scriptSrc).toContain("'unsafe-inline'");
     expect(scriptSrc).not.toContain("'unsafe-eval'");
   });
+
+  test("should set connect-src wildcard CSP headers on response when on details page", async () => {
+    const response = new NextResponse();
+    const request = new NextRequest(new URL("https://test.de/suche/daten/"));
+    const middlewareResponse = await withHeadersMiddleware(request, response);
+
+    expect(middlewareResponse).toBeUndefined();
+
+    const cspHeaders = response.headers.get("Content-Security-Policy");
+    const cspHeadersSplit = cspHeaders?.split(";");
+
+    const connectSrc = cspHeadersSplit?.find((csp) =>
+      csp.includes("connect-src"),
+    );
+    expect(connectSrc).toBeDefined();
+    expect(connectSrc).toContain("*");
+  });
 });

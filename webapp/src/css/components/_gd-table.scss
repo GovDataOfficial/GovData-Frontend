@@ -28,12 +28,12 @@
       }
     }
 
-    tbody tr:has(+.d-none) {
+    tbody tr:has(+ .d-none) {
       border-bottom: 1px solid $clr-neutral-grey-300;
     }
 
     tbody tr[id] {
-      border-bottom: 1px solid  $clr-neutral-grey-300;
+      border-bottom: 1px solid $clr-neutral-grey-300;
     }
   }
 

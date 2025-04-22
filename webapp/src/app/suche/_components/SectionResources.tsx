@@ -6,9 +6,10 @@ import { Metadata } from "@/types/types";
 
 type SectionResources = {
   data: Metadata;
+  tileUrl: string;
 };
 
-export function SectionResources({ data }: SectionResources) {
+export function SectionResources({ data, tileUrl }: SectionResources) {
   if (!data.resources || data.resources?.length == 0) {
     return null;
   }
@@ -16,8 +17,8 @@ export function SectionResources({ data }: SectionResources) {
   return (
     <DesignBox>
       <h2 className="mt-1">{i18n.t("resources.headline")}</h2>
-      <ResourcesTable data={data} />
-      <ResourceTableMobile data={data} />
+      <ResourcesTable data={data} tileUrl={tileUrl} />
+      <ResourceTableMobile data={data} tileUrl={tileUrl} />
     </DesignBox>
   );
 }

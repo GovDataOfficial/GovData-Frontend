@@ -1,7 +1,11 @@
 import { FilterResultCount } from "@/app/_components/FilterArea/FilterResultCount";
 import { URLHelper } from "@/app/_lib/URLHelper";
 import { i18n } from "@/i18n";
-import { NextJSSearchParams, SearchResults } from "@/types/types";
+import {
+  NextJSSearchParams,
+  SearchResults,
+  UnknownSearchResultHit,
+} from "@/types/types";
 
 type TypeListFilterItem = {
   facet: { name: string; docCount: number };
@@ -50,7 +54,7 @@ export function TypeListFilter({
   data,
   searchParams,
 }: {
-  data: SearchResults;
+  data: SearchResults<UnknownSearchResultHit>;
   searchParams: NextJSSearchParams;
 }) {
   if (!data.filterMap.type) {

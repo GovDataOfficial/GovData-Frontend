@@ -7,6 +7,7 @@ type ButtonIcon = {
   icon: ComponentProps<typeof SVG>["icon"];
   size?: ComponentProps<typeof SVG>["size"];
   title?: string;
+  tooltipPlacement?: "top" | "bottom" | "left" | "right";
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function ButtonIcon({
@@ -14,9 +15,10 @@ export function ButtonIcon({
   className,
   size = "small",
   title,
+  tooltipPlacement,
   ...rest
 }: ButtonIcon) {
-  const ref = useTooltip<HTMLButtonElement>();
+  const ref = useTooltip<HTMLButtonElement>(tooltipPlacement);
   return (
     <button
       ref={ref}
@@ -24,6 +26,7 @@ export function ButtonIcon({
       {...rest}
       title={title}
     >
+      <span className="sr-only">{title}</span>
       <SVG icon={icon} size={size} />
     </button>
   );

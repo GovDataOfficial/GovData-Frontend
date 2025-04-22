@@ -34,7 +34,10 @@ export default async function DatasetPage({
         <div className="row mt-2 mt-md-5">
           <div className="col-sm-12 col-md-8">
             <SearchDetailsMetaInfo data={data} />
-            <SectionResources data={data} />
+            <SectionResources
+              data={data}
+              tileUrl={process.env.BE_GD_DATA_MAP_PREVIEW_TILE_URL || ""}
+            />
             <SectionDataServices data={data} />
           </div>
           <div className="col-sm-12 col-md-4 mt-3 mt-md-0">

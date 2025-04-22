@@ -1,68 +1,64 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import {
-  BaseMapSuggestResponse,
-  LocationSearch,
-  OSMSuggestResponse,
-} from "@/app/kartensuche/_components/LocationSearch";
+import LocationSearch from "@/app/kartensuche/_components/LocationSearch";
+import { MappedSuggest, NextJSSearchParams } from "@/types/types";
 
 describe("LocationSearch", () => {
-  const mockOSMSuggestResponse = [
-    {
-      osm_type: "node",
-      osm_id: 9295643525,
-      display_name: "Philippinen",
-      boundingbox: ["11.3742595", "11.4142595", "122.5292143", "122.5692143"],
-    },
-    {
-      osm_type: "node",
-      osm_id: 3367652278,
-      display_name: "TestLocation",
-      boundingbox: ["11.4209794", "11.4609794", "122.0420189", "122.0820189"],
-    },
-  ] satisfies OSMSuggestResponse;
+  const ResizeObserverMock = vi.fn(() => ({
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn(),
+  }));
 
-  const mockBaseMapSuggestResponse = {
-    features: [
-      { properties: { typ: "ort", text: "Ort Nummer 1" }, bbox: [], id: "1" },
-      { properties: { typ: "straße", text: "Straße 55" }, bbox: [], id: "2" },
-    ],
-    type: "FeatureCollection",
-  } satisfies BaseMapSuggestResponse;
-
-  it("should correctly map osm response", async () => {
-    global.fetch = vi.fn().mockResolvedValue({
-      json: () => Promise.resolve(mockOSMSuggestResponse),
-    });
-
-    const user = userEvent.setup();
-
-    render(<LocationSearch />);
-
-    const box = screen.getByRole("searchbox", { name: /nach orten suchen/i });
-    await user.type(box, "555");
-    const listbox = await screen.findByRole("listbox");
-
-    within(listbox).getByRole("option", { name: /philippinen/i });
-    within(listbox).getByRole("option", { name: /testlocation/i });
+  beforeAll(() => {
+    // Stub the global ResizeObserver for the map component
+    vi.stubGlobal("ResizeObserver", ResizeObserverMock);
   });
 
-  it("should correctly map basemap response", async () => {
-    global.fetch = vi.fn().mockResolvedValue({
-      json: () => Promise.resolve(mockBaseMapSuggestResponse),
-    });
+  afterAll(() => {
+    vi.unstubAllGlobals();
+  });
 
-    const user = userEvent.setup();
+  const sessionId = "session-id";
+  const tileUrl = "tile-url";
+  const isOSMActive = true;
 
-    render(<LocationSearch />);
+  it("renders the form with hidden inputs and search button", () => {
+    const boundingbox =
+      "5.4700927734375,49.89399948318322,12.5299072265625,52.08025065777832";
+    const searchParams: NextJSSearchParams = {
+      boundingbox,
+      q: "test",
+    };
 
-    const box = screen.getByRole("searchbox", { name: /nach orten suchen/i });
-    await user.type(box, "test");
-    const listbox = await screen.findByRole("listbox");
-    const options = within(listbox).getAllByRole("option");
-    expect(options[0].textContent).toBe("Ort Nummer 1 ort");
-    expect(options[1].textContent).toBe("Straße 55 straße");
+    const { container } = render(
+      <LocationSearch
+        isOSMActive={isOSMActive}
+        searchParams={searchParams}
+        tileUrl={tileUrl}
+        sessionId={sessionId}
+      />,
+    );
+
+    expect(container.querySelector("form")).toBeDefined();
+
+    // Check for hidden inputs
+    const queryInput = screen.getByDisplayValue("test");
+    expect(queryInput).toBeInTheDocument();
+    expect(queryInput).toHaveAttribute("name", "q");
+    expect(queryInput).toHaveAttribute("value", "test");
+    expect(queryInput).toHaveAttribute("type", "hidden");
+
+    const boundingboxInput = screen.getByDisplayValue(boundingbox);
+    expect(boundingboxInput).toBeInTheDocument();
+    expect(boundingboxInput).toHaveAttribute("name", "boundingbox");
+    expect(boundingboxInput).toHaveAttribute("value", boundingbox);
+    expect(boundingboxInput).toHaveAttribute("type", "hidden");
+
+    expect(
+      screen.getByRole("button", { name: /suche senden/i }),
+    ).toBeInTheDocument();
   });
 });

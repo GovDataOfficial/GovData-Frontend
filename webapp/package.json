@@ -26,6 +26,8 @@
     "next": "^14.2.26",
     "nodemailer": "^6.9.15",
     "normalize.css": "^8.0.1",
+    "ol": "^10.4.0",
+    "ol-mapbox-style": "^12.4.1",
     "openid-client": "^5.7.0",
     "pino": "^9.5.0",
     "react": "^18.3.1",

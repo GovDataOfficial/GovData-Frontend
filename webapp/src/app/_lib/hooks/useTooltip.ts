@@ -14,40 +14,40 @@ declare global {
  */
 export function useTooltip<T extends HTMLElement>(
   placement: Placement = "bottom",
+  delay: number = 0,
 ) {
   const ref = useRef<T>(null);
 
   useEffect(() => {
     if (ref.current && ref.current.hasAttribute("title")) {
-      const instance = tippy(ref.current, {
+      const current = ref.current;
+      const instance = tippy(current, {
         arrow: true,
         theme: "gd-theme",
         placement,
         hideOnClick: false,
-        content: ref.current.title,
-        onShow: () => {
-          ref.current?.removeAttribute("title");
+        content: () => {
+          const title = current.title;
+          current.removeAttribute("title");
+          return title as string;
         },
-        onHide: () => {
-          ref.current?.setAttribute("title", instance.props.content as string);
-        },
-        onBeforeUpdate(instance) {
-          if (instance.state.isVisible) {
-            ref.current?.removeAttribute("title");
-          }
-        },
+        delay,
       });
-
       return () => {
+        current.setAttribute("title", instance.props.content as string);
         instance.destroy();
       };
     }
-  }, [placement]);
+  }, [placement, delay]);
 
   useEffect(() => {
     const tippyInstance = ref.current?._tippy;
-    if (tippyInstance && tippyInstance.props.content !== ref.current.title) {
+    const tippyContent = tippyInstance && tippyInstance.props.content;
+    const title = ref.current?.title;
+
+    if (tippyContent && tippyContent !== "" && title && title !== "") {
       tippyInstance.setContent(ref.current.title);
+      ref.current.removeAttribute("title");
     }
   });
 

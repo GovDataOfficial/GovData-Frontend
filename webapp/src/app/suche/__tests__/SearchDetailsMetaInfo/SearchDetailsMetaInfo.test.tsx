@@ -32,7 +32,7 @@ describe("SearchDetailsMetaInfo", () => {
     const mediaTypeIconDiv = container.querySelector(".mediatype-icon");
 
     expect(mediaTypeIconDiv).toBeInTheDocument();
-    expect(mediaTypeIconDiv).toHaveClass("mediatype-concept");
+    expect(mediaTypeIconDiv).toHaveClass("mediatype-showcase");
   });
 
   it("should render correct headline for showcase data", () => {

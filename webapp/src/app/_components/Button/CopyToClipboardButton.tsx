@@ -12,7 +12,7 @@ export function CopyToClipboardButton({ url }: { url: string }) {
     <ButtonIcon
       onClick={() => copyToClipboard(url)}
       title={text}
-      className="gd-button-copy-to-clipboard"
+      className="gd-button-icon-tertiary"
       icon={icons.copy}
       size="big"
     />

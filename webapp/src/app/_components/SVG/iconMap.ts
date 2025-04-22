@@ -26,30 +26,20 @@ import icon_kat_tran from "./icons/categories/icon_kat_tran.svg";
 import check from "./icons/check.svg";
 import copy from "./icons/copy.svg";
 import editPencil from "./icons/edit.svg";
+import external_link from "./icons/external_link.svg";
 import filter from "./icons/filter.svg";
 import icon_download from "./icons/icon_download.svg";
 import icon_upload from "./icons/icon_upload.svg";
 import infoBlue from "./icons/info_blue.svg";
 import login from "./icons/login.svg";
+import mapMarker from "./icons/map_marker.svg";
 import mastodon from "./icons/mastodon.svg";
 import tool from "./icons/mediatypes/tool.svg";
 import mediatype_typ_article_inverted from "./icons/mediatypes/typ_article_inverted.svg";
 import mediatype_typ_blog_inverted from "./icons/mediatypes/typ_blog_inverted.svg";
-import mediatype_concept_blue from "./icons/mediatypes/typ_concept_blue.svg";
-import mediatype_typ_concept_inverted from "./icons/mediatypes/typ_concept_inverted.svg";
 import mediatype_dataset_inverted from "./icons/mediatypes/typ_dataset_inverted.svg";
-import mediatype_mobile_app_blue from "./icons/mediatypes/typ_mobile_app_blue.svg";
-import mediatype_typ_mobile_app_inverted from "./icons/mediatypes/typ_mobile_app_inverted.svg";
-import mediatype_other_blue from "./icons/mediatypes/typ_other_blue.svg";
-import mediatype_typ_other_inverted from "./icons/mediatypes/typ_other_inverted.svg";
-import mediatype_publication_blue from "./icons/mediatypes/typ_publication_blue.svg";
+import mediatype_showcase_blue from "./icons/mediatypes/typ_showcase_blue.svg";
 import mediatype_showcase_inverted from "./icons/mediatypes/typ_showcase_inverted.svg";
-import mediatype_tool_blue from "./icons/mediatypes/typ_tool_blue.svg";
-import mediatype_typ_tool_inverted from "./icons/mediatypes/typ_tool_inverted.svg";
-import mediatype_visualization_blue from "./icons/mediatypes/typ_visualization_blue.svg";
-import mediatype_typ_visualization_inverted from "./icons/mediatypes/typ_visualization_inverted.svg";
-import mediatype_website_blue from "./icons/mediatypes/typ_website_blue.svg";
-import mediatype_typ_website_inverted from "./icons/mediatypes/typ_website_inverted.svg";
 import plus from "./icons/plus.svg";
 import remove from "./icons/remove.svg";
 import reset from "./icons/reset.svg";
@@ -87,22 +77,10 @@ const icons = {
   remove,
   reset,
   mediatype_dataset_inverted,
-  mediatype_typ_concept_inverted,
-  mediatype_typ_visualization_inverted,
-  mediatype_typ_mobile_app_inverted,
-  mediatype_typ_tool_inverted,
-  mediatype_typ_other_inverted,
-  mediatype_typ_website_inverted,
   mediatype_typ_article_inverted,
   mediatype_typ_blog_inverted,
-  mediatype_website_blue,
-  mediatype_tool_blue,
-  mediatype_publication_blue,
-  mediatype_mobile_app_blue,
-  mediatype_concept_blue,
-  mediatype_other_blue,
-  mediatype_visualization_blue,
   mediatype_showcase_inverted,
+  mediatype_showcase_blue,
   tool,
   hvd,
   infoBlue,
@@ -112,6 +90,8 @@ const icons = {
   trash,
   editPencil,
   login,
+  mapMarker,
+  external_link,
 };
 
 export { icons };

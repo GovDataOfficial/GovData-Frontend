@@ -1,14 +1,12 @@
 "use client";
 
-import { Fragment } from "react";
-
-import { ResourcesTableRowBottom } from "@/app/suche/_components/ResourceTable/ResourcesTableRowBottom";
-import { ResourcesTableRowTop } from "@/app/suche/_components/ResourceTable/ResourcesTableRowTop";
+import { ResourceTableEntry } from "@/app/suche/_components/ResourceTable/ResourceTableEntry";
 import { useResourceTable } from "@/app/suche/_components/ResourceTable/useResourceTable";
 import { i18n } from "@/i18n";
 import { Metadata } from "@/types/types";
 
 type ResourcesTable = {
+  tileUrl: string;
   data?: Metadata;
 };
 
@@ -28,7 +26,7 @@ function TableHead({
   );
 }
 
-export function ResourcesTable({ data }: ResourcesTable) {
+export function ResourcesTable({ tileUrl, data }: ResourcesTable) {
   const { openIds, handleOnClick } = useResourceTable();
 
   return (
@@ -65,18 +63,15 @@ export function ResourcesTable({ data }: ResourcesTable) {
             );
 
             return (
-              <Fragment key={resource.id}>
-                <ResourcesTableRowTop
-                  resource={resource}
-                  open={isOpen}
-                  onClick={handleOnClick}
-                />
-                <ResourcesTableRowBottom
-                  resource={resource}
-                  open={isOpen}
-                  available={isAvailable}
-                />
-              </Fragment>
+              <ResourceTableEntry
+                tileUrl={tileUrl}
+                metadataId={data.id}
+                isAvailable={isAvailable}
+                isOpen={isOpen}
+                resource={resource}
+                handleOnClick={handleOnClick}
+                key={resource.id}
+              />
             );
           })}
         </tbody>

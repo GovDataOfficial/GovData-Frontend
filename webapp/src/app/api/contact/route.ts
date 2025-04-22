@@ -9,7 +9,9 @@ const transporter = nodemailer.createTransport({
   host: process.env.mail_smtp_host,
   port: process.env.mail_smtp_port,
   secure: false,
-  requireTLS: process.env.mail_smtp_tls_enable,
+  requireTLS:
+    process.env.mail_smtp_tls_enable &&
+    process.env.mail_smtp_tls_enable.toLowerCase() === "true",
   auth: {
     user: process.env.mail_smtp_user,
     pass: process.env.mail_smtp_password,
@@ -56,7 +58,10 @@ function sendContactMail(data: ContactMailFormData) {
 }
 
 export async function POST(request: Request) {
-  if (process.env.mail_enabled === "true") {
+  if (
+    process.env.mail_enabled &&
+    process.env.mail_enabled.toLowerCase() === "true"
+  ) {
     const body = await request.text();
     const params = new URLSearchParams(body);
 

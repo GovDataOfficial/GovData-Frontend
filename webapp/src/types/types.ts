@@ -53,28 +53,54 @@ export type FilterMap = {
 
 export type RecordFilterMap = Partial<Record<KnownFilter, FilterMap>>;
 
-export type SearchResultHit = {
+export enum HitType {
+  dataset = "dataset",
+  showcase = "showcase",
+  article = "article",
+  blog = "blog",
+}
+
+export type BaseSearchResultHit = {
   id: string;
   name: string;
-  lastModified: string;
-  metadataModified: string;
-  created: string;
   title: string;
   content: string;
-  type: string;
-  primaryShowcaseType?: string;
-  hasHvd: boolean;
-  resources?: MetadataResource[];
+  type: HitType;
+  lastModified: string;
   displayImage?: string;
   targetLink?: string;
+};
+
+export type MetadataSearchResultHit = BaseSearchResultHit & {
+  metadataModified: string;
+  created: string;
+  hasHvd: boolean;
+  resources?: MetadataResource[];
   contact?: string;
 };
 
+export type ShowcasesSearchResultHit = BaseSearchResultHit & {
+  releaseDate: string;
+  allShowcaseTypes: string[];
+  metadataModified: string;
+  resources?: string[];
+  usedDatasets?: { id: string; name: string; url: string }[];
+  platforms?: { id: string; name: string }[];
+  ownerOrg?: string;
+  groups?: { id: string; name: string }[];
+  groupId?: number;
+  articleId?: string;
+};
+
+export type UnknownSearchResultHit = BaseSearchResultHit &
+  Partial<MetadataSearchResultHit> &
+  Partial<ShowcasesSearchResultHit>;
+
 export type SearchResultSuggestion = { name: string; score: number };
 
-export type SearchResults = {
+export type SearchResults<T extends BaseSearchResultHit> = {
   hitsTotal: number;
-  hits: SearchResultHit[];
+  hits: T[];
   scrollId: string;
   moreNextHitsAvailable: boolean;
   filterMap: RecordFilterMap;
@@ -84,8 +110,8 @@ export type SearchResults = {
   pageSize: number;
 };
 
-export type LoadMoreResults = {
-  hits: SearchResultHit[];
+export type LoadMoreResults<T extends BaseSearchResultHit> = {
+  hits: T[];
   scrollId: string;
 };
 
@@ -254,23 +280,24 @@ export type Metadata = {
   published?: string;
 };
 
-export type ShowCaseData = {
+export type ShowcaseContact = {
+  name: string;
+  email: string;
+  website: string;
+  addressReceiver: string;
+  addressExtras: string;
+  addressStreet: string;
+  addressCity: string;
+  addressPostalCode: string;
+  addressCountry: string;
+};
+
+export type ShowcaseData = {
   id: number;
   title: string;
   notes: string;
-  contact?: {
-    id: number;
-    name: string;
-    email: string;
-    website: string;
-    addressReceiver: string;
-    addressExtras: string;
-    addressStreet: string;
-    addressCity: string;
-    addressPostalCode: string;
-    addressCountry: string;
-  };
-  showcaseTypes: { id: number; name: string; primaryShowcase: boolean }[];
+  contact?: ShowcaseContact;
+  showcaseTypes: { id: number; name: string }[];
   images: { id: number; imageOrderId: number; image: string }[];
   linksToShowcase: { id: number; name: string; url: string }[];
   usedDatasets: { id: number; name: string; url: string }[];
@@ -281,12 +308,14 @@ export type ShowCaseData = {
   keywords: { id: number; name: string }[];
   website?: string;
   manualShowcaseCreatedDate: number;
+  manualShowcaseModifiedDate: number;
   usecasePublisher?: string;
   usecaseSourceUrl?: string;
   creatorUserId: string;
   modifyDate: number;
   hidden: boolean;
   createDate: number;
+  spatial: string;
 };
 
 export type PortalNumbers = {
@@ -308,4 +337,23 @@ export type PostDto = {
   retweet: boolean;
 };
 
+export type MappedSuggest = {
+  id: string | number;
+  display_name: string;
+  boundingbox: any[];
+  type?: string;
+};
+
+export type boundingBoxNumberCoordinates = [number, number, number, number];
+export type boundingBoxStringCoordinates = [string, string, string, string];
+
 export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+
+export enum ResourceFormatShort {
+  geojson = "geojson",
+}
+
+export enum ProjectionName {
+  EPSG4326 = "EPSG:4326",
+  EPSG3857 = "EPSG:3857",
+}

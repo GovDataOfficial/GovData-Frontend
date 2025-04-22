@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { SearchResultsContainer } from "@/app/suche/_components/SearchResults/SearchResultsContainer";
-import { SearchResults } from "@/types/types";
+import { SearchResults, UnknownSearchResultHit } from "@/types/types";
 
 describe("SearchResultsContainer", () => {
   beforeAll(() => {
@@ -33,7 +33,7 @@ describe("SearchResultsContainer", () => {
     hitsTotal: 1,
     moreNextHitsAvailable: false,
     pageSize: 10,
-  } as SearchResults;
+  } as SearchResults<UnknownSearchResultHit>;
 
   const withMoreNextHits = {
     ...mockSearchResults,

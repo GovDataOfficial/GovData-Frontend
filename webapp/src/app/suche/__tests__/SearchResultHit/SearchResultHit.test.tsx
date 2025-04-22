@@ -2,7 +2,10 @@ import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 import { SearchResultHit } from "@/app/suche/_components/SearchResultHit/SearchResultHit";
-import { SearchResultHit as SearchResultHitType } from "@/types/types";
+import {
+  HitType,
+  UnknownSearchResultHit as SearchResultHitType,
+} from "@/types/types";
 
 const mockedHit = {
   id: "id",
@@ -11,7 +14,7 @@ const mockedHit = {
   hasHvd: false,
   resources: [],
   title: "Mocked Title",
-  type: "dataset",
+  type: HitType.dataset,
   lastModified: "never",
   targetLink: "/targetLink",
   created: "2024-10-31T12:47:12",
@@ -64,21 +67,14 @@ describe("SearchResultHit", () => {
   });
 
   it("should render the correct hit link for type showcase", () => {
-    const hit = { ...mockedHit, type: "showcase" };
+    const hit = { ...mockedHit, type: HitType.showcase };
     render(<SearchResultHit hit={hit} />);
     const link = screen.getByRole("link", { name: /mocked title/i });
     expect(link).toHaveAttribute("href", "/suche/anwendung/mock");
   });
 
   it("should render the correct hit link for type article", () => {
-    const hit = { ...mockedHit, type: "article" };
-    render(<SearchResultHit hit={hit} />);
-    const link = screen.getByRole("link", { name: /mocked title/i });
-    expect(link).toHaveAttribute("href", "/targetLink");
-  });
-
-  it("should render the correct hit link for type information", () => {
-    const hit = { ...mockedHit, type: "information" };
+    const hit = { ...mockedHit, type: HitType.article };
     render(<SearchResultHit hit={hit} />);
     const link = screen.getByRole("link", { name: /mocked title/i });
     expect(link).toHaveAttribute("href", "/targetLink");

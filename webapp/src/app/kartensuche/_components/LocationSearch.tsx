@@ -1,102 +1,84 @@
 "use client";
 
-import {
-  Autocomplete,
-  AutocompleteHighlightedSuggestion,
-  AutocompleteListItem,
-} from "@/app/_components/Autocomplete";
-import { i18n } from "@/i18n";
+import { useRef, useState } from "react";
 
-type LocationSearch = {
+import { ContainerDiv } from "@/app/_components/Container";
+import { SPECIAL_FILTERS, URLHelper } from "@/app/_lib/URLHelper";
+import { LocationSearchAutocomplete } from "@/app/kartensuche/_components/LocationSearchAutocomplete";
+import { LocationSearchMap } from "@/app/kartensuche/_components/LocationSearchMap";
+import { i18n } from "@/i18n";
+import { MappedSuggest, NextJSSearchParams } from "@/types/types";
+
+export type LocationSearch = {
+  isOSMActive: boolean;
+  searchParams: NextJSSearchParams;
+  tileUrl: string;
   sessionId?: string;
 };
 
-export type BaseMapSuggestResponse = {
-  type: "FeatureCollection";
-  features: {
-    id: string;
-    bbox: unknown[];
-    properties: { text: string; typ: string };
-  }[];
-};
+export default function LocationSearch({
+  isOSMActive,
+  searchParams,
+  tileUrl,
+  sessionId,
+}: LocationSearch) {
+  const [selectedMappedSuggest, setSelectedMappedSuggest] =
+    useState<MappedSuggest>();
+  const boundingboxInputRef = useRef<HTMLInputElement>(null);
 
-export type OSMSuggestResponse = {
-  boundingbox: unknown[];
-  display_name: string;
-  osm_id: number;
-  osm_type: string;
-}[];
+  const {
+    getActiveFiltersForHiddenInput,
+    getBoundingBoxValueFromCurrentParams,
+  } = URLHelper(searchParams);
 
-function isOSMSuggestResponse(
-  res: BaseMapSuggestResponse | OSMSuggestResponse,
-): res is OSMSuggestResponse {
-  return Array.isArray(res) && "osm_id" in res[0] && "osm_type" in res[0];
-}
+  const boundingbox = getBoundingBoxValueFromCurrentParams();
 
-type MappedSuggest = {
-  id: string | number;
-  display_name: string;
-  boundingbox: any[];
-  type?: string;
-};
+  const hiddenInputs = getActiveFiltersForHiddenInput(
+    SPECIAL_FILTERS.BOUNDING_BOX,
+  ).map((input) => <input {...input} key={input.key} />);
 
-function toMappedSuggest(
-  res: BaseMapSuggestResponse | OSMSuggestResponse,
-): MappedSuggest[] {
-  if (isOSMSuggestResponse(res)) {
-    return res.map((osmItem) => ({
-      id: osmItem.osm_id,
-      display_name: osmItem.display_name,
-      boundingbox: osmItem.boundingbox,
-    }));
-  }
-  return res.features.map((basemapItem) => ({
-    id: basemapItem.id,
-    display_name: basemapItem.properties.text,
-    type: basemapItem.properties.typ,
-    boundingbox: basemapItem.bbox,
-  }));
-}
-
-export function LocationSearch({ sessionId }: LocationSearch) {
-  const fetchData = (input: string): Promise<MappedSuggest[]> => {
-    const url = `/api/geocoding-suggest?sessionId=${sessionId}&q=${input}`;
-    return fetch(url)
-      .then((r) => r.json())
-      .then(toMappedSuggest);
+  const onSearchItemSelected = (suggestion: MappedSuggest) => {
+    setSelectedMappedSuggest(suggestion);
   };
 
-  /**
-   * func is given from ol-govdata.js which is loaded via <Script Tag
-   * refactor this when updating ol.js
-   */
-  const zoomToSelectedLocation = (suggestion: MappedSuggest) => {
-    // @ts-expect-error
-    const funcFromInitMap = window.onAutocompleteListItemSelect;
-    if (typeof funcFromInitMap === "function") {
-      funcFromInitMap(suggestion);
-      return suggestion.display_name;
+  const onBoundingBoxChanged = (boundingBox: string) => {
+    if (boundingboxInputRef.current) {
+      boundingboxInputRef.current.value = boundingBox;
     }
   };
 
   return (
-    <div className="locationsearch">
-      <Autocomplete
-        label={i18n.t("searchmap.form.search.placeholder")}
-        placeholder={i18n.t("searchmap.form.search.placeholder")}
-        fetchData={fetchData}
-        onItemSelect={zoomToSelectedLocation}
-      >
-        {(suggestion, requiredListProps, inputValue) => (
-          <AutocompleteListItem key={suggestion.id} {...requiredListProps}>
-            <AutocompleteHighlightedSuggestion
-              suggestion={suggestion.display_name}
-              inputValue={inputValue}
+    <form action="/suche" method="get">
+      {hiddenInputs}
+      <input
+        ref={boundingboxInputRef}
+        type="hidden"
+        name="boundingbox"
+        id="boundingbox"
+        defaultValue={boundingbox}
+      />
+      <LocationSearchMap
+        isOSMActive={isOSMActive}
+        tileUrl={tileUrl}
+        boundingBox={boundingbox}
+        mappedSuggest={selectedMappedSuggest}
+        onBoundingBoxChanged={onBoundingBoxChanged}
+      />
+      <ContainerDiv containerWidth="lg">
+        <div className="row searchmap-input-row align-items-center ">
+          <div className="d-block mb-1 col-sm-6 mb-sm-0">
+            <LocationSearchAutocomplete
+              sessionId={sessionId}
+              onSearchItemSelected={onSearchItemSelected}
             />
-            {suggestion.type && <span> {suggestion.type}</span>}
-          </AutocompleteListItem>
-        )}
-      </Autocomplete>
-    </div>
+          </div>
+          <div className="d-block col-sm-6 text-right">
+            <button type="submit" className="button-search">
+              {i18n.t("searchmap.form.send")}
+            </button>
+          </div>
+        </div>
+      </ContainerDiv>
+    </form>
   );
 }
