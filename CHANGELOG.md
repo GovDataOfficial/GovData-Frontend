@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.5.1 2025-04-16
+
+- Fixed initial map search bounding box
+
 ## 7.5.0 2025-04-15
 
 - Replaced comma with pipe as the separator for active filters

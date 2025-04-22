@@ -79,10 +79,33 @@ describe("LocationSearchMap", () => {
         onBoundingBoxChanged={onBoundingBoxChanged}
       />,
     );
+    expect(onBoundingBoxChanged).not.toHaveBeenCalled();
     mockFeature.changed();
     act(() => {
       vi.advanceTimersByTime(300);
     });
+    expect(onBoundingBoxChanged).toHaveBeenCalled();
+  });
+
+  it("calls onBoundingBoxChanged when bounding box is empty", () => {
+    const polygon = new Polygon([
+      [
+        [0, 0],
+        [1, 0],
+        [1, 1],
+        [0, 1],
+        [0, 0],
+      ],
+    ]);
+    const mockFeature = new Feature(polygon);
+    vi.spyOn(olUtils, "getFeatureForBoundingBox").mockReturnValue(mockFeature);
+    const onBoundingBoxChanged = vi.fn();
+    render(
+      <LocationSearchMap
+        {...{ ...defaultProps, boundingBox: undefined }}
+        onBoundingBoxChanged={onBoundingBoxChanged}
+      />,
+    );
     expect(onBoundingBoxChanged).toHaveBeenCalled();
   });
 

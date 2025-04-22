@@ -1,6 +1,6 @@
 import "ol/ol.css";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Collection, Map } from "ol";
 import { Attribution, defaults as defaultControls } from "ol/control";
 import Feature from "ol/Feature";
@@ -45,20 +45,24 @@ export function LocationSearchMap({
 }: LocationSearchMapProps) {
   const mapRef = useRef<Map | null>(null);
 
+  const updateBoundingBox = useCallback(
+    (feature: Feature) => {
+      const geometry = feature.getGeometry();
+      if (geometry) {
+        // extent can be used as parameter for the bounding box as we have a rectangle
+        const extent = geometry.getExtent();
+        const boundingbox = transformExtent(
+          extent,
+          ProjectionName.EPSG3857,
+          ProjectionName.EPSG4326,
+        );
+        onBoundingBoxChanged(boundingbox.toString());
+      }
+    },
+    [onBoundingBoxChanged],
+  );
   // called when a search polygons vertex is dragged
-  const boundingBoxChange = debounce((feature: Feature) => {
-    const geometry = feature.getGeometry();
-    if (geometry) {
-      // extent can be used as parameter for the bounding box as we have a rectangle
-      const extent = geometry.getExtent();
-      const boundingbox = transformExtent(
-        extent,
-        ProjectionName.EPSG3857,
-        ProjectionName.EPSG4326,
-      );
-      onBoundingBoxChanged(boundingbox.toString());
-    }
-  }, 300);
+  const boundingBoxChange = debounce(updateBoundingBox, 300);
 
   useEffect(() => {
     if (mapRef.current) {
@@ -66,6 +70,9 @@ export function LocationSearchMap({
     }
 
     const feature = getFeatureForBoundingBox(boundingBox);
+    if (!boundingBox) {
+      updateBoundingBox(feature);
+    }
     feature.on("change", function () {
       boundingBoxChange(feature);
     });
@@ -78,7 +85,7 @@ export function LocationSearchMap({
       style: styles,
     });
 
-    // dependeing on whether OSM is active different coordinates are used
+    // depending on whether OSM is active different coordinates are used
     const map = new Map({
       target: mapId,
       layers: [createTileLayer(isOSMActive, tileUrl), vectorLayer],
@@ -126,7 +133,7 @@ export function LocationSearchMap({
       }
     });
     mapRef.current = map;
-  }, [isOSMActive, tileUrl, boundingBox, boundingBoxChange]);
+  }, [isOSMActive, tileUrl, boundingBox, boundingBoxChange, updateBoundingBox]);
 
   // handle mappedSuggest change - update search polygon and center map
   useEffect(() => {
