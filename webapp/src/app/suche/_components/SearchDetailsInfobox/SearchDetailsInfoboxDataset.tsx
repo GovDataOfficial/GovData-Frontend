@@ -132,7 +132,7 @@ export async function SearchDetailsInfoboxDataSet({
           <SearchDetailsInfoBoxGroup>
             <TermCategories
               title={t("search.details.infobox.categories")}
-              categories={categories.map((c) => c.name)}
+              categories={categories}
             />
           </SearchDetailsInfoBoxGroup>
         )}
@@ -170,7 +170,7 @@ export async function SearchDetailsInfoboxDataSet({
           </SearchDetailsInfoBoxGroup>
         )}
       </dl>
-      <DLTags tags={tags.map((tag) => tag.name)} />
+      <DLTags tags={tags} />
       {showCaseConnection && showCaseConnection.items?.length > 0 && (
         <dl className="mt-3">
           <dt>{t("search.details.infobox.datasetShowCaseConnection")}</dt>

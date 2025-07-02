@@ -11,6 +11,9 @@ export async function UserHeader() {
   const userInformation = await getUserInformation();
 
   return userInformation ? (
-    <UserHeaderNavigation userName={userInformation.username} />
+    <UserHeaderNavigation
+      userName={userInformation.username}
+      isShowcaseEditor={userInformation.isShowcaseEditor}
+    />
   ) : null;
 }

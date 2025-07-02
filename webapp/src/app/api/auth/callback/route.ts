@@ -18,6 +18,8 @@ export async function GET(request: NextRequest): Promise<Request> {
   if (codeVerifierSession && codeVerifierSession.value) {
     const client = await getKeyCloakClient();
     const params = client.callbackParams(request.url);
+
+    // checks that the redirect_uri is the same as the one used in the login request
     const tokenSet = await client.callback(
       getCallbackUriFromRequest(request),
       params,
@@ -27,7 +29,12 @@ export async function GET(request: NextRequest): Promise<Request> {
     );
     codeVerifierSession.destroy();
     await setSession(tokenSet);
-    return redirect(PAGES_AUTH.manage_data);
+
+    const redirectTo = request.nextUrl.searchParams.get("redirectTo");
+    if (redirectTo) {
+      return redirect(decodeURIComponent(redirectTo));
+    }
+    return redirect(PAGES_AUTH.manage_metadata);
   }
 
   return redirect("/error");

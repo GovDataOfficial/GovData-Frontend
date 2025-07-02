@@ -58,11 +58,20 @@ export const PAGES = {
 
 export const PAGES_AUTH = {
   manage_data: "/datenpflege",
-  manage_data_form_add: "/datenpflege/metadaten/erstellen",
-  manage_data_form_add_success: "/datenpflege/metadaten/erstellen/erfolgreich",
-  manage_data_form_edit: "/datenpflege/metadaten/bearbeiten",
-  manage_data_form_edit_success:
+  manage_metadata: "/datenpflege/metadaten",
+  manage_metadata_form_add: "/datenpflege/metadaten/erstellen",
+  manage_metadata_form_add_success:
+    "/datenpflege/metadaten/erstellen/erfolgreich",
+  manage_metadata_form_edit: "/datenpflege/metadaten/bearbeiten",
+  manage_metadata_form_edit_success:
     "/datenpflege/metadaten/bearbeiten/erfolgreich",
+  manage_showcases: "/datenpflege/anwendungen",
+  manage_showcases_form_add: "/datenpflege/anwendungen/erstellen",
+  manage_showcases_form_add_success:
+    "/datenpflege/anwendungen/erstellen/erfolgreich",
+  manage_showcases_form_edit: "/datenpflege/anwendungen/bearbeiten",
+  manage_showcases_form_edit_success:
+    "/datenpflege/anwendungen/bearbeiten/erfolgreich",
 };
 
 const createHref = (url: string, searchParams: URLSearchParams): string => {

@@ -22,9 +22,7 @@ const getIcon = (type: HitType) => {
 export function MetaInfoHeadline({ type }: { type: HitType }) {
   const { t } = i18n;
   return (
-    <span className="paragraph-small bold">
-      {t("filter.showcase_types." + type)}
-    </span>
+    <span className="paragraph-small bold">{t("search.hit.type." + type)}</span>
   );
 }
 

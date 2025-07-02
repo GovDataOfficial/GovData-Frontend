@@ -35,7 +35,7 @@ export default async function Page() {
         <DesignBox>
           <HomePageLink />
           <div className="mt-2">
-            <a href={PAGES_AUTH.manage_data}>
+            <a href={PAGES_AUTH.manage_metadata}>
               {i18n.t("logout.page.loginAgain")}
             </a>
           </div>

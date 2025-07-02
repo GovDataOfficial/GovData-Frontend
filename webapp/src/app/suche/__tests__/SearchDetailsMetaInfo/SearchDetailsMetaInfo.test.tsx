@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 
 import {
@@ -6,6 +6,14 @@ import {
   showCaseTestData,
 } from "@/app/suche/__tests__/props";
 import { SearchDetailsMetaInfo } from "@/app/suche/_components/SearchDetailsMetaInfo/SearchDetailsMetaInfo";
+
+// Mock Next.js Image component
+vi.mock("next/image", () => ({
+  default: vi.fn(({ src, alt, ...props }) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={src} alt={alt} {...props} />
+  )),
+}));
 
 describe("SearchDetailsMetaInfo", () => {
   it("should render correct icon and headline for datasets", () => {
@@ -48,18 +56,21 @@ describe("SearchDetailsMetaInfo", () => {
   });
 
   it("should show images", () => {
-    const dataWithImg = Object.assign(showCaseTestData, {
+    const dataWithImage = {
+      ...showCaseTestData,
       images: [
         {
           id: 123,
-          imageOrderId: 12333,
+          imageOrderId: 1,
           image: "testbase64img",
           url: "",
         },
       ],
-    });
+    };
 
-    const { container } = render(<SearchDetailsMetaInfo data={dataWithImg} />);
+    const { container } = render(
+      <SearchDetailsMetaInfo data={dataWithImage} />,
+    );
 
     const imgContainer = container.querySelector(
       ".search-details-showcase-images-box",
@@ -76,6 +87,23 @@ describe("SearchDetailsMetaInfo", () => {
     expect(showCaseImg).toHaveAttribute("alt", "");
   });
 
+  it("should show default image", () => {
+    const { container } = render(
+      <SearchDetailsMetaInfo data={showCaseTestData} />,
+    );
+
+    const imgContainer = container.querySelector(
+      ".search-details-showcase-images-box",
+    );
+
+    expect(imgContainer).toBeInTheDocument();
+    const showCaseImg = within(imgContainer as HTMLElement).getByRole(
+      "presentation",
+    );
+    expect(showCaseImg).toHaveAttribute("src", "/images/showcase-default.png");
+    expect(showCaseImg).toHaveAttribute("alt", "");
+  });
+
   it("should render sanitized notes", () => {
     const propsWithDirtyHtml = {
       ...metaDataTestProps,
@@ -86,5 +114,17 @@ describe("SearchDetailsMetaInfo", () => {
     );
     const html = container.querySelector(".paragraph")?.innerHTML;
     expect(html).toBe("test");
+  });
+
+  it("should not show default image for datasets", () => {
+    const { container } = render(
+      <SearchDetailsMetaInfo data={metaDataTestProps} />,
+    );
+
+    const imgContainer = container.querySelector(
+      ".search-details-showcase-images-box",
+    );
+
+    expect(imgContainer).not.toBeInTheDocument();
   });
 });

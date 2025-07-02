@@ -20,6 +20,7 @@ export function SearchDetailsInfoboxApplication({
   const { showcaseTypes, contact, categories, keywords, platforms } = data;
   const hasCategories = categories?.length > 0;
   const hasPlatforms = platforms?.length > 0;
+
   return (
     <SearchDetailsInfoBoxContainer
       headline={t("search.details.infobox.headline.application")}
@@ -28,12 +29,12 @@ export function SearchDetailsInfoboxApplication({
         <SearchDetailsInfoBoxGroup inline>
           <dt>{t("filter.showcase_types.title")}</dt>
           {showcaseTypes.map((a) => (
-            <dd key={a.name}>
+            <dd key={a}>
               <SearchDetailsInfoboxFilterTagAnchor
                 searchCriteria={FILTERS.SHOWCASE_TYPES}
-                searchCriteriaValue={a.name}
+                searchCriteriaValue={a}
               >
-                {t("filter.showcase_types." + a.name)}
+                {t("filter.showcase_types." + a)}
               </SearchDetailsInfoboxFilterTagAnchor>
             </dd>
           ))}
@@ -43,12 +44,12 @@ export function SearchDetailsInfoboxApplication({
           <SearchDetailsInfoBoxGroup inline>
             <dt>{t("filter.platforms.title")}</dt>
             {platforms.map((platform) => (
-              <dd key={platform.id}>
+              <dd key={platform}>
                 <SearchDetailsInfoboxFilterTagAnchor
                   searchCriteria={FILTERS.PLATFORMS}
-                  searchCriteriaValue={platform.name}
+                  searchCriteriaValue={platform}
                 >
-                  {t("filter.platforms." + platform.name)}
+                  {t("filter.platforms." + platform)}
                 </SearchDetailsInfoboxFilterTagAnchor>
               </dd>
             ))}
@@ -86,12 +87,12 @@ export function SearchDetailsInfoboxApplication({
           <SearchDetailsInfoBoxGroup>
             <TermCategories
               title={t("search.details.infobox.categories")}
-              categories={categories.map((c) => c.name)}
+              categories={categories}
             />
           </SearchDetailsInfoBoxGroup>
         )}
       </dl>
-      <DLTags tags={keywords.map((keyword) => keyword.name)} />
+      <DLTags tags={keywords} />
     </SearchDetailsInfoBoxContainer>
   );
 }

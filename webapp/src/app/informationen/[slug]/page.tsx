@@ -1,8 +1,10 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { ContainerDiv } from "@/app/_components/Container";
 import { EditorialContent } from "@/app/_components/EditorialContent/EditorialContent";
 import { SiteNavigationT3 } from "@/app/_components/SiteNavBar/SiteNavigationT3";
+import { UserSurveyHeader } from "@/app/_components/UserSurveyHeader/UserSurveyHeader";
 import { fetchMetadata, fetchTypo3Data } from "@/app/_lib/getData";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
 import { endpoints } from "@/configuration/endpoints";
@@ -38,6 +40,9 @@ export default async function Page({ params }: PageConstructor) {
       <div className="d-none d-md-block">
         <SiteNavigationT3 subPages={subPages} />
       </div>
+      <ContainerDiv containerWidth="lg">
+        <UserSurveyHeader />
+      </ContainerDiv>
       <EditorialContent pageData={pageData} />
     </>
   );

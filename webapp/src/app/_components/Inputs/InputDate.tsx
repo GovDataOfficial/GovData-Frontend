@@ -9,6 +9,7 @@ type InputDate = {
   defaultValue?: string;
   recommended?: boolean;
   type?: "date" | "datetime-local";
+  className?: string;
 };
 
 function parseDateString(
@@ -25,6 +26,7 @@ export function InputDate({
   recommended,
   defaultValue,
   type = "date",
+  className,
 }: InputDate) {
   const id = useId();
 
@@ -33,7 +35,7 @@ export function InputDate({
     : undefined;
 
   return (
-    <div className="gd-input">
+    <div className={`gd-input ${className}`}>
       <Label
         label={label}
         htmlFor={id}

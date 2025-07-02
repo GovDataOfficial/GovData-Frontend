@@ -2,6 +2,7 @@ import { beforeAll, describe, expect, test, vi } from "vitest";
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server.js";
 
+import { PAGES_AUTH } from "@/app/_lib/URLHelper.js";
 import { getKeyCloakClient, KeycloakClient } from "@/app/api/auth/_keycloak";
 import { getCodeVerifierSession, setSession } from "@/app/api/auth/_session";
 
@@ -53,6 +54,26 @@ describe("auth / callback", () => {
     expect(mockCodeVerifierSession.destroy).toHaveBeenCalled();
     expect(setSession).toHaveBeenCalledWith("mockCallback");
 
-    expect(redirect).toHaveBeenCalledWith("/datenpflege");
+    expect(redirect).toHaveBeenCalledWith(PAGES_AUTH.manage_metadata);
+  });
+
+  test("callback should call redirect url from params", async () => {
+    vi.mocked(redirect).mockReset();
+    const mockCodeVerifierSession = { value: "123", destroy: vi.fn() };
+
+    vi.mocked(getCodeVerifierSession).mockResolvedValue(
+      mockCodeVerifierSession as any,
+    );
+
+    const request = new NextRequest(
+      `https://www.foo.de?redirectTo=${encodeURIComponent("/bar")}`,
+    );
+    const { GET } = await import("../../callback/route.js");
+    await GET(request);
+
+    expect(mockCodeVerifierSession.destroy).toHaveBeenCalled();
+    expect(setSession).toHaveBeenCalledWith("mockCallback");
+
+    expect(redirect).toHaveBeenCalledWith("/bar");
   });
 });

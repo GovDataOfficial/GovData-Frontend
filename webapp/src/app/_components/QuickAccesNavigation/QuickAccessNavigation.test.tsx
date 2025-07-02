@@ -27,7 +27,7 @@ describe("QuickAccessNavigation", () => {
   });
 
   it("should render correct skiplinks for intern pages", async () => {
-    vi.mocked(usePathname).mockReturnValue(PAGES_AUTH.manage_data);
+    vi.mocked(usePathname).mockReturnValue(PAGES_AUTH.manage_metadata);
     render(<QuickAccessNavigation />);
 
     const links = getAllLinks();

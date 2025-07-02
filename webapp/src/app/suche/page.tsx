@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { ContainerDiv } from "@/app/_components/Container";
 import { FilterAreaOpenMenuButton } from "@/app/_components/FilterArea";
 import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
+import { UserSurveyHeader } from "@/app/_components/UserSurveyHeader/UserSurveyHeader";
 import { convertToURLSearchParams } from "@/app/_lib/convertToSearchParams";
 import { getSearchResults } from "@/app/_lib/getData";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
@@ -82,6 +83,7 @@ export default async function Suche({ searchParams }: PageConstructor) {
   return (
     <>
       <ContainerDiv containerWidth="lg">
+        <UserSurveyHeader />
         <div className="row mt-3">
           <div className="col-12 col-md-8 offset-md-4">
             <h1 className="m-0 ">{title}</h1>

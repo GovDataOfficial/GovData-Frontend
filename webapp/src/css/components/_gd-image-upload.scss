@@ -1,0 +1,62 @@
+.form-image-upload-and-crop-component {
+  display: flex;
+  @include media-breakpoint-down(md) {
+    align-items: center;
+  }
+}
+
+$crop-container-size: 225px;
+
+.image-upload-and-crop {
+  &:not(:last-child) {
+    margin-right: rem-calc(30);
+  }
+  @include media-breakpoint-down(md) {
+    &:not(:last-child) {
+      margin-right: 0;
+      margin-bottom: rem-calc(30);
+    }
+  }
+}
+
+$image-upload-border-radius: rem-calc(2.5);
+$image-upload-border-style: rem-calc(1) dashed $clr-neutral-grey-800;
+
+.image-upload {
+  border: $image-upload-border-style;
+  padding: 10px;
+  text-align: center;
+  border-radius: $image-upload-border-radius;
+  width: $crop-container-size;
+  height: $crop-container-size;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    margin: 0;
+  }
+}
+
+.image-crop {
+  .crop-container {
+    position: relative;
+    width: $crop-container-size;
+    height: $crop-container-size;
+    outline: $image-upload-border-style;
+    border-radius: $image-upload-border-radius;
+
+    .reactEasyCrop_Container {
+      width: $crop-container-size;
+      height: $crop-container-size;
+      border-radius: $image-upload-border-radius;
+
+      .reactEasyCrop_CropArea {
+        color: #030d1880;
+        border: 2px solid $clr-shades-white-0;
+      }
+    }
+  }
+}

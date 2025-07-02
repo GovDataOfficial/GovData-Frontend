@@ -18,7 +18,7 @@ export function SearchHeaderSwitcher() {
     case pathName.startsWith(PAGES.dlde):
       return <Background />;
     case pathName.startsWith(PAGES.geosearch):
-    case pathName.startsWith(PAGES_AUTH.manage_data):
+    case pathName.startsWith(PAGES_AUTH.manage_metadata):
       return null;
     case pathName.startsWith(PAGES.search):
       return <Search keepFiltersForSearch />;

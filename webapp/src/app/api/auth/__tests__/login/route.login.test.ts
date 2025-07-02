@@ -3,7 +3,12 @@ import { redirect } from "next/navigation";
 import { NextRequest } from "next/server.js";
 import { generators } from "openid-client";
 
-import { getKeyCloakClient, KeycloakClient } from "@/app/api/auth/_keycloak";
+import { API_ENDPOINTS } from "@/app/api/apiEndpoints.js";
+import {
+  getCallbackUriFromRequest,
+  getKeyCloakClient,
+  KeycloakClient,
+} from "@/app/api/auth/_keycloak";
 import { setCodeVerifierSession } from "@/app/api/auth/_session";
 
 vi.mock("ioredis");
@@ -28,18 +33,20 @@ describe("auth / login", () => {
   });
 
   test("should return a redirect response", async () => {
+    const redirectTo = encodeURIComponent("/bar");
+    const redirect_uri = `http://www.testcloak.de/${API_ENDPOINTS.AUTH.CALLBACK}?redirectTo=${redirectTo}`;
     const { GET } = await import("../../login/route.js");
-    await GET(new NextRequest("https://www.foo.de"));
+    vi.mocked(getCallbackUriFromRequest).mockReturnValue(redirect_uri);
+    await GET(new NextRequest(`https://www.foo.de?redirectTo=${redirectTo}`));
 
     // checking that cookie has been set with code challenge verifier
     expect(setCodeVerifierSession).toHaveBeenCalledWith("codeVerifierTest");
-    expect(keyCloakClientMock.authorizationUrl).toHaveBeenCalledWith(
-      expect.objectContaining({
-        scope: "openid",
-        code_challenge_method: "S256",
-        code_challenge: "codeChallengeTest",
-      }),
-    );
+    expect(keyCloakClientMock.authorizationUrl).toHaveBeenCalledWith({
+      scope: "openid",
+      code_challenge_method: "S256",
+      code_challenge: "codeChallengeTest",
+      redirect_uri,
+    });
     expect(generators.codeChallenge).toHaveBeenCalledWith("codeVerifierTest");
 
     expect(redirect).toHaveBeenCalledWith(authUrl);

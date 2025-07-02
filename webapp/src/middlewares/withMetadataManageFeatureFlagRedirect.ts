@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import {
   API_ENDPOINTS_AUTH_BASE,
+  API_ENDPOINTS_MANAGE_DATA_BASE,
   API_ENDPOINTS_METADATA_BASE,
 } from "@/app/api/apiEndpoints";
 import { logger } from "@/logger/logger";
@@ -27,7 +28,7 @@ export const withMetaDataManageFeatureFlagRedirect: MiddlewareFactory = async (
 ) => {
   const pathname = request.nextUrl.pathname;
   const isInternPage = pathname.startsWith(PAGES_AUTH.manage_data);
-  const isInternApi = pathname.startsWith(API_ENDPOINTS_METADATA_BASE);
+  const isInternApi = pathname.startsWith(API_ENDPOINTS_MANAGE_DATA_BASE);
   const isKeycloakRoute = pathname.startsWith(API_ENDPOINTS_AUTH_BASE);
   const isRouteToSecure = isInternPage || isInternApi || isKeycloakRoute;
   const isActive = process.env.metadata_management_active === "1";

@@ -34,7 +34,7 @@ const YasguiMock = vi.fn().mockReturnValue({
   }),
 });
 
-vi.mock("@triply/yasgui", () => ({
+vi.mock("@zazuko/yasgui", () => ({
   default: YasguiMock,
 }));
 

@@ -11,6 +11,7 @@ type InputUrl = {
   defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   maxLength?: number;
+  className?: string;
 };
 const InputUrl = forwardRef<HTMLInputElement, PropsWithChildren<InputUrl>>(
   (
@@ -22,6 +23,7 @@ const InputUrl = forwardRef<HTMLInputElement, PropsWithChildren<InputUrl>>(
       onChange,
       defaultValue,
       maxLength,
+      className,
       children,
     },
     ref,
@@ -29,7 +31,7 @@ const InputUrl = forwardRef<HTMLInputElement, PropsWithChildren<InputUrl>>(
     const id = useId();
 
     return (
-      <div className="gd-input">
+      <div className={`gd-input ${className}`}>
         <Label
           label={label}
           htmlFor={id}

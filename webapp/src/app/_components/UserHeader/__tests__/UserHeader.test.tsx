@@ -17,9 +17,10 @@ describe("UserHeader", () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  test("should correct markup", async () => {
+  test("should render correct markup", async () => {
     vi.mocked(getUserInformation).mockResolvedValue({
       username: "TestName",
+      isShowcaseEditor: true,
     });
     const user = userEvent.setup();
 
@@ -35,20 +36,27 @@ describe("UserHeader", () => {
       name: /metadatensätze meiner organisation/i,
     });
 
+    const linkShowcases = screen.queryByRole("link", {
+      name: /anwendungen/i,
+    });
+
     const linkLogout = screen.queryByRole("link", { name: "abmelden" });
 
     expect(linkMeta).not.toBeVisible();
+    expect(linkShowcases).not.toBeVisible();
     expect(linkLogout).not.toBeVisible();
 
     await user.click(summary);
 
     expect(linkMeta).toBeVisible();
+    expect(linkShowcases).toBeVisible();
     expect(linkLogout).toBeVisible();
   });
 
   test("should close details on outside click", async () => {
     vi.mocked(getUserInformation).mockResolvedValue({
       username: "TestName",
+      isShowcaseEditor: true,
     });
     const user = userEvent.setup();
 
@@ -64,5 +72,17 @@ describe("UserHeader", () => {
 
     await user.click(document.body);
     expect(details).not.toHaveAttribute("open");
+  });
+
+  test("should not render link to showcases if user is no showcase editor", async () => {
+    vi.mocked(getUserInformation).mockResolvedValue({
+      username: "TestName",
+      isShowcaseEditor: false,
+    });
+    render(await UserHeader());
+    const linkShowcases = screen.queryByRole("link", {
+      name: /anwendungen/i,
+    });
+    expect(linkShowcases).toBeNull();
   });
 });

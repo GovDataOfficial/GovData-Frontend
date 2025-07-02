@@ -14,7 +14,7 @@ import {
 import { hasContributorId } from "@/app/_lib/organization";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import { getSessionOrRedirect } from "@/app/api/auth/_session";
-import { MetadataForm } from "@/app/datenpflege/_components/MetadataForm/MetadataForm";
+import { MetadataForm } from "@/app/datenpflege/metadaten/_components/MetadataForm/MetadataForm";
 import { i18n } from "@/i18n";
 
 export const metadata: Metadata = {
@@ -22,12 +22,14 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const session = await getSessionOrRedirect();
+  const session = await getSessionOrRedirect(
+    PAGES_AUTH.manage_metadata_form_add,
+  );
 
   const organizations = await fetchOrganizationsForUser(session.username);
 
   if (!hasContributorId(organizations)) {
-    redirect(PAGES_AUTH.manage_data);
+    redirect(PAGES_AUTH.manage_metadata);
   }
 
   const categories = await fetchCategoriesSorted();

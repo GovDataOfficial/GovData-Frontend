@@ -38,7 +38,13 @@ function getBaseUrlFromRequest(request: NextRequest): string {
 
 export function getCallbackUriFromRequest(request: NextRequest): string {
   const baseUrl = getBaseUrlFromRequest(request);
-  return `${baseUrl}${API_ENDPOINTS.AUTH.CALLBACK}`;
+
+  let callbackUri = `${baseUrl}${API_ENDPOINTS.AUTH.CALLBACK}`;
+  const redirectTo = request.nextUrl.searchParams.get("redirectTo");
+  if (redirectTo) {
+    return `${callbackUri}?redirectTo=${encodeURIComponent(redirectTo)}`;
+  }
+  return callbackUri;
 }
 
 export function getPostLogoutUriFromRequest(request: NextRequest): string {

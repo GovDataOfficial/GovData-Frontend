@@ -1,14 +1,17 @@
 // @vitest-environment node
 
-import { beforeAll, describe, expect, test, vi } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { cookies } from "next/headers";
 
+import { getKeyCloakClient } from "@/app/api/auth/_keycloak";
 import { getRedisClient } from "@/app/api/auth/_redis";
 
 vi.mock("next/headers");
+vi.mock("next/navigation");
 vi.mock("ioredis");
 vi.mock("@/app/api/auth/_redis");
+vi.mock("@/app/api/auth/_keycloak");
 
 describe("_session", () => {
   const mockIdToken = "eyidtoken";
@@ -22,6 +25,7 @@ describe("_session", () => {
     claims: () => ({ preferred_username: "test" }),
     expires_in: 555,
     refresh_expires_in: 777,
+    expires_at: 0,
   } as any;
 
   function setupMockCookies(cookieName: string, cookieValue: string) {
@@ -33,7 +37,7 @@ describe("_session", () => {
     return mockCookies;
   }
 
-  beforeAll(() => {
+  beforeEach(() => {
     vi.resetAllMocks();
     vi.stubEnv("session_secret", "12345678901234567890123456789012");
     vi.mocked(getRedisClient).mockReturnValue(redisClientMock);
@@ -155,5 +159,172 @@ describe("_session", () => {
     await deleteSession();
     expect(redisClientMock.del).toHaveBeenCalledWith("123123");
     expect(delMockCookiesSpy).toHaveBeenCalledWith("gd_session");
+  });
+
+  test("setSession should correctly set session information including username and roles", async () => {
+    const mockTokenWithRoles = {
+      ...mockToken,
+      access_token: "mockAccessToken",
+      claims: () => ({
+        preferred_username: "testUser",
+        realm_access: {
+          roles: ["showcases"],
+        },
+        iat: 1234567890,
+      }),
+    };
+
+    vi.mocked(redisClientMock.set).mockResolvedValue(undefined);
+
+    const { setSession } = await import("../_session.js");
+    await setSession(mockTokenWithRoles);
+
+    expect(redisClientMock.set).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.stringContaining(
+        JSON.stringify({
+          username: "testUser",
+          id_token: mockIdToken,
+          access_token: mockTokenWithRoles.access_token,
+          refresh_token: "",
+          iat: 1234567890,
+          roles: ["showcases"],
+          expires_at: 0,
+        }),
+      ),
+      "EX",
+      600,
+    );
+  });
+
+  test("getUserInformation should return null if no session cookie is available", async () => {
+    setupMockCookies("not_gd", "123");
+    const { getUserInformation } = await import("../_session.js");
+
+    const userInfo = await getUserInformation();
+    expect(userInfo).toBeNull();
+  });
+
+  test("getUserInformation should return null if session cannot be found in Redis", async () => {
+    setupMockCookies("gd_session", "123");
+    vi.mocked(redisClientMock.get).mockResolvedValue(null);
+    const { getUserInformation } = await import("../_session.js");
+
+    const userInfo = await getUserInformation();
+    expect(userInfo).toBeNull();
+  });
+
+  test("getUserInformation should return user information if session exists in Redis", async () => {
+    setupMockCookies("gd_session", "123");
+    const mockSession = {
+      username: "testUser",
+      roles: ["showcases"],
+    };
+    vi.mocked(redisClientMock.get).mockResolvedValue(
+      JSON.stringify(mockSession),
+    );
+
+    const { getUserInformation } = await import("../_session.js");
+
+    const userInfo = await getUserInformation();
+    expect(userInfo).toEqual({
+      username: "testUser",
+      isShowcaseEditor: true,
+    });
+  });
+
+  test("getUserInformation should correctly handle roles and return isShowcaseEditor as false if roles do not include 'showcases'", async () => {
+    setupMockCookies("gd_session", "123");
+    const mockSession = {
+      username: "testUser",
+      roles: ["otherRole"],
+    };
+    vi.mocked(redisClientMock.get).mockResolvedValue(
+      JSON.stringify(mockSession),
+    );
+
+    const { getUserInformation } = await import("../_session.js");
+
+    const userInfo = await getUserInformation();
+    expect(userInfo).toEqual({
+      username: "testUser",
+      isShowcaseEditor: false,
+    });
+  });
+
+  test("getSessionOrRedirect should return session if session exists and is not expired", async () => {
+    setupMockCookies("gd_session", "123");
+    const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+    const mockSession = {
+      username: "testUser",
+      id_token: mockIdToken,
+      access_token: "mockAccessToken",
+      refresh_token: "mockRefreshToken",
+      iat: currentTimeInSeconds - 100,
+      roles: ["showcases"],
+      expires_at: currentTimeInSeconds + 300, // expires in 5 minutes
+    };
+    vi.mocked(redisClientMock.get).mockResolvedValue(
+      JSON.stringify(mockSession),
+    );
+
+    const { getSessionOrRedirect } = await import("../_session.js");
+
+    const session = await getSessionOrRedirect();
+    expect(session).toEqual(mockSession);
+    expect(redisClientMock.get).toHaveBeenCalledWith("123");
+  });
+
+  test("getSessionOrRedirect should refresh token and return new session if token is expired", async () => {
+    setupMockCookies("gd_session", "123");
+    const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+    const expiredSession = {
+      username: "testUser",
+      id_token: mockIdToken,
+      access_token: "expiredAccessToken",
+      refresh_token: "mockRefreshToken",
+      iat: currentTimeInSeconds - 1000,
+      roles: ["showcases"],
+      expires_at: currentTimeInSeconds - 10, // expired 10 seconds ago
+    };
+
+    const refreshedToken = {
+      ...mockToken,
+      access_token: "newAccessToken",
+      refresh_token: "newRefreshToken",
+      expires_at: currentTimeInSeconds + 500,
+      refresh_expires_in: 600,
+      claims: () => ({
+        preferred_username: "testUser",
+        realm_access: { roles: ["showcases"] },
+        iat: currentTimeInSeconds,
+      }),
+    };
+
+    // Mock getKeyCloakClient
+    const mockKeyCloakClient = {
+      refresh: vi.fn().mockResolvedValue(refreshedToken),
+    };
+
+    vi.mocked(getKeyCloakClient).mockResolvedValue(mockKeyCloakClient as any);
+
+    vi.mocked(redisClientMock.get).mockResolvedValue(
+      JSON.stringify(expiredSession),
+    );
+    vi.mocked(redisClientMock.set).mockResolvedValue(undefined);
+
+    const { getSessionOrRedirect } = await import("../_session.js");
+
+    const session = await getSessionOrRedirect();
+
+    expect(mockKeyCloakClient.refresh).toHaveBeenCalledWith("mockRefreshToken");
+    expect(redisClientMock.set).toHaveBeenCalledWith(
+      "123",
+      expect.stringContaining("newAccessToken"),
+      "EX",
+      600,
+    );
+    expect(session.access_token).toBe("newAccessToken");
+    expect(session.username).toBe("testUser");
   });
 });

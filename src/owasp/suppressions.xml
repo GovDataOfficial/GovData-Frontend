@@ -9,9 +9,7 @@
   </suppress>
   <suppress until="2025-08-01Z">
     <notes>yasgui - uses third-party dependencies with vulnerabilities and is not actively developed anymore - see GOVDATADE-1551</notes>
-    <packageUrl regex="true">^pkg:javascript/DOMPurify@.*$</packageUrl>
-    <cve>CVE-2024-45801</cve>
-    <cve>CVE-2024-47875</cve>
-    <cve>CVE-2024-48910</cve>
+    <packageUrl regex="true">^pkg:npm/dompurify@.*$</packageUrl>
+    <cve>CVE-2025-48050</cve>
   </suppress>
 </suppressions>

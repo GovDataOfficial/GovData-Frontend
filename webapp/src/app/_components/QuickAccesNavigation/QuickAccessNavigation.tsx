@@ -36,7 +36,7 @@ export function QuickAccessNavigation() {
   switch (true) {
     case pathname.startsWith(PAGES.extendedSearch):
     case pathname.startsWith(PAGES.dlde):
-    case pathname.startsWith(PAGES_AUTH.manage_data):
+    case pathname.startsWith(PAGES_AUTH.manage_metadata):
       links.push(toNav, toMain);
       break;
     case pathname.startsWith(PAGES.geosearch):

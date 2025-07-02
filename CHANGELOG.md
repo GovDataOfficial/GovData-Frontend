@@ -1,5 +1,18 @@
 # Changelog
 
+## 7.6.0 2025-07-01
+
+- Updates triply/yasgui 4.2.28 to zazuko/yasgui 4.5.0. Fixes CVE-2025-48050
+- Updates dependencies to latest patch versions
+- Added image upload to showcases form
+- Added geoJSON Validation to spatial inputs
+- Added sticky navigation to showcases form
+- Added permission check for showcase editors
+- Added showcases overview
+- Added showcase form
+- Added default image for showcases
+- Added user survey header
+
 ## 7.5.1 2025-04-16
 
 - Fixed initial map search bounding box

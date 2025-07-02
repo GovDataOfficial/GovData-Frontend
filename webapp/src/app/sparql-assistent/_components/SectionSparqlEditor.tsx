@@ -14,7 +14,7 @@ import {
 import { useYasgui } from "@/app/sparql-assistent/SparqlEditor/hooks/useYasgui";
 import { i18n } from "@/i18n";
 
-import "@triply/yasgui/build/yasgui.min.css";
+import "@zazuko/yasgui/build/yasgui.min.css";
 
 import { ContainerDiv } from "@/app/_components/Container";
 

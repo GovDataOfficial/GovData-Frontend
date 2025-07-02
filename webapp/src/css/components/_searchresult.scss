@@ -55,17 +55,6 @@
     @include media-breakpoint-down(sm) {
       display: none;
     }
-    &.showcase {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: $clr-primary-100;
-
-      img {
-        max-height: 85.6px;
-        max-width: 125.6px;
-      }
-    }
   }
 
   .search-result-hit-detail-info {

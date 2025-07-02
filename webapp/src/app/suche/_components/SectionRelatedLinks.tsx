@@ -55,7 +55,7 @@ export function SectionRelatedLinks({ data }: SectionRelatedLinks) {
       {hasShowCaseLinks && (
         <>
           {renderList(
-            usedDatasets,
+            linksToShowcase,
             t("search.details.relatedLinks.linksToShowcase"),
           )}
         </>

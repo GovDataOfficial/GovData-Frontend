@@ -40,6 +40,6 @@ describe("Logout Page", () => {
     const loginAgainLink = screen.getByRole("link", {
       name: /erneut anmelden/i,
     });
-    expect(loginAgainLink).toHaveAttribute("href", PAGES_AUTH.manage_data);
+    expect(loginAgainLink).toHaveAttribute("href", PAGES_AUTH.manage_metadata);
   });
 });

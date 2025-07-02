@@ -17,6 +17,7 @@ import {
   ResourceFormatsSorted,
   SearchResults,
   ShowcaseData,
+  ShowcasesSearchResultHit,
   StateList,
   UnknownSearchResultHit,
 } from "@/types/types";
@@ -272,6 +273,20 @@ export async function fetchMetadataForOrganizations(
   });
 
   return fetchMicroData<SearchResults<MetadataSearchResultHit>>(
+    toSend.toString(),
+  );
+}
+
+export async function fetchShowcases() {
+  const toSend = new URL(`${process.env.be_index_app2_url}/search/search`);
+  toSend.searchParams.set("type", "showcase");
+
+  //result is subsequently sorted on the client-side within the ShowcasesOverviewContainer component
+  toSend.searchParams.set("sortType", FILTERS.LAST_MODIFICATION);
+  toSend.searchParams.set("ascending", "false");
+  toSend.searchParams.set("numResults", "3000");
+
+  return fetchMicroData<SearchResults<ShowcasesSearchResultHit>>(
     toSend.toString(),
   );
 }

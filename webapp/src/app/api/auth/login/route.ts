@@ -16,6 +16,7 @@ export async function GET(request: NextRequest) {
   await setCodeVerifierSession(code_verifier);
 
   const callbackUri = getCallbackUriFromRequest(request);
+
   const authorizationUrl = client.authorizationUrl({
     scope: "openid",
     code_challenge: generators.codeChallenge(code_verifier),

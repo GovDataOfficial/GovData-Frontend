@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
-import { icons } from "@/app/_components/SVG/SVG";
 import { Time } from "@/app/_components/Time/Time";
 import { Trans } from "@/app/_components/Trans/Trans";
 import { Truncate } from "@/app/_components/Truncate/Truncate";
@@ -56,7 +55,7 @@ function getDisplayImage(
   }
 
   if (isShowcase) {
-    return icons.mediatype_showcase_blue;
+    return "/images/showcase-default.png";
   }
 
   return null;
@@ -75,9 +74,7 @@ export function SearchResultHit({ hit }: { hit: SearchResultHitType }) {
     >
       <DesignBox extraClasses={["d-flex"]}>
         {displayImage && (
-          <div
-            className={`resultentry-display-image me-5 ${!hasDisplayImage && isShowcase ? "showcase" : ""}`}
-          >
+          <div className={`resultentry-display-image me-5`}>
             <Image alt="" width={200} height={200} src={displayImage} />
           </div>
         )}

@@ -1,41 +1,73 @@
 import { authHeader } from "@/app/_lib/getData";
-import { getSessionNameOrThrow } from "@/app/api/metadata/_lib/getSessionNameOrThrow";
+import { SessionInformation } from "@/app/api/auth/_session";
 import { logger } from "@/logger/logger";
 import { HttpMethod } from "@/types/types";
 
 const log = logger("sendAuthorizedRequest");
 
-export async function sendAuthorizedRequest(
+export async function sendAuthorizedRequestWithBasicAuth(
+  username: string,
   endpoint: string,
   method: HttpMethod,
   bodyContent?: Object,
 ): Promise<Response | undefined> {
-  let username;
+  return sendAuthorizedRequest(
+    endpoint,
+    method,
+    authHeader,
+    { User: username },
+    bodyContent,
+  );
+}
 
-  try {
-    username = await getSessionNameOrThrow();
-  } catch (error) {
-    return new Response(null, { status: 401 });
-  }
+export async function sendAuthorizedRequestWithBearer(
+  session: SessionInformation,
+  endpoint: string,
+  method: HttpMethod,
+  bodyContent?: Object,
+): Promise<Response | undefined> {
+  const authHeader = `Bearer ${session.access_token}`;
+  return sendAuthorizedRequest(
+    endpoint,
+    method,
+    authHeader,
+    undefined,
+    bodyContent,
+  );
+}
 
+async function sendAuthorizedRequest(
+  endpoint: string,
+  method: HttpMethod,
+  authHeader: string,
+  additionalHeaderInformation?: HeadersInit,
+  bodyContent?: Object,
+): Promise<Response | undefined> {
   const body = bodyContent ? JSON.stringify(bodyContent) : undefined;
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+    Authorization: authHeader,
+    ...additionalHeaderInformation,
+  };
 
   try {
     const response = await fetch(new URL(endpoint), {
       method,
       body,
-      headers: {
-        User: username,
-        "Content-Type": "application/json",
-        Authorization: authHeader,
-      },
+      headers,
     });
 
     if (!response.ok) {
+      const errorBody = await response.text();
       log.error(response, "Response status not ok");
-      return new Response(null, { status: response.status });
+      return new Response(errorBody, {
+        status: response.status,
+      });
     }
-    return new Response(response.statusText, { status: response.status });
+    // https://community.vercel.com/t/nextresponse-throws-error-when-http-request-status-code-is-204/625
+    const responseStatusText =
+      response.status === 204 ? null : response.statusText;
+    return new Response(responseStatusText, { status: response.status });
   } catch (e) {
     log.error(e, "Error sending request");
     return new Response(null, { status: 500 });

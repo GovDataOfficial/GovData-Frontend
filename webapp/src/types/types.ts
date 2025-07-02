@@ -236,20 +236,10 @@ export type Metadata = {
   url: string;
   resources: MetadataResource[];
   notAvailableResourceLinks?: string[];
-  tags: {
-    name: string;
-    count: number;
-    description: string;
-  }[];
+  tags: string[];
   contacts: MetadataContact[];
   averageRating: number;
-  categories: {
-    name: string;
-    displayName: string;
-    title: string;
-    count: number;
-    description: string;
-  }[];
+  categories: string[];
   lastModifiedDate: string;
   temporalCoverageFrom?: string;
   temporalCoverageTo?: string;
@@ -292,20 +282,22 @@ export type ShowcaseContact = {
   addressCountry: string;
 };
 
+export type ShowcaseImage = { imageOrderId: number; image: string };
+
 export type ShowcaseData = {
   id: number;
   title: string;
   notes: string;
   contact?: ShowcaseContact;
-  showcaseTypes: { id: number; name: string }[];
-  images: { id: number; imageOrderId: number; image: string }[];
+  showcaseTypes: string[];
+  images: ShowcaseImage[];
   linksToShowcase: { id: number; name: string; url: string }[];
   usedDatasets: { id: number; name: string; url: string }[];
-  platforms: { id: number; name: string }[];
+  platforms: string[];
   linkToSourcesUrl?: string;
   linkToSourcesName?: string;
-  categories: { id: number; name: string }[];
-  keywords: { id: number; name: string }[];
+  categories: string[];
+  keywords: string[];
   website?: string;
   manualShowcaseCreatedDate: number;
   manualShowcaseModifiedDate: number;
@@ -317,6 +309,13 @@ export type ShowcaseData = {
   createDate: number;
   spatial: string;
 };
+
+export enum ShowcaseFormLinkType {
+  usecase = "usecase",
+  linksToShowcase = "linksToShowcase",
+  usedDatasets = "usedDatasets",
+  linkToSources = "linkToSources",
+}
 
 export type PortalNumbers = {
   hvdDatasets: number;

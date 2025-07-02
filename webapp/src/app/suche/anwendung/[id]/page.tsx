@@ -2,6 +2,7 @@ import { Metadata } from "next";
 
 import { ContainerDiv } from "@/app/_components/Container";
 import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
+import { UserSurveyHeader } from "@/app/_components/UserSurveyHeader/UserSurveyHeader";
 import { fetchShowcase } from "@/app/_lib/getData";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
 import { SearchDetailsInfoboxApplication } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxApplication";
@@ -30,15 +31,18 @@ export default async function ShowcasePage({
     <>
       <ContainerDiv containerWidth="lg">
         {data ? (
-          <div className="row mt-2 mt-md-5">
-            <div className="col-sm-12 col-md-8">
-              <SearchDetailsMetaInfo data={data} />
-              <SectionRelatedLinks data={data} />
+          <>
+            <UserSurveyHeader />
+            <div className="row mt-2 mt-md-5">
+              <div className="col-sm-12 col-md-8">
+                <SearchDetailsMetaInfo data={data} />
+                <SectionRelatedLinks data={data} />
+              </div>
+              <div className="col-sm-12 col-md-4 mt-3 mt-md-0">
+                <SearchDetailsInfoboxApplication data={data} />
+              </div>
             </div>
-            <div className="col-sm-12 col-md-4 mt-3 mt-md-0">
-              <SearchDetailsInfoboxApplication data={data} />
-            </div>
-          </div>
+          </>
         ) : (
           <InfoBox
             className="mt-3"

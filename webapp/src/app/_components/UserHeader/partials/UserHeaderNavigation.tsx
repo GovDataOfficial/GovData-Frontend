@@ -10,6 +10,7 @@ import { i18n } from "@/i18n";
 
 type UserHeaderNavigation = {
   userName: string;
+  isShowcaseEditor?: boolean;
 };
 
 /**
@@ -18,7 +19,10 @@ type UserHeaderNavigation = {
  *  - not reliant on JS, so user can log out even if js is not enabled.
  *  - outside click closes only enhancement.
  */
-export function UserHeaderNavigation({ userName }: UserHeaderNavigation) {
+export function UserHeaderNavigation({
+  userName,
+  isShowcaseEditor,
+}: UserHeaderNavigation) {
   const { t } = i18n;
   const ref = useOutsideClick<HTMLDetailsElement>((r) => {
     r.current?.removeAttribute("open");
@@ -39,13 +43,23 @@ export function UserHeaderNavigation({ userName }: UserHeaderNavigation) {
           >
             <ul className="gd-list gd-user-header-accordion-flyout">
               <li>
-                <a href={PAGES_AUTH.manage_data}>
+                <a href={PAGES_AUTH.manage_metadata}>
                   <Trans
                     i18nKey="header.user.navigation.myDatasets"
                     params={{ break: <br /> }}
                   />
                 </a>
               </li>
+              {isShowcaseEditor && (
+                <li>
+                  <a href={PAGES_AUTH.manage_showcases}>
+                    <Trans
+                      i18nKey="header.user.navigation.myShowcases"
+                      params={{ break: <br /> }}
+                    />
+                  </a>
+                </li>
+              )}
               <li>
                 <a href={PAGES.logout} className="d-flex">
                   <SVG icon={icons.login} size="big" />

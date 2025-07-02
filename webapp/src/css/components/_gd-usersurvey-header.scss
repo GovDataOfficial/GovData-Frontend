@@ -1,0 +1,9 @@
+.usersurvey-header {
+  background-color: $clr-primary-100;
+  border: 2px solid $clr-primary-400;
+  padding: map-get($spacers, 2);
+  color: $clr-neutral-grey-800;
+  p {
+    margin: 0;
+  }
+}

@@ -7,6 +7,15 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["pino"],
   },
+  async redirects() {
+    return [
+      {
+        source: '/datenpflege',
+        destination: '/datenpflege/metadaten',
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

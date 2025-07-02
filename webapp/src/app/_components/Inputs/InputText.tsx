@@ -12,6 +12,7 @@ type InputTextProps = {
   maxLength?: number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   readonly?: boolean;
+  className?: string;
 };
 
 const InputText = forwardRef<
@@ -28,6 +29,7 @@ const InputText = forwardRef<
       defaultValue,
       maxLength,
       readonly,
+      className,
       children,
     },
     ref,
@@ -35,7 +37,7 @@ const InputText = forwardRef<
     const id = useId();
 
     return (
-      <div className="gd-input">
+      <div className={`gd-input ${className}`}>
         <Label
           label={label}
           htmlFor={id}

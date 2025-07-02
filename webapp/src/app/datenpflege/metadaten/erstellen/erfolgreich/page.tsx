@@ -32,7 +32,7 @@ export default function Page() {
         <div className="d-flex flex-column flex-sm-row justify-content-between">
           <a
             className="d-flex mt-2 text-center"
-            href={PAGES_AUTH.manage_data_form_add}
+            href={PAGES_AUTH.manage_metadata_form_add}
           >
             <SVG icon={icons.plus} size={"14"} />
             {i18n.t("metadataform.navigation.createAnother")}
@@ -41,7 +41,7 @@ export default function Page() {
           <AnchorButton
             className="mt-2 text-center"
             variant="primary"
-            href={PAGES_AUTH.manage_data}
+            href={PAGES_AUTH.manage_metadata}
           >
             {i18n.t("metadataform.navigation.myDatasets")}
           </AnchorButton>

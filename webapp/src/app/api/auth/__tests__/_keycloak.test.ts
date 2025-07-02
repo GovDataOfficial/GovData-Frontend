@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, test, vi } from "vitest";
 import { redirect } from "next/navigation";
 import { Issuer } from "openid-client";
 
-import { getKeyCloakClient } from "../_keycloak";
+import { getCallbackUriFromRequest, getKeyCloakClient } from "../_keycloak";
 
 vi.mock("openid-client");
 vi.mock("next/navigation");
@@ -45,5 +45,60 @@ describe("_keycloak", () => {
 
     await getKeyCloakClient();
     expect(redirect).toHaveBeenCalledWith("/");
+  });
+
+  test("should generate correct callback URI from request", () => {
+    const mockRequest = {
+      headers: new Map([
+        ["x-forwarded-host", "example.com"],
+        ["x-forwarded-proto", "https"],
+      ]),
+      nextUrl: {
+        searchParams: new URLSearchParams({
+          redirectTo: "/datenpflege/anwendungen",
+        }),
+        origin: "http://localhost:3000",
+      },
+    } as any;
+
+    const callbackUri = getCallbackUriFromRequest(mockRequest);
+
+    expect(callbackUri).toBe(
+      `https://example.com/api/auth/callback?redirectTo=${encodeURIComponent("/datenpflege/anwendungen")}`,
+    );
+  });
+  test("should generate correct callback URI from request if redirectTo is empty", () => {
+    const mockRequest = {
+      headers: new Map([
+        ["x-forwarded-host", "example.com"],
+        ["x-forwarded-proto", "https"],
+      ]),
+      nextUrl: {
+        searchParams: new URLSearchParams(),
+        origin: "http://localhost:3000",
+      },
+    } as any;
+
+    const callbackUri = getCallbackUriFromRequest(mockRequest);
+
+    expect(callbackUri).toBe("https://example.com/api/auth/callback");
+  });
+
+  test("should fallback to request origin if headers are missing", () => {
+    const mockRequest = {
+      headers: new Map(),
+      nextUrl: {
+        searchParams: new URLSearchParams({
+          redirectTo: "/datenpflege/anwendungen",
+        }),
+        origin: "http://localhost:3000",
+      },
+    } as any;
+
+    const callbackUri = getCallbackUriFromRequest(mockRequest);
+
+    expect(callbackUri).toBe(
+      `http://localhost:3000/api/auth/callback?redirectTo=${encodeURIComponent("/datenpflege/anwendungen")}`,
+    );
   });
 });

@@ -2,64 +2,55 @@
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { sendAuthorizedRequest } from "@/app/api/_lib/sendAuthorizedRequest";
-import { getUserInformation } from "@/app/api/auth/_session";
+import {
+  sendAuthorizedRequestWithBasicAuth,
+  sendAuthorizedRequestWithBearer,
+} from "@/app/api/_lib/sendAuthorizedRequest";
 
 vi.mock("ioredis");
-vi.mock("@/app/api/auth/_session");
 
 describe("sendAuthorizedRequest", () => {
-  const mockValidUser = {
-    username: "test",
-  };
+  const username = "test";
 
   beforeEach(() => {
     vi.resetAllMocks();
-    vi.useFakeTimers();
     globalThis.fetch = vi.fn();
   });
 
-  it("should return 401 if no session is available", async () => {
-    vi.mocked(getUserInformation).mockResolvedValueOnce(null);
+  it("should return the resolved error if fetch fails", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce({
+      ok: false,
+      status: 400,
+      text: vi.fn().mockResolvedValue("Some error occurred"),
+    } as any);
 
-    const authorizedRequest = sendAuthorizedRequest(
+    const authorizedRequest = sendAuthorizedRequestWithBasicAuth(
+      username,
       "https://create-metadata",
       "POST",
       {},
     );
-    vi.advanceTimersByTime(1000);
     const response = await authorizedRequest;
-    expect(response?.status).toBe(401);
-  });
-
-  it("should return 500 if fetch fails", async () => {
-    vi.mocked(getUserInformation).mockResolvedValueOnce(mockValidUser);
-    vi.mocked(fetch).mockResolvedValueOnce({ status: 500 } as any);
-
-    const authorizedRequest = sendAuthorizedRequest(
-      "https://create-metadata",
-      "POST",
-      {},
-    );
-    vi.advanceTimersByTime(1000);
-    const response = await authorizedRequest;
-    expect(response?.status).toBe(500);
+    expect(response?.status).toBe(400);
   });
 
   it("should correctly call fetch", async () => {
-    vi.mocked(getUserInformation).mockResolvedValueOnce(mockValidUser);
-    vi.mocked(fetch).mockResolvedValueOnce({ status: 200 } as any);
+    vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+      statusText: "OK",
+    } as any);
 
     const bodyContent = {
       testValue: "a value",
     };
 
-    const authorizedRequest = sendAuthorizedRequest(
+    const authorizedRequest = sendAuthorizedRequestWithBasicAuth(
+      username,
       "https://create-metadata",
       "POST",
       bodyContent,
     );
-    vi.advanceTimersByTime(1000);
     const response = await authorizedRequest;
 
     const [firstParam, secondParam] = vi.mocked(globalThis.fetch).mock.calls[0];
@@ -77,5 +68,162 @@ describe("sendAuthorizedRequest", () => {
     expect(parsedBody.testValue).toEqual(bodyContent.testValue);
 
     expect(response?.status).toBe(200);
+  });
+});
+
+describe("sendAuthorizedRequestWithBearer", () => {
+  // Updated mock to match the SessionInformation interface from _session.ts
+  const mockValidSession = {
+    username: "test",
+    id_token: "mock-id-token",
+    access_token: "mock-jwt-token-123",
+    refresh_token: "mock-refresh-token",
+    iat: Math.floor(Date.now() / 1000),
+    roles: ["showcases"],
+  };
+
+  beforeEach(() => {
+    vi.resetAllMocks();
+    globalThis.fetch = vi.fn();
+  });
+
+  it("should return 500 if fetch fails", async () => {
+    vi.mocked(fetch).mockRejectedValueOnce(new Error("Network error"));
+
+    const authorizedRequest = sendAuthorizedRequestWithBearer(
+      mockValidSession,
+      "https://api-endpoint",
+      "GET",
+      undefined,
+    );
+    const response = await authorizedRequest;
+    expect(response?.status).toBe(500);
+  });
+
+  it("should correctly set Authorization header with Bearer token", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+      statusText: "OK",
+    } as any);
+
+    const authorizedRequest = sendAuthorizedRequestWithBearer(
+      mockValidSession,
+      "https://api-endpoint",
+      "GET",
+      undefined,
+    );
+    await authorizedRequest;
+
+    const [_url, options] = vi.mocked(globalThis.fetch).mock.calls[0];
+    const headers = options?.headers as Record<string, string>;
+
+    expect(headers["Authorization"]).toBe(
+      `Bearer ${mockValidSession.access_token}`,
+    );
+  });
+
+  it("should correctly handle POST request with body", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
+      status: 201,
+      statusText: "Created",
+    } as any);
+
+    const bodyContent = {
+      key: "value",
+      nested: { property: true },
+    };
+
+    const authorizedRequest = sendAuthorizedRequestWithBearer(
+      mockValidSession,
+      "https://api-endpoint",
+      "POST",
+      bodyContent,
+    );
+    const response = await authorizedRequest;
+
+    const [url, options] = vi.mocked(globalThis.fetch).mock.calls[0];
+
+    // Check URL formatting
+    expect(url).toEqual(new URL("https://api-endpoint/"));
+
+    // Check method
+    expect(options?.method).toEqual("POST");
+
+    // Check headers
+    const headers = options?.headers as Record<string, string>;
+    expect(headers["Authorization"]).toBe(
+      `Bearer ${mockValidSession.access_token}`,
+    );
+    expect(headers["Content-Type"]).toEqual("application/json");
+
+    // Check body
+    const parsedBody = JSON.parse(options?.body as string);
+    expect(parsedBody).toEqual(bodyContent);
+
+    // Check response
+    expect(response?.status).toBe(201);
+  });
+
+  it("should correctly handle query parameters in URL", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+      statusText: "OK",
+    } as any);
+
+    const authorizedRequest = sendAuthorizedRequestWithBearer(
+      mockValidSession,
+      "https://api-endpoint?param1=value1&param2=value2",
+      "GET",
+      undefined,
+    );
+    await authorizedRequest;
+
+    const [url, _options] = vi.mocked(globalThis.fetch).mock.calls[0];
+
+    expect(url.toString()).toBe(
+      "https://api-endpoint/?param1=value1&param2=value2",
+    );
+  });
+
+  it("should return an error response if response is not ok", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce({
+      ok: false,
+      status: 403,
+      statusText: "Forbidden",
+      text: vi.fn().mockResolvedValue("Forbidden"),
+    } as any);
+
+    const authorizedRequest = sendAuthorizedRequestWithBearer(
+      mockValidSession,
+      "https://api-endpoint",
+      "GET",
+      undefined,
+    );
+
+    const response = await authorizedRequest;
+
+    expect(response?.status).toBe(403);
+  });
+
+  it("should handle response with status 204 properly", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
+      status: 204,
+      statusText: "No Content",
+    } as any);
+
+    const authorizedRequest = sendAuthorizedRequestWithBearer(
+      mockValidSession,
+      "https://api-endpoint",
+      "DELETE",
+      undefined,
+    );
+
+    const response = await authorizedRequest;
+
+    expect(response?.status).toBe(204);
   });
 });

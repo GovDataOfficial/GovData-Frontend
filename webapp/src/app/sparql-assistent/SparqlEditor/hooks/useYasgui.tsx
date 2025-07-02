@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type Yasgui from "@triply/yasgui";
+import type Yasgui from "@zazuko/yasgui";
 
 import { Prefix } from "@/app/sparql-assistent/SparqlEditor/types";
 
@@ -94,7 +94,7 @@ export const useYasgui = (containerId: string, endpoint: string) => {
         if (!isLoading.current && !yasguiRef.current) {
           isLoading.current = true;
 
-          const YasguiModule = await import("@triply/yasgui");
+          const YasguiModule = await import("@zazuko/yasgui");
           const YasguiDefault =
             YasguiModule.default as unknown as typeof Yasgui;
           const container = document.getElementById(containerId);

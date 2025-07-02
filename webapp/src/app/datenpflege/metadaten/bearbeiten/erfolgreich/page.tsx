@@ -27,7 +27,7 @@ export default function Page() {
             variant={"success"}
           />
         </div>
-        <a href={PAGES_AUTH.manage_data}>
+        <a href={PAGES_AUTH.manage_metadata}>
           {i18n.t("metadataform.success.edit.back")}
         </a>
       </ContainerSection>

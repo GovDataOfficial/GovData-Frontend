@@ -3,7 +3,7 @@
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { generators, TokenSet } from "openid-client";
+import { generators, IdTokenClaims, TokenSet } from "openid-client";
 
 import { API_ENDPOINTS } from "@/app/api/apiEndpoints";
 import { getKeyCloakClient } from "@/app/api/auth/_keycloak";
@@ -13,6 +13,8 @@ import { logger } from "@/logger/logger";
 const password = process.env.session_secret;
 const SESSION_COOKIE = "gd_session";
 const CODE_VERIFIER_COOKIE = "gd_cvf";
+const SHOWCASES_EDITOR_ROLE = "showcases";
+const refreshBufferSeconds = 5;
 
 const log = logger("_session.ts");
 
@@ -20,11 +22,27 @@ type KeycloakToken = TokenSet & {
   refresh_expires_in?: number;
 };
 
-type SessionInformation = {
+type RealmAccess = {
+  roles: string[];
+};
+
+type TokenClaims = IdTokenClaims & {
+  realm_access?: RealmAccess;
+};
+
+export type SessionInformation = {
   username: string;
   id_token: string;
+  access_token: string;
   refresh_token: string;
   iat: number;
+  expires_at: number;
+  roles: string[];
+};
+
+type UserInformation = {
+  username: string;
+  isShowcaseEditor: boolean;
 };
 
 /**
@@ -73,15 +91,16 @@ export async function getSession(): Promise<SessionInformation | null> {
  * Retrieves user from a session or null if non is existent.
  * this will not refresh the session.
  */
-export async function getUserInformation(): Promise<{
-  username: string;
-} | null> {
+export async function getUserInformation(): Promise<UserInformation | null> {
   const sessionId = getSessionIdFromCookie();
 
   if (sessionId) {
     const session = await getRedisSession(sessionId);
     if (session) {
-      return { username: session.username };
+      return {
+        username: session.username,
+        isShowcaseEditor: session.roles.includes(SHOWCASES_EDITOR_ROLE),
+      };
     }
   }
   return null;
@@ -92,30 +111,37 @@ export async function getUserInformation(): Promise<{
  * If no session exists, the user is redirected to the login page.
  * This will also refresh the session if it is older than 5 minutes.
  */
-export async function getSessionOrRedirect(): Promise<SessionInformation> {
+export async function getSessionOrRedirect(
+  requestUrl?: string,
+): Promise<SessionInformation> {
   const sessionId = getSessionIdFromCookie();
+  let loginUrl = API_ENDPOINTS.AUTH.LOGIN;
+  if (requestUrl) {
+    loginUrl = `${loginUrl}?redirectTo=${encodeURIComponent(requestUrl)}`;
+  }
 
   if (!sessionId) {
-    return redirect(API_ENDPOINTS.AUTH.LOGIN);
+    redirect(loginUrl);
   }
 
   const session = await getRedisSession(sessionId);
 
   if (!session) {
-    redirect(API_ENDPOINTS.AUTH.LOGIN);
+    redirect(loginUrl);
   }
 
-  // refresh token if it is older than 5 minutes
+  // refresh token if it is older than the refresh time minus 5 seconds as buffer
   const currentTimeInSeconds = Math.floor(Date.now() / 1000);
 
-  if (currentTimeInSeconds > session.iat + 300) {
+  if (currentTimeInSeconds > session.expires_at - refreshBufferSeconds) {
     try {
       const client = await getKeyCloakClient();
       const newTokenSet = await client.refresh(session.refresh_token);
-      await setSession(newTokenSet, sessionId);
+      const newSession = await setSession(newTokenSet, sessionId);
+      return newSession;
     } catch (error) {
       log.error(error, "Failed to refresh token");
-      return redirect(API_ENDPOINTS.AUTH.LOGIN);
+      redirect(loginUrl);
     }
   }
 
@@ -133,13 +159,17 @@ export async function setSession(
 ) {
   const sessionId = currentSessionId || generators.random(128);
   const expiration = token.refresh_expires_in || 600;
-  const claims = token.claims();
+  const claims = token.claims() as TokenClaims;
+  let roles: string[] = [];
 
   const session: SessionInformation = {
     username: claims.preferred_username || "",
     id_token: token.id_token || "",
+    access_token: token.access_token || "",
     refresh_token: token.refresh_token || "",
     iat: claims.iat || 0,
+    roles: claims.realm_access?.roles || roles,
+    expires_at: token.expires_at || 0,
   };
   const redisSessionString = JSON.stringify(session);
 
@@ -162,6 +192,7 @@ export async function setSession(
   } catch (error) {
     log.error(error, "Failed to set session in Redis:");
   }
+  return session;
 }
 
 /**
@@ -195,7 +226,7 @@ export function hasSessionCookie(): boolean {
  */
 export function getCodeVerifierSession() {
   const cookie = cookies();
-  if (!cookie.has(CODE_VERIFIER_COOKIE)) {
+  if (!cookie || !cookie.has(CODE_VERIFIER_COOKIE)) {
     return null;
   }
 

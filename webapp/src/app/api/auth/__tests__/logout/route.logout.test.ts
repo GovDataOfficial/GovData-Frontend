@@ -21,7 +21,10 @@ describe("auth / logout", () => {
     username: "test",
     id_token: "testtoken",
     iat: 0,
+    access_token: "0",
     refresh_token: "0",
+    roles: [],
+    expires_at: 0,
   };
 
   test("should return a redirect response and call endsession on keycloak client", async () => {
