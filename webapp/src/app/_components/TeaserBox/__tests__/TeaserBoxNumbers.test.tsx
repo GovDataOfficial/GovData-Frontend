@@ -1,8 +1,15 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 import { icons } from "@/app/_components/SVG/SVG";
 import { TeaserBoxNumber } from "@/app/_components/TeaserBox/partials/TeaserBoxNumber";
+
+// if not mocked, next.js will optimize the SVG and convert it to a base64 string
+vi.mock("@/app/_components/SVG/iconMap", () => ({
+  icons: {
+    hvd: "/mocked-hvd.svg",
+  },
+}));
 
 describe("TeaserBoxNumbers", () => {
   const testProps = {

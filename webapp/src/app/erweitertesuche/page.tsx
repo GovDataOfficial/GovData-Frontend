@@ -21,9 +21,8 @@ export const metadata: Metadata = metaDataGenerator({
   title: i18n.t("meta.erweitertesuche.title"),
 });
 
-export default async function ErweiterteSuche({
-  searchParams,
-}: PageConstructor) {
+export default async function ErweiterteSuche(props: PageConstructor) {
+  const searchParams = await props.searchParams;
   const stateList = await fetchStateList();
   const categoriesSorted = await fetchCategoriesSorted();
   const licenseActiveSorted = await fetchLicenseActiveSorted();

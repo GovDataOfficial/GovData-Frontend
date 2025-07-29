@@ -23,7 +23,7 @@ export function SectionSchnittstellen() {
       headline={i18n.t("sparql.schnittstellen.headline")}
     >
       <Trans
-        i18nKey="sparql.schnittstellen.text"
+        i18nKey="sparql.schnittstellen.paragraph1"
         htmlElement="paragraph"
         params={{
           linkMetadatenkatalog: (
@@ -43,6 +43,16 @@ export function SectionSchnittstellen() {
           codeSparql: <code>https://www.govdata.de/sparql</code>,
           codeCkan: <code>https://www.govdata.de/ckan/api</code>,
         }}
+      />
+
+      <Trans
+        i18nKey="sparql.schnittstellen.paragraph2"
+        htmlElement="paragraph"
+      />
+
+      <Trans
+        i18nKey="sparql.schnittstellen.paragraph3"
+        htmlElement="paragraph"
       />
     </ContainerSection>
   );

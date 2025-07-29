@@ -22,7 +22,8 @@ export const metadata: Metadata = {
   title: i18n.t("meta.manageshowcases.title"),
 };
 
-export default async function Page({ searchParams }: PageConstructor) {
+export default async function Page(props: PageConstructor) {
+  const searchParams = await props.searchParams;
   const { t } = i18n;
 
   /*

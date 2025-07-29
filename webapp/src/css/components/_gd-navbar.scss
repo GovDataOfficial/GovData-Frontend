@@ -75,7 +75,7 @@ header {
     height: 50px;
     justify-content: center;
     align-items: center;
-    margin-right: -($grid-gutter-width/2);
+    margin-right: -(calc($grid-gutter-width/2));
 
     &:hover,
     &:focus,

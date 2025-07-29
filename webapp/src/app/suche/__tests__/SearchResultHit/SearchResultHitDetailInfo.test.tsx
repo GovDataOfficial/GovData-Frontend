@@ -53,8 +53,8 @@ describe("SearchResultHitDetailInfo", () => {
     render(
       <SearchResultHitDetailInfo
         hasHvd={false}
-        allShowcaseTypes={[ 'mobile_app', 'website', 'visualization' ]}
-      />
+        allShowcaseTypes={["mobile_app", "website", "visualization"]}
+      />,
     );
 
     const dt = screen.getByRole("term");

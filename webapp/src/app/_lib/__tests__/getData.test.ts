@@ -14,7 +14,7 @@ vi.mock("next/headers");
 
 describe("getData", () => {
   beforeEach(() => {
-    vi.mocked(headers).mockReturnValue(new Headers());
+    vi.mocked(headers).mockResolvedValue(new Headers());
     vi.stubEnv("be_index_app2_url", "http://mtest.de");
     global.fetch = vi.fn().mockResolvedValue({
       json: () => vi.fn(),

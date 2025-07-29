@@ -16,9 +16,10 @@ async function getPageData(params: PageConstructor["params"]) {
   return fetchTypo3Data(endpoints.T3.informationen + `/${params.slug}`);
 }
 
-export async function generateMetadata({
-  params,
-}: PageConstructor): Promise<Metadata> {
+export async function generateMetadata(
+  props: PageConstructor,
+): Promise<Metadata> {
+  const params = await props.params;
   const pageData = await getPageData(params);
   return metaDataGenerator({
     title: i18n.t("meta.dynamic.title", { title: pageData?.meta.title }),
@@ -26,7 +27,8 @@ export async function generateMetadata({
   });
 }
 
-export default async function Page({ params }: PageConstructor) {
+export default async function Page(props: PageConstructor) {
+  const params = await props.params;
   const menuData = await fetchTypo3Data(endpoints.T3Api.information);
   const subPages = findT3ContentElement(menuData, "menu_subpages");
 

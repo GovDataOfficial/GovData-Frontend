@@ -21,7 +21,9 @@ describe("Showcase Edit Route", () => {
   it("should return 401 if no session is available", async () => {
     vi.mocked(getSessionOrThrow).mockRejectedValueOnce(new Error("No session"));
     const request = new Request("https://example.com", {});
-    const response = await POST(request, { params: { id: "test" } });
+    const response = await POST(request, {
+      params: Promise.resolve({ id: "test" }),
+    });
     expect(response?.status).toBe(401);
   });
 
@@ -31,7 +33,9 @@ describe("Showcase Edit Route", () => {
       session as SessionInformation,
     );
     const request = new Request("https://test.com", {});
-    const editRequest = POST(request, { params: { id: "test" } });
+    const editRequest = POST(request, {
+      params: Promise.resolve({ id: "test" }),
+    });
     const response = await editRequest;
 
     expect(postShowcase).toHaveBeenCalledWith(

@@ -17,10 +17,9 @@ vi.mock(
   () => ({ ResourcePreviewMap: () => <div>ResourcePreviewMap</div> }),
 );
 
-vi.mock(
-  "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewLoading",
-  () => ({ ResourcePreviewLoading: () => <div>Loading...</div> }),
-);
+vi.mock("@/app/suche/_components/common/PreviewLoading", () => ({
+  PreviewLoading: () => <div>Loading...</div>,
+}));
 
 vi.mock(
   "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewError",

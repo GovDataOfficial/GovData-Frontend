@@ -21,9 +21,8 @@ export const metadata: Metadata = {
   title: i18n.t("meta.manageshowcases.edit"),
 };
 
-export default async function Page({
-  params,
-}: PageConstructor<{ id: string }>) {
+export default async function Page(props: PageConstructor<{ id: string }>) {
+  const params = await props.params;
   await getSessionOrRedirect(
     `${PAGES_AUTH.manage_showcases_form_edit}/${params.id}`,
   );

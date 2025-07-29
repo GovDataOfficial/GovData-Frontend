@@ -21,7 +21,9 @@ describe("Showcase Delete Route", () => {
 
   it("should return 401 if no session is available", async () => {
     vi.mocked(getSessionOrThrow).mockRejectedValueOnce(new Error("No session"));
-    const deleteRequest = DELETE({} as Request, { params: { id: "test" } });
+    const deleteRequest = DELETE({} as Request, {
+      params: Promise.resolve({ id: "test" }),
+    });
     const response = await deleteRequest;
     expect(response?.status).toBe(401);
   });
@@ -31,7 +33,9 @@ describe("Showcase Delete Route", () => {
     vi.mocked(getSessionOrThrow).mockResolvedValueOnce(
       session as SessionInformation,
     );
-    const deleteRequest = DELETE({} as Request, { params: { id: "test" } });
+    const deleteRequest = DELETE({} as Request, {
+      params: Promise.resolve({ id: "test" }),
+    });
     const response = await deleteRequest;
 
     expect(sendAuthorizedRequestWithBearer).toHaveBeenCalledWith(

@@ -12,8 +12,8 @@ import { useGeographic as olUseGeographic } from "ol/proj";
 import VectorSource from "ol/source/Vector";
 
 import { debounce } from "@/app/_lib/debounce";
+import { PreviewLoading } from "@/app/suche/_components/common/PreviewLoading";
 import { ResourcePreviewError } from "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewError";
-import { ResourcePreviewLoading } from "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewLoading";
 import { styleFunction } from "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewMapStyles";
 import { i18n } from "@/i18n";
 import { ProjectionName } from "@/types/types";
@@ -45,7 +45,7 @@ export const ResourcePreviewMap = ({
   // state won't work because it will be reset on each render
   const initialLoadStart = useRef<boolean>(false);
 
-  const mapRef = useRef<Map>();
+  const mapRef = useRef<Map>(null);
   useEffect(() => {
     if (mapRef.current) {
       return;
@@ -161,7 +161,7 @@ export const ResourcePreviewMap = ({
         tabIndex={0}
       ></div>
       {isLoading && (
-        <ResourcePreviewLoading
+        <PreviewLoading
           loadingText={i18n.t("search.details.preview.map.loading")}
         />
       )}

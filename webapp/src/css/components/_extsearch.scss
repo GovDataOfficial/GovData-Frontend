@@ -167,7 +167,7 @@
   @media #{$large-up} {
     .checkboxitem {
       display: inline-block;
-      width: (99% / 2);
+      width: calc(99% / 2);
     }
   }
 }
@@ -175,18 +175,18 @@
 .field-format {
   .checkboxitem {
     display: inline-block;
-    width: (99% / 2);
+    width: calc(99% / 2);
   }
 
   @media #{$medium-only} {
     .checkboxitem {
-      width: (99% / 4);
+      width: calc(99% / 4);
     }
   }
 
   @media #{$large-up} {
     .checkboxitem {
-      width: (99% / 6);
+      width: calc(99% / 6);
     }
   }
 }

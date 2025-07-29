@@ -4,7 +4,7 @@ import { valid } from "geojson-validation";
 import { i18n } from "@/i18n";
 
 export function useSpatialValidation() {
-  const elementRef = useRef<HTMLTextAreaElement | null>();
+  const elementRef = useRef<HTMLTextAreaElement>(null);
   const errorMessage = i18n.t("form.field.spatial.error");
 
   // wrapped in useCallback() to isolate the reference to the current element

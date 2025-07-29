@@ -20,7 +20,8 @@ export const metadata: Metadata = {
 export default async function Page() {
   // double checking if user manually calls this route,
   // redirect to logout api
-  if (hasSessionCookie()) {
+  const sessionCookieExists = await hasSessionCookie();
+  if (sessionCookieExists) {
     redirect(API_ENDPOINTS.AUTH.LOGOUT);
   }
 

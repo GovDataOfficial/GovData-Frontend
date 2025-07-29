@@ -16,7 +16,8 @@ export const metadata: Metadata = {
   title: i18n.t("meta.top5.title"),
 };
 
-export default async function Page({ searchParams }: PageConstructor) {
+export default async function Page(props: PageConstructor) {
+  const searchParams = await props.searchParams;
   if (process.env.metadata_quality_dashboard_active !== "1") {
     notFound();
   }

@@ -9,7 +9,7 @@ describe("useResourcePreview", () => {
     expect(result.current.previewRef.current).toBeNull();
   });
 
-  it("should scroll to and focus the resource preview", () => {
+  it("should scroll to and focus the resource preview", async () => {
     const { result } = renderHook(() => useResourcePreview());
     const div = document.createElement("div");
     document.body.appendChild(div);
@@ -19,7 +19,7 @@ describe("useResourcePreview", () => {
 
     result.current.previewRef.current = div;
 
-    act(() => {
+    await act(() => {
       result.current.scrollToResourcePreview();
     });
 

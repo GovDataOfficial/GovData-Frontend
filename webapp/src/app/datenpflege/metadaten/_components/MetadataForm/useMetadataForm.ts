@@ -45,7 +45,7 @@ const parseErrorResponse = async (
 
 type useMetadataForm = {
   editMode?: boolean;
-  infoRef: RefObject<HTMLDivElement>;
+  infoRef: RefObject<HTMLDivElement | null>;
 };
 
 export function useMetadataForm({ editMode, infoRef }: useMetadataForm) {

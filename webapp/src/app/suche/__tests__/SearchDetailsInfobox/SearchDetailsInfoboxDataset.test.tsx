@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 import { SearchDetailsInfoboxDataSet } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxDataset";
@@ -14,10 +14,6 @@ vi.mock("@/app/_lib/getData", () => ({
 }));
 
 describe("SearchDetailsInfoboxDataSet", () => {
-  beforeAll(() => {
-    vi.stubEnv("BE_GD_CKAN_DATASET_URL", "http://test/ckan");
-  });
-
   it("should have correct heading", async () => {
     const Component = await SearchDetailsInfoboxDataSet({
       data: metaDataTestProps,
@@ -48,23 +44,5 @@ describe("SearchDetailsInfoboxDataSet", () => {
     render(Component);
 
     expect(screen.getByText(/schlagwörter/i)).toBeDefined();
-  });
-
-  it("should create correct ckan url", async () => {
-    const Component = await SearchDetailsInfoboxDataSet({
-      data: metaDataTestProps,
-    });
-
-    render(Component);
-
-    const downloadLink = screen.getByRole("link", {
-      name: /download metadaten/i,
-    });
-
-    expect(downloadLink).toHaveAttribute("target", "_blank");
-    expect(downloadLink).toHaveAttribute(
-      "href",
-      "http://test/ckan/metadata_max.rdf",
-    );
   });
 });

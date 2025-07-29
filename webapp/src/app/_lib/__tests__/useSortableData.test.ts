@@ -29,10 +29,10 @@ describe("useSortableData", () => {
     expect(result.current.sortedData).toEqual(data);
   });
 
-  it("should sort data by name in ascending order", () => {
+  it("should sort data by name in ascending order", async () => {
     const { result } = renderHook(() => useSortableData(data, columns));
 
-    act(() => {
+    await act(() => {
       result.current.sortByKeyAndDirection("name", "ascending");
     });
 
@@ -43,10 +43,10 @@ describe("useSortableData", () => {
     ]);
   });
 
-  it("should sort data by name in descending order", () => {
+  it("should sort data by name in descending order", async () => {
     const { result } = renderHook(() => useSortableData(data, columns));
 
-    act(() => {
+    await act(() => {
       result.current.sortByKeyAndDirection("name", "descending");
     });
 
@@ -57,10 +57,10 @@ describe("useSortableData", () => {
     ]);
   });
 
-  it("should toggle sort direction for a key", () => {
+  it("should toggle sort direction for a key", async () => {
     const { result } = renderHook(() => useSortableData(data, columns));
 
-    act(() => {
+    await act(() => {
       result.current.sortByKeyAndDirection("name");
     });
 
@@ -70,7 +70,7 @@ describe("useSortableData", () => {
       { name: "Foo", age: "30" },
     ]);
 
-    act(() => {
+    await act(() => {
       result.current.sortByKeyAndDirection("name");
     });
 
@@ -81,10 +81,10 @@ describe("useSortableData", () => {
     ]);
   });
 
-  it("should sort data by age using custom sort function", () => {
+  it("should sort data by age using custom sort function", async () => {
     const { result } = renderHook(() => useSortableData(data, columns));
 
-    act(() => {
+    await act(() => {
       result.current.sortByKeyAndDirection("age", "ascending");
     });
 

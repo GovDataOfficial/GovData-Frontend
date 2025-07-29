@@ -11,9 +11,10 @@ async function getPageData(params: PageConstructor["params"]) {
   return fetchTypo3Data(endpoints.T3.dl_de + `/${params.slug}`);
 }
 
-export async function generateMetadata({
-  params,
-}: PageConstructor): Promise<Metadata> {
+export async function generateMetadata(
+  props: PageConstructor,
+): Promise<Metadata> {
+  const params = await props.params;
   const pageData = await getPageData(params);
   return metaDataGenerator({
     title: i18n.t("meta.dynamic.title", { title: pageData?.meta.title }),
@@ -21,7 +22,8 @@ export async function generateMetadata({
   });
 }
 
-export default async function DeDLSlugPage({ params }: PageConstructor) {
+export default async function DeDLSlugPage(props: PageConstructor) {
+  const params = await props.params;
   const pageData = await getPageData(params);
 
   return <EditorialContent pageData={pageData} />;

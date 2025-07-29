@@ -26,7 +26,7 @@ describe("External Search Filter Test", () => {
   // adding filters that are hidden for easier testing
   const addFilter = async (name: string, user: UserEvent) => {
     const button = screen.getByRole("button", { name, hidden: true });
-    await act(() => user.click(button));
+    await user.click(button);
   };
 
   it("should handle adding and removing a filter", async () => {
@@ -38,7 +38,7 @@ describe("External Search Filter Test", () => {
 
     // clicking on button
     const add = screen.getByRole("button", { name: /suchfeld hinzufügen/i });
-    await act(() => user.click(add));
+    await user.click(add);
 
     const filterList = screen.getByRole("list", { name: "Filter Optionen" });
     expect(filterList).toBeDefined();
@@ -47,7 +47,7 @@ describe("External Search Filter Test", () => {
     expect(within(filterList).getAllByRole("listitem")).toHaveLength(19);
 
     // adding a filter from within the list, expecting it not to be there anymore
-    await act(() => user.click(within(filterList).getByText("Bund oder Land")));
+    await user.click(within(filterList).getByText("Bund oder Land"));
     expect(within(filterList).getAllByRole("listitem")).toHaveLength(18);
     expect(within(filterList).queryByText("Bund oder Land")).toBeNull();
 
@@ -56,8 +56,8 @@ describe("External Search Filter Test", () => {
       name: /suchfeld „Bund oder Land“ entfernen/i,
     });
     // removing filter and expecting it to be in list again
-    await act(() => user.click(removeButton));
-    await act(() => user.click(add));
+    await user.click(removeButton);
+    await user.click(add);
     expect(within(filterList).getAllByRole("listitem")).toHaveLength(19);
     expect(within(filterList).getByText("Bund oder Land")).toBeDefined();
   });
@@ -99,7 +99,7 @@ describe("External Search Filter Test", () => {
     const input = screen.getByRole("textbox", { name: "in " + filterName });
 
     expect(document.activeElement).toBe(input);
-    await act(() => user.type(input, "Test1, Tag2, Und noch eins"));
+    await user.type(input, "Test1, Tag2, Und noch eins");
 
     const formData = getFormData(container);
 

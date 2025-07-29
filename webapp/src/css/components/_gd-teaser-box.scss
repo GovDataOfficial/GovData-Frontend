@@ -72,6 +72,7 @@
   .crop {
     display: -webkit-box;
     /* max-width: 330px; */
+    line-clamp: 3;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -86,7 +87,5 @@
   @include media-breakpoint-up(sm) {
     flex-wrap: nowrap;
     justify-content: space-between;
-  }
-  .gd-teaser-box {
   }
 }

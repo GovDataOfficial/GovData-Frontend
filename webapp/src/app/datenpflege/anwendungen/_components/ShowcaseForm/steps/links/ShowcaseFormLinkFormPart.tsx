@@ -1,5 +1,3 @@
-import { forwardRef } from "react";
-
 import { Button } from "@/app/_components/Button/Button";
 import { ButtonIcon } from "@/app/_components/Button/ButtonIcon";
 import { InputText } from "@/app/_components/Inputs/InputText";
@@ -29,53 +27,54 @@ type ShowcaseLinkInputGroup = {
   defaultName?: string;
   defaultUrl?: string;
   linkName?: string;
+  ref?: React.Ref<HTMLInputElement>;
 };
 
-export const ShowcaseLinkInputGroup = forwardRef<
-  HTMLInputElement,
-  ShowcaseLinkInputGroup
->(
-  (
-    { showcaseLinkType, deleteLink, linkId, defaultName, defaultUrl, linkName },
-    ref,
-  ) => {
-    const linkInput = SHOWCASE_FORM_INPUTS.LINK(showcaseLinkType, linkName);
-    return (
-      <div className="d-flex w-100">
-        <InputText
-          className="flex-grow-1 pe-1"
-          name={linkInput.name}
-          label={i18n.t("showcaseform.field.links.name", { name: linkName })}
-          defaultValue={defaultName}
-          ref={ref}
-          maxLength={SHOWCASE_FORM_MAX_LENGTH_SMALL}
+export const ShowcaseLinkInputGroup = ({
+  ref,
+  showcaseLinkType,
+  deleteLink,
+  linkId,
+  defaultName,
+  defaultUrl,
+  linkName,
+}: ShowcaseLinkInputGroup) => {
+  const linkInput = SHOWCASE_FORM_INPUTS.LINK(showcaseLinkType, linkName);
+  return (
+    <div className="d-flex w-100">
+      <InputText
+        className="flex-grow-1 pe-1"
+        name={linkInput.name}
+        label={i18n.t("showcaseform.field.links.name", { name: linkName })}
+        defaultValue={defaultName}
+        ref={ref}
+        maxLength={SHOWCASE_FORM_MAX_LENGTH_SMALL}
+      />
+      <InputUrl
+        className="flex-grow-1"
+        name={linkInput.url}
+        label={i18n.t("showcaseform.field.links.url", { name: linkName })}
+        defaultValue={defaultUrl}
+        maxLength={SHOWCASE_FORM_MAX_LENGTH_SMALL}
+      />
+      <div className="d-flex align-items-center">
+        <ButtonIcon
+          className="gd-button-icon-tertiary"
+          size="big"
+          icon={icons.trash}
+          onClick={(event) => deleteLink(event, linkId, linkName)}
+          title={
+            linkId
+              ? i18n.t("showcaseform.field.links.delete", {
+                  name: linkName,
+                })
+              : i18n.t("showcaseform.field.links.delete.noName")
+          }
         />
-        <InputUrl
-          className="flex-grow-1"
-          name={linkInput.url}
-          label={i18n.t("showcaseform.field.links.url", { name: linkName })}
-          defaultValue={defaultUrl}
-          maxLength={SHOWCASE_FORM_MAX_LENGTH_SMALL}
-        />
-        <div className="d-flex align-items-center">
-          <ButtonIcon
-            className="gd-button-icon-tertiary"
-            size="big"
-            icon={icons.trash}
-            onClick={(event) => deleteLink(event, linkId, linkName)}
-            title={
-              linkId
-                ? i18n.t("showcaseform.field.links.delete", {
-                    name: linkName,
-                  })
-                : i18n.t("showcaseform.field.links.delete.noName")
-            }
-          />
-        </div>
       </div>
-    );
-  },
-);
+    </div>
+  );
+};
 
 ShowcaseLinkInputGroup.displayName = "ShowcaseLinkInputGroup";
 

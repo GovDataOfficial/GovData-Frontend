@@ -45,7 +45,13 @@ export function useTooltip<T extends HTMLElement>(
     const tippyContent = tippyInstance && tippyInstance.props.content;
     const title = ref.current?.title;
 
-    if (tippyContent && tippyContent !== "" && title && title !== "") {
+    if (
+      ref.current &&
+      tippyContent &&
+      tippyContent !== "" &&
+      title &&
+      title !== ""
+    ) {
       tippyInstance.setContent(ref.current.title);
       ref.current.removeAttribute("title");
     }

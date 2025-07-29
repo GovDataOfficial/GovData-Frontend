@@ -1,12 +1,10 @@
 import { i18n } from "@/i18n";
 
-export type ResourcePreviewLoading = {
+export type PreviewLoading = {
   loadingText?: string;
 };
 
-export function ResourcePreviewLoading({
-  loadingText,
-}: ResourcePreviewLoading) {
+export function PreviewLoading({ loadingText }: PreviewLoading) {
   return (
     <div className="search-details-preview-loading">
       <div className="d-flex flex-column align-items-center">

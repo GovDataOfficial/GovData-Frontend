@@ -1,6 +1,7 @@
 "server-only";
 
-import { requestAsyncStorage } from "next/dist/client/components/request-async-storage.external";
+import { workUnitAsyncStorageInstance } from "next/dist/server/app-render/work-unit-async-storage-instance";
+import { RequestStore } from "next/dist/server/app-render/work-unit-async-storage.external";
 import pino, { LoggerOptions, stdTimeFunctions } from "pino";
 
 const isProd = process.env.NODE_ENV === "production";
@@ -12,11 +13,16 @@ const isEdgeRuntime = process.env.NEXT_RUNTIME === "edge";
  * This function avoids using the headers() method because:
  *  - Using headers() marks routes as dynamic, which is not desired.
  *  - headers() throws errors on routes where the headers are not available, whereas this function returns null if the header is not present
+ * workUnitAsyncStorageInstance is used for different storage types in Next.js,
+ * such as action, request, and work. This function specifically retrieves the correlation ID from the request store.
  */
 function getUnsafeCorrelationIdFromHeader(): string | undefined {
-  return (
-    requestAsyncStorage.getStore()?.headers.get("x-correlation-id") || undefined
-  );
+  const store = workUnitAsyncStorageInstance.getStore();
+  if (store && store.type === "request") {
+    const requestStore = store as RequestStore;
+    return requestStore.headers?.get("x-correlation-id") || undefined;
+  }
+  return undefined;
 }
 
 /**

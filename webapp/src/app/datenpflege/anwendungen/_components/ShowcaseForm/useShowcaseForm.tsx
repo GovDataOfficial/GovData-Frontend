@@ -6,7 +6,7 @@ import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import { API_ENDPOINTS } from "@/app/api/apiEndpoints";
 
 type useShowcaseForm = {
-  infoRef: RefObject<HTMLDivElement>;
+  infoRef: RefObject<HTMLDivElement | null>;
   showcaseId?: number;
 };
 

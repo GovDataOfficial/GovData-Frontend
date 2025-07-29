@@ -21,7 +21,7 @@ export function ResourcesTableRowBottom({
   open: boolean;
   available: boolean;
   tileUrl: string;
-  previewRef: React.RefObject<HTMLDivElement>;
+  previewRef: React.RefObject<HTMLDivElement | null>;
 }) {
   const { license, descriptionOnlyText, id, shortendAvailability } = resource;
 

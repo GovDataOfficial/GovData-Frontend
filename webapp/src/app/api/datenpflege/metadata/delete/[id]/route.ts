@@ -3,8 +3,9 @@ import { sendAuthorizedRequestWithBasicAuth } from "@/app/api/_lib/sendAuthorize
 
 export async function DELETE(
   _request: Request,
-  { params }: { params: { id: string } },
+  props: { params: Promise<{ id: string }> },
 ): Promise<Response | undefined> {
+  const params = await props.params;
   let username;
 
   try {

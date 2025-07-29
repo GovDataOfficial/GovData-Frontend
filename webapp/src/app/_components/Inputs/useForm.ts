@@ -1,8 +1,7 @@
 import { RefObject, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 type useForm = {
-  infoRef: RefObject<HTMLDivElement>;
+  infoRef: RefObject<HTMLDivElement | null>;
 };
 
 export function useForm<T extends string>({ infoRef }: useForm) {

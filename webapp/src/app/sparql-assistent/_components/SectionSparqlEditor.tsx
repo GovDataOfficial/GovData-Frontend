@@ -16,7 +16,10 @@ import { i18n } from "@/i18n";
 
 import "@zazuko/yasgui/build/yasgui.min.css";
 
-import { ContainerDiv } from "@/app/_components/Container";
+import {
+  ContainerDiv,
+  ContainerWrapperModifier,
+} from "@/app/_components/Container";
 
 const initialEndpoint = endpointOptions[0].key;
 const initialFormat = formatOptions[0].key;
@@ -53,9 +56,18 @@ export function SectionSparqlEditor({ endpoints }: SectionSparqlEditor) {
   }, [endpoints, selectedEndpoint, setEndpoint]);
 
   return (
-    <ContainerDiv containerWidth="lg">
+    <ContainerDiv
+      containerWidth="lg"
+      modifier={[
+        ContainerWrapperModifier.BOTTOM_SEPARATOR,
+        ContainerWrapperModifier.PADDING_Y,
+      ]}
+    >
       <div id="devcorner" className="column developers-corner-portlet">
         <div className="col-12">
+          <h2 className="m-0 mb-2 text-center">
+            {i18n.t("sparql.editor.headline")}
+          </h2>
           <div id="devcorner-endpoint-container" className="d-flex flex-wrap">
             <h3 className="w-100">{i18n.t("sparql.endpoint.headline")}</h3>
             <SelectEndpoint

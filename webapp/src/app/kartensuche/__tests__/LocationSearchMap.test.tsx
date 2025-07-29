@@ -60,7 +60,7 @@ describe("LocationSearchMap", () => {
     expect(screen.getAllByRole("button")).toHaveLength(5);
   });
 
-  it("calls onBoundingBoxChanged when bounding box changes", () => {
+  it("calls onBoundingBoxChanged when bounding box changes", async () => {
     const polygon = new Polygon([
       [
         [0, 0],
@@ -81,7 +81,7 @@ describe("LocationSearchMap", () => {
     );
     expect(onBoundingBoxChanged).not.toHaveBeenCalled();
     mockFeature.changed();
-    act(() => {
+    await act(() => {
       vi.advanceTimersByTime(300);
     });
     expect(onBoundingBoxChanged).toHaveBeenCalled();

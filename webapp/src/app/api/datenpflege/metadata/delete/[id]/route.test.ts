@@ -22,7 +22,9 @@ describe("Metadata Delete Route", () => {
     vi.mocked(getSessionNameOrThrow).mockRejectedValueOnce(
       new Error("No session"),
     );
-    const deleteRequest = DELETE({} as Request, { params: { id: "test" } });
+    const deleteRequest = DELETE({} as Request, {
+      params: Promise.resolve({ id: "test" }),
+    });
     const response = await deleteRequest;
     expect(response?.status).toBe(401);
   });
@@ -30,7 +32,9 @@ describe("Metadata Delete Route", () => {
   it("should call sendAuthorizedRequestWithBasicAuth with correct data", async () => {
     const username = "test";
     vi.mocked(getSessionNameOrThrow).mockResolvedValueOnce(username);
-    const deleteRequest = DELETE({} as Request, { params: { id: "test" } });
+    const deleteRequest = DELETE({} as Request, {
+      params: Promise.resolve({ id: "test" }),
+    });
     const response = await deleteRequest;
 
     expect(sendAuthorizedRequestWithBasicAuth).toHaveBeenCalledWith(

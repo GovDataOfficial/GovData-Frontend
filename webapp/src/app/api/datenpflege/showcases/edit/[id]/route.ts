@@ -3,8 +3,9 @@ import { postShowcase } from "@/app/api/datenpflege/showcases/_lib/postShowcase"
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } },
+  props: { params: Promise<{ id: string }> },
 ) {
+  const params = await props.params;
   let session;
   try {
     session = await getSessionOrThrow();

@@ -6,11 +6,7 @@ type OverviewButtonEdit = {
   dataTitle: string;
   url: string;
 };
-export function OverviewButtonEdit({
-  id,
-  dataTitle,
-  url,
-}: OverviewButtonEdit) {
+export function OverviewButtonEdit({ id, dataTitle, url }: OverviewButtonEdit) {
   const { t } = i18n;
 
   return (

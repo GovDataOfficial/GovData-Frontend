@@ -3,8 +3,9 @@ import { sendAuthorizedRequestWithBearer } from "@/app/api/_lib/sendAuthorizedRe
 
 export async function DELETE(
   _request: Request,
-  { params }: { params: { id: string } },
+  props: { params: Promise<{ id: string }> },
 ): Promise<Response | undefined> {
+  const params = await props.params;
   let session;
   try {
     session = await getSessionOrThrow();

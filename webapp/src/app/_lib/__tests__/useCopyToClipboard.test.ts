@@ -25,7 +25,7 @@ describe("useCopyToClipboard", () => {
 
     expect(result.current.text).toEqual(copyToClipboardText);
 
-    act(() => {
+    await act(() => {
       result.current.copyToClipboard("https://www.example.com");
     });
 

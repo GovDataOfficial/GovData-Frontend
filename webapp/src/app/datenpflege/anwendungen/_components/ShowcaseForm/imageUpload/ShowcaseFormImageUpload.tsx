@@ -5,7 +5,7 @@ import { i18n } from "@/i18n";
 
 export type ShowcaseFormImageUpload = {
   onImageUpload: (file: File) => void;
-  uploadButtonRef: React.RefObject<HTMLButtonElement>;
+  uploadButtonRef: React.RefObject<HTMLButtonElement | null>;
 };
 
 export function ShowcaseFormImageUpload({

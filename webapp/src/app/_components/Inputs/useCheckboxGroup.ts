@@ -5,7 +5,7 @@ export function useCheckboxGroup(
   requiredItems: number,
   initialSelectedItems = 0,
 ) {
-  const elementRef = useRef<HTMLInputElement | null>();
+  const elementRef = useRef<HTMLInputElement>(null);
   const numberOfSelectedCheckBoxes = useRef(initialSelectedItems);
 
   // wrapped in useCallback() to isolate the reference to the current element

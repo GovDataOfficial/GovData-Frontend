@@ -22,7 +22,7 @@ describe("api/geocoding-suggest", () => {
   });
 
   beforeEach(() => {
-    vi.mocked(headers).mockReturnValue(new Headers());
+    vi.mocked(headers).mockResolvedValue(new Headers());
     global.fetch = vi.fn().mockResolvedValue({
       status: 200,
       ok: true,

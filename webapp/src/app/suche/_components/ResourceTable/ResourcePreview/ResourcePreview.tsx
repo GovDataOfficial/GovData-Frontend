@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
+import { PreviewLoading } from "@/app/suche/_components/common/PreviewLoading";
 import { ResourcePreviewError } from "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewError";
-import { ResourcePreviewLoading } from "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewLoading";
 import { ResourcePreviewMap } from "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewMap";
 import { useFetchPreviewData } from "@/app/suche/_components/ResourceTable/ResourcePreview/useFetchPreviewData";
 import { i18n } from "@/i18n";
@@ -39,7 +39,7 @@ function ResourcePreview(props: ResourcePreview) {
   );
 
   if (isLoading) {
-    return <ResourcePreviewLoading />;
+    return <PreviewLoading />;
   }
 
   if (error) {
@@ -55,7 +55,7 @@ function ResourcePreview(props: ResourcePreview) {
 }
 
 export type DtResourcePreview = ResourcePreview & {
-  previewRef: React.RefObject<HTMLDivElement>;
+  previewRef: React.RefObject<HTMLDivElement | null>;
 };
 
 const DtResourcePreviewComponent = (props: DtResourcePreview) => {

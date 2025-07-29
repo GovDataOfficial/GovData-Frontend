@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.7.0 2025-07-28
+
+- Added metadata preview modal to metadata details page
+- Added format select for metadata preview
+- Updated Next.js to 15.3.3 and added various other minor updates
+- Changed the layout of the sparql editor page
+
 ## 7.6.0 2025-07-01
 
 - Updates triply/yasgui 4.2.28 to zazuko/yasgui 4.5.0. Fixes CVE-2025-48050

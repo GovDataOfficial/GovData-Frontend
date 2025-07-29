@@ -1,5 +1,3 @@
-import { forwardRef } from "react";
-
 import { Button } from "@/app/_components/Button/Button";
 import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 import { Fieldset } from "@/app/_components/Inputs/Fieldset";
@@ -30,6 +28,7 @@ type MetadataFormStepResourcesPart = {
   resourceInfo: MetadataRessourceFormInfo;
   deleteResource: (key: string) => void;
   totalResourceCount: number;
+  ref?: React.Ref<HTMLInputElement>;
 };
 
 function mapLicensesToOption(licenses: LicenseActiveSorted) {
@@ -88,155 +87,148 @@ function getSortedLicenses(licenses?: LicenseActiveSorted) {
   ];
 }
 
-export const MetadataFormStepResourcesPart = forwardRef<
-  HTMLInputElement,
-  MetadataFormStepResourcesPart
->(
-  (
-    {
-      licenses,
-      resourceNumber,
-      resourceInfo,
-      deleteResource,
-      totalResourceCount: resourceCount,
-    },
-    ref,
-  ) => {
-    const sortedLicenses = getSortedLicenses(licenses);
-    const resourceInput = METADATA_FORM_INPUTS.RESSOURCE(resourceNumber);
-    const { resource, id } = resourceInfo;
+export const MetadataFormStepResourcesPart = ({
+  ref,
+  licenses,
+  resourceNumber,
+  resourceInfo,
+  deleteResource,
+  totalResourceCount: resourceCount,
+}: MetadataFormStepResourcesPart) => {
+  const sortedLicenses = getSortedLicenses(licenses);
+  const resourceInput = METADATA_FORM_INPUTS.RESSOURCE(resourceNumber);
+  const { resource, id } = resourceInfo;
 
-    return (
-      <Fieldset
-        legend={i18n.t("metadataform.fieldset.resource.label", {
-          count: resourceNumber + 1,
-        })}
-      >
-        {resourceCount > 1 && (
-          <Button
-            variant="secondary"
-            onClick={() => {
-              deleteResource(id);
-            }}
-            className="metadata-form-fieldset-legend-button"
-          >
-            <SVG icon={icons.trash} size="big" />
-            <span className="ms-0_5">
-              {i18n.t("metadataform.field.resource.delete", {
-                count: resourceNumber + 1,
-              })}
-            </span>
-          </Button>
-        )}
-
-        <InputUrl
-          name={resourceInput.url}
-          label={i18n.t("metadataform.field.resource.url.label")}
-          required={true}
-          defaultValue={resource?.url}
-          maxLength={METADATA_FORM_MAX_LENGTH_MEDIUM}
-          ref={ref}
-        />
-        <InputText
-          name={resourceInput.name}
-          label={i18n.t("metadataform.field.resource.name.label")}
-          defaultValue={resource?.name}
-          maxLength={METADATA_FORM_MAX_LENGTH_MEDIUM}
-        />
-        <TextArea
-          name={resourceInput.description}
-          label={i18n.t("metadataform.field.resource.description.label")}
-          defaultValue={resource?.description}
-          maxLength={METADATA_FORM_MAX_LENGTH_LONG}
-        />
-        <InputText
-          name={resourceInput.format}
-          label={i18n.t("metadataform.field.resource.format.label")}
-          defaultValue={resource?.format}
-          maxLength={METADATA_FORM_MAX_LENGTH_MEDIUM}
+  return (
+    <Fieldset
+      legend={i18n.t("metadataform.fieldset.resource.label", {
+        count: resourceNumber + 1,
+      })}
+    >
+      {resourceCount > 1 && (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            deleteResource(id);
+          }}
+          className="metadata-form-fieldset-legend-button"
         >
-          <InputTextMultipleDescription examples={["CSV", "JSON", "XML"]} />
-        </InputText>
-        <InputTextMultiple
-          name={resourceInput.language}
-          label={i18n.t("metadataform.field.resource.language.label")}
-          examples={["deutsch", "englisch", "französisch"]}
-          defaultValue={resource?.language}
-          maxLength={METADATA_FORM_MAX_LENGTH_LONG}
-        />
+          <SVG icon={icons.trash} size="big" />
+          <span className="ms-0_5">
+            {i18n.t("metadataform.field.resource.delete", {
+              count: resourceNumber + 1,
+            })}
+          </span>
+        </Button>
+      )}
 
-        {hasValidOrNoLicense(licenses, resource) ? (
+      <InputUrl
+        name={resourceInput.url}
+        label={i18n.t("metadataform.field.resource.url.label")}
+        required={true}
+        defaultValue={resource?.url}
+        maxLength={METADATA_FORM_MAX_LENGTH_MEDIUM}
+        ref={ref}
+      />
+      <InputText
+        name={resourceInput.name}
+        label={i18n.t("metadataform.field.resource.name.label")}
+        defaultValue={resource?.name}
+        maxLength={METADATA_FORM_MAX_LENGTH_MEDIUM}
+      />
+      <TextArea
+        name={resourceInput.description}
+        label={i18n.t("metadataform.field.resource.description.label")}
+        defaultValue={resource?.description}
+        maxLength={METADATA_FORM_MAX_LENGTH_LONG}
+      />
+      <InputText
+        name={resourceInput.format}
+        label={i18n.t("metadataform.field.resource.format.label")}
+        defaultValue={resource?.format}
+        maxLength={METADATA_FORM_MAX_LENGTH_MEDIUM}
+      >
+        <InputTextMultipleDescription examples={["CSV", "JSON", "XML"]} />
+      </InputText>
+      <InputTextMultiple
+        name={resourceInput.language}
+        label={i18n.t("metadataform.field.resource.language.label")}
+        examples={["deutsch", "englisch", "französisch"]}
+        defaultValue={resource?.language}
+        maxLength={METADATA_FORM_MAX_LENGTH_LONG}
+      />
+
+      {hasValidOrNoLicense(licenses, resource) ? (
+        <Select
+          label={i18n.t("metadataform.field.resource.license.label")}
+          name={resourceInput.licenseId}
+          required
+          defaultValue={resource?.license?.id}
+        >
+          {sortedLicenses}
+        </Select>
+      ) : (
+        <>
+          <InfoBox
+            className="mb-2"
+            variant="error"
+            title={i18n.t("metadataform.field.resource.license.help.title")}
+          >
+            <Trans
+              i18nKey={"metadataform.field.resource.license.help.description"}
+              params={{
+                license: <strong>„{resource?.license?.title}“</strong>,
+              }}
+            />
+          </InfoBox>
+          <InputText
+            label={i18n.t("metadataform.field.resource.license.old.label")}
+            defaultValue={resource?.license?.title}
+            readonly
+          />
           <Select
-            label={i18n.t("metadataform.field.resource.license.label")}
+            label={i18n.t("metadataform.field.resource.license.new.label")}
             name={resourceInput.licenseId}
             required
-            defaultValue={resource?.license?.id}
+            showNoValueOption
           >
             {sortedLicenses}
           </Select>
-        ) : (
-          <>
-            <InfoBox
-              className="mb-2"
-              variant="error"
-              title={i18n.t("metadataform.field.resource.license.help.title")}
-            >
-              <Trans
-                i18nKey={"metadataform.field.resource.license.help.description"}
-                params={{
-                  license: <strong>„{resource?.license?.title}“</strong>,
-                }}
-              />
-            </InfoBox>
-            <InputText
-              label={i18n.t("metadataform.field.resource.license.old.label")}
-              defaultValue={resource?.license?.title}
-              readonly
-            />
-            <Select
-              label={i18n.t("metadataform.field.resource.license.new.label")}
-              name={resourceInput.licenseId}
-              required
-              showNoValueOption
-            >
-              {sortedLicenses}
-            </Select>
-          </>
+        </>
+      )}
+      <InputText
+        name={resourceInput.licenseAttributionByText}
+        label={i18n.t(
+          "metadataform.field.resource.licenseAttributionByText.label",
         )}
-        <InputText
-          name={resourceInput.licenseAttributionByText}
-          label={i18n.t(
-            "metadataform.field.resource.licenseAttributionByText.label",
-          )}
-          defaultValue={resource?.licenseAttributionByText}
-          maxLength={METADATA_FORM_MAX_LENGTH_MEDIUM}
-        />
-        <InputDate
-          name={resourceInput.modified}
-          label={i18n.t("metadataform.field.resource.modified.label")}
-          defaultValue={resource?.modified}
-        />
-        <Select
-          showNoValueOption
-          label={i18n.t("metadataform.field.resource.availability.label")}
-          name={resourceInput.availability}
-          defaultValue={resource?.shortendAvailability}
-          recommended
-        >
-          {defaultAvailability?.map((availability) => (
-            <option key={availability.key} value={availability.key}>
-              {availability.label}
-            </option>
-          ))}
-        </Select>
-        <InputCheckbox
-          name={resourceInput.hvd}
-          label={i18n.t("metadataform.field.resource.hvd.label")}
-          defaultChecked={resource?.hvd}
-        />
-      </Fieldset>
-    );
-  },
-);
+        defaultValue={resource?.licenseAttributionByText}
+        maxLength={METADATA_FORM_MAX_LENGTH_MEDIUM}
+      />
+      <InputDate
+        name={resourceInput.modified}
+        label={i18n.t("metadataform.field.resource.modified.label")}
+        defaultValue={resource?.modified}
+      />
+      <Select
+        showNoValueOption
+        label={i18n.t("metadataform.field.resource.availability.label")}
+        name={resourceInput.availability}
+        defaultValue={resource?.shortendAvailability}
+        recommended
+      >
+        {defaultAvailability?.map((availability) => (
+          <option key={availability.key} value={availability.key}>
+            {availability.label}
+          </option>
+        ))}
+      </Select>
+      <InputCheckbox
+        name={resourceInput.hvd}
+        label={i18n.t("metadataform.field.resource.hvd.label")}
+        defaultChecked={resource?.hvd}
+      />
+    </Fieldset>
+  );
+};
 
 MetadataFormStepResourcesPart.displayName = "ResourceFormPart";

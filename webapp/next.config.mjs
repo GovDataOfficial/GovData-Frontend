@@ -4,9 +4,7 @@
 const nextConfig = {
   output: "standalone",
   poweredByHeader: false,
-  experimental: {
-    serverComponentsExternalPackages: ["pino"],
-  },
+  serverExternalPackages: ["pino"],
   async redirects() {
     return [
       {

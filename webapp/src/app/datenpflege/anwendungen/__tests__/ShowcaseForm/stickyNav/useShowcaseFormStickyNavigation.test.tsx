@@ -17,7 +17,7 @@ describe("useShowcaseFormStickyNavigation", () => {
     vi.unstubAllGlobals();
   });
 
-  it("should update active section based on visibility", () => {
+  it("should update active section based on visibility", async () => {
     const { result } = renderHook(() => useShowcaseFormStickyNavigation());
 
     const observerInstance = vi.mocked(global.IntersectionObserver) as any;
@@ -28,7 +28,7 @@ describe("useShowcaseFormStickyNavigation", () => {
     expect(result.current.isActive("part3")).toBe(false);
 
     // Simulate intersecting with Section Part 1 using the observer instance
-    act(() => {
+    await act(() => {
       observerInstance.mock.calls[0][0]([
         { isIntersecting: true, target: { id: "part1" } },
       ]);
@@ -40,7 +40,7 @@ describe("useShowcaseFormStickyNavigation", () => {
     expect(result.current.isActive("part3")).toBe(false);
 
     // Simulate intersecting with Section Part 2
-    act(() => {
+    await act(() => {
       observerInstance.mock.calls[0][0]([
         { isIntersecting: true, target: { id: "part2" } },
       ]);

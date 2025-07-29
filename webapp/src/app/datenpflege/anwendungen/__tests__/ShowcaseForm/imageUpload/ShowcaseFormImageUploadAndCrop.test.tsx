@@ -37,7 +37,9 @@ describe("ShowcaseFormImageUploadAndCrop", () => {
   });
 
   it("renders the ImageUpload component when no image is available", () => {
-    const uploadButtonRef = { current: null } as RefObject<HTMLButtonElement>;
+    const uploadButtonRef = {
+      current: null,
+    } as RefObject<HTMLButtonElement | null>;
 
     // Setup mock hook return value
     vi.mocked(useImageUpload).mockReturnValue({
@@ -60,7 +62,7 @@ describe("ShowcaseFormImageUploadAndCrop", () => {
     // Verify props passed to the upload component
     expect(ShowcaseFormImageUpload).toHaveBeenCalledWith(
       { onImageUpload: mockUploadImage, uploadButtonRef },
-      expect.anything(),
+      undefined,
     );
   });
 
@@ -92,7 +94,7 @@ describe("ShowcaseFormImageUploadAndCrop", () => {
         onDeleteImage: mockDeleteImage,
         imageOrderNumber: 2,
       },
-      expect.anything(),
+      undefined,
     );
   });
 

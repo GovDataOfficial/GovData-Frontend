@@ -1,40 +1,22 @@
-import Image from "next/image";
-
 import { Time } from "@/app/_components/Time/Time";
 import { TimeRange } from "@/app/_components/Time/TimeRange";
 import { fetchDataSetShowCaseConnection } from "@/app/_lib/getData";
 import { getOrganizationDisplayName } from "@/app/_lib/organization";
 import { FILTERS } from "@/app/_lib/URLHelper";
 import { DtHVD } from "@/app/suche/_components/common/CommonDtDd";
+import { MetadataPreview } from "@/app/suche/_components/SearchDetailsInfobox/MetadataPreview/MetadataPreview";
 import { DLTags } from "@/app/suche/_components/SearchDetailsInfobox/partials/DLTags";
 import { SearchDetailsInfoBoxContainer } from "@/app/suche/_components/SearchDetailsInfobox/partials/SearchDetailsInfoBoxContainer";
 import { SearchDetailsInfoBoxGroup } from "@/app/suche/_components/SearchDetailsInfobox/partials/SearchDetailsInfoBoxGroup";
 import { TermCategories } from "@/app/suche/_components/SearchDetailsInfobox/partials/TermCategories";
 import { SearchDetailsInfoboxFilterTagAnchor } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxFilterTagAnchor";
 import { i18n } from "@/i18n";
-import { logger } from "@/logger/logger";
 import { isNotNullOrUndefined } from "@/types/typeGuards";
 import { Metadata } from "@/types/types";
-
-import downloadIcon from "../../../_components/SVG/icons/icon_download.svg";
 
 type SearchDetailsInfoboxDataset = {
   data: Metadata;
 };
-
-const log = logger("SearchDetailsInfoboxDataset");
-
-function createCKANDatasetUrl(metaDataName: string) {
-  try {
-    const url = new URL(
-      process.env.BE_GD_CKAN_DATASET_URL + `/${metaDataName}.rdf`,
-    );
-    return url.toString();
-  } catch (e) {
-    log.error("could not create ckan dataset url for", metaDataName);
-  }
-  return "#";
-}
 
 export async function SearchDetailsInfoboxDataSet({
   data,
@@ -90,16 +72,12 @@ export async function SearchDetailsInfoboxDataSet({
         </SearchDetailsInfoBoxGroup>
 
         <SearchDetailsInfoBoxGroup>
-          <dt>{t("search.details.infobox.metaDataDownloadLink")}</dt>
+          <dt>Metadaten</dt>
           <dd>
-            <a
-              className="d-flex"
-              target="_blank"
-              href={createCKANDatasetUrl(data.name)}
-            >
-              <Image width={0} height={0} src={downloadIcon} alt="" />
-              {t("search.details.infobox.metaDataDownload")}
-            </a>
+            <MetadataPreview
+              metadataName={data.name}
+              backendUrl={process.env.BE_GD_CKAN_DATASET_URL}
+            />
           </dd>
         </SearchDetailsInfoBoxGroup>
 

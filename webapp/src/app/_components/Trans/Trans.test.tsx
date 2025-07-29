@@ -18,7 +18,7 @@ describe("Trans", () => {
   it("should render a translated text including html wrapped with a paragraph", () => {
     render(
       <Trans
-        i18nKey="sparql.schnittstellen.text"
+        i18nKey="sparql.schnittstellen.paragraph1"
         htmlElement="paragraph"
         params={{
           linkMetadatenkatalog: <a href="/f">metadatenkatalog</a>,

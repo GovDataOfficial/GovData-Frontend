@@ -13,7 +13,8 @@ export const metadata: Metadata = metaDataGenerator({
   description: i18n.t("meta.kartensuche.description"),
 });
 
-export default async function Home({ searchParams }: PageConstructor) {
+export default async function Home(props: PageConstructor) {
+  const searchParams = await props.searchParams;
   const sessionId = await fetchSearchMapSessionId();
   return (
     <>

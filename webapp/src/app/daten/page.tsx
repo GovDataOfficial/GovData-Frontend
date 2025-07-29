@@ -8,5 +8,10 @@ export const metadata: Metadata = {
   title: i18n.t("meta.daten.title"),
 };
 export default function Page(props: PageConstructor) {
-  return <Suche {...props} searchParams={{ type: "dataset" }} />;
+  return (
+    <Suche /* @next-codemod-error 'props' is used with spread syntax (...). Any asynchronous properties of 'props' must be awaited when accessed. */
+      {...props}
+      searchParams={{ type: "dataset" }}
+    />
+  );
 }

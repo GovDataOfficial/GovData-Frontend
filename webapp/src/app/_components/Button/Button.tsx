@@ -1,32 +1,31 @@
-import React, { forwardRef, PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
 
-type Button = {
-  variant?: "primary" | "secondary" | "a";
-} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+type ButtonProps = PropsWithChildren<
+  {
+    variant?: "primary" | "secondary" | "a";
+    ref?: React.Ref<HTMLButtonElement>;
+  } & React.ButtonHTMLAttributes<HTMLButtonElement>
+>;
 
-export const Button = forwardRef<HTMLButtonElement, PropsWithChildren<Button>>(
-  (props, ref) => {
-    const {
-      variant = "primary",
-      children,
-      className,
+export const Button = ({
+  variant = "primary",
+  children,
+  className,
+  ref,
+  ...buttonProps
+}: ButtonProps) => {
+  const classes = ["gd-button"];
+  classes.push(`gd-button-${variant}`);
 
-      ...buttonProps
-    } = props;
-
-    const classes = ["gd-button"];
-    classes.push(`gd-button-${variant}`);
-
-    return (
-      <button
-        ref={ref}
-        className={`${classes.join(" ")} ${className || ""}`}
-        {...buttonProps}
-      >
-        {children}
-      </button>
-    );
-  },
-);
+  return (
+    <button
+      ref={ref}
+      className={`${classes.join(" ")} ${className || ""}`}
+      {...buttonProps}
+    >
+      {children}
+    </button>
+  );
+};
 
 Button.displayName = "NewButton";

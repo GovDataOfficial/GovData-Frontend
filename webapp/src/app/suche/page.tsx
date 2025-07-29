@@ -32,9 +32,10 @@ function getQueryParam(searchParams: PageConstructor["searchParams"]) {
   return isNotNullOrUndefined(q) && q !== "" ? q : undefined;
 }
 
-export async function generateMetadata({
-  searchParams,
-}: PageConstructor): Promise<Metadata> {
+export async function generateMetadata(
+  props: PageConstructor,
+): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const q = getQueryParam(searchParams);
   const title = q
     ? i18n.t("meta.search.titleQuery", { q: q })
@@ -61,7 +62,8 @@ function getHeadline(data: SearchResults<UnknownSearchResultHit>, q?: string) {
   }
 }
 
-export default async function Suche({ searchParams }: PageConstructor) {
+export default async function Suche(props: PageConstructor) {
+  const searchParams = await props.searchParams;
   const data = await getSearchResults(searchParams);
 
   if (!data) {

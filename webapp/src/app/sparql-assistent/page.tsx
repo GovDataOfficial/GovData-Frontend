@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
+import { SectionDatenzugriffUndSchnittstellen } from "@/app/sparql-assistent/_components/SectionDatenzugriffUndSchnittstellen";
 import { SectionSchnittstellen } from "@/app/sparql-assistent/_components/SectionSchnittstellen";
-import { SectionSparqlAssistent } from "@/app/sparql-assistent/_components/SectionSparqlAssistent";
 import { SectionSparqlEditor } from "@/app/sparql-assistent/_components/SectionSparqlEditor";
 import { i18n } from "@/i18n";
 
@@ -12,15 +12,15 @@ export const metadata: Metadata = metaDataGenerator({
 export default function Page() {
   return (
     <>
-      <h1 className="sr-only">{i18n.t("sparql.assistent.headline")}</h1>
-      <SectionSchnittstellen />
-      <SectionSparqlAssistent />
+      <h1 className="sr-only">{i18n.t("sparql.editor.headline")}</h1>
+      <SectionDatenzugriffUndSchnittstellen />
       <SectionSparqlEditor
         endpoints={{
           ds: process.env.GD_SPARQL_DS as string,
           mqa: process.env.GD_SPARQL_MQA as string,
         }}
       />
+      <SectionSchnittstellen />
     </>
   );
 }

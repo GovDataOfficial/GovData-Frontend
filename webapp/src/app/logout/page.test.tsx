@@ -21,14 +21,14 @@ describe("Logout Page", () => {
   });
 
   test("should redirect to logout api if user has a session", async () => {
-    vi.mocked(hasSessionCookie).mockReturnValue(true);
+    vi.mocked(hasSessionCookie).mockResolvedValue(true);
     render(await Page());
 
     expect(vi.mocked(redirect)).toHaveBeenCalledWith("/api/auth/logout");
   });
 
   test("should show successfull logout info if user has no session", async () => {
-    vi.mocked(hasSessionCookie).mockReturnValue(false);
+    vi.mocked(hasSessionCookie).mockResolvedValue(false);
     render(await Page());
 
     expect(vi.mocked(redirect)).not.toHaveBeenCalled();

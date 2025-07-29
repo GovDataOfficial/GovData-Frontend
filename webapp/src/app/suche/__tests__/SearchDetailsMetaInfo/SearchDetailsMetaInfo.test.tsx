@@ -9,7 +9,7 @@ import { SearchDetailsMetaInfo } from "@/app/suche/_components/SearchDetailsMeta
 
 // Mock Next.js Image component
 vi.mock("next/image", () => ({
-  default: vi.fn(({ src, alt, ...props }) => (
+  default: vi.fn(({ src, alt, fill, ...props }) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img src={src} alt={alt} {...props} />
   )),

@@ -178,7 +178,7 @@ describe("ResourceTableMobile", () => {
 
     // @ts-ignore
     mockedData.resources[0].license.open = false;
-    act(() =>
+    await act(() =>
       rerender(<ResourceTableMobile data={mockedData} tileUrl={tileUrl} />),
     );
 
@@ -198,7 +198,7 @@ describe("ResourceTableMobile", () => {
 
     const mockData = getMockedData();
     mockData.resources[0].shortendAvailability = "EXPERIMENTAL";
-    act(() =>
+    await act(() =>
       rerender(<ResourceTableMobile data={mockData} tileUrl={tileUrl} />),
     );
 

@@ -340,7 +340,6 @@ table.dataTable thead .sorting_asc_disabled,
 table.dataTable thead .sorting_desc,
 table.dataTable thead .sorting_desc_disabled {
   cursor: pointer;
-  *cursor: hand;
   background-repeat: no-repeat;
   background-position: 100%;
 }
@@ -632,7 +631,6 @@ table.dataTable th {
 .dataTables_wrapper {
   position: relative;
   clear: both;
-  *zoom: 1;
   zoom: 1;
 }
 
@@ -670,7 +668,6 @@ table.dataTable th {
   text-align: center;
   text-decoration: none !important;
   cursor: pointer;
-  *cursor: hand;
   color: #333 !important;
   border: 1px solid transparent;
   border-radius: 2px;
@@ -816,7 +813,7 @@ table.dataTable th {
 }
 
 .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
-  *margin-top: -1px;
+  margin-top: -1px;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -1862,6 +1859,12 @@ span.CodeMirror-selectedtext {
 }
 
 @-webkit-keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes spin {
   to {
     transform: rotate(1turn);
   }

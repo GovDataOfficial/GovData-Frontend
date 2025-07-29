@@ -31,8 +31,8 @@ describe("_session", () => {
   function setupMockCookies(cookieName: string, cookieValue: string) {
     const mockCookies = new RequestCookies(new Headers());
     mockCookies.set(cookieName, cookieValue);
-    vi.mocked(cookies).mockReturnValue(
-      mockCookies as unknown as ReturnType<typeof cookies>,
+    vi.mocked(cookies).mockResolvedValue(
+      mockCookies as unknown as Awaited<ReturnType<typeof cookies>>,
     );
     return mockCookies;
   }
@@ -138,7 +138,7 @@ describe("_session", () => {
 
     const { hasSessionCookie } = await import("../_session.js");
 
-    const hasSession = hasSessionCookie();
+    const hasSession = await hasSessionCookie();
     expect(hasSession).toBe(true);
   });
 
@@ -146,7 +146,7 @@ describe("_session", () => {
     setupMockCookies("not_gd", "123");
     const { hasSessionCookie } = await import("../_session.js");
 
-    const hasSession = hasSessionCookie();
+    const hasSession = await hasSessionCookie();
     expect(hasSession).toBe(false);
   });
 

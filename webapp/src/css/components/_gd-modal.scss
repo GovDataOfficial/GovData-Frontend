@@ -1,0 +1,132 @@
+// Modal backdrop that covers the entire screen
+.gd-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1050; // Higher than off-canvas (1003)
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: map-get($spacers, 2);
+}
+
+// The modal dialog itself
+.gd-modal {
+  @include outline-base();
+
+  background-color: $clr-neutral-grey-0;
+  border-radius: $spacer * 0.5;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  max-width: 90vw;
+  min-width: 250px;
+  max-height: 90vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: map-get($spacers, 3);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+pre {
+  min-width: max-content; /* Prevent <pre> from collapsing horizontally */
+  box-sizing: border-box;
+}
+
+// Modal header containing title and close button
+.gd-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: map-get($spacers, 2);
+  flex-shrink: 0;
+  .gd-button.gd-button-icon-tertiary {
+    background-color: $clr-neutral-grey-0;
+  }
+}
+
+// Modal title
+.gd-modal-title {
+  margin: 0;
+  flex-grow: 1;
+  margin-right: map-get($spacers, 2);
+}
+
+// Modal body for content component
+.gd-modal-body {
+  padding: map-get($spacers, 3);
+}
+
+// Animation for modal appearance
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.gd-modal-backdrop {
+  animation: modal-fade-in 0.15s ease-out;
+}
+
+// Focus trap for better accessibility
+.gd-modal {
+  // Ensure all interactive elements within modal are focusable
+  button,
+  a,
+  input,
+  select,
+  textarea,
+  [tabindex]:not([tabindex="-1"]) {
+    &:focus-visible {
+      @include outline-base();
+    }
+  }
+}
+
+.metadata-preview {
+  & .file-suffix-select {
+    min-width: rem-calc(180);
+  }
+  & .download-button {
+    margin-bottom: rem-calc(-5);
+  }
+
+  & .search-details-preview-loading {
+    height: 60vh;
+    aspect-ratio: unset;
+  }
+
+  // scrollable code content area
+  & .metadata-preview-code-content {
+    max-height: 60vh;
+    overflow: scroll;
+    box-sizing: content-box;
+
+    & pre {
+      margin: 0;
+    }
+  }
+
+  & .outline-margin {
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+
+  // needed for focus outline on elements with overflow
+  & .outline-padding {
+    padding: 5px;
+    min-width: max-content;
+  }
+}

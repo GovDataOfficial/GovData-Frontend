@@ -12,9 +12,10 @@ import { SectionResources } from "@/app/suche/_components/SectionResources";
 import { i18n } from "@/i18n";
 import { PageConstructor } from "@/types/types";
 
-export async function generateMetadata({
-  params,
-}: PageConstructor<{ id: string }>): Promise<Metadata> {
+export async function generateMetadata(
+  props: PageConstructor<{ id: string }>,
+): Promise<Metadata> {
+  const params = await props.params;
   const data = await fetchMetadata(params.id);
   const title = data?.title
     ? i18n.t("meta.dynamic.title", { title: data.title })
@@ -23,9 +24,10 @@ export async function generateMetadata({
   return metaDataGenerator({ title, description: data?.notes });
 }
 
-export default async function DatasetPage({
-  params,
-}: PageConstructor<{ id: string }>) {
+export default async function DatasetPage(
+  props: PageConstructor<{ id: string }>,
+) {
+  const params = await props.params;
   const { t } = i18n;
   const data = await fetchMetadata(params.id);
 

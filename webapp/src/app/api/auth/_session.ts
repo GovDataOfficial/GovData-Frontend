@@ -48,15 +48,17 @@ type UserInformation = {
 /**
  * Initializes an Iron Session for storing the code verifier.
  */
-function getCodeVerifierIronSession() {
-  return getIronSession<{ value: string }>(cookies(), {
+async function getCodeVerifierIronSession() {
+  const cookieStore = await cookies();
+  return getIronSession<{ value: string }>(cookieStore, {
     password: password!,
     cookieName: CODE_VERIFIER_COOKIE,
   });
 }
 
-function getSessionIdFromCookie(): string | null {
-  const sessionCookie = cookies().get(SESSION_COOKIE);
+async function getSessionIdFromCookie(): Promise<string | null> {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get(SESSION_COOKIE);
   return sessionCookie ? sessionCookie.value : null;
 }
 
@@ -78,7 +80,7 @@ async function getRedisSession(id: string): Promise<SessionInformation | null> {
 }
 
 export async function getSession(): Promise<SessionInformation | null> {
-  const sessionId = getSessionIdFromCookie();
+  const sessionId = await getSessionIdFromCookie();
 
   if (sessionId) {
     return getRedisSession(sessionId);
@@ -92,7 +94,7 @@ export async function getSession(): Promise<SessionInformation | null> {
  * this will not refresh the session.
  */
 export async function getUserInformation(): Promise<UserInformation | null> {
-  const sessionId = getSessionIdFromCookie();
+  const sessionId = await getSessionIdFromCookie();
 
   if (sessionId) {
     const session = await getRedisSession(sessionId);
@@ -114,7 +116,7 @@ export async function getUserInformation(): Promise<UserInformation | null> {
 export async function getSessionOrRedirect(
   requestUrl?: string,
 ): Promise<SessionInformation> {
-  const sessionId = getSessionIdFromCookie();
+  const sessionId = await getSessionIdFromCookie();
   let loginUrl = API_ENDPOINTS.AUTH.LOGIN;
   if (requestUrl) {
     loginUrl = `${loginUrl}?redirectTo=${encodeURIComponent(requestUrl)}`;
@@ -179,7 +181,7 @@ export async function setSession(
     await redisClient?.set(sessionId, redisSessionString, "EX", expiration);
     // if currentSessionId is provided we update an existing session
     if (!currentSessionId) {
-      cookies().set(SESSION_COOKIE, sessionId, {
+      (await cookies()).set(SESSION_COOKIE, sessionId, {
         secure: true,
         httpOnly: true,
         // can not update cookies on pageload with redis info
@@ -199,7 +201,7 @@ export async function setSession(
  * Deletes a session from Redis and removes the session cookie.
  */
 export async function deleteSession() {
-  const sessionCookie = cookies().get(SESSION_COOKIE);
+  const sessionCookie = (await cookies()).get(SESSION_COOKIE);
   if (!sessionCookie) {
     return;
   }
@@ -210,23 +212,24 @@ export async function deleteSession() {
     log.error(error, "Failed to delete session from Redis:");
   }
   // delete cookie anyway!
-  cookies().delete(SESSION_COOKIE);
+  (await cookies()).delete(SESSION_COOKIE);
 }
 
 /**
  * Checks if a session cookie exists. This does not check if the session is valid.
  * @returns {boolean} True if the session cookie exists, false otherwise.
  */
-export function hasSessionCookie(): boolean {
-  return cookies().has(SESSION_COOKIE);
+export async function hasSessionCookie(): Promise<boolean> {
+  const cookieStore = await cookies();
+  return cookieStore.has(SESSION_COOKIE);
 }
 
 /**
  * Retrieves the code verifier session if the corresponding cookie exists.
  */
-export function getCodeVerifierSession() {
-  const cookie = cookies();
-  if (!cookie || !cookie.has(CODE_VERIFIER_COOKIE)) {
+export async function getCodeVerifierSession() {
+  const cookieStore = await cookies();
+  if (!cookieStore || !cookieStore.has(CODE_VERIFIER_COOKIE)) {
     return null;
   }
 
