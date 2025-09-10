@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.7.2 2025-09-08
+
+- Changed geosearch url to use output format as parameter
+
 ## 7.7.0 2025-07-28
 
 - Added metadata preview modal to metadata details page

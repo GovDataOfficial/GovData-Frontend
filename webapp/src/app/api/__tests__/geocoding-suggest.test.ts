@@ -17,7 +17,10 @@ describe("api/geocoding-suggest", () => {
   beforeAll(() => {
     vi.stubEnv(envSearchmapSessionId, "test/searchmap");
     vi.stubEnv(envSearchmapTitleUrl, "test/wms_basemapde");
-    vi.stubEnv(envGeoSearchUrl, "test/geosearch.json?count=5&query=");
+    vi.stubEnv(
+      envGeoSearchUrl,
+      "test/geosearch?outputformat=json&count=5&query=",
+    );
     vi.stubEnv(envOSMSearchUrl, "https://openstreetmap.org/search?q=");
   });
 
@@ -51,7 +54,7 @@ describe("api/geocoding-suggest", () => {
     expect(response.status).toBe(200);
     expect(await response.json()).toBe("mock");
     expect(fetchSpy).toHaveBeenCalledWith(
-      "test/geosearch.json?count=5&query=123",
+      "test/geosearch?outputformat=json&count=5&query=123",
       { cache: "no-cache" },
     );
   });
