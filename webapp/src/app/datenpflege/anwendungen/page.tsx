@@ -7,10 +7,7 @@ import { ContainerWrapperModifier } from "@/app/_components/Container/partials/C
 import { icons, SVG } from "@/app/_components/SVG/SVG";
 import { fetchShowcases } from "@/app/_lib/getData";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
-import {
-  getSessionOrRedirect,
-  getUserInformation,
-} from "@/app/api/auth/_session";
+import { getUserInformation } from "@/app/api/auth/_session";
 import { ShowcaseEditorError } from "@/app/datenpflege/anwendungen/_components/ShowcaseEditorError";
 import { ShowcasesOverviewContainer } from "@/app/datenpflege/anwendungen/_components/ShowcasesOverview/ShowcasesOverviewContainer";
 import { ShowcaseWelcome } from "@/app/datenpflege/anwendungen/_components/ShowcaseWelcome";
@@ -26,10 +23,6 @@ export default async function Page(props: PageConstructor) {
   const searchParams = await props.searchParams;
   const { t } = i18n;
 
-  /*
-   * searchParams are ignored in the redirectUrl, since they only manage the delete feedback
-   */
-  const session = await getSessionOrRedirect(PAGES_AUTH.manage_showcases);
   const searchResults = await fetchShowcases();
   const data = searchResults ? (searchResults.hits as any) : undefined;
   const userInformation = await getUserInformation();
@@ -42,7 +35,7 @@ export default async function Page(props: PageConstructor) {
       <ContainerSection
         containerWidth="lg"
         headline={t("metadata.welcome.title", {
-          name: session.username,
+          name: userInformation?.username,
         })}
         modifier={[ContainerWrapperModifier.MARGIN_TOP]}
       >

@@ -252,7 +252,7 @@ describe("_session", () => {
     });
   });
 
-  test("getSessionOrRedirect should return session if session exists and is not expired", async () => {
+  test("getSessionAndRefreshIt should return session if session exists and is not expired", async () => {
     setupMockCookies("gd_session", "123");
     const currentTimeInSeconds = Math.floor(Date.now() / 1000);
     const mockSession = {
@@ -268,14 +268,16 @@ describe("_session", () => {
       JSON.stringify(mockSession),
     );
 
-    const { getSessionOrRedirect } = await import("../_session.js");
+    const { getSessionAndRefreshIt: getSessionAndRefreshIt } = await import(
+      "../_session.js"
+    );
 
-    const session = await getSessionOrRedirect();
+    const session = await getSessionAndRefreshIt();
     expect(session).toEqual(mockSession);
     expect(redisClientMock.get).toHaveBeenCalledWith("123");
   });
 
-  test("getSessionOrRedirect should refresh token and return new session if token is expired", async () => {
+  test("getSessionAndRefreshIt should refresh token and return new session if token is expired", async () => {
     setupMockCookies("gd_session", "123");
     const currentTimeInSeconds = Math.floor(Date.now() / 1000);
     const expiredSession = {
@@ -313,9 +315,11 @@ describe("_session", () => {
     );
     vi.mocked(redisClientMock.set).mockResolvedValue(undefined);
 
-    const { getSessionOrRedirect } = await import("../_session.js");
+    const { getSessionAndRefreshIt: getSessionAndRefreshIt } = await import(
+      "../_session.js"
+    );
 
-    const session = await getSessionOrRedirect();
+    const session = await getSessionAndRefreshIt();
 
     expect(mockKeyCloakClient.refresh).toHaveBeenCalledWith("mockRefreshToken");
     expect(redisClientMock.set).toHaveBeenCalledWith(
@@ -324,7 +328,7 @@ describe("_session", () => {
       "EX",
       600,
     );
-    expect(session.access_token).toBe("newAccessToken");
-    expect(session.username).toBe("testUser");
+    expect(session?.access_token).toBe("newAccessToken");
+    expect(session?.username).toBe("testUser");
   });
 });

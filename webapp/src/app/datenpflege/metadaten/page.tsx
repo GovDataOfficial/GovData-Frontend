@@ -13,7 +13,7 @@ import {
 } from "@/app/_lib/getData";
 import { hasContributorId } from "@/app/_lib/organization";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
-import { getSessionOrRedirect } from "@/app/api/auth/_session";
+import { getSession } from "@/app/api/auth/_session";
 import { OverviewDeleteInfoBox } from "@/app/datenpflege/common/OverviewDeleteInfoBox";
 import { MetadataOrganizationError } from "@/app/datenpflege/metadaten/_components/MetadataOrganizationError";
 import { MetadataOverviewContainer } from "@/app/datenpflege/metadaten/_components/MetadataOverview/MetadataOverviewContainer";
@@ -29,9 +29,9 @@ export default async function Page(props: PageConstructor) {
   const searchParams = await props.searchParams;
   const { t } = i18n;
 
-  const session = await getSessionOrRedirect();
+  const session = await getSession();
 
-  const organizations = await fetchOrganizationsForUser(session.username);
+  const organizations = await fetchOrganizationsForUser(session?.username);
   const searchResults = await fetchMetadataForOrganizations(organizations);
 
   const data = searchResults ? searchResults.hits : undefined;
@@ -47,7 +47,7 @@ export default async function Page(props: PageConstructor) {
       <ContainerSection
         containerWidth="lg"
         headline={t("metadata.welcome.title", {
-          name: session.username,
+          name: session?.username,
         })}
         modifier={[ContainerWrapperModifier.MARGIN_TOP]}
       >

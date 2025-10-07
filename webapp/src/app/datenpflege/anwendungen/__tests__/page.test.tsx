@@ -2,10 +2,7 @@ import { beforeAll, describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 import { fetchShowcases } from "@/app/_lib/getData";
-import {
-  getSessionOrRedirect,
-  getUserInformation,
-} from "@/app/api/auth/_session";
+import { getSession, getUserInformation } from "@/app/api/auth/_session";
 import Page, { metadata } from "@/app/datenpflege/anwendungen/page";
 import { SearchResults, ShowcasesSearchResultHit } from "@/types/types";
 
@@ -39,14 +36,12 @@ const pageParams = {
 };
 
 describe("Landing Page", () => {
-  const mockTokenSet = {
-    id_token: "123 ",
-    name: "TestNutzer1",
-    claims: () => ({ name: "TestNutzer1" }),
+  const mockSession = {
+    username: "test",
   } as any;
 
   beforeAll(() => {
-    vi.mocked(getSessionOrRedirect).mockResolvedValue(mockTokenSet);
+    vi.mocked(getSession).mockResolvedValue(mockSession);
   });
 
   vi.mocked(getUserInformation).mockResolvedValue({

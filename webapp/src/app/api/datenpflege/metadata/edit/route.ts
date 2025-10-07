@@ -1,11 +1,17 @@
-import { getSessionNameOrThrow } from "@/app/api/_lib/getSessionNameOrThrow";
+import { checkFeatureFlagForDataManagement } from "@/app/api/_lib/checkFeatureFlags";
+import { getSessionOrThrow } from "@/app/api/_lib/getSessionOrThrow";
 import { postMetadata } from "@/app/api/datenpflege/metadata/_lib/postMetadata";
 
 export async function POST(request: Request) {
+  if (!checkFeatureFlagForDataManagement()) {
+    return new Response(null, { status: 501 });
+  }
+
   let username;
 
   try {
-    username = await getSessionNameOrThrow();
+    const session = await getSessionOrThrow();
+    username = session.username;
   } catch (error) {
     return new Response(null, { status: 401 });
   }

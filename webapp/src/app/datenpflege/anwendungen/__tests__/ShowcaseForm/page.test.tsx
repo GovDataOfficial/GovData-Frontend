@@ -1,12 +1,7 @@
-import { beforeAll, describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { render } from "@testing-library/react";
-import { redirect } from "next/navigation";
 
-import { PAGES_AUTH } from "@/app/_lib/URLHelper";
-import {
-  getSessionOrRedirect,
-  getUserInformation,
-} from "@/app/api/auth/_session";
+import { getUserInformation } from "@/app/api/auth/_session";
 import { SHOWCASE_FORM_ID } from "@/app/datenpflege/anwendungen/_components/ShowcaseForm/showcase-formConstants";
 import Page from "@/app/datenpflege/anwendungen/erstellen/page";
 
@@ -57,28 +52,9 @@ vi.mocked(getUserInformation).mockResolvedValue({
 });
 
 describe("Showcase create page", () => {
-  const mockTokenSet = {
-    id_token: "123 ",
-    name: "TestNutzer1",
-    claims: () => ({ name: "TestNutzer1" }),
-  } as any;
-
-  beforeAll(() => {
-    vi.mocked(getSessionOrRedirect).mockResolvedValue(mockTokenSet);
-  });
-
   test("should show form", async () => {
     const { container } = render(await Page());
     const form = container.querySelector("form");
     expect(form).toHaveAttribute("id", SHOWCASE_FORM_ID);
-  });
-
-  test("should redirect if user has no organizations", async () => {
-    vi.mocked(getUserInformation).mockResolvedValue({
-      username: "test",
-      isShowcaseEditor: false,
-    });
-    render(await Page());
-    expect(redirect).toHaveBeenCalledWith(PAGES_AUTH.manage_showcases);
   });
 });

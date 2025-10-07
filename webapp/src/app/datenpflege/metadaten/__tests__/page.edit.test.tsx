@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 import { fetchMetadata, fetchOrganizationsForUser } from "@/app/_lib/getData";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
-import { getSessionOrRedirect } from "@/app/api/auth/_session";
+import { getSession } from "@/app/api/auth/_session";
 import { MetadataForm } from "@/app/datenpflege/metadaten/_components/MetadataForm/MetadataForm";
 import Page from "@/app/datenpflege/metadaten/bearbeiten/[id]/page";
 
@@ -48,13 +48,8 @@ describe("Metadata Edit Page", () => {
     vi.resetAllMocks();
     const mockSession = {
       username: "test",
-      id_token: "123",
-      access_token: "123",
-      refresh_token: "123",
-      iat: 0,
-      roles: [],
-    };
-    vi.mocked(getSessionOrRedirect).mockResolvedValue(mockSession);
+    } as any;
+    vi.mocked(getSession).mockResolvedValue(mockSession);
 
     vi.mocked(MetadataForm).mockReturnValue(
       <div data-testid="mock-metadataform" />,

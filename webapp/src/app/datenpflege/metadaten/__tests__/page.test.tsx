@@ -5,7 +5,7 @@ import {
   fetchMetadataForOrganizations,
   fetchOrganizationsForUser,
 } from "@/app/_lib/getData";
-import { getSessionOrRedirect } from "@/app/api/auth/_session";
+import { getSession } from "@/app/api/auth/_session";
 import Page, { metadata } from "@/app/datenpflege/metadaten/page";
 import {
   MetadataSearchResultHit,
@@ -57,14 +57,12 @@ const pageParams = {
 };
 
 describe("Landing Page", () => {
-  const mockTokenSet = {
-    id_token: "123 ",
-    name: "TestNutzer1",
-    claims: () => ({ name: "TestNutzer1" }),
+  const mockSession = {
+    username: "test",
   } as any;
 
   beforeAll(() => {
-    vi.mocked(getSessionOrRedirect).mockResolvedValue(mockTokenSet);
+    vi.mocked(getSession).mockResolvedValue(mockSession);
   });
 
   test("should render a link to create Metadata", async () => {

@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.8.0 2025-10-07
+
+- Changed umbrella brand header text
+- Updated next.js from 15.3.3 to 15.5.3
+
 ## 7.7.2 2025-09-08
 
 - Changed geosearch url to use output format as parameter

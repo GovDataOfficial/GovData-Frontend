@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 import { fetchOrganizationsForUser } from "@/app/_lib/getData";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
-import { getSessionOrRedirect } from "@/app/api/auth/_session";
+import { getSession } from "@/app/api/auth/_session";
 import { METADATA_FORM_ID } from "@/app/datenpflege/metadaten/_components/MetadataForm/metadata-formConstants";
 import Page from "@/app/datenpflege/metadaten/erstellen/page";
 import { OrganizationSorted } from "@/types/types";
@@ -31,14 +31,12 @@ vi.mock(
 );
 
 describe("Metadata create page", () => {
-  const mockTokenSet = {
-    id_token: "123 ",
-    name: "TestNutzer1",
-    claims: () => ({ name: "TestNutzer1" }),
+  const mockSession = {
+    username: "test",
   } as any;
 
   beforeAll(() => {
-    vi.mocked(getSessionOrRedirect).mockResolvedValue(mockTokenSet);
+    vi.mocked(getSession).mockResolvedValue(mockSession);
   });
 
   test("should show form", async () => {

@@ -36,10 +36,12 @@ export function SectionDataServices({ data }: SectionDataServices) {
           licenseAttributionByText,
           shortendAvailability,
         } = service;
-
         return (
           <Fragment key={title + index}>
-            <details className="gd-a-button-icon gd-a-button-icon-border">
+            <details
+              className="gd-a-button-icon gd-a-button-icon-border"
+              open={false}
+            >
               <summary className="gd-a-button-icon-summary">{title}</summary>
               <div className="gd-a-button-icon-content">
                 <dl className="gd-common-dl">

@@ -1,6 +1,5 @@
 import React from "react";
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 
 import {
   ContainerDiv,
@@ -8,11 +7,6 @@ import {
 } from "@/app/_components/Container";
 import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 import { fetchCategoriesSorted, fetchShowcase } from "@/app/_lib/getData";
-import { PAGES_AUTH } from "@/app/_lib/URLHelper";
-import {
-  getSessionOrRedirect,
-  getUserInformation,
-} from "@/app/api/auth/_session";
 import { ShowcaseForm } from "@/app/datenpflege/anwendungen/_components/ShowcaseForm/ShowcaseForm";
 import { i18n } from "@/i18n";
 import { PageConstructor } from "@/types/types";
@@ -23,15 +17,6 @@ export const metadata: Metadata = {
 
 export default async function Page(props: PageConstructor<{ id: string }>) {
   const params = await props.params;
-  await getSessionOrRedirect(
-    `${PAGES_AUTH.manage_showcases_form_edit}/${params.id}`,
-  );
-
-  const userInformation = await getUserInformation();
-  if (!userInformation?.isShowcaseEditor) {
-    redirect(PAGES_AUTH.manage_showcases);
-  }
-
   const data = await fetchShowcase(params.id);
 
   if (!data) {

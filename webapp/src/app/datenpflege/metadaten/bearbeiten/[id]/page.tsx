@@ -1,7 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { P } from "pino";
 
 import {
   ContainerDiv,
@@ -16,10 +15,9 @@ import {
 } from "@/app/_lib/getData";
 import { hasContributorId } from "@/app/_lib/organization";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
-import { getSessionOrRedirect } from "@/app/api/auth/_session";
+import { getSession } from "@/app/api/auth/_session";
 import { MetadataForm } from "@/app/datenpflege/metadaten/_components/MetadataForm/MetadataForm";
 import { i18n } from "@/i18n";
-import { logger } from "@/logger/logger";
 import { PageConstructor } from "@/types/types";
 
 export const metadata: Metadata = {
@@ -28,11 +26,9 @@ export const metadata: Metadata = {
 
 export default async function Page(props: PageConstructor<{ id: string }>) {
   const params = await props.params;
-  const session = await getSessionOrRedirect(
-    `${PAGES_AUTH.manage_metadata_form_edit}/${params.id}`,
-  );
+  const session = await getSession();
 
-  const organizations = await fetchOrganizationsForUser(session.username);
+  const organizations = await fetchOrganizationsForUser(session?.username);
 
   // user has no org
   if (!hasContributorId(organizations)) {

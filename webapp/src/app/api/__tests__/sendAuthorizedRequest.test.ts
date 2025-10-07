@@ -80,6 +80,7 @@ describe("sendAuthorizedRequestWithBearer", () => {
     refresh_token: "mock-refresh-token",
     iat: Math.floor(Date.now() / 1000),
     roles: ["showcases"],
+    expires_at: Math.floor(Date.now() / 1000) + 3600,
   };
 
   beforeEach(() => {

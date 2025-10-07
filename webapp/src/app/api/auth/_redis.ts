@@ -9,7 +9,7 @@ const log = logger("_redis.ts");
 let redisClient: Redis | null = null;
 
 function getRedisClient() {
-  if (process.env.metadata_management_active !== "1") {
+  if (process.env.data_management_active !== "1") {
     return null;
   }
 

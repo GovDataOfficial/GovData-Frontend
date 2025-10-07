@@ -1,5 +1,6 @@
 import CSPBuilder from "content-security-policy-builder";
 
+import { fetchMetadata } from "@/app/_lib/getData";
 import { MiddlewareFactory } from "@/middlewares/types";
 
 // Default CSP directives based on helmet js.
@@ -36,6 +37,20 @@ addExtraCSP(process.env.csp_extra_font_src, defaultCSP["font-src"]);
 
 const cspDirectives = CSPBuilder({ directives: defaultCSP });
 
+async function getResourceUrlsForMetadata(metadataName?: string) {
+  if (!metadataName) {
+    return [];
+  }
+
+  try {
+    const data = await fetchMetadata(metadataName);
+    return data?.resources.map((resource) => resource.url) || [];
+  } catch (error) {
+    console.error("Error fetching metadata:", error);
+    return [];
+  }
+}
+
 /**
  * Middleware for setting CSP and other relevant Headers.
  */
@@ -51,10 +66,18 @@ export const withHeadersMiddleware: MiddlewareFactory = async (
   response.headers.set("X-Permitted-Cross-Domain-Policies", "none");
 
   // Set CSP for detail pages to allow map preview to load data
-  // TODO: restrict to resource paths from metdataset when next 15 is integrated
+  // Only allow resource URLs
   if (_request.nextUrl.pathname.startsWith("/suche/daten/")) {
     const detailPageCsp = { ...defaultCSP };
-    detailPageCsp["connect-src"] = ["*"];
+    detailPageCsp["connect-src"] = [...defaultCSP["connect-src"]];
+    const { pathname } = new URL(_request.nextUrl);
+    const metadataName = pathname.split("/").pop();
+    const resourceUrls = await getResourceUrlsForMetadata(metadataName);
+
+    resourceUrls.forEach((url) => {
+      detailPageCsp["connect-src"].push(url);
+    });
+
     const detailPageDirectives = CSPBuilder({ directives: detailPageCsp });
     response.headers.set("Content-Security-Policy", detailPageDirectives);
   } else {

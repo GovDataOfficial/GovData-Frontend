@@ -2,10 +2,8 @@
 
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { generators, IdTokenClaims, TokenSet } from "openid-client";
 
-import { API_ENDPOINTS } from "@/app/api/apiEndpoints";
 import { getKeyCloakClient } from "@/app/api/auth/_keycloak";
 import { getRedisClient } from "@/app/api/auth/_redis";
 import { logger } from "@/logger/logger";
@@ -40,7 +38,7 @@ export type SessionInformation = {
   roles: string[];
 };
 
-type UserInformation = {
+export type UserInformation = {
   username: string;
   isShowcaseEditor: boolean;
 };
@@ -109,27 +107,18 @@ export async function getUserInformation(): Promise<UserInformation | null> {
 }
 
 /**
- * Retrieves a session from Redis using id in session cookie.
- * If no session exists, the user is redirected to the login page.
- * This will also refresh the session if it is older than 5 minutes.
+ * Refresh the session if it is older than 5 minutes.
  */
-export async function getSessionOrRedirect(
-  requestUrl?: string,
-): Promise<SessionInformation> {
+export async function getSessionAndRefreshIt(): Promise<SessionInformation | null> {
   const sessionId = await getSessionIdFromCookie();
-  let loginUrl = API_ENDPOINTS.AUTH.LOGIN;
-  if (requestUrl) {
-    loginUrl = `${loginUrl}?redirectTo=${encodeURIComponent(requestUrl)}`;
-  }
 
   if (!sessionId) {
-    redirect(loginUrl);
+    return null;
   }
 
   const session = await getRedisSession(sessionId);
-
   if (!session) {
-    redirect(loginUrl);
+    return null;
   }
 
   // refresh token if it is older than the refresh time minus 5 seconds as buffer
@@ -143,10 +132,9 @@ export async function getSessionOrRedirect(
       return newSession;
     } catch (error) {
       log.error(error, "Failed to refresh token");
-      redirect(loginUrl);
+      return null;
     }
   }
-
   return session;
 }
 

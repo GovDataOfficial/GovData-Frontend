@@ -1,11 +1,17 @@
-// @vitest-environment node
-
 import { describe, expect, test, vi } from "vitest";
 import { NextRequest, NextResponse } from "next/server";
 
 import { withHeadersMiddleware } from "@/middlewares/withHeadersMiddleware";
 
 vi.spyOn(NextResponse, "redirect");
+
+vi.mock("@/app/_lib/getData", async () => {
+  return {
+    fetchMetadata: vi.fn().mockResolvedValue({
+      resources: [{ url: "www.resource.com" }],
+    }),
+  };
+});
 
 describe("middleware Headers", () => {
   const url = new URL("https://test.de/");
@@ -45,9 +51,11 @@ describe("middleware Headers", () => {
     expect(scriptSrc).not.toContain("'unsafe-eval'");
   });
 
-  test("should set connect-src wildcard CSP headers on response when on details page", async () => {
+  test("should set connect-src resource url headers on response when on details page", async () => {
     const response = new NextResponse();
-    const request = new NextRequest(new URL("https://test.de/suche/daten/"));
+    const request = new NextRequest(
+      new URL("https://test.de/suche/daten/example"),
+    );
     const middlewareResponse = await withHeadersMiddleware(request, response);
 
     expect(middlewareResponse).toBeUndefined();
@@ -59,6 +67,6 @@ describe("middleware Headers", () => {
       csp.includes("connect-src"),
     );
     expect(connectSrc).toBeDefined();
-    expect(connectSrc).toContain("*");
+    expect(connectSrc).toContain("www.resource.com");
   });
 });

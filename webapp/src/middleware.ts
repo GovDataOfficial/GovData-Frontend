@@ -2,8 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { logger } from "@/logger/logger";
 import { MiddlewareFactory } from "@/middlewares/types";
+import { withAuthentication } from "@/middlewares/withAuthentication";
+import { withAuthorization } from "@/middlewares/withAuthorization";
 import { withHeadersMiddleware } from "@/middlewares/withHeadersMiddleware";
-import { withMetaDataManageFeatureFlagRedirect } from "@/middlewares/withMetadataManageFeatureFlagRedirect";
+import { withDataManageFeatureFlagRedirect } from "@/middlewares/withMetadataManageFeatureFlagRedirect";
 import { withRedirectLegacyPaths } from "@/middlewares/withRedirectLegacyPaths";
 
 /*
@@ -14,15 +16,18 @@ import { withRedirectLegacyPaths } from "@/middlewares/withRedirectLegacyPaths";
  * - favicon.ico (favicon file)
  */
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|images/|favicon.ico).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|images/|favicon.ico).*)"],
+  runtime: "nodejs",
 };
 
 const log = logger("middleware.ts");
 
 const middlewareChain: MiddlewareFactory[] = [
-  withMetaDataManageFeatureFlagRedirect,
+  withDataManageFeatureFlagRedirect,
   withRedirectLegacyPaths,
   withHeadersMiddleware,
+  withAuthentication,
+  withAuthorization,
 ];
 
 export async function middleware(

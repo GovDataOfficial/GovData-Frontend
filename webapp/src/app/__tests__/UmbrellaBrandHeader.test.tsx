@@ -7,14 +7,14 @@ describe("UmbrellaBrandHeader", () => {
   it("should show header", () => {
     vi.stubEnv("show_umbrella_brand_header", "true");
     render(<UmbrellaBrandHeader />);
-    screen.getByText("Eine offizielle Website der Bundesrepublik Deutschland");
+    screen.getByText("Offizielle Website – Bundesrepublik Deutschland");
     vi.unstubAllEnvs();
   });
 
   it("should show header (camel-case)", () => {
     vi.stubEnv("show_umbrella_brand_header", "True");
     render(<UmbrellaBrandHeader />);
-    screen.getByText("Eine offizielle Website der Bundesrepublik Deutschland");
+    screen.getByText("Offizielle Website – Bundesrepublik Deutschland");
     vi.unstubAllEnvs();
   });
 

@@ -1,5 +1,3 @@
-// @vitest-environment node
-
 import { beforeAll, describe, expect, test, vi } from "vitest";
 import { NextRequest, NextResponse } from "next/server";
 

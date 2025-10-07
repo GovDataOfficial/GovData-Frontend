@@ -1,4 +1,3 @@
-import { defineConfig } from "eslint/config";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
@@ -12,22 +11,18 @@ const compat = new FlatCompat({
     allConfig: js.configs.all
 });
 
-export default defineConfig([{
-    extends: compat.extends("next/core-web-vitals", "prettier"),
-
+const options =  [{
+    ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"]
+}, ...compat.extends("next/core-web-vitals", "prettier"), {
     languageOptions: {
-        ecmaVersion: 5,
-        sourceType: "script",
-
-        parserOptions: {
-            babelOptions: {
-                presets: ["require.resolve('next/babel')"],
-            },
-        },
+        ecmaVersion: 2020,
+        sourceType: "module",
     },
 
     rules: {
         curly: ["error", "all"],
         "@next/next/no-html-link-for-pages": "off",
     },
-}]);
+}]
+
+export default options;
