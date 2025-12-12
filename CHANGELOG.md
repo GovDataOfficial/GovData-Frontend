@@ -1,6 +1,10 @@
 # Changelog
 
-## 7.9.0 2025-12-08
+## 7.8.3 2025-12-12
+
+- Fixed CVE-2025-55183 and CVE-2025-55184 with update to Next.js 15.5.9 and React to 19.1.4
+
+## 7.8.2 2025-12-08
 
 - Fixed CVE-2025-55182 with update to Next.js 15.5.7 and React to 19.1.2
 
