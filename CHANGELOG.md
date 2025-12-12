@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.9.0 2025-12-08
+
+- Fixed CVE-2025-55182 with update to Next.js 15.5.7 and React to 19.1.2
+
 ## 7.8.0 2025-10-07
 
 - Changed umbrella brand header text
