@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.9.1 2025-12-16
+
+- Updated brace-expansion to 1.1.12 (fixes GHSA-v6h2-p8h4-qcjw)
+- Updated vite to 7.2.7 (fixes CVE-2025-58751, CVE-2025-58752, GHSA-g4jq-h2w9-997c, GHSA-jqfw-vq24-v9c3, GHSA-93m4-6634-74q7)
+- Updated eslint to 9.39.1 (fixes GHSA-xffm-g5w8-qvg7)
+- Updated vitest to 4.0.15 (fixes GHSA-5j98-mcp5-4vw2)
+- Updated openid-client to 6.8.1 (fixes CVE-2025-45767)
+- Updated nodemailer to 7.0.11 (fixes CVE-2025-13033)
+
 ## 7.8.3 2025-12-12
 
 - Fixed CVE-2025-55183 and CVE-2025-55184 with update to Next.js 15.5.9 and React to 19.1.4

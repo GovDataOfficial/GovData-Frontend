@@ -7,19 +7,4 @@
     <cve>CVE-2022-31129</cve>
     <cve>CVE-2023-22467</cve>
   </suppress>
-   <suppress until="2026-02-01Z">
-    <notes>nodemailer - requires update to new major version</notes>
-    <packageUrl regex="true">^pkg:npm/nodemailer@.*$</packageUrl>
-    <cve>CVE-2025-13033</cve>
-  </suppress>
-   <suppress until="2026-02-01Z">
-    <notes>glob - requires updates to @vitest/coverage and propably to @vitest</notes>
-    <packageUrl regex="true">^pkg:npm/glob@.*$</packageUrl>
-    <vulnerabilityName>GHSA-5j98-mcp5-4vw2</vulnerabilityName>
-  </suppress>
-   <suppress until="2026-02-01Z">
-    <notes>jose - requires updates to openid-client</notes>
-    <packageUrl regex="true">^pkg:npm/jose@.*$</packageUrl>
-    <cve>CVE-2025-45767</cve>
-  </suppress>
 </suppressions>

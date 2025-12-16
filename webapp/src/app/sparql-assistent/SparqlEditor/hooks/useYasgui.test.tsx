@@ -15,22 +15,25 @@ const MockYasqeAddPrefixes = vi.fn();
 const MockYasqeRemovePrefix = vi.fn();
 const MockYasqeGetPrefixesFromQuery = vi.fn();
 
-const YasguiMock = vi.fn().mockReturnValue({
-  config: {
+class YasguiMock {
+  config = {
     requestConfig: {
       acceptHeaderSelect: "",
       endpoint: "",
     },
-  },
-  getTab: MockYasguiTab.mockReturnValue({
-    setRequestConfig: MockTabsStRequestConfig,
-    query: MockTabQuery,
-    getYasqe: vi.fn().mockReturnValue({
-      setValue: MockYasqeSetValue,
-      addPrefixes: MockYasqeAddPrefixes,
-      removePrefixes: MockYasqeRemovePrefix,
-      getPrefixesFromQuery: MockYasqeGetPrefixesFromQuery,
-    }),
+  };
+
+  getTab = vi.fn().mockReturnValue(MockYasguiTab());
+}
+
+MockYasguiTab.mockReturnValue({
+  setRequestConfig: MockTabsStRequestConfig,
+  query: MockTabQuery,
+  getYasqe: vi.fn().mockReturnValue({
+    setValue: MockYasqeSetValue,
+    addPrefixes: MockYasqeAddPrefixes,
+    removePrefixes: MockYasqeRemovePrefix,
+    getPrefixesFromQuery: MockYasqeGetPrefixesFromQuery,
   }),
 });
 

@@ -1,16 +1,15 @@
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
-import { render, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen } from "@testing-library/react";
 
 import LocationSearch from "@/app/kartensuche/_components/LocationSearch";
-import { MappedSuggest, NextJSSearchParams } from "@/types/types";
+import { NextJSSearchParams } from "@/types/types";
 
 describe("LocationSearch", () => {
-  const ResizeObserverMock = vi.fn(() => ({
-    observe: vi.fn(),
-    unobserve: vi.fn(),
-    disconnect: vi.fn(),
-  }));
+  class ResizeObserverMock {
+    observe = vi.fn();
+    unobserve = vi.fn();
+    disconnect = vi.fn();
+  }
 
   beforeAll(() => {
     // Stub the global ResizeObserver for the map component

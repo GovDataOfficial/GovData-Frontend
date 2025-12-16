@@ -6,7 +6,7 @@ import { Modal } from "@/app/_components/Modal/Modal";
 
 // Mock the ButtonIcon component
 vi.mock("@/app/_components/Button/ButtonIcon", () => ({
-  ButtonIcon: vi.fn(({ onClick, title, "aria-label": ariaLabel, ...props }) => (
+  ButtonIcon: ({ onClick, title, "aria-label": ariaLabel, ...props }: any) => (
     <button
       onClick={onClick}
       title={title}
@@ -15,7 +15,7 @@ vi.mock("@/app/_components/Button/ButtonIcon", () => ({
     >
       Close
     </button>
-  )),
+  ),
 }));
 
 // Mock the useOutsideClick hook
@@ -366,17 +366,25 @@ describe("Modal", () => {
       });
 
       it("focuses modal container as fallback when no close button", async () => {
-        // Mock ButtonIcon to not render anything
-        vi.mocked(
-          await import("@/app/_components/Button/ButtonIcon"),
-        ).ButtonIcon.mockImplementation(() => <></>);
+        // Re-mock ButtonIcon to not render anything for this test
+        vi.doMock("@/app/_components/Button/ButtonIcon", () => ({
+          ButtonIcon: () => null,
+        }));
+
+        // Clear the module cache to force the new mock
+        vi.resetModules();
+
+        // Re-import Modal with the new mock
+        const { Modal: ModalWithoutButton } = await import(
+          "@/app/_components/Modal/Modal"
+        );
 
         render(
-          <Modal {...defaultProps}>
+          <ModalWithoutButton {...defaultProps}>
             <div className="gd-modal-content">
               <p>Just text content</p>
             </div>
-          </Modal>,
+          </ModalWithoutButton>,
         );
 
         // Focus should be set to the modal container

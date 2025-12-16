@@ -13,7 +13,6 @@ export const withAuthentication: MiddlewareFactory = async (
 ) => {
   const pathname = request.nextUrl.pathname;
   if (pathname.startsWith(PAGES_AUTH.manage_data)) {
-    console.log("check session for ", pathname);
     const session = await getSessionAndRefreshIt();
     if (!session) {
       log.info("No session - redirect to login");

@@ -13,32 +13,36 @@ import { apply } from "ol-mapbox-style";
 import { ResourcePreviewMap } from "../../_components/ResourceTable/ResourcePreview/ResourcePreviewMap";
 
 vi.mock("ol/View", () => ({
-  default: vi.fn().mockImplementation(() => ({
-    setCenter: vi.fn(),
-    setZoom: vi.fn(),
-  })),
+  default: class {
+    setCenter() {}
+    setZoom() {}
+  },
 }));
 
 vi.mock("ol/layer/Tile", () => ({
-  default: vi.fn().mockImplementation(() => ({})),
+  default: class {},
 }));
 
 vi.mock("ol/source/Vector", () => ({
-  default: vi.fn().mockImplementation(() => ({
-    on: vi.fn(),
-    getExtent: vi.fn().mockReturnValue([0, 0, 0, 0]),
-  })),
+  default: class {
+    on() {}
+    getExtent() {
+      return [0, 0, 0, 0];
+    }
+  },
 }));
 
 vi.mock("ol/layer/Vector", () => ({
-  default: vi.fn().mockImplementation(() => ({
-    addEventListener: vi.fn(),
-    getLayerStatesArray: vi.fn(),
-  })),
+  default: class {
+    addEventListener() {}
+    getLayerStatesArray() {}
+  },
 }));
 
 vi.mock("ol/format/GeoJSON", () => ({
-  default: vi.fn().mockImplementation(() => ({ readFeatures: vi.fn() })),
+  default: class {
+    readFeatures() {}
+  },
 }));
 
 vi.mock("ol-mapbox-style", () => ({
@@ -53,11 +57,11 @@ describe("ResourcePreviewMap", () => {
     });
   });
 
-  const ResizeObserverMock = vi.fn(() => ({
-    observe: vi.fn(),
-    unobserve: vi.fn(),
-    disconnect: vi.fn(),
-  }));
+  class ResizeObserverMock {
+    observe = vi.fn();
+    unobserve = vi.fn();
+    disconnect = vi.fn();
+  }
 
   beforeAll(() => {
     // Stub the global ResizeObserver for the map component

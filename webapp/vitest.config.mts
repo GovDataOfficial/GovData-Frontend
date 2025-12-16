@@ -9,8 +9,14 @@ export default defineConfig({
     setupFiles: "vitest.setup.ts",
     coverage: {
       provider: "v8",
-      reporter: ["clover"],
+      reporter: ["clover", "text-summary"],
       include: ["src"],
+      exclude: [
+        "**/.DS_Store",
+        "**/vitest.setup.ts",
+        "**/__tests__/**",
+        "**/*.svg",
+      ],
     },
     alias: {
       "@/": new URL("./src/", import.meta.url).pathname,

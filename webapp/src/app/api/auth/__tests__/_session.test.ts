@@ -3,6 +3,7 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { cookies } from "next/headers";
+import * as client from "openid-client";
 
 import { getKeyCloakClient } from "@/app/api/auth/_keycloak";
 import { getRedisClient } from "@/app/api/auth/_redis";
@@ -10,6 +11,7 @@ import { getRedisClient } from "@/app/api/auth/_redis";
 vi.mock("next/headers");
 vi.mock("next/navigation");
 vi.mock("ioredis");
+vi.mock("openid-client");
 vi.mock("@/app/api/auth/_redis");
 vi.mock("@/app/api/auth/_keycloak");
 
@@ -41,6 +43,7 @@ describe("_session", () => {
     vi.resetAllMocks();
     vi.stubEnv("session_secret", "12345678901234567890123456789012");
     vi.mocked(getRedisClient).mockReturnValue(redisClientMock);
+    vi.mocked(client.randomState).mockReturnValue("mockSessionId");
   });
 
   test("getSession should return null if no session cookie available", async () => {
@@ -303,12 +306,12 @@ describe("_session", () => {
       }),
     };
 
-    // Mock getKeyCloakClient
-    const mockKeyCloakClient = {
-      refresh: vi.fn().mockResolvedValue(refreshedToken),
-    };
+    // Mock getKeyCloakClient to return config
+    const mockKeyCloakConfig = {} as any;
+    vi.mocked(getKeyCloakClient).mockResolvedValue(mockKeyCloakConfig);
 
-    vi.mocked(getKeyCloakClient).mockResolvedValue(mockKeyCloakClient as any);
+    // Mock client.refreshTokenGrant
+    vi.mocked(client.refreshTokenGrant).mockResolvedValue(refreshedToken);
 
     vi.mocked(redisClientMock.get).mockResolvedValue(
       JSON.stringify(expiredSession),
@@ -321,7 +324,10 @@ describe("_session", () => {
 
     const session = await getSessionAndRefreshIt();
 
-    expect(mockKeyCloakClient.refresh).toHaveBeenCalledWith("mockRefreshToken");
+    expect(client.refreshTokenGrant).toHaveBeenCalledWith(
+      mockKeyCloakConfig,
+      "mockRefreshToken",
+    );
     expect(redisClientMock.set).toHaveBeenCalledWith(
       "123",
       expect.stringContaining("newAccessToken"),

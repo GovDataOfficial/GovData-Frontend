@@ -6,15 +6,13 @@
  */
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
-import { BaseClient, Issuer } from "openid-client";
+import * as client from "openid-client";
 
 import { PAGES } from "@/app/_lib/URLHelper";
 import { API_ENDPOINTS } from "@/app/api/apiEndpoints";
 import { logger } from "@/logger/logger";
 
-export type KeycloakClient = BaseClient & {
-  redirect_uris: string[];
-};
+export type KeycloakConfig = client.Configuration;
 
 const log = logger("keycloak");
 
@@ -38,13 +36,7 @@ function getBaseUrlFromRequest(request: NextRequest): string {
 
 export function getCallbackUriFromRequest(request: NextRequest): string {
   const baseUrl = getBaseUrlFromRequest(request);
-
-  let callbackUri = `${baseUrl}${API_ENDPOINTS.AUTH.CALLBACK}`;
-  const redirectTo = request.nextUrl.searchParams.get("redirectTo");
-  if (redirectTo) {
-    return `${callbackUri}?redirectTo=${encodeURIComponent(redirectTo)}`;
-  }
-  return callbackUri;
+  return `${baseUrl}${API_ENDPOINTS.AUTH.CALLBACK}`;
 }
 
 export function getPostLogoutUriFromRequest(request: NextRequest): string {
@@ -52,27 +44,16 @@ export function getPostLogoutUriFromRequest(request: NextRequest): string {
   return `${baseUrl}${PAGES.logout}`;
 }
 
-export async function getKeyCloakClient(): Promise<KeycloakClient> {
-  let keycloakIssuer = null;
-
+export async function getKeyCloakClient(): Promise<KeycloakConfig> {
   try {
-    keycloakIssuer = await Issuer.discover(process.env.keycloak_issuer!);
+    const config = await client.discovery(
+      new URL(process.env.keycloak_issuer!),
+      process.env.keycloak_client_id!,
+      process.env.keycloak_client_secret,
+    );
+    return config;
   } catch (error) {
     log.error(error, "Can not discover keycloak");
     return redirect(PAGES.root);
   }
-
-  let keycloakClient;
-
-  try {
-    keycloakClient = new keycloakIssuer.Client({
-      client_id: process.env.keycloak_client_id!,
-      client_secret: process.env.keycloak_client_secret,
-      response_types: ["code"],
-    });
-  } catch (error) {
-    log.error(error, "Can not create keycloak client");
-    return redirect(PAGES.root);
-  }
-  return keycloakClient as KeycloakClient;
 }

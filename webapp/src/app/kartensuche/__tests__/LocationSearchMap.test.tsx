@@ -21,11 +21,11 @@ import {
 } from "../_components/LocationSearchMap";
 
 describe("LocationSearchMap", () => {
-  const ResizeObserverMock = vi.fn(() => ({
-    observe: vi.fn(),
-    unobserve: vi.fn(),
-    disconnect: vi.fn(),
-  }));
+  class ResizeObserverMock {
+    observe = vi.fn();
+    unobserve = vi.fn();
+    disconnect = vi.fn();
+  }
 
   const defaultProps: LocationSearchMapProps = {
     isOSMActive: false,

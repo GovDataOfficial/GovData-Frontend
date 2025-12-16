@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, test, vi } from "vitest";
 import { redirect } from "next/navigation";
-import { Issuer } from "openid-client";
+import * as client from "openid-client";
 
 import { getCallbackUriFromRequest, getKeyCloakClient } from "../_keycloak";
 
@@ -17,31 +17,24 @@ describe("_keycloak", () => {
   });
 
   test("should get the keycloak client", async () => {
-    const mockIssuer = {
-      Client: vi.fn().mockImplementation(() => ({
-        redirect_uris: ["http://localhost:3000/api/auth/callback"],
-      })),
-    } as any;
+    const mockConfig = {} as any;
 
-    vi.mocked(Issuer.discover).mockResolvedValue(mockIssuer);
+    vi.mocked(client.discovery).mockResolvedValue(mockConfig);
 
-    const client = await getKeyCloakClient();
+    const config = await getKeyCloakClient();
 
-    expect(Issuer.discover).toHaveBeenCalledWith("http://www.testcloak.de");
-    expect(client).toBeDefined();
-    expect(client.redirect_uris).toContain(
-      "http://localhost:3000/api/auth/callback",
+    expect(client.discovery).toHaveBeenCalledWith(
+      new URL("http://www.testcloak.de"),
+      "test-client-id",
+      "test-client-secret",
     );
+    expect(config).toBeDefined();
   });
 
   test("should handle invalid client configuration", async () => {
-    const mockIssuer = {
-      Client: vi.fn().mockImplementation(() => {
-        throw new Error();
-      }),
-    } as any;
-
-    vi.mocked(Issuer.discover).mockResolvedValue(mockIssuer);
+    vi.mocked(client.discovery).mockRejectedValue(
+      new Error("Discovery failed"),
+    );
 
     await getKeyCloakClient();
     expect(redirect).toHaveBeenCalledWith("/");
@@ -63,9 +56,7 @@ describe("_keycloak", () => {
 
     const callbackUri = getCallbackUriFromRequest(mockRequest);
 
-    expect(callbackUri).toBe(
-      `https://example.com/api/auth/callback?redirectTo=${encodeURIComponent("/datenpflege/anwendungen")}`,
-    );
+    expect(callbackUri).toBe("https://example.com/api/auth/callback");
   });
   test("should generate correct callback URI from request if redirectTo is empty", () => {
     const mockRequest = {
@@ -97,8 +88,6 @@ describe("_keycloak", () => {
 
     const callbackUri = getCallbackUriFromRequest(mockRequest);
 
-    expect(callbackUri).toBe(
-      `http://localhost:3000/api/auth/callback?redirectTo=${encodeURIComponent("/datenpflege/anwendungen")}`,
-    );
+    expect(callbackUri).toBe("http://localhost:3000/api/auth/callback");
   });
 });

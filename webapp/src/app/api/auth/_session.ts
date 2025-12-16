@@ -2,7 +2,7 @@
 
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
-import { generators, IdTokenClaims, TokenSet } from "openid-client";
+import * as client from "openid-client";
 
 import { getKeyCloakClient } from "@/app/api/auth/_keycloak";
 import { getRedisClient } from "@/app/api/auth/_redis";
@@ -16,7 +16,7 @@ const refreshBufferSeconds = 5;
 
 const log = logger("_session.ts");
 
-type KeycloakToken = TokenSet & {
+type KeycloakToken = client.TokenEndpointResponse & {
   refresh_expires_in?: number;
 };
 
@@ -24,7 +24,7 @@ type RealmAccess = {
   roles: string[];
 };
 
-type TokenClaims = IdTokenClaims & {
+type TokenClaims = client.IDToken & {
   realm_access?: RealmAccess;
 };
 
@@ -44,13 +44,24 @@ export type UserInformation = {
 };
 
 /**
- * Initializes an Iron Session for storing the code verifier.
+ * Initializes an Iron Session for storing the code verifier, state, and redirectTo.
  */
 async function getCodeVerifierIronSession() {
   const cookieStore = await cookies();
-  return getIronSession<{ value: string }>(cookieStore, {
+  return getIronSession<{
+    codeVerifier: string;
+    state: string;
+    redirectTo?: string;
+    redirectUri: string;
+  }>(cookieStore, {
     password: password!,
     cookieName: CODE_VERIFIER_COOKIE,
+    cookieOptions: {
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      httpOnly: true,
+      path: "/",
+    },
   });
 }
 
@@ -126,8 +137,11 @@ export async function getSessionAndRefreshIt(): Promise<SessionInformation | nul
 
   if (currentTimeInSeconds > session.expires_at - refreshBufferSeconds) {
     try {
-      const client = await getKeyCloakClient();
-      const newTokenSet = await client.refresh(session.refresh_token);
+      const config = await getKeyCloakClient();
+      const newTokenSet = await client.refreshTokenGrant(
+        config,
+        session.refresh_token,
+      );
       const newSession = await setSession(newTokenSet, sessionId);
       return newSession;
     } catch (error) {
@@ -140,26 +154,29 @@ export async function getSessionAndRefreshIt(): Promise<SessionInformation | nul
 
 /**
  * Sets a session in Redis with an expiration time and stores the session ID in a cookie.
- * @param {TokenSet} token - The token set to be stored in the session.
+ * @param {KeycloakToken} token - The token set to be stored in the session.
  * @param currentSessionId - if set, the session with this id will be updated without recreating the cookie.
  */
 export async function setSession(
-  token: KeycloakToken,
+  token: KeycloakToken & client.TokenEndpointResponseHelpers,
   currentSessionId?: string,
 ) {
-  const sessionId = currentSessionId || generators.random(128);
+  const sessionId = currentSessionId || client.randomState();
   const expiration = token.refresh_expires_in || 600;
-  const claims = token.claims() as TokenClaims;
+  const claims = token.claims() as TokenClaims | undefined;
   let roles: string[] = [];
 
   const session: SessionInformation = {
-    username: claims.preferred_username || "",
+    username:
+      typeof claims?.preferred_username === "string"
+        ? claims.preferred_username
+        : "",
     id_token: token.id_token || "",
     access_token: token.access_token || "",
     refresh_token: token.refresh_token || "",
-    iat: claims.iat || 0,
-    roles: claims.realm_access?.roles || roles,
-    expires_at: token.expires_at || 0,
+    iat: typeof claims?.iat === "number" ? claims.iat : 0,
+    roles: claims?.realm_access?.roles || roles,
+    expires_at: typeof token.expires_at === "number" ? token.expires_at : 0,
   };
   const redisSessionString = JSON.stringify(session);
 
@@ -225,11 +242,24 @@ export async function getCodeVerifierSession() {
 }
 
 /**
- * Sets the code verifier session.
+ * Sets the code verifier session with state, redirectUri and optional redirectTo.
  * @param {string} codeVerifier - The code verifier to be stored in the session.
+ * @param {string} state - The state parameter for CSRF protection.
+ * @param {string} redirectUri - The redirect_uri used in the authorization request.
+ * @param {string} [redirectTo] - Optional redirect destination after authentication.
  */
-export async function setCodeVerifierSession(codeVerifier: string) {
+export async function setCodeVerifierSession(
+  codeVerifier: string,
+  state: string,
+  redirectUri: string,
+  redirectTo?: string,
+) {
   const session = await getCodeVerifierIronSession();
-  session.value = codeVerifier;
+  session.codeVerifier = codeVerifier;
+  session.state = state;
+  session.redirectUri = redirectUri;
+  if (redirectTo) {
+    session.redirectTo = redirectTo;
+  }
   await session.save();
 }
