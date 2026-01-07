@@ -32,15 +32,6 @@ const createListItemId = (groupName: string, facetIndex: number) => {
   return `gd-filterarea-list-item-${groupName}-${facetIndex}`;
 };
 
-const focusFilterAreaListItem = (groupName: string, facetIndex: number) => {
-  const listItemId = createListItemId(groupName, facetIndex);
-  const listItem = document.querySelector<HTMLLIElement>(`#${listItemId} a`);
-
-  if (listItem) {
-    listItem.focus();
-  }
-};
-
 const hitsMoreLimit = (data: any[], limit: number) => {
   return data.length > limit;
 };
@@ -91,16 +82,6 @@ export function FilterCommon({
 
     return facetList.filter((_, index) => index < visibleCount);
   }, [facetList, more, visibleCount]);
-
-  useEffect(() => {
-    if (more && typeof visibleCount == "number") {
-      const firstNewItemIndex = filteredFacetList.length - visibleCount;
-
-      if (typeof filteredFacetList[firstNewItemIndex] !== "undefined") {
-        focusFilterAreaListItem(name, firstNewItemIndex);
-      }
-    }
-  }, [more, filteredFacetList, visibleCount, name]);
 
   if (facetList.length === 0) {
     return null;

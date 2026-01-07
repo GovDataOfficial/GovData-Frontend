@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.10.0 2026-01-07
+
+- Changed default contact email address
+- Removed automatic focus when link "show more" is clicked in a facet on the search results page
+
 ## 7.9.1 2025-12-16
 
 - Updated brace-expansion to 1.1.12 (fixes GHSA-v6h2-p8h4-qcjw)
