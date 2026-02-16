@@ -240,6 +240,7 @@ export type Metadata = {
   contacts: MetadataContact[];
   averageRating: number;
   categories: string[];
+  documentation?: string[];
   lastModifiedDate: string;
   temporalCoverageFrom?: string;
   temporalCoverageTo?: string;

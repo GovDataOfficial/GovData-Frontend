@@ -16,8 +16,7 @@ import { withRedirectLegacyPaths } from "@/middlewares/withRedirectLegacyPaths";
  * - favicon.ico (favicon file)
  */
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|images/|favicon.ico).*)"],
-  runtime: "nodejs",
+  matcher: ["/((?!api|_next/static|_next/image|images/|favicon.ico).*)"]
 };
 
 const log = logger("middleware.ts");
@@ -30,7 +29,7 @@ const middlewareChain: MiddlewareFactory[] = [
   withAuthorization,
 ];
 
-export async function middleware(
+export async function proxy(
   request: NextRequest,
 ): Promise<NextResponse | Response> {
   log.debug(`GET ${request.nextUrl}`);

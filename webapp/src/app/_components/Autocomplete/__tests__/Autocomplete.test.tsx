@@ -51,7 +51,7 @@ describe("Autocomplete", () => {
     expect(searchbox.getAttribute("type")).toBe("search");
     expect(searchbox.getAttribute("placeholder")).toBe("Mein Placeholder");
     expect(searchbox.getAttribute("title")).toBe("Mein label");
-    expect(searchbox.getAttribute("value")).toBe(null);
+    expect(searchbox.getAttribute("value")).toBe("");
     expect(searchbox.getAttribute("aria-controls")).toBe(
       "autocomplete-suggestion-container",
     );

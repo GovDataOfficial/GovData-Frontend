@@ -9,19 +9,29 @@ type useMetadataForm = {
  */
 export function useMetadataFormNavigation({ editMode }: useMetadataForm) {
   const initialStep = editMode ? 7 : 0;
+  const isBrowser = typeof document !== "undefined";
 
   const [currentStep, setCurrentStep] = useState(() => initialStep);
   const [updateFocus, updateFocusAfterNextClick] = useState<number>(0);
 
   const isSummary = currentStep === 7;
 
-  const getVisibleStepContainer = () => {
+  const getVisibleStepContainer = useCallback(() => {
+    if (!isBrowser) {
+      return null;
+    }
     return document.querySelector('.step-container[aria-hidden="false"]');
-  };
+  }, [isBrowser]);
 
-  const getStepContainer = (step: number) => {
-    return document.querySelector(`.step-container-${step}`);
-  };
+  const getStepContainer = useCallback(
+    (step: number) => {
+      if (!isBrowser) {
+        return null;
+      }
+      return document.querySelector(`.step-container-${step}`);
+    },
+    [isBrowser],
+  );
 
   // needs better logic to query fields
   const getAllFieldsInContainer = (container: Element | null) => {
@@ -40,13 +50,19 @@ export function useMetadataFormNavigation({ editMode }: useMetadataForm) {
     return getAllFieldsInContainer(container);
   };
 
-  const checkValidityOfStep = useCallback((step: number) => {
-    const container = getStepContainer(step);
-    const requiredInputs = getAllFieldsInContainer(container);
+  const checkValidityOfStep = useCallback(
+    (step: number) => {
+      if (!isBrowser) {
+        return true;
+      }
+      const container = getStepContainer(step);
+      const requiredInputs = getAllFieldsInContainer(container);
 
-    const hasInvalidInput = requiredInputs.some((i) => !i.checkValidity());
-    return !hasInvalidInput;
-  }, []);
+      const hasInvalidInput = requiredInputs.some((i) => !i.checkValidity());
+      return !hasInvalidInput;
+    },
+    [isBrowser, getStepContainer],
+  );
 
   const setStepAndFocusFirstVisibleInput = (step: number) => {
     setCurrentStep(step);
@@ -54,6 +70,9 @@ export function useMetadataFormNavigation({ editMode }: useMetadataForm) {
   };
 
   const reportValidity = (): boolean => {
+    if (!isBrowser) {
+      return true;
+    }
     const inputs = getVisibleInputs();
     // check validity for all so we can set gd-input-invalid on all inputs
     const invalidInputs = inputs.filter((input) => !input.checkValidity());
@@ -81,16 +100,17 @@ export function useMetadataFormNavigation({ editMode }: useMetadataForm) {
   };
 
   useEffect(() => {
-    if (updateFocus !== 0) {
-      const stepContainer = getVisibleStepContainer();
-      const fields = stepContainer?.querySelectorAll(
-        "input, select",
-      ) as NodeListOf<HTMLInputElement | HTMLSelectElement>;
-      if (fields && fields.length > 0) {
-        fields[0].focus();
-      }
+    if (!isBrowser || updateFocus === 0) {
+      return;
     }
-  }, [updateFocus]);
+    const stepContainer = getVisibleStepContainer();
+    const fields = stepContainer?.querySelectorAll(
+      "input, select",
+    ) as NodeListOf<HTMLInputElement | HTMLSelectElement>;
+    if (fields && fields.length > 0) {
+      fields[0].focus();
+    }
+  }, [isBrowser, updateFocus, getVisibleStepContainer]);
 
   return {
     currentStep,

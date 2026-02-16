@@ -1,5 +1,15 @@
 # Changelog
 
+## 7.12.0 2026-02-16
+
+- Updated @zazuko/yasgui to version 4.6.1
+- Updated @testing-library/jest-dom to version 6.9.1
+- Updated undici to version 7.19.2
+- Updated Next.js to version 16.1.6
+- Optimized CSP header in metadata details view
+- Added new error handling for session timeout in forms
+- Added documentation links to metadata details view
+
 ## 7.11.0 2026-01-21
 
 - Added timestamp to error message in metadata form

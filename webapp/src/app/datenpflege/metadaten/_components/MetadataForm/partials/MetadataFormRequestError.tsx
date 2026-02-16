@@ -1,5 +1,9 @@
 import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 import { Trans } from "@/app/_components/Trans/Trans";
+import {
+  formatTimestampForUser,
+  useLoginRedirect,
+} from "@/app/datenpflege/_lib/useFormErrorHelpers";
 import { MetadataRequestError } from "@/app/datenpflege/metadaten/_components/MetadataForm/useMetadataForm";
 import { i18n } from "@/i18n";
 
@@ -9,27 +13,12 @@ type MetadataFormRequestError = {
   timeStamp?: string;
 };
 
-const formatTimestampForUser = (isoTimestamp: string): string => {
-  const date = new Date(isoTimestamp);
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const year = date.getUTCFullYear();
-  const hours = String(date.getUTCHours()).padStart(2, "0");
-  const minutes = String(date.getUTCMinutes()).padStart(2, "0");
-  const seconds = String(date.getUTCSeconds()).padStart(2, "0");
-
-  return i18n.t("time.format.dateTime", {
-    date: `${day}.${month}.${year}`,
-    time: `${hours}:${minutes}:${seconds}`,
-    oClock: i18n.t("time.oClock"),
-  });
-};
-
 export function MetadataFormRequestError({
   requestError,
   mailFitko,
   timeStamp,
 }: MetadataFormRequestError) {
+  const { loginUrl } = useLoginRedirect();
   const mailtoHref = timeStamp
     ? `mailto:${mailFitko}?subject=${encodeURIComponent(
         i18n.t("metadataform.errors.mail.subject", { timeStamp }),
@@ -45,6 +34,15 @@ export function MetadataFormRequestError({
       })}
     </strong>
   );
+
+  const loginLink = (
+    <a href={loginUrl}>
+      {i18n.t(
+        "metadataform.errors.request.description.sessionTimeout.loginLink",
+      )}
+    </a>
+  );
+
   return (
     <InfoBox
       variant="error"
@@ -53,7 +51,7 @@ export function MetadataFormRequestError({
     >
       <Trans
         i18nKey={`metadataform.errors.request.description.${requestError}`}
-        params={{ mail, break: <br />, timeStampText }}
+        params={{ mail, break: <br />, timeStampText, loginLink }}
       />
     </InfoBox>
   );

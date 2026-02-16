@@ -3,7 +3,9 @@ import {
   SetStateAction,
   useCallback,
   useEffect,
-  useState,
+  useMemo,
+  useReducer,
+  useRef,
 } from "react";
 
 type useMetadataFormStickyNavigation = {
@@ -14,68 +16,101 @@ type useMetadataFormStickyNavigation = {
   editMode?: boolean;
 };
 
+type StepState = {
+  visited: boolean;
+  error: boolean;
+};
+
+type Action = { type: "VISIT" } | { type: "SET_ERROR"; error: boolean };
+
+function stepReducer(state: StepState, action: Action): StepState {
+  switch (action.type) {
+    case "VISIT":
+      // Only mark as visited once and keep it true
+      return state.visited ? state : { ...state, visited: true };
+    case "SET_ERROR":
+      return { ...state, error: action.error };
+    default:
+      return state;
+  }
+}
+
 export function useMetadataFormStickyNavigation({
   index,
-  setCurrentStep,
   currentStep,
+  setCurrentStep,
   checkValidityOfStep,
-  editMode,
+  editMode = false,
 }: useMetadataFormStickyNavigation) {
-  const initialActive = editMode ? index === 7 : index === 0;
-  const [isActive, setIsActive] = useState<boolean>(initialActive);
-  const [notVisited, setNotVisited] = useState<boolean>(
-    editMode ? false : !initialActive,
-  );
-  const [hasError, setHasError] = useState<boolean>(false);
+  const isActive = currentStep === index;
 
-  const onClick = () => {
+  // Initial state: in edit mode all steps start as visited
+  const [state, dispatch] = useReducer(stepReducer, {
+    visited: editMode,
+    error: false,
+  });
+
+  const notVisited = !state.visited;
+  const hasError = state.error;
+
+  const onClick = useCallback(() => {
     if (!isActive) {
       setCurrentStep(index);
     }
-  };
+  }, [isActive, index, setCurrentStep]);
 
   const checkValidityOfCurrentStep = useCallback(() => {
-    if (checkValidityOfStep(index)) {
-      setHasError(false);
-    } else {
-      setHasError(true);
-    }
+    const valid = checkValidityOfStep(index);
+    dispatch({ type: "SET_ERROR", error: !valid });
   }, [checkValidityOfStep, index]);
 
-  const liClass = [];
-  isActive && liClass.push("active");
-  !notVisited && !isActive && liClass.push("done");
-  hasError && liClass.push("error");
-
-  // effect for switching active and done items
+  // First time this step is entered → mark as visited
   useEffect(() => {
-    if (index === currentStep) {
-      setIsActive(true);
-      setNotVisited(false);
-    } else {
-      setIsActive(false);
+    if (isActive && !state.visited) {
+      // queueMicrotask avoids warnings about updates during render
+      queueMicrotask(() => dispatch({ type: "VISIT" }));
     }
-  }, [currentStep, index]);
+  }, [isActive, state.visited]);
 
-  // effect to trigger validation on moving out of a current active step
+  // If the step was active and is now left → trigger validation
+  const wasActiveRef = useRef(isActive);
   useEffect(() => {
-    if (isActive && index !== currentStep) {
-      checkValidityOfCurrentStep();
+    if (wasActiveRef.current && !isActive) {
+      queueMicrotask(checkValidityOfCurrentStep);
     }
-  }, [checkValidityOfCurrentStep, currentStep, index, isActive]);
+    wasActiveRef.current = isActive;
+  }, [isActive, checkValidityOfCurrentStep]);
 
-  // effect to trigger validation once on init if we are in edit mode
+  // Edit mode: run an initial validation once
   useEffect(() => {
     if (editMode) {
-      checkValidityOfCurrentStep();
+      queueMicrotask(checkValidityOfCurrentStep);
     }
-  }, [checkValidityOfCurrentStep, editMode]);
+  }, [editMode, checkValidityOfCurrentStep]);
+
+  // Combine classes based on logical state
+  const listItemClasses = useMemo(() => {
+    const classes: string[] = [];
+    if (isActive) {
+      classes.push("active");
+    }
+    if (!notVisited && !isActive) {
+      classes.push("done");
+    }
+    if (hasError) {
+      classes.push("error");
+    }
+    if (notVisited) {
+      classes.push("notvisited");
+    }
+    return classes.join(" ");
+  }, [isActive, notVisited, hasError]);
 
   return {
     isActive,
     notVisited,
     hasError,
     onClick,
-    listItemClasses: liClass.join(" "),
+    listItemClasses,
   };
 }

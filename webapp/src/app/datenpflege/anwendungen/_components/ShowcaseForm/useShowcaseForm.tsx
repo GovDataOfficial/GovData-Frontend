@@ -13,6 +13,8 @@ type useShowcaseForm = {
 export enum ShowcaseRequestError {
   general = "general",
   dataDeleted = "dataDeleted",
+  sessionTimeout = "sessionTimeout",
+  forbidden = "forbidden",
 }
 
 export function useShowcaseForm({ showcaseId, infoRef }: useShowcaseForm) {
@@ -43,6 +45,12 @@ export function useShowcaseForm({ showcaseId, infoRef }: useShowcaseForm) {
       router.push(redirectTo);
     } else {
       switch (response.status) {
+        case 401:
+          setRequestError(ShowcaseRequestError.sessionTimeout);
+          break;
+        case 403:
+          setRequestError(ShowcaseRequestError.forbidden);
+          break;
         case 404:
           setRequestError(ShowcaseRequestError.dataDeleted);
           break;

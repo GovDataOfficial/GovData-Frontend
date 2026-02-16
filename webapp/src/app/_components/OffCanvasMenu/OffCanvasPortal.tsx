@@ -1,16 +1,19 @@
 "use client";
 
-import { PropsWithChildren, ReactPortal, useEffect, useState } from "react";
+import { PropsWithChildren } from "react";
 import { createPortal } from "react-dom";
 
+// Progressive enhancement: render inline on the server/non-DOM environments,
+// and portalize only when the target node exists in the browser.
 export function OffCanvasPortal({ children }: PropsWithChildren) {
-  const [portal, setPortal] = useState<ReactPortal | null>(null);
+  const canUseDOM = typeof document !== "undefined";
+  const target = canUseDOM
+    ? document.getElementById("off-canvas-filter")
+    : null;
 
-  useEffect(() => {
-    const filter = document.getElementById("off-canvas-filter");
+  if (!canUseDOM || !target) {
+    return <>{children}</>;
+  }
 
-    filter && setPortal(createPortal(children, filter));
-  }, [children]);
-
-  return portal;
+  return createPortal(children, target);
 }

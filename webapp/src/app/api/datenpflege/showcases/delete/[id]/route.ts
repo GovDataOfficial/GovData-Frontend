@@ -1,5 +1,4 @@
 import { checkFeatureFlagForEnvVarDataManagement } from "@/app/api/_lib/checkEnvVarFeatureFlags";
-import { getSessionOrThrow } from "@/app/api/_lib/getSessionOrThrow";
 import { sendAuthorizedRequestWithBearer } from "@/app/api/_lib/sendAuthorizedRequest";
 
 export async function DELETE(
@@ -11,14 +10,6 @@ export async function DELETE(
   }
 
   const params = await props.params;
-  let session;
-  try {
-    session = await getSessionOrThrow();
-  } catch (error) {
-    return new Response(null, { status: 401 });
-  }
-
   const endpoint = `${process.env.be_gd_db_url}/showcase/${params.id}`;
-
-  return sendAuthorizedRequestWithBearer(session, endpoint, "DELETE");
+  return sendAuthorizedRequestWithBearer(endpoint, "DELETE");
 }

@@ -36,7 +36,7 @@ describe("MetaDatenQualität - Qualitätsmerkmale - Page", () => {
     render(Component);
 
     screen.getByRole("heading", { name: /qualitätsmerkmale/i, level: 2 });
-    screen.getByRole("heading", { name: /filtermöglichkeiten/i, level: 2 });
+    screen.getAllByRole("heading", { name: /filtermöglichkeiten/i, level: 2 });
     screen.getByRole("heading", {
       name: /übersicht auffindbarkeit/i,
       level: 2,

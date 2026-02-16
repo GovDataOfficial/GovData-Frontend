@@ -45,4 +45,51 @@ describe("SearchDetailsInfoboxDataSet", () => {
 
     expect(screen.getByText(/schlagwörter/i)).toBeDefined();
   });
+
+  it("should not list any documentation link", async () => {
+    const Component = await SearchDetailsInfoboxDataSet({
+      data: metaDataTestProps,
+    });
+    render(Component);
+
+    expect(
+      screen.queryByText(/weiterführende informationen/i),
+    ).not.toBeInTheDocument();
+  });
+
+  it("should list one documentation link", async () => {
+    const data = Object.assign(metaDataTestProps, {
+      documentation: ["https://example.com/doc"],
+    });
+
+    const Component = await SearchDetailsInfoboxDataSet({
+      data,
+    });
+    render(Component);
+
+    expect(
+      screen.getByText(/weiterführende informationen/i),
+    ).toBeInTheDocument();
+
+    expect(screen.getByText(/zur Dokumentation/i)).toBeInTheDocument();
+    expect(screen.queryByText(/zur Dokumentation 1/i)).not.toBeInTheDocument();
+  });
+
+  it("should list multiple documentation links", async () => {
+    const data = Object.assign(metaDataTestProps, {
+      documentation: ["https://example.com/doc", "https://example2.com/doc"],
+    });
+
+    const Component = await SearchDetailsInfoboxDataSet({
+      data,
+    });
+    render(Component);
+
+    expect(
+      screen.getByText(/weiterführende informationen/i),
+    ).toBeInTheDocument();
+
+    expect(screen.getByText(/zur Dokumentation 1/i)).toBeInTheDocument();
+    expect(screen.getByText(/zur Dokumentation 2/i)).toBeInTheDocument();
+  });
 });

@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, test, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
 import { redirect } from "next/navigation";
 
 import { fetchOrganizationsForUser } from "@/app/_lib/getData";
@@ -47,7 +47,12 @@ describe("Metadata create page", () => {
         contributorIds: ["contrib1", "contrib2"],
       },
     ] as OrganizationSorted);
-    const { container } = render(await Page());
+    let container!: HTMLElement;
+
+    await act(async () => {
+      const page = await Page();
+      ({ container } = render(page));
+    });
 
     const form = container.querySelector("form");
     expect(form).toHaveAttribute("id", METADATA_FORM_ID);
@@ -55,7 +60,11 @@ describe("Metadata create page", () => {
 
   test("should redirect if user has no organizations", async () => {
     vi.mocked(fetchOrganizationsForUser).mockResolvedValue(undefined);
-    render(await Page());
+
+    await act(async () => {
+      render(await Page());
+    });
+
     expect(redirect).toHaveBeenCalledWith(PAGES_AUTH.manage_metadata);
   });
 
@@ -67,7 +76,11 @@ describe("Metadata create page", () => {
         contributorIds: [],
       },
     ] as unknown as OrganizationSorted);
-    render(await Page());
+
+    await act(async () => {
+      render(await Page());
+    });
+
     expect(redirect).toHaveBeenCalledWith(PAGES_AUTH.manage_metadata);
   });
 });

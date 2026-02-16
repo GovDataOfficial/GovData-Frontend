@@ -54,6 +54,29 @@ async function getResourceUrlsForMetadata(metadataName?: string) {
 }
 
 /**
+ * Extracts unique origins (protocol + host + optional port) from a list of URLs.
+ * This reduces the number of CSP entries by grouping all resources from the same host.
+ * Invalid URLs are ignored.
+ *
+ * @param urls Array of resource URLs
+ * @returns Array of unique origins suitable for CSP
+ */
+function getUniqueOrigins(urls: string[]): string[] {
+  const origins = new Set<string>();
+  urls.forEach((url) => {
+    try {
+      const { protocol, hostname, port } = new URL(url);
+      // For now, just use the origin (protocol + host + port)
+      const origin = `${protocol}//${hostname}${port ? `:${port}` : ""}`;
+      origins.add(origin);
+    } catch {
+      // Ignore invalid URLs
+    }
+  });
+  return Array.from(origins);
+}
+
+/**
  * Middleware for setting CSP and other relevant Headers.
  */
 export const withHeadersMiddleware: MiddlewareFactory = async (
@@ -76,9 +99,9 @@ export const withHeadersMiddleware: MiddlewareFactory = async (
     const metadataName = pathname.split("/").pop();
     const resourceUrls = await getResourceUrlsForMetadata(metadataName);
 
-    resourceUrls.forEach((url) => {
-      detailPageCsp["connect-src"].push(url);
-    });
+    // Optimize: Use only unique origins
+    const uniqueOrigins = getUniqueOrigins(resourceUrls);
+    detailPageCsp["connect-src"].push(...uniqueOrigins);
 
     const detailPageDirectives = CSPBuilder({ directives: detailPageCsp });
     response.headers.set("Content-Security-Policy", detailPageDirectives);

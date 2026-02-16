@@ -4,7 +4,6 @@ import { convertShowcaseFormData } from "@/app/api/datenpflege/showcases/_lib/co
 import { HttpMethod } from "@/types/types";
 
 export async function postShowcase(
-  session: SessionInformation,
   request: Request,
   endpoint: string,
   method: HttpMethod,
@@ -12,5 +11,5 @@ export async function postShowcase(
   const formData = await request.formData();
   const data = convertShowcaseFormData(formData);
 
-  return sendAuthorizedRequestWithBearer(session, endpoint, method, data);
+  return sendAuthorizedRequestWithBearer(endpoint, method, data);
 }

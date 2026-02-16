@@ -36,7 +36,7 @@ describe("MetaDatenQualität - Top5 - Page", () => {
     render(Component);
 
     screen.getByRole("heading", { name: "Top 5", level: 2 });
-    screen.getByRole("heading", { name: /filtermöglichkeiten/i, level: 2 });
+    screen.getAllByRole("heading", { name: /filtermöglichkeiten/i, level: 2 });
     screen.getByRole("heading", { name: "Top 5 Lizenzen", level: 2 });
     screen.getByRole("heading", { name: "Top 5 Formate", level: 2 });
   });

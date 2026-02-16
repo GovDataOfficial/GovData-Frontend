@@ -9,7 +9,7 @@ export default defineConfig({
     setupFiles: "vitest.setup.ts",
     coverage: {
       provider: "v8",
-      reporter: ["clover", "text-summary"],
+      reporter: ["clover", "text-summary", "cobertura"],
       include: ["src"],
       exclude: [
         "**/.DS_Store",

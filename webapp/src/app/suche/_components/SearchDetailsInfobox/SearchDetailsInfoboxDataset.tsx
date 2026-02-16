@@ -39,6 +39,7 @@ export async function SearchDetailsInfoboxDataSet({
     tags,
     categories,
     hvdCategories,
+    documentation,
   } = data;
 
   const ownerDisplayName = await getOrganizationDisplayName(owner_org);
@@ -123,6 +124,22 @@ export async function SearchDetailsInfoboxDataSet({
               title={t("search.details.infobox.categoriesHvd")}
               categories={hvdCategories}
             />
+          </SearchDetailsInfoBoxGroup>
+        )}
+
+        {documentation && documentation.length > 0 && (
+          <SearchDetailsInfoBoxGroup>
+            <dt>{t("search.details.infobox.documentation.headline")}</dt>
+
+            {documentation.map((doc, index) => (
+              <dd key={index} className="mark-external-links">
+                <a href={doc} target="_blank" rel="noreferrer">
+                  {documentation.length > 1
+                    ? `${t("search.details.infobox.documentation.link")} ${index + 1}`
+                    : t("search.details.infobox.documentation.link")}
+                </a>
+              </dd>
+            ))}
           </SearchDetailsInfoBoxGroup>
         )}
 

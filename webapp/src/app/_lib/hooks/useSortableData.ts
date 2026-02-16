@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 
 export type Direction = "ascending" | "descending" | undefined;
 
@@ -62,20 +62,12 @@ export function useSortableData<T extends SortableData>(
   const [sortConfig, setSortConfig] = useState<SortConfig | undefined>(
     initialSortConfig,
   );
-  const [sortedData, setSortedData] = useState(() => {
-    if (initialSortConfig) {
-      return sortData(data, initialSortConfig, options);
-    }
-    return data;
-  });
-
-  useEffect(() => {
+  const sortedData = useMemo(() => {
     if (!sortConfig) {
-      setSortedData(data);
-      return;
+      return data;
     }
-    setSortedData(sortData(data, sortConfig, options));
-  }, [data, sortConfig, options]);
+    return sortData(data, sortConfig, options);
+  }, [data, options, sortConfig]);
 
   const sortByKeyAndDirection = (
     key: keyof SortableData,

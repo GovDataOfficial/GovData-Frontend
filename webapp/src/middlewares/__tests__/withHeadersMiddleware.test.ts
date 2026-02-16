@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, it, test, vi } from "vitest";
 import { NextRequest, NextResponse } from "next/server";
 
 import { withHeadersMiddleware } from "@/middlewares/withHeadersMiddleware";
@@ -8,7 +8,7 @@ vi.spyOn(NextResponse, "redirect");
 vi.mock("@/app/_lib/getData", async () => {
   return {
     fetchMetadata: vi.fn().mockResolvedValue({
-      resources: [{ url: "www.resource.com" }],
+      resources: [{ url: "https://www.resource.com" }],
     }),
   };
 });
@@ -68,6 +68,132 @@ describe("middleware Headers", () => {
     );
     expect(connectSrc).toBeDefined();
     expect(connectSrc).toContain("www.resource.com");
+  });
+
+  test("should consolidate multiple URLs from same origin into single CSP entry", async () => {
+    // Mock fetchMetadata to return multiple URLs from the same origin
+    const { fetchMetadata } = await import("@/app/_lib/getData");
+    vi.mocked(fetchMetadata).mockResolvedValueOnce({
+      resources: [
+        { url: "https://example.com/resource1.json" },
+        { url: "https://example.com/resource2.json" },
+        { url: "https://example.com/api/data.json" },
+        { url: "https://other.com/data.json" },
+      ],
+    } as any);
+
+    const response = new NextResponse();
+    const request = new NextRequest(
+      new URL("https://test.de/suche/daten/example"),
+    );
+    await withHeadersMiddleware(request, response);
+
+    const cspHeaders = response.headers.get("Content-Security-Policy");
+    const cspHeadersSplit = cspHeaders?.split(";");
+    const connectSrc = cspHeadersSplit?.find((csp) =>
+      csp.includes("connect-src"),
+    );
+
+    expect(connectSrc).toBeDefined();
+    // Should contain only the origin, not all individual URLs
+    expect(connectSrc).toContain("https://example.com");
+    expect(connectSrc).toContain("https://other.com");
+    // Should not contain the full paths
+    expect(connectSrc).not.toContain("/resource1.json");
+    expect(connectSrc).not.toContain("/resource2.json");
+    expect(connectSrc).not.toContain("/api/data.json");
+  });
+
+  test("should handle URLs with different ports as separate origins", async () => {
+    const { fetchMetadata } = await import("@/app/_lib/getData");
+    vi.mocked(fetchMetadata).mockResolvedValueOnce({
+      resources: [
+        { url: "https://example.com:443/resource1.json" },
+        { url: "https://example.com:8080/resource2.json" },
+        { url: "https://example.com/resource3.json" },
+      ],
+    } as any);
+
+    const response = new NextResponse();
+    const request = new NextRequest(
+      new URL("https://test.de/suche/daten/example"),
+    );
+    await withHeadersMiddleware(request, response);
+
+    const cspHeaders = response.headers.get("Content-Security-Policy");
+    const cspHeadersSplit = cspHeaders?.split(";");
+    const connectSrc = cspHeadersSplit?.find((csp) =>
+      csp.includes("connect-src"),
+    );
+
+    expect(connectSrc).toBeDefined();
+    // Port 8080 should be included as it's non-default
+    expect(connectSrc).toContain("https://example.com:8080");
+    // Default HTTPS port (443) and no port should result in same origin
+    expect(connectSrc).toContain("https://example.com");
+  });
+
+  test("should ignore invalid URLs when extracting origins", async () => {
+    const { fetchMetadata } = await import("@/app/_lib/getData");
+    vi.mocked(fetchMetadata).mockResolvedValueOnce({
+      resources: [
+        { url: "https://valid.com/resource.json" },
+        { url: "not-a-valid-url" },
+        { url: "ftp://another-valid.com/data" },
+        { url: "" },
+      ],
+    } as any);
+
+    const response = new NextResponse();
+    const request = new NextRequest(
+      new URL("https://test.de/suche/daten/example"),
+    );
+    await withHeadersMiddleware(request, response);
+
+    const cspHeaders = response.headers.get("Content-Security-Policy");
+    const cspHeadersSplit = cspHeaders?.split(";");
+    const connectSrc = cspHeadersSplit?.find((csp) =>
+      csp.includes("connect-src"),
+    );
+
+    expect(connectSrc).toBeDefined();
+    // Valid URLs should be included
+    expect(connectSrc).toContain("https://valid.com");
+    expect(connectSrc).toContain("ftp://another-valid.com");
+    // Invalid URLs should not crash or appear
+    expect(connectSrc).not.toContain("not-a-valid-url");
+  });
+
+  test("should optimize CSP by reducing duplicate origins from resource URLs", async () => {
+    const { fetchMetadata } = await import("@/app/_lib/getData");
+    vi.mocked(fetchMetadata).mockResolvedValueOnce({
+      resources: [
+        { url: "https://cdn.example.com/file1.json" },
+        { url: "https://cdn.example.com/file2.json" },
+        { url: "https://cdn.example.com/file3.json" },
+        { url: "https://cdn.example.com/file4.json" },
+        { url: "https://cdn.example.com/file5.json" },
+      ],
+    } as any);
+
+    const response = new NextResponse();
+    const request = new NextRequest(
+      new URL("https://test.de/suche/daten/example"),
+    );
+    await withHeadersMiddleware(request, response);
+
+    const cspHeaders = response.headers.get("Content-Security-Policy");
+    const cspHeadersSplit = cspHeaders?.split(";");
+    const connectSrc = cspHeadersSplit?.find((csp) =>
+      csp.includes("connect-src"),
+    );
+
+    expect(connectSrc).toBeDefined();
+    // Should contain the origin only once
+    const originCount = (
+      connectSrc?.match(/https:\/\/cdn\.example\.com/g) || []
+    ).length;
+    expect(originCount).toBe(1);
   });
 
   test("should not include empty entries from env vars", async () => {

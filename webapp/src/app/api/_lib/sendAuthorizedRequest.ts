@@ -1,4 +1,6 @@
 import { authHeader } from "@/app/_lib/getData";
+import { createErrorResponseWithTimestamp } from "@/app/api/_lib/errorResponseWithTimestamp";
+import { getSessionOrThrow } from "@/app/api/_lib/getSessionOrThrow";
 import { SessionInformation } from "@/app/api/auth/_session";
 import { logger } from "@/logger/logger";
 import { HttpMethod } from "@/types/types";
@@ -6,11 +8,18 @@ import { HttpMethod } from "@/types/types";
 const log = logger("sendAuthorizedRequest");
 
 export async function sendAuthorizedRequestWithBasicAuth(
-  username: string,
   endpoint: string,
   method: HttpMethod,
   bodyContent?: Object,
 ): Promise<Response | undefined> {
+  let username: string;
+  try {
+    const session = await getSessionOrThrow();
+    username = session.username;
+  } catch (error) {
+    return createErrorResponseWithTimestamp(null, 401);
+  }
+
   return sendAuthorizedRequest(
     endpoint,
     method,
@@ -21,11 +30,17 @@ export async function sendAuthorizedRequestWithBasicAuth(
 }
 
 export async function sendAuthorizedRequestWithBearer(
-  session: SessionInformation,
   endpoint: string,
   method: HttpMethod,
   bodyContent?: Object,
 ): Promise<Response | undefined> {
+  let session: SessionInformation;
+  try {
+    session = await getSessionOrThrow();
+  } catch (error) {
+    return createErrorResponseWithTimestamp(null, 401);
+  }
+
   const authHeader = `Bearer ${session.access_token}`;
   return sendAuthorizedRequest(
     endpoint,
@@ -59,14 +74,8 @@ async function sendAuthorizedRequest(
 
     if (!response.ok) {
       const errorBody = await response.text();
-      const timestamp = new Date().toISOString();
       log.error(response, "Response status not ok");
-      return new Response(errorBody, {
-        status: response.status,
-        headers: {
-          "X-Error-Timestamp": timestamp,
-        },
-      });
+      return createErrorResponseWithTimestamp(errorBody, response.status);
     }
     // https://community.vercel.com/t/nextresponse-throws-error-when-http-request-status-code-is-204/625
     const responseStatusText =
@@ -74,12 +83,6 @@ async function sendAuthorizedRequest(
     return new Response(responseStatusText, { status: response.status });
   } catch (e) {
     log.error(e, "Error sending request");
-    const timestamp = new Date().toISOString();
-    return new Response(null, {
-      status: 500,
-      headers: {
-        "X-Error-Timestamp": timestamp,
-      },
-    });
+    return createErrorResponseWithTimestamp();
   }
 }

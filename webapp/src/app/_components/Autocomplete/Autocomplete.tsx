@@ -1,4 +1,10 @@
-import React, { ReactNode, useRef, useState } from "react";
+import React, {
+  ReactNode,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { PassedListItemProps } from "@/app/_components/Autocomplete/AutocompleteListItem";
 import { debounce } from "@/app/_lib/debounce";
@@ -36,34 +42,44 @@ export function Autocomplete<T>({
   const [suggestions, setSuggestions] = useState<T[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [activeItem, setActiveItem] = useState<number | undefined>(undefined);
+  const [inputValue, setInputValue] = useState<string>(defaultValue ?? "");
 
   const hasSuggestions = suggestions?.length > 0;
   const hasActiveItem = activeItem !== undefined;
   const openWithSuggestions = open && hasSuggestions;
 
   const ref = useOutsideClick<HTMLDivElement>(() => setOpen(false));
-  const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
 
-  const setInputRefValue = (val: string) => {
-    if (inputRef.current) {
-      inputRef.current.value = val;
-    }
+  const setInputValueAndFocus = (val: string) => {
+    setInputValue(val);
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value) {
-      fetchData(e.target.value)
-        .then((r) => setSuggestions(r))
-        .then(() => setOpen(true))
-        .catch(() => setSuggestions([]));
-    } else {
-      setSuggestions([]);
-      setActiveItem(undefined);
-    }
-  };
+  const handleFetchSuggestions = useCallback(
+    (value: string) => {
+      if (value) {
+        fetchData(value)
+          .then((r) => setSuggestions(r))
+          .then(() => setOpen(true))
+          .catch(() => setSuggestions([]));
+      } else {
+        setSuggestions([]);
+        setActiveItem(undefined);
+      }
+    },
+    [fetchData],
+  );
 
-  const delayedOnChange = debounce(onChange, 200);
+  const delayedOnChange = useMemo(
+    () => debounce(handleFetchSuggestions, 200),
+    [handleFetchSuggestions],
+  );
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setInputValue(value);
+    delayedOnChange(value);
+  };
 
   const setItem = (dir: "up" | "down") => {
     if (dir === "down") {
@@ -89,7 +105,7 @@ export function Autocomplete<T>({
     const isEscape = e.key === "Escape";
     switch (true) {
       case isEscape && !open:
-        setInputRefValue("");
+        setInputValueAndFocus("");
         setOpen(false);
         setActiveItem(undefined);
         break;
@@ -120,9 +136,8 @@ export function Autocomplete<T>({
   const handleSelection = (suggestion: T) => {
     if (onItemSelect) {
       const text = onItemSelect(suggestion);
-      if (text && inputRef.current) {
-        setInputRefValue(text);
-        inputRef.current.focus();
+      if (text) {
+        setInputValueAndFocus(text);
       }
       setOpen(false);
     }
@@ -149,7 +164,6 @@ export function Autocomplete<T>({
         {label}
       </label>
       <input
-        ref={inputRef}
         autoComplete="off"
         type="search"
         id={GlobalIds.searchField}
@@ -158,12 +172,12 @@ export function Autocomplete<T>({
         placeholder={placeholder}
         title={label}
         aria-autocomplete="list"
-        defaultValue={defaultValue}
+        value={inputValue}
         aria-controls="autocomplete-suggestion-container"
         aria-activedescendant={
           hasActiveItem ? `autocomplete-suggestion-${activeItem}` : undefined
         }
-        onChange={delayedOnChange}
+        onChange={handleInputChange}
         onKeyDown={handleSelectionOnEnter}
       />
       <span className="offscreen" aria-live="polite" role="status">
@@ -184,7 +198,6 @@ export function Autocomplete<T>({
                 isActive,
                 onClick: () => handleSelectionOnClick(suggestion),
               };
-              const inputValue = inputRef.current?.value;
               return children(suggestion, listProps, inputValue);
             })}
           </ul>

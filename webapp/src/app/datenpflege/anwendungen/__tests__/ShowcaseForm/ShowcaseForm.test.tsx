@@ -24,6 +24,8 @@ describe("ShowcaseForm", () => {
   vi.mock("next/navigation", async () => {
     return {
       useRouter,
+      usePathname: vi.fn(() => PAGES_AUTH.manage_showcases_form_add),
+      useSearchParams: vi.fn(() => ({ toString: () => "" })),
     };
   });
 

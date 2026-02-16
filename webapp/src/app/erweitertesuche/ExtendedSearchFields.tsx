@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Dropdown } from "@/app/_components/Dropdown/Dropdown";
 import { convertToURLSearchParams } from "@/app/_lib/convertToSearchParams";
@@ -83,23 +83,23 @@ export function ExtendedSearchFields({
   });
 
   const [activeFilters, setActiveFilters] = useState<string[]>(initialFilters);
-  const [userClicked, setUserClicked] = useState<boolean>();
+  const focusPendingRef = useRef(false);
 
   const addFilter = (filter: string) => {
     setActiveFilters((prevState) => [...prevState, filter]);
-    setUserClicked(true);
+    focusPendingRef.current = true;
   };
 
   const removeFilter = (filter: string) => {
     setActiveFilters((prevState) =>
       prevState.filter((item) => item !== filter),
     );
-    setUserClicked(true);
+    focusPendingRef.current = true;
   };
 
   // focus handling after used clicked and react mounted all elements
   useEffect(() => {
-    if (userClicked) {
+    if (focusPendingRef.current) {
       const fieldList = document.querySelector("#fieldlist");
       const lastChild = fieldList?.lastElementChild;
       const inputTofocus = lastChild?.querySelector("input, select");
@@ -110,9 +110,10 @@ export function ExtendedSearchFields({
         const button = document.querySelector(".gd-dropdown-toggle");
         (button as HTMLElement).focus();
       }
-      setUserClicked(undefined);
+
+      focusPendingRef.current = false;
     }
-  }, [userClicked]);
+  }, [activeFilters]);
 
   const orgData = normalizeData(organizationSorted, (item) => ({
     key: item.id,

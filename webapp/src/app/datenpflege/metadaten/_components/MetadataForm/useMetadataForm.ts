@@ -15,6 +15,8 @@ export enum MetadataRequestError {
   dataDeleted = "dataDeleted",
   validationError = "validationError",
   invalidTag = "invalidTag",
+  sessionTimeout = "sessionTimeout",
+  forbidden = "forbidden",
 }
 
 export interface DetailedErrorInfo {
@@ -91,6 +93,12 @@ export function useMetadataForm({ editMode, infoRef }: useMetadataForm) {
       setDetailedErrorInfo(errorInfo);
 
       switch (response.status) {
+        case 401:
+          setRequestError(MetadataRequestError.sessionTimeout);
+          break;
+        case 403:
+          setRequestError(MetadataRequestError.forbidden);
+          break;
         case 409:
           setRequestError(MetadataRequestError.duplicateTitle);
           break;

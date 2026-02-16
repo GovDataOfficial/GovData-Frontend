@@ -1,7 +1,6 @@
 import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
-import { render, screen, within } from "@testing-library/react";
+import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { text } from "stream/consumers";
 
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import { API_ENDPOINTS } from "@/app/api/apiEndpoints";
@@ -25,6 +24,10 @@ describe("MetadataForm", () => {
   vi.mock("next/navigation", async () => {
     return {
       useRouter,
+      usePathname: vi.fn(() => PAGES_AUTH.manage_metadata_form_add),
+      useSearchParams: vi.fn(() => ({
+        toString: () => "",
+      })),
     };
   });
 
@@ -149,14 +152,16 @@ describe("MetadataForm", () => {
 
   test("should correctly navigate with the sticky nav", async () => {
     const user = userEvent.setup();
-    render(
-      <MetadataForm
-        categories={[]}
-        licenses={[]}
-        organizations={organizations}
-        {...commonLinks}
-      />,
-    );
+    await act(async () => {
+      render(
+        <MetadataForm
+          categories={[]}
+          licenses={[]}
+          organizations={organizations}
+          {...commonLinks}
+        />,
+      );
+    });
 
     const nav = screen.getByRole("navigation");
     // getting all items in nav
@@ -425,6 +430,67 @@ describe("MetadataForm", () => {
     );
     const alert = screen.getByRole("alert");
     within(alert).getByText("Die Schlagwörter sind ungültig.", {
+      exact: false,
+    });
+  });
+
+  test("should show a session timeout error after a failed request", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce({
+      status: 401,
+      ok: false,
+      headers: { get: vi.fn(() => null) },
+      text: vi.fn().mockResolvedValueOnce(""),
+    } as any);
+    const user = userEvent.setup();
+
+    render(
+      <MetadataForm
+        categories={[]}
+        licenses={[
+          { id: "license1", title: "license1", url: "http://example.com" },
+        ]}
+        organizations={organizations}
+        metadata={validMetadata}
+        {...commonLinks}
+      />,
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: /speichern und schließen/i }),
+    );
+    const alert = screen.getByRole("alert");
+    within(alert).getByText("Ihre Sitzung ist abgelaufen", {
+      exact: false,
+    });
+    within(alert).getByRole("link", { name: "melden Sie sich erneut an" });
+  });
+
+  test("should show a forbidden error after a failed request", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce({
+      status: 403,
+      ok: false,
+      headers: { get: vi.fn(() => null) },
+      text: vi.fn().mockResolvedValueOnce(""),
+    } as any);
+    const user = userEvent.setup();
+
+    render(
+      <MetadataForm
+        categories={[]}
+        licenses={[
+          { id: "license1", title: "license1", url: "http://example.com" },
+        ]}
+        organizations={organizations}
+        metadata={validMetadata}
+        {...commonLinks}
+      />,
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: /speichern und schließen/i }),
+    );
+    const alert = screen.getByRole("alert");
+    within(alert).getByText("Fehlende Berechtigung", {
       exact: false,
     });
   });

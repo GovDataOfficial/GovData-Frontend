@@ -15,6 +15,7 @@ export function MetadataPreview({ metadataName, backendUrl }: MetadataPreview) {
 
   useEffect(() => {
     // If useEffect runs, JavaScript is enabled
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsJsEnabled(true);
   }, []);
 

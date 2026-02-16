@@ -2,22 +2,56 @@
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { createErrorResponseWithTimestamp } from "@/app/api/_lib/errorResponseWithTimestamp";
+import { getSessionOrThrow } from "@/app/api/_lib/getSessionOrThrow";
 import {
   sendAuthorizedRequestWithBasicAuth,
   sendAuthorizedRequestWithBearer,
 } from "@/app/api/_lib/sendAuthorizedRequest";
+import { SessionInformation } from "@/app/api/auth/_session";
 
 vi.mock("ioredis");
+vi.mock("@/app/api/_lib/errorResponseWithTimestamp");
+vi.mock("@/app/api/_lib/getSessionOrThrow");
 
 describe("sendAuthorizedRequest", () => {
-  const username = "test";
+  const mockSession = {
+    username: "test",
+  } as SessionInformation;
 
   beforeEach(() => {
     vi.resetAllMocks();
     globalThis.fetch = vi.fn();
+    vi.mocked(getSessionOrThrow).mockResolvedValue(mockSession);
+  });
+
+  it("should return 401 if getSessionOrThrow fails", async () => {
+    const mockErrorResponse = new Response(null, { status: 401 });
+    vi.mocked(createErrorResponseWithTimestamp).mockReturnValueOnce(
+      mockErrorResponse,
+    );
+    vi.mocked(getSessionOrThrow).mockRejectedValueOnce(new Error("No session"));
+
+    const authorizedRequest = sendAuthorizedRequestWithBasicAuth(
+      "https://create-metadata",
+      "POST",
+      {},
+    );
+    const response = await authorizedRequest;
+
+    expect(response).toBe(mockErrorResponse);
+    expect(createErrorResponseWithTimestamp).toHaveBeenCalledWith(null, 401);
+    expect(fetch).not.toHaveBeenCalled();
   });
 
   it("should return the resolved error if fetch fails", async () => {
+    const mockErrorResponse = new Response("Some error occurred", {
+      status: 400,
+    });
+    vi.mocked(createErrorResponseWithTimestamp).mockReturnValueOnce(
+      mockErrorResponse,
+    );
+
     vi.mocked(fetch).mockResolvedValueOnce({
       ok: false,
       status: 400,
@@ -25,19 +59,23 @@ describe("sendAuthorizedRequest", () => {
     } as any);
 
     const authorizedRequest = sendAuthorizedRequestWithBasicAuth(
-      username,
       "https://create-metadata",
       "POST",
       {},
     );
     const response = await authorizedRequest;
-    expect(response?.status).toBe(400);
+    expect(response).toBe(mockErrorResponse);
+    expect(createErrorResponseWithTimestamp).toHaveBeenCalledWith(
+      "Some error occurred",
+      400,
+    );
   });
 
-  it("should include X-Error-Timestamp header when request fails", async () => {
-    const fixedDate = new Date("2026-01-19T10:30:45.123Z");
-    vi.useFakeTimers();
-    vi.setSystemTime(fixedDate);
+  it("should call createErrorResponseWithTimestamp when request fails", async () => {
+    const mockErrorResponse = new Response("Server error", { status: 500 });
+    vi.mocked(createErrorResponseWithTimestamp).mockReturnValueOnce(
+      mockErrorResponse,
+    );
 
     vi.mocked(fetch).mockResolvedValueOnce({
       ok: false,
@@ -46,40 +84,36 @@ describe("sendAuthorizedRequest", () => {
     } as any);
 
     const authorizedRequest = sendAuthorizedRequestWithBasicAuth(
-      username,
       "https://create-metadata",
       "POST",
       {},
     );
     const response = await authorizedRequest;
 
-    expect(response?.status).toBe(500);
-    const timestamp = response?.headers.get("X-Error-Timestamp");
-    expect(timestamp).toBe("2026-01-19T10:30:45.123Z");
-
-    vi.useRealTimers();
+    expect(response).toBe(mockErrorResponse);
+    expect(createErrorResponseWithTimestamp).toHaveBeenCalledWith(
+      "Server error",
+      500,
+    );
   });
 
-  it("should include X-Error-Timestamp header when fetch throws an error", async () => {
-    const fixedDate = new Date("2026-01-19T14:22:10.456Z");
-    vi.useFakeTimers();
-    vi.setSystemTime(fixedDate);
+  it("should call createErrorResponseWithTimestamp when fetch throws an error", async () => {
+    const mockErrorResponse = new Response(null, { status: 500 });
+    vi.mocked(createErrorResponseWithTimestamp).mockReturnValueOnce(
+      mockErrorResponse,
+    );
 
     vi.mocked(fetch).mockRejectedValueOnce(new Error("Network error"));
 
     const authorizedRequest = sendAuthorizedRequestWithBasicAuth(
-      username,
       "https://create-metadata",
       "POST",
       {},
     );
     const response = await authorizedRequest;
 
-    expect(response?.status).toBe(500);
-    const timestamp = response?.headers.get("X-Error-Timestamp");
-    expect(timestamp).toBe("2026-01-19T14:22:10.456Z");
-
-    vi.useRealTimers();
+    expect(response).toBe(mockErrorResponse);
+    expect(createErrorResponseWithTimestamp).toHaveBeenCalledWith();
   });
 
   it("should correctly call fetch", async () => {
@@ -94,7 +128,6 @@ describe("sendAuthorizedRequest", () => {
     };
 
     const authorizedRequest = sendAuthorizedRequestWithBasicAuth(
-      username,
       "https://create-metadata",
       "POST",
       bodyContent,
@@ -120,39 +153,58 @@ describe("sendAuthorizedRequest", () => {
 });
 
 describe("sendAuthorizedRequestWithBearer", () => {
-  // Updated mock to match the SessionInformation interface from _session.ts
   const mockValidSession = {
-    username: "test",
-    id_token: "mock-id-token",
     access_token: "mock-jwt-token-123",
-    refresh_token: "mock-refresh-token",
-    iat: Math.floor(Date.now() / 1000),
-    roles: ["showcases"],
-    expires_at: Math.floor(Date.now() / 1000) + 3600,
-  };
+  } as SessionInformation;
 
   beforeEach(() => {
     vi.resetAllMocks();
     globalThis.fetch = vi.fn();
+    vi.mocked(getSessionOrThrow).mockResolvedValue(mockValidSession);
   });
 
-  it("should return 500 if fetch fails", async () => {
-    vi.mocked(fetch).mockRejectedValueOnce(new Error("Network error"));
+  it("should return 401 if getSessionOrThrow fails", async () => {
+    const mockErrorResponse = new Response(null, { status: 401 });
+    vi.mocked(createErrorResponseWithTimestamp).mockReturnValueOnce(
+      mockErrorResponse,
+    );
+    vi.mocked(getSessionOrThrow).mockRejectedValueOnce(new Error("No session"));
 
     const authorizedRequest = sendAuthorizedRequestWithBearer(
-      mockValidSession,
       "https://api-endpoint",
       "GET",
       undefined,
     );
     const response = await authorizedRequest;
-    expect(response?.status).toBe(500);
+
+    expect(response).toBe(mockErrorResponse);
+    expect(createErrorResponseWithTimestamp).toHaveBeenCalledWith(null, 401);
+    expect(fetch).not.toHaveBeenCalled();
   });
 
-  it("should include X-Error-Timestamp header when response is not ok", async () => {
-    const fixedDate = new Date("2026-01-19T08:15:30.789Z");
-    vi.useFakeTimers();
-    vi.setSystemTime(fixedDate);
+  it("should call createErrorResponseWithTimestamp if fetch fails", async () => {
+    const mockErrorResponse = new Response(null, { status: 500 });
+    vi.mocked(createErrorResponseWithTimestamp).mockReturnValueOnce(
+      mockErrorResponse,
+    );
+
+    vi.mocked(fetch).mockRejectedValueOnce(new Error("Network error"));
+
+    const authorizedRequest = sendAuthorizedRequestWithBearer(
+      "https://api-endpoint",
+      "GET",
+      undefined,
+    );
+    const response = await authorizedRequest;
+    expect(response).toBe(mockErrorResponse);
+    expect(createErrorResponseWithTimestamp).toHaveBeenCalledWith();
+  });
+
+  it("should call createErrorResponseWithTimestamp when response is not ok", async () => {
+    const mockErrorResponse = new Response("Forbidden", { status: 403 });
+    vi.mocked(createErrorResponseWithTimestamp).mockReturnValueOnce(
+      mockErrorResponse,
+    );
 
     vi.mocked(fetch).mockResolvedValueOnce({
       ok: false,
@@ -162,40 +214,36 @@ describe("sendAuthorizedRequestWithBearer", () => {
     } as any);
 
     const authorizedRequest = sendAuthorizedRequestWithBearer(
-      mockValidSession,
       "https://api-endpoint",
       "GET",
       undefined,
     );
     const response = await authorizedRequest;
 
-    expect(response?.status).toBe(403);
-    const timestamp = response?.headers.get("X-Error-Timestamp");
-    expect(timestamp).toBe("2026-01-19T08:15:30.789Z");
-
-    vi.useRealTimers();
+    expect(response).toBe(mockErrorResponse);
+    expect(createErrorResponseWithTimestamp).toHaveBeenCalledWith(
+      "Forbidden",
+      403,
+    );
   });
 
-  it("should include X-Error-Timestamp header when fetch throws an exception", async () => {
-    const fixedDate = new Date("2026-01-19T16:45:20.111Z");
-    vi.useFakeTimers();
-    vi.setSystemTime(fixedDate);
+  it("should call createErrorResponseWithTimestamp when fetch throws an exception", async () => {
+    const mockErrorResponse = new Response(null, { status: 500 });
+    vi.mocked(createErrorResponseWithTimestamp).mockReturnValueOnce(
+      mockErrorResponse,
+    );
 
     vi.mocked(fetch).mockRejectedValueOnce(new Error("Connection timeout"));
 
     const authorizedRequest = sendAuthorizedRequestWithBearer(
-      mockValidSession,
       "https://api-endpoint",
       "POST",
       { data: "test" },
     );
     const response = await authorizedRequest;
 
-    expect(response?.status).toBe(500);
-    const timestamp = response?.headers.get("X-Error-Timestamp");
-    expect(timestamp).toBe("2026-01-19T16:45:20.111Z");
-
-    vi.useRealTimers();
+    expect(response).toBe(mockErrorResponse);
+    expect(createErrorResponseWithTimestamp).toHaveBeenCalledWith();
   });
 
   it("should correctly set Authorization header with Bearer token", async () => {
@@ -206,7 +254,6 @@ describe("sendAuthorizedRequestWithBearer", () => {
     } as any);
 
     const authorizedRequest = sendAuthorizedRequestWithBearer(
-      mockValidSession,
       "https://api-endpoint",
       "GET",
       undefined,
@@ -234,7 +281,6 @@ describe("sendAuthorizedRequestWithBearer", () => {
     };
 
     const authorizedRequest = sendAuthorizedRequestWithBearer(
-      mockValidSession,
       "https://api-endpoint",
       "POST",
       bodyContent,
@@ -272,7 +318,6 @@ describe("sendAuthorizedRequestWithBearer", () => {
     } as any);
 
     const authorizedRequest = sendAuthorizedRequestWithBearer(
-      mockValidSession,
       "https://api-endpoint?param1=value1&param2=value2",
       "GET",
       undefined,
@@ -287,6 +332,11 @@ describe("sendAuthorizedRequestWithBearer", () => {
   });
 
   it("should return an error response if response is not ok", async () => {
+    const mockErrorResponse = new Response("Forbidden", { status: 403 });
+    vi.mocked(createErrorResponseWithTimestamp).mockReturnValueOnce(
+      mockErrorResponse,
+    );
+
     vi.mocked(fetch).mockResolvedValueOnce({
       ok: false,
       status: 403,
@@ -295,7 +345,6 @@ describe("sendAuthorizedRequestWithBearer", () => {
     } as any);
 
     const authorizedRequest = sendAuthorizedRequestWithBearer(
-      mockValidSession,
       "https://api-endpoint",
       "GET",
       undefined,
@@ -303,7 +352,11 @@ describe("sendAuthorizedRequestWithBearer", () => {
 
     const response = await authorizedRequest;
 
-    expect(response?.status).toBe(403);
+    expect(response).toBe(mockErrorResponse);
+    expect(createErrorResponseWithTimestamp).toHaveBeenCalledWith(
+      "Forbidden",
+      403,
+    );
   });
 
   it("should handle response with status 204 properly", async () => {
@@ -314,7 +367,6 @@ describe("sendAuthorizedRequestWithBearer", () => {
     } as any);
 
     const authorizedRequest = sendAuthorizedRequestWithBearer(
-      mockValidSession,
       "https://api-endpoint",
       "DELETE",
       undefined,

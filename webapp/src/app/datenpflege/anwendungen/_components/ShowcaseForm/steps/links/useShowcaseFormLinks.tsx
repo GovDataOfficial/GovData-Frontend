@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { MAX_SHOWCASE_LINKS_COUNT } from "@/app/datenpflege/anwendungen/_components/ShowcaseForm/showcase-formConstants";
 import { i18n } from "@/i18n";
@@ -28,7 +28,6 @@ export function useShowcaseFormLinks({
   maxLinks,
 }: useShowcaseFormLinks) {
   const [wasAdded, setWasAdded] = useState(false);
-  const [linkDeleted, setLinkDeleted] = useState(false);
 
   const addButtonRef = useRef<HTMLButtonElement>(null);
   const firstInputRef = useRef<HTMLInputElement | null>(null);
@@ -41,14 +40,6 @@ export function useShowcaseFormLinks({
     },
     [wasAdded],
   );
-
-  // wait for the add button to render and set focus
-  useEffect(() => {
-    if (linkDeleted) {
-      addButtonRef.current?.focus();
-      setLinkDeleted(false);
-    }
-  }, [linkDeleted]);
 
   const hasDefaultLinks = defaultLinks && defaultLinks.length > 0;
   const [liveRegionMessage, setLiveRegionMessage] = useState<string>("");
@@ -115,7 +106,8 @@ export function useShowcaseFormLinks({
           : i18n.t("showcaseform.field.links.deleted.noName"),
       );
       setWasAdded(false);
-      setLinkDeleted(true);
+      // focus button after DOM updates
+      setTimeout(() => addButtonRef.current?.focus(), 0);
     }
   };
 

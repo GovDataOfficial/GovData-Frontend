@@ -1,8 +1,17 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 
+import { PAGES_AUTH } from "@/app/_lib/URLHelper";
+import { API_ENDPOINTS } from "@/app/api/apiEndpoints";
 import { MetadataFormRequestError } from "@/app/datenpflege/metadaten/_components/MetadataForm/partials/MetadataFormRequestError";
 import { MetadataRequestError } from "@/app/datenpflege/metadaten/_components/MetadataForm/useMetadataForm";
+
+vi.mock("next/navigation", () => ({
+  usePathname: vi.fn(() => PAGES_AUTH.manage_metadata_form_add),
+  useSearchParams: vi.fn(() => ({
+    toString: () => "",
+  })),
+}));
 
 describe("MetadataFormRequestError", () => {
   test("should render correct alert for general error", () => {
@@ -147,5 +156,35 @@ describe("MetadataFormRequestError", () => {
 
     const mailLink = screen.getByRole("link", { name: testMail });
     expect(mailLink).toHaveAttribute("href", `mailto:${testMail}`);
+  });
+
+  test("should render correct alert for session timeout error with login link", () => {
+    render(
+      <MetadataFormRequestError
+        requestError={MetadataRequestError.sessionTimeout}
+      />,
+    );
+
+    const alert = screen.getByRole("alert");
+    within(alert).getByText("Ihre Sitzung ist abgelaufen", { exact: false });
+
+    const loginLink = within(alert).getByRole("link", {
+      name: "melden Sie sich erneut an",
+    });
+    expect(loginLink).toHaveAttribute(
+      "href",
+      `${API_ENDPOINTS.AUTH.LOGIN}?redirectTo=${encodeURIComponent(PAGES_AUTH.manage_metadata_form_add)}`,
+    );
+  });
+
+  test("should render correct alert for forbidden error", () => {
+    render(
+      <MetadataFormRequestError
+        requestError={MetadataRequestError.forbidden}
+      />,
+    );
+
+    const alert = screen.getByRole("alert");
+    within(alert).getByText("Fehlende Berechtigung", { exact: false });
   });
 });

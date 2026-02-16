@@ -17,27 +17,24 @@ describe("postMetadata", () => {
   });
 
   it("should call sendAuthorizedRequestWithBasicAuth with correct data", async () => {
-    const username = "test";
     const request = new Request("https://example.com", {
       method: "POST",
       body: new FormData(),
     });
     const postRequest = postMetadata(
-      username,
       request,
       "https://test.com/create-metadata",
       "POST",
     );
     const response = await postRequest;
 
-    const [firstParam, secondParam, thirdParam, fourthParam] = vi.mocked(
+    const [firstParam, secondParam, thirdParam] = vi.mocked(
       sendAuthorizedRequestWithBasicAuth,
     ).mock.calls[0];
 
-    expect(firstParam).toEqual(username);
-    expect(secondParam).toEqual("https://test.com/create-metadata");
-    expect(thirdParam).toEqual("POST");
-    expect(fourthParam).toBeDefined();
+    expect(firstParam).toEqual("https://test.com/create-metadata");
+    expect(secondParam).toEqual("POST");
+    expect(thirdParam).toBeDefined();
     expect(response).not.toBeUndefined();
   });
 });

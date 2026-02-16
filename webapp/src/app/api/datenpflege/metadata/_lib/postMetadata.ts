@@ -3,7 +3,6 @@ import { convertMetadataFormData } from "@/app/api/datenpflege/metadata/_lib/con
 import { HttpMethod } from "@/types/types";
 
 export async function postMetadata(
-  username: string,
   request: Request,
   endpoint: string,
   method: HttpMethod,
@@ -11,5 +10,5 @@ export async function postMetadata(
   const formData = await request.formData();
   const data = convertMetadataFormData(formData);
 
-  return sendAuthorizedRequestWithBasicAuth(username, endpoint, method, data);
+  return sendAuthorizedRequestWithBasicAuth(endpoint, method, data);
 }
