@@ -1,12 +1,13 @@
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { Map, View } from "ol";
-import { getCenter } from "ol/extent";
 import Feature from "ol/Feature";
 import Polygon from "ol/geom/Polygon";
 import TileLayer from "ol/layer/Tile";
 import { fromLonLat } from "ol/proj";
 import OSM from "ol/source/OSM";
 import TileWMS from "ol/source/TileWMS";
+
+import { defaultConfigurationOptions } from "@/configuration/options/options.default";
 
 import {
   createTileLayer,
@@ -17,6 +18,12 @@ import {
   transformBBox,
   validateBoundingBoxValue,
 } from "../_lib/olUtils";
+
+vi.mock("@/configuration/options/options", () => ({
+  getConfigurationOptions: vi
+    .fn()
+    .mockReturnValue({ ...defaultConfigurationOptions }),
+}));
 
 describe("olUtils", () => {
   class ResizeObserverMock {
@@ -34,18 +41,15 @@ describe("olUtils", () => {
     vi.unstubAllGlobals();
   });
 
-  it("should create a view with OSM active", () => {
-    const view = createView(true);
-    expect(view).toBeInstanceOf(View);
-    expect(view.getCenter()).toEqual(fromLonLat([9, 48.66]));
-    expect(view.getZoom()).toBe(8);
-  });
-
-  it("should create a view with OSM inactive", () => {
+  it("should create a view", () => {
     const view = createView(false);
     expect(view).toBeInstanceOf(View);
-    expect(view.getCenter()).toEqual(fromLonLat([9, 51]));
-    expect(view.getZoom()).toBe(6);
+    expect(view.getCenter()).toEqual(
+      defaultConfigurationOptions.locationsearch.view.center,
+    );
+    expect(view.getZoom()).toBe(
+      defaultConfigurationOptions.locationsearch.view.zoom,
+    );
   });
 
   it("should create a tile layer with OSM active", () => {

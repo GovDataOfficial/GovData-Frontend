@@ -20,7 +20,7 @@ export function TeaserBoxNumber({
   return (
     <TeaserBox theme="dark" href={href}>
       <div className="gd-teaser-box-numbers">
-        <SVG size="32" icon={icon} />
+        <SVG size="32" icon={icon} className="inverted" />
         <div className="gd-teaser-box-numbers-heading mt-1">
           {docCount && numberToLocaleString(docCount)}
         </div>

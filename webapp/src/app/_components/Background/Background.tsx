@@ -1,5 +1,8 @@
 import { PropsWithChildren } from "react";
 
+import { isFeatureEnabled } from "@/app/_lib/features";
+import { Feature } from "@/configuration/featureFlags/types";
+
 import connectionmap_mini_blog from "./images/connectionmap_mini_blog.jpg";
 import connectionmap_mini_data from "./images/connectionmap_mini_data.jpg";
 import connectionmap_mini_devcorner from "./images/connectionmap_mini_devcorner.jpg";
@@ -55,9 +58,13 @@ export function Background({
     <div className="gd-search-container">
       <div
         className={`gd-search`}
-        style={{
-          backgroundImage: `url(${image.src})`,
-        }}
+        style={
+          isFeatureEnabled(Feature.useBackgroundImage)
+            ? {
+                backgroundImage: `url(${image.src})`,
+              }
+            : {}
+        }
       >
         {children ? children : <div className="searchFormPlaceholder" />}
       </div>

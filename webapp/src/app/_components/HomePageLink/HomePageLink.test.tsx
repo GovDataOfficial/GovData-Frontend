@@ -10,7 +10,7 @@ describe("Homepagelink", () => {
     screen.getByText("Hier geht es");
     const link = screen.getByRole("link");
 
-    expect(link).toHaveTextContent("zur Startseite von GovData");
+    expect(link.textContent).toMatch(/^zur Startseite von /);
     expect(link).toHaveAttribute("href", "/");
   });
 });

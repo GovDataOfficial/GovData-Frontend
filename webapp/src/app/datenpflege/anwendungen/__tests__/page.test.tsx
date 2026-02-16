@@ -55,7 +55,7 @@ describe("Landing Page", () => {
   });
 
   test("should have correct meta info", () => {
-    expect(metadata.title).toBe("Anwendungen - GovData");
+    expect(metadata.title).toContain("Anwendungen - ");
   });
 
   test("should show table", async () => {

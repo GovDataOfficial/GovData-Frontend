@@ -26,6 +26,7 @@ export function SectionSchnittstellen() {
         i18nKey="sparql.schnittstellen.paragraph1"
         htmlElement="paragraph"
         params={{
+          portalName: i18n.t("portal.name"),
           linkMetadatenkatalog: (
             <a
               href={PAGES.search_details_dataset + "/govdata-metadatenkatalog"}

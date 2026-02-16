@@ -15,8 +15,6 @@ describe("Showcase SuccessPage", () => {
   });
 
   test("should generate correct metadata", () => {
-    expect(metadata.title).toBe(
-      "Anwendung erfolgreich veröffentlicht - GovData",
-    );
+    expect(metadata.title).toContain("Anwendung erfolgreich veröffentlicht -");
   });
 });

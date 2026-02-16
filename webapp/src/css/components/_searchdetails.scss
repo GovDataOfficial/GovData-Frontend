@@ -64,13 +64,3 @@
     }
   }
 }
-
-.search-details-preview-error {
-  background-color: $clr-primary-100;
-  color: $clr-primary-500;
-  border-radius: 0.25rem;
-  @extend .paragraph-extra-small;
-  display: flex;
-  align-items: center;
-  padding: map-get($spacers, "0_5") map-get($spacers, 1);
-}

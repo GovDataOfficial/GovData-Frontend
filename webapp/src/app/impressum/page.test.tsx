@@ -16,8 +16,8 @@ describe("Impressum Page", () => {
     const metadata = await generateMetadata();
 
     expect(metadata).toBeDefined();
-    expect(metadata).toHaveProperty("title", "mein Title - GovData");
-    expect(metadata.openGraph).toHaveProperty("title", "mein Title - GovData");
+    expect(metadata.title).toMatch(/^mein Title -/);
+    expect(metadata.openGraph?.title).toMatch(/^mein Title -/);
 
     expect(metadata).toHaveProperty("description", undefined);
     expect(metadata.openGraph).toHaveProperty("description", undefined);
@@ -30,8 +30,8 @@ describe("Impressum Page", () => {
     const metadata = await generateMetadata();
 
     expect(metadata).toBeDefined();
-    expect(metadata).toHaveProperty("title", "mein Title - GovData");
-    expect(metadata.openGraph).toHaveProperty("title", "mein Title - GovData");
+    expect(metadata.title).toMatch(/^mein Title -/);
+    expect(metadata.openGraph?.title).toMatch(/^mein Title -/);
 
     expect(metadata).toHaveProperty("description", "Test1234");
     expect(metadata.openGraph).toHaveProperty("description", "Test1234");

@@ -6,7 +6,7 @@ import { i18n } from "@/i18n";
 
 export function MetadataOrganizationError() {
   const { t } = i18n;
-  const mailFitko = process.env.mail_fitko;
+  const mailFitko = process.env.mail_datamanagement;
   const mail = <a href={`mailto:${mailFitko}`}>{mailFitko}</a>;
   const username = <strong>{t("username")}</strong>;
   return (

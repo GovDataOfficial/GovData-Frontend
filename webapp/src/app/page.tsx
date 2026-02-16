@@ -3,9 +3,11 @@ import React from "react";
 import { EditorialContentMainPage } from "@/app/_components/EditorialContent/EditorialContentMainPage";
 import { RegionSearch } from "@/app/_components/RegionSearch/RegionSearch";
 import { TeaserBoxes } from "@/app/_components/TeaserBox/TeaserBoxes";
+import { isFeatureEnabled } from "@/app/_lib/features";
 import { fetchTypo3Data } from "@/app/_lib/getData";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
 import { endpoints } from "@/configuration/endpoints";
+import { Feature } from "@/configuration/featureFlags/types";
 import { i18n } from "@/i18n";
 
 export const metadata = metaDataGenerator({
@@ -20,7 +22,7 @@ export default async function Home() {
     <>
       <TeaserBoxes />
       <EditorialContentMainPage pageData={pageData} />
-      <RegionSearch />
+      {isFeatureEnabled(Feature.showRegionSearch) && <RegionSearch />}
     </>
   );
 }

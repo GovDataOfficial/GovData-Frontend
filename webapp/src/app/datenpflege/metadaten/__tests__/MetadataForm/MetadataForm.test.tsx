@@ -231,7 +231,12 @@ describe("MetadataForm", () => {
   });
 
   test("should show a general error after a failed request", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce({ status: 500, ok: false } as any);
+    vi.mocked(fetch).mockResolvedValueOnce({
+      status: 500,
+      ok: false,
+      headers: { get: vi.fn(() => null) },
+      text: vi.fn().mockResolvedValueOnce(""),
+    } as any);
     const user = userEvent.setup();
 
     render(
@@ -255,8 +260,54 @@ describe("MetadataForm", () => {
     });
   });
 
+  test("should show timestamp in general error after a failed request", async () => {
+    const timestamp = "2026-01-19T10:30:45.123Z";
+    vi.mocked(fetch).mockResolvedValueOnce({
+      status: 500,
+      ok: false,
+      headers: {
+        get: vi.fn((key: string) =>
+          key === "X-Error-Timestamp" ? timestamp : null,
+        ),
+      },
+      text: vi.fn().mockResolvedValueOnce(""),
+    } as any);
+    const user = userEvent.setup();
+
+    render(
+      <MetadataForm
+        categories={[]}
+        licenses={[
+          { id: "license1", title: "license1", url: "http://example.com" },
+        ]}
+        organizations={organizations}
+        metadata={validMetadata}
+        {...commonLinks}
+      />,
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: /speichern und schließen/i }),
+    );
+    const alert = screen.getByRole("alert");
+    within(alert).getByText("Es ist ein Fehler aufgetreten", {
+      exact: false,
+    });
+    within(alert).getByText(
+      "genauen Zeitpunkt (19.01.2026 um 10:30:45 Uhr (UTC))",
+      {
+        exact: false,
+      },
+    );
+  });
+
   test("should show a duplicate title error after a failed request", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce({ status: 409, ok: false } as any);
+    vi.mocked(fetch).mockResolvedValueOnce({
+      status: 409,
+      ok: false,
+      headers: { get: vi.fn(() => null) },
+      text: vi.fn().mockResolvedValueOnce(""),
+    } as any);
     const user = userEvent.setup();
 
     render(
@@ -281,7 +332,12 @@ describe("MetadataForm", () => {
   });
 
   test("should show a data deleted error after a failed request", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce({ status: 404, ok: false } as any);
+    vi.mocked(fetch).mockResolvedValueOnce({
+      status: 404,
+      ok: false,
+      headers: { get: vi.fn(() => null) },
+      text: vi.fn().mockResolvedValueOnce(""),
+    } as any);
     const user = userEvent.setup();
 
     render(
@@ -306,7 +362,12 @@ describe("MetadataForm", () => {
   });
 
   test("should show a validation error after a failed request", async () => {
-    vi.mocked(fetch).mockResolvedValueOnce({ status: 400, ok: false } as any);
+    vi.mocked(fetch).mockResolvedValueOnce({
+      status: 400,
+      ok: false,
+      headers: { get: vi.fn(() => null) },
+      text: vi.fn().mockResolvedValueOnce(""),
+    } as any);
     const user = userEvent.setup();
 
     render(
@@ -342,6 +403,7 @@ describe("MetadataForm", () => {
     vi.mocked(fetch).mockResolvedValueOnce({
       status: 400,
       ok: false,
+      headers: { get: vi.fn(() => null) },
       text: vi.fn().mockResolvedValueOnce(error),
     } as any);
     const user = userEvent.setup();

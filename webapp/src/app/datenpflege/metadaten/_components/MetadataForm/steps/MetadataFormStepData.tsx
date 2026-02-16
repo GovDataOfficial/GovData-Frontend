@@ -1,8 +1,10 @@
 import { useState } from "react";
 
 import { Select } from "@/app/_components/Inputs/Select";
+import { isFeatureEnabled } from "@/app/_lib/features";
 import { METADATA_FORM_INPUTS } from "@/app/datenpflege/metadaten/_components/MetadataForm/metadata-formConstants";
 import { MetadataFormStepContainer } from "@/app/datenpflege/metadaten/_components/MetadataForm/partials/MetadataFormStepContainer";
+import { Feature } from "@/configuration/featureFlags/types";
 import { i18n } from "@/i18n";
 import { OrganizationSorted } from "@/types/types";
 
@@ -58,19 +60,20 @@ export function MetadataFormStepData({
           </option>
         ))}
       </Select>
-
-      <Select
-        label={i18n.t("metadataform.field.contributorId.label")}
-        name={METADATA_FORM_INPUTS.CONTRIBUTOR_ID}
-        value={selectedContributorId}
-        required
-      >
-        {selectedOrg?.contributorIds.map((contributorId) => (
-          <option key={contributorId} value={contributorId}>
-            {contributorId}
-          </option>
-        ))}
-      </Select>
+      {isFeatureEnabled(Feature.contributorIdIsRequired) && (
+        <Select
+          label={i18n.t("metadataform.field.contributorId.label")}
+          name={METADATA_FORM_INPUTS.CONTRIBUTOR_ID}
+          value={selectedContributorId}
+          required
+        >
+          {selectedOrg?.contributorIds.map((contributorId) => (
+            <option key={contributorId} value={contributorId}>
+              {contributorId}
+            </option>
+          ))}
+        </Select>
+      )}
     </MetadataFormStepContainer>
   );
 }

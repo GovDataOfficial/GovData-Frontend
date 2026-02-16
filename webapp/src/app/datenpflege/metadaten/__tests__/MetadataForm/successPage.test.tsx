@@ -13,8 +13,8 @@ describe("Metadata SuccessPage", () => {
   });
 
   test("should generate correct metadata", () => {
-    expect(metadata.title).toBe(
-      "Metadatensatz erfolgreich veröffentlicht - GovData",
+    expect(metadata.title).toContain(
+      "Metadatensatz erfolgreich veröffentlicht",
     );
   });
 });

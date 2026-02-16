@@ -17,7 +17,7 @@ export function FilterAreaResetButton() {
 
   return (
     <a href={resetLink} className="d-flex">
-      <SVG className="gd-filterarea-icon" icon={icons.reset} />
+      <SVG className="gd-filterarea-icon primary" icon={icons.reset} />
       {i18n.t("search.results.filter.reset")}
     </a>
   );

@@ -16,6 +16,9 @@
   border: 1px solid $clr-neutral-grey-300;
   border-radius: $spacer * 0.5;
   color: $clr-neutral-grey-800;
+  img {
+    filter: $filter-secondary;
+  }
 
   &.interactive {
     &:hover {

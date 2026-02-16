@@ -99,11 +99,23 @@ button {
     background-color: #fff;
     color: $clr-primary-400;
     margin-left: rem-calc(8);
+    img {
+      filter: $filter-primary;
+    }
     &:hover {
       background-color: $clr-neutral-grey-100;
       img {
-        filter: brightness(0) saturate(100%) invert(19%) sepia(21%)
-          saturate(4842%) hue-rotate(172deg) brightness(96%) contrast(101%);
+        filter: $filter-secondary;
+      }
+    }
+    &.inverted {
+      img {
+        filter: $filter-secondary;
+      }
+      &:hover {
+        img {
+          filter: $filter-primary;
+        }
       }
     }
   }

@@ -33,7 +33,7 @@ export function ResourcePreviewIcon({
     <ButtonIcon
       onClick={onClick}
       title={i18n.t("search.details.preview.tooltip")}
-      className={`gd-button-icon-tertiary ${className}`}
+      className={`gd-button-icon-tertiary inverted ${className}`}
       icon={icon}
       size="big"
       tooltipPlacement="bottom"

@@ -25,20 +25,20 @@ export function SocialMediaLinks() {
   }
 
   return (
-    <div className="col-12 mt-2 mt-sm-0 col-sm-5 order-last order-sm-first">
+    <>
       <span className="clr-white paragraph-small">
         {i18n.t("footer.social.visit")}
       </span>
       <ul className="social-icons mt-0_5">
         {links.map((link) => (
           <li key={link.title}>
-            <a href={link.url} target="_blank" title={link.title}>
+            <a href={link.url} target="_blank" title={link.title} rel="me">
               <i className={"fa-brands " + link.icon} aria-hidden="true" />
               <span className="offscreen">{link.title}</span>
             </a>
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 }

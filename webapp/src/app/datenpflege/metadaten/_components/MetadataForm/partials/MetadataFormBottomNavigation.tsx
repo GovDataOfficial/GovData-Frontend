@@ -34,7 +34,7 @@ export function MetadataFormBottomNavigation({
             onClick={() => setCurrentStep(currentStep - 1)}
             className="me-2"
           >
-            <SVG icon={icons.arrowLeftLongBlue} size="big" />
+            <SVG icon={icons.arrowLeftLong} size="big" />
             <span className="ms-0_5">
               {i18n.t("metadataform.navigation.back")}
             </span>
@@ -65,7 +65,7 @@ export function MetadataFormBottomNavigation({
                 ? i18n.t("metadataform.navigation.toSummary")
                 : i18n.t("metadataform.navigation.forward")}
             </span>
-            <SVG icon={icons.arrowRightLongWhite} size="big" />
+            <SVG icon={icons.arrowRightLong} size="big" />
           </Button>
         )}
       </div>

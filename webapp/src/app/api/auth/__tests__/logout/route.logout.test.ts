@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { NextRequest } from "next/server.js";
 import * as client from "openid-client";
 
-import { checkFeatureFlagForDataManagement } from "@/app/api/_lib/checkFeatureFlags.js";
+import { checkFeatureFlagForEnvVarDataManagement } from "@/app/api/_lib/checkEnvVarFeatureFlags.js";
 import { getKeyCloakClient, KeycloakConfig } from "@/app/api/auth/_keycloak";
 import { deleteSession, getSession } from "@/app/api/auth/_session";
 
@@ -13,7 +13,7 @@ vi.mock("next/navigation");
 vi.mock("openid-client");
 vi.mock("@/app/api/auth/_keycloak");
 vi.mock("@/app/api/auth/_session");
-vi.mock("@/app/api/_lib/checkFeatureFlags");
+vi.mock("@/app/api/_lib/checkEnvVarFeatureFlags");
 
 describe("auth / logout", () => {
   const endSessionUrl = new URL("http://killsession/");
@@ -29,7 +29,7 @@ describe("auth / logout", () => {
     expires_at: 0,
   };
 
-  vi.mocked(checkFeatureFlagForDataManagement).mockReturnValue(true);
+  vi.mocked(checkFeatureFlagForEnvVarDataManagement).mockReturnValue(true);
 
   test("should return a redirect response and call buildEndSessionUrl", async () => {
     vi.mocked(getSession).mockResolvedValue(mockSession);
@@ -49,7 +49,7 @@ describe("auth / logout", () => {
   });
 
   test("should return 501 if feature is not enabled", async () => {
-    vi.mocked(checkFeatureFlagForDataManagement).mockReturnValue(false);
+    vi.mocked(checkFeatureFlagForEnvVarDataManagement).mockReturnValue(false);
     const { GET } = await import("../../logout/route.js");
     const response = await GET(new NextRequest("https://www.foo.de"));
     expect(response?.status).toBe(501);

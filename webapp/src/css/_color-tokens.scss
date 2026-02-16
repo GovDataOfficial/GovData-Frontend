@@ -83,10 +83,10 @@ $mastodon-purple: #563acc;
 
 $disabled-text: #737373;
 
-$filter-primary: brightness(0) saturate(100%) invert(25%) sepia(89%)
-  saturate(2036%) hue-rotate(179deg) brightness(92%) contrast(101%);
+$focus-outline-color: #0073a8;
 
-$filter-white: brightness(0) saturate(100%) invert(100%);
+$alert-info-bg: #e6f1f6;
+$alert-info-clr: #0073a8;
 
 // a colors map - name => color
 $colors: (
@@ -105,90 +105,16 @@ $colors: (
   "magenta": $magenta,
 );
 
-// generate color classes from the colors map
-// you can use it like: <div class="bg-data-green clr-data-green"></div>
-@each $color_name, $color_code in $colors {
-  // background color classes
-  .bg-#{$color_name} {
-    --class-item-bg: #{$color_code};
-    background-color: $color_code;
-  }
+$filter-primary: brightness(0) saturate(100%) invert(25%) sepia(89%)
+  saturate(2036%) hue-rotate(179deg) brightness(92%) contrast(101%);
 
-  // color classes
-  .clr-#{$color_name} {
-    --class-item-clr: #{$color_code};
-    color: $color_code;
-  }
-}
+$filter-secondary: invert(11%) sepia(8%) saturate(3498%) hue-rotate(173deg)
+  brightness(98%) contrast(90%);
 
-// own colors
-$checkbox-border: darken($kontur-gray, 10%);
+$filter-white: brightness(0) saturate(100%) invert(100%);
 
-@mixin navcolor($background-color, $color) {
-  &.active > a {
-    background-color: $background-color;
-    color: $color;
+$filter-info: invert(20%) sepia(36%) saturate(2701%) hue-rotate(171deg)
+  brightness(91%) contrast(101%);
 
-    &:focus {
-      background-color: transparent;
-      color: $clr-media-grey-500;
-    }
-  }
-
-  a::after {
-    border-top-color: $background-color;
-    color: $background-color;
-  }
-}
-
-// colors for the background of the main menu...
-#layout_3 {
-  // Daten
-  @include navcolor($clr-media-green-500, $white);
-}
-
-#layout_6 {
-  // Dokumente
-  @include navcolor($dokument-violett, $white);
-}
-
-#layout_7 {
-  // Showcases
-  @include navcolor($showcase-blue, $white);
-}
-
-#layout_8 {
-  // Neues
-  @include navcolor($blog-red, $white);
-}
-
-#layout_9 {
-  // Bibliothek
-  @include navcolor($black, $white);
-}
-
-#layout_47 {
-  // Entwicklerecke
-  @include navcolor($devcorner-green, $white);
-}
-
-#layout_51 {
-  // Metadatenqualität
-  @include navcolor($metadataquality-pink, $white);
-}
-
-// colors for mediatype-icons
-$mediatypes: (
-  "article": $clr-media-grey-500,
-  "blog": $blog-red,
-  "dataset": $clr-media-green-500,
-  "showcase": $clr-media-blue-500,
-);
-
-@each $suffix, $typeColor in $mediatypes {
-  .mediatype-icon {
-    &.mediatype-#{$suffix} {
-      background-color: #{$typeColor};
-    }
-  }
-}
+$filter-error: invert(23%) sepia(20%) saturate(6719%) hue-rotate(341deg)
+  brightness(98%) contrast(87%);

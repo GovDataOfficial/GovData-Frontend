@@ -34,6 +34,54 @@ describe("sendAuthorizedRequest", () => {
     expect(response?.status).toBe(400);
   });
 
+  it("should include X-Error-Timestamp header when request fails", async () => {
+    const fixedDate = new Date("2026-01-19T10:30:45.123Z");
+    vi.useFakeTimers();
+    vi.setSystemTime(fixedDate);
+
+    vi.mocked(fetch).mockResolvedValueOnce({
+      ok: false,
+      status: 500,
+      text: vi.fn().mockResolvedValue("Server error"),
+    } as any);
+
+    const authorizedRequest = sendAuthorizedRequestWithBasicAuth(
+      username,
+      "https://create-metadata",
+      "POST",
+      {},
+    );
+    const response = await authorizedRequest;
+
+    expect(response?.status).toBe(500);
+    const timestamp = response?.headers.get("X-Error-Timestamp");
+    expect(timestamp).toBe("2026-01-19T10:30:45.123Z");
+
+    vi.useRealTimers();
+  });
+
+  it("should include X-Error-Timestamp header when fetch throws an error", async () => {
+    const fixedDate = new Date("2026-01-19T14:22:10.456Z");
+    vi.useFakeTimers();
+    vi.setSystemTime(fixedDate);
+
+    vi.mocked(fetch).mockRejectedValueOnce(new Error("Network error"));
+
+    const authorizedRequest = sendAuthorizedRequestWithBasicAuth(
+      username,
+      "https://create-metadata",
+      "POST",
+      {},
+    );
+    const response = await authorizedRequest;
+
+    expect(response?.status).toBe(500);
+    const timestamp = response?.headers.get("X-Error-Timestamp");
+    expect(timestamp).toBe("2026-01-19T14:22:10.456Z");
+
+    vi.useRealTimers();
+  });
+
   it("should correctly call fetch", async () => {
     vi.mocked(fetch).mockResolvedValueOnce({
       ok: true,
@@ -99,6 +147,55 @@ describe("sendAuthorizedRequestWithBearer", () => {
     );
     const response = await authorizedRequest;
     expect(response?.status).toBe(500);
+  });
+
+  it("should include X-Error-Timestamp header when response is not ok", async () => {
+    const fixedDate = new Date("2026-01-19T08:15:30.789Z");
+    vi.useFakeTimers();
+    vi.setSystemTime(fixedDate);
+
+    vi.mocked(fetch).mockResolvedValueOnce({
+      ok: false,
+      status: 403,
+      statusText: "Forbidden",
+      text: vi.fn().mockResolvedValue("Forbidden"),
+    } as any);
+
+    const authorizedRequest = sendAuthorizedRequestWithBearer(
+      mockValidSession,
+      "https://api-endpoint",
+      "GET",
+      undefined,
+    );
+    const response = await authorizedRequest;
+
+    expect(response?.status).toBe(403);
+    const timestamp = response?.headers.get("X-Error-Timestamp");
+    expect(timestamp).toBe("2026-01-19T08:15:30.789Z");
+
+    vi.useRealTimers();
+  });
+
+  it("should include X-Error-Timestamp header when fetch throws an exception", async () => {
+    const fixedDate = new Date("2026-01-19T16:45:20.111Z");
+    vi.useFakeTimers();
+    vi.setSystemTime(fixedDate);
+
+    vi.mocked(fetch).mockRejectedValueOnce(new Error("Connection timeout"));
+
+    const authorizedRequest = sendAuthorizedRequestWithBearer(
+      mockValidSession,
+      "https://api-endpoint",
+      "POST",
+      { data: "test" },
+    );
+    const response = await authorizedRequest;
+
+    expect(response?.status).toBe(500);
+    const timestamp = response?.headers.get("X-Error-Timestamp");
+    expect(timestamp).toBe("2026-01-19T16:45:20.111Z");
+
+    vi.useRealTimers();
   });
 
   it("should correctly set Authorization header with Bearer token", async () => {

@@ -57,7 +57,7 @@ export function OverviewButtonDelete({
   // should this be a button? a progressive enhanced anchor would be better
   return (
     <Button variant="a" title={dataTitle} onClick={() => confirmAndDelete()}>
-      <SVG icon={icons.trash} />
+      <SVG icon={icons.trash} className="primary" />
       {t("overview.table.delete")}
     </Button>
   );

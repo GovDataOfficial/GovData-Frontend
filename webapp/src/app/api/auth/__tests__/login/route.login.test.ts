@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { NextRequest } from "next/server.js";
 import * as client from "openid-client";
 
-import { checkFeatureFlagForDataManagement } from "@/app/api/_lib/checkFeatureFlags.js";
+import { checkFeatureFlagForEnvVarDataManagement } from "@/app/api/_lib/checkEnvVarFeatureFlags.js";
 import { API_ENDPOINTS } from "@/app/api/apiEndpoints.js";
 import {
   getCallbackUriFromRequest,
@@ -17,7 +17,7 @@ vi.mock("openid-client");
 vi.mock("next/navigation");
 vi.mock("@/app/api/auth/_session");
 vi.mock("@/app/api/auth/_keycloak");
-vi.mock("@/app/api/_lib/checkFeatureFlags");
+vi.mock("@/app/api/_lib/checkEnvVarFeatureFlags");
 
 describe("auth / login", () => {
   const authUrl = new URL("http://foo/auth");
@@ -36,7 +36,7 @@ describe("auth / login", () => {
       "codeChallengeTest",
     );
     vi.mocked(client.buildAuthorizationUrl).mockReturnValue(authUrl);
-    vi.mocked(checkFeatureFlagForDataManagement).mockReturnValue(true);
+    vi.mocked(checkFeatureFlagForEnvVarDataManagement).mockReturnValue(true);
   });
 
   test("should return a redirect response", async () => {
@@ -75,7 +75,7 @@ describe("auth / login", () => {
   });
 
   test("should return 501 if feature is not enabled", async () => {
-    vi.mocked(checkFeatureFlagForDataManagement).mockReturnValue(false);
+    vi.mocked(checkFeatureFlagForEnvVarDataManagement).mockReturnValue(false);
     const { GET } = await import("../../login/route.js");
     const response = await GET(
       new NextRequest(`https://www.foo.de?redirectTo=$redirectTo`),

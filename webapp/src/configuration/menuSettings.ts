@@ -1,5 +1,7 @@
 import { MenuItem } from "@/app/_components/MenuItem/MenuItem";
 import { MenuItemMobile } from "@/app/_components/MenuItem/MenuItemMobile";
+import { isFeatureEnabled } from "@/app/_lib/features";
+import { Feature } from "@/configuration/featureFlags/types";
 import { i18n } from "@/i18n";
 
 const dataMenuItem: MenuItem = {
@@ -38,10 +40,24 @@ const informationMenuitem: MenuItem = {
   color: "black",
 };
 
-export const menuSettings: MenuItem[] =
-  process.env.metadata_quality_dashboard_active === "1"
-    ? [dataMenuItem, metaDataQuality, sparqlMenuItem, informationMenuitem]
-    : [dataMenuItem, sparqlMenuItem, informationMenuitem];
+export const menuSettings: MenuItem[] = (() => {
+  const baseItems = [dataMenuItem];
+
+  // Add metadata quality dashboard if environment variable is set
+  if (process.env.metadata_quality_dashboard_active === "1") {
+    baseItems.push(metaDataQuality);
+  }
+
+  // Add SPARQL menu item if feature is enabled
+  if (isFeatureEnabled(Feature.showSparql)) {
+    baseItems.push(sparqlMenuItem);
+  }
+
+  // Always add information menu item
+  baseItems.push(informationMenuitem);
+
+  return baseItems;
+})();
 
 export const metaDataQualityMenu = [
   {

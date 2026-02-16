@@ -6,8 +6,14 @@ type InputCheckbox = {
   name: string;
   label: string;
   defaultChecked?: boolean;
+  required?: boolean;
 };
-export function InputCheckbox({ label, name, defaultChecked }: InputCheckbox) {
+export function InputCheckbox({
+  label,
+  name,
+  defaultChecked,
+  required = false,
+}: InputCheckbox) {
   const id = useId();
 
   return (
@@ -17,6 +23,7 @@ export function InputCheckbox({ label, name, defaultChecked }: InputCheckbox) {
         type="checkbox"
         name={name}
         defaultChecked={defaultChecked}
+        required={required}
       />
       <Label label={label} htmlFor={id} />
     </div>

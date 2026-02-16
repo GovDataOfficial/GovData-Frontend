@@ -31,24 +31,30 @@ export default function Search({
               </div>
             </div>
           )}
-          <div
-            className={`gd-search-searchbox ${withTeaser ? "py-8" : "py-4"} px-2  `}
-          >
-            <div className="gd-search-searchbox-row-main">
-              <SearchField keepFiltersForSearch={keepFiltersForSearch} />
-              <div className="gd-search-submit">
-                <button className="button-search" type="submit" title="Suchen">
-                  <span className="d-none d-sm-block">
-                    {t("search.button.title")}
-                  </span>
-                  <span className="d-inline-block d-sm-none sr-only">
-                    {t("search.button.title")}
-                  </span>
-                  <span className="d-inline-block d-sm-none sbi-lupe"></span>
-                </button>
+          <div className="gd-search-searchbox-container">
+            <div
+              className={`gd-search-searchbox ${withTeaser ? "py-8" : "py-4"} px-2  `}
+            >
+              <div className="gd-search-searchbox-row-main">
+                <SearchField keepFiltersForSearch={keepFiltersForSearch} />
+                <div className="gd-search-submit">
+                  <button
+                    className="button-search"
+                    type="submit"
+                    title="Suchen"
+                  >
+                    <span className="d-none d-sm-block">
+                      {t("search.button.title")}
+                    </span>
+                    <span className="d-inline-block d-sm-none sr-only">
+                      {t("search.button.title")}
+                    </span>
+                    <span className="d-inline-block d-sm-none sbi-lupe"></span>
+                  </button>
+                </div>
               </div>
+              <SearchSecondaryLinks />
             </div>
-            <SearchSecondaryLinks />
           </div>
         </form>
       </Background>

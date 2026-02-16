@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
+import { InfoBadge } from "@/app/_components/InfoBoxes/InfoBadge";
 import { PreviewLoading } from "@/app/suche/_components/common/PreviewLoading";
-import { ResourcePreviewError } from "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewError";
 import { ResourcePreviewMap } from "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewMap";
 import { useFetchPreviewData } from "@/app/suche/_components/ResourceTable/ResourcePreview/useFetchPreviewData";
 import { i18n } from "@/i18n";
@@ -43,7 +43,7 @@ function ResourcePreview(props: ResourcePreview) {
   }
 
   if (error) {
-    return <ResourcePreviewError />;
+    return <InfoBadge>{i18n.t("search.details.preview.error")}</InfoBadge>;
   }
 
   const resourcePreviewComponent = getResourcePreviewComponent({

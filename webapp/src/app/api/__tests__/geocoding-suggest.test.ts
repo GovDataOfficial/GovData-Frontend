@@ -8,14 +8,12 @@ import { GET } from "../geocoding-suggest/route";
 vi.mock("next/headers");
 
 describe("api/geocoding-suggest", () => {
-  const envSearchmapSessionId = "BE_GD_DATA_SEARCHMAP_SESSION_ID";
   const envSearchmapTitleUrl = "BE_GD_DATA_SEARCHMAP_TILE_URL";
   const envGeoSearchUrl = "BE_GD_DATA_SEARCHMAP_GEOSEARCH_URL";
   const envOSMSearchUrl = "BE_GD_DATA_SEARCHMAP_OSMSEARCH_URL";
   const envUseOSM = "BE_GD_DATA_USE_OSM";
 
   beforeAll(() => {
-    vi.stubEnv(envSearchmapSessionId, "test/searchmap");
     vi.stubEnv(envSearchmapTitleUrl, "test/wms_basemapde");
     vi.stubEnv(
       envGeoSearchUrl,

@@ -7,6 +7,14 @@ import { MatomoTracking } from "@/app/_components/MatomoTracking/MatomoTracking"
 describe("Matomo Tracking", () => {
   const matomo_tracker_url = "matomo_tracker_url";
   const matomo_site_id = "matomo_site_id";
+  const matomo_options = "matomo_options";
+
+  const expectedOptions = [
+    ["disableCookies"],
+    ["trackPageView"],
+    ["enableLinkTracking"],
+    ["disableBrowserFeatureDetection"],
+  ];
 
   beforeEach(() => {
     vi.unstubAllEnvs();
@@ -40,13 +48,18 @@ describe("Matomo Tracking", () => {
   it("should set correct matomo config in window object", () => {
     vi.stubEnv(matomo_tracker_url, "https://test.de");
     vi.stubEnv(matomo_site_id, "55");
+    vi.stubEnv(
+      matomo_options,
+      '[["disableCookies"],["trackPageView"],["enableLinkTracking"],["disableBrowserFeatureDetection"]]',
+    );
 
     render(<MatomoTracking />);
-    expect(window._paq).toHaveLength(4);
+    expect(window._paq).toHaveLength(6);
     expect(window._paq).toEqual(
       expect.arrayContaining([["setTrackerUrl", "https://test.de/matomo.php"]]),
     );
     expect(window._paq).toEqual(expect.arrayContaining([["setSiteId", "55"]]));
+    expect(window._paq).toEqual(expect.arrayContaining(expectedOptions));
   });
 
   it("should add noscript for tracking nojs user", () => {

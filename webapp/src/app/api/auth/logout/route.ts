@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 import * as client from "openid-client";
 
-import { checkFeatureFlagForDataManagement } from "@/app/api/_lib/checkFeatureFlags";
+import { checkFeatureFlagForEnvVarDataManagement } from "@/app/api/_lib/checkEnvVarFeatureFlags";
 import {
   getKeyCloakClient,
   getPostLogoutUriFromRequest,
@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 const log = logger("logout route");
 
 export async function GET(request: NextRequest) {
-  if (!checkFeatureFlagForDataManagement()) {
+  if (!checkFeatureFlagForEnvVarDataManagement()) {
     return new Response(null, { status: 501 });
   }
 

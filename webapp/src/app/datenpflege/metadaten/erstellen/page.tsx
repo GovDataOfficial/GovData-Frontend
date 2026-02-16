@@ -43,7 +43,7 @@ export default async function Page() {
           categories={categories}
           licenses={licenses}
           organizations={organizations!}
-          mailFitko={process.env.mail_fitko!}
+          mailFitko={process.env.mail_datamanagement!}
           metadataGuideLink={process.env.metadata_guide_link!}
           metadataDcatapLink={process.env.metadata_dcatap_link!}
         />

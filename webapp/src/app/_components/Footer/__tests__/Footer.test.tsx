@@ -1,7 +1,13 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 
 import { Footer } from "@/app/_components/Footer/Footer";
+import { isFeatureEnabled } from "@/app/_lib/features";
+
+// Mock the features module before importing anything else
+vi.mock("@/app/_lib/features", () => ({
+  isFeatureEnabled: vi.fn(() => true),
+}));
 
 vi.mock("@/app/_lib/getData", () => ({
   fetchTypo3Data: vi.fn().mockResolvedValue({
@@ -25,6 +31,11 @@ vi.mock("@/app/_lib/getData", () => ({
 }));
 
 describe("Footer", () => {
+  beforeEach(() => {
+    vi.unstubAllEnvs();
+    vi.clearAllMocks();
+  });
+
   it("should render provided links", async () => {
     const Component = await Footer();
     render(Component);
@@ -54,5 +65,15 @@ describe("Footer", () => {
     });
 
     expect(socialMediaLinksHeading).toBeNull();
+  });
+
+  it("should render footer logo instead of social media if feature is disabled", async () => {
+    vi.mocked(isFeatureEnabled).mockReturnValue(false);
+    const Component = await Footer();
+    render(Component);
+
+    const image = screen.getByAltText("");
+    expect(image).toHaveAttribute("alt", "");
+    expect(image).toHaveAttribute("src", "/images/footer_logo.svg");
   });
 });

@@ -8,7 +8,7 @@ import { PostDto } from "@/types/types";
 
 export function TeaserBoxMastodon({ data }: { data: PostDto }) {
   return (
-    <TeaserBox theme="bright" target="_blank" href={data.url}>
+    <TeaserBox theme="bright" target="_blank" href={data.url} rel="me">
       <div className="gd-teaser-box-social">
         <div className="d-flex">
           <SVG size="32" icon={icons.mastodon} />

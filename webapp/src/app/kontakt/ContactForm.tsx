@@ -8,9 +8,16 @@ import { InputText } from "@/app/_components/Inputs/InputText";
 import { RequiredAsteriskInfo } from "@/app/_components/Inputs/partials/RequiredAsteriskInfo";
 import { Select } from "@/app/_components/Inputs/Select";
 import { TextArea } from "@/app/_components/Inputs/TextArea";
+import { isFeatureEnabled } from "@/app/_lib/features";
+import { PrivacyPolicyConsent } from "@/app/kontakt/PrivacyPolicyConsent";
+import { Feature } from "@/configuration/featureFlags/types";
 import { i18n } from "@/i18n";
 
-export function ContactForm() {
+export type ContactForm = {
+  mailAdress: string;
+};
+
+export function ContactForm({ mailAdress }: ContactForm) {
   const { t } = i18n;
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -51,6 +58,9 @@ export function ContactForm() {
           )}
         />
       </div>
+      {isFeatureEnabled(Feature.needsPrivacyPolicyConsent) ? (
+        <PrivacyPolicyConsent mailAdress={mailAdress} />
+      ) : null}
       <Button type={"submit"}>{t("contact.page.form.submit")}</Button>
     </form>
   );

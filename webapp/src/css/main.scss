@@ -1,8 +1,10 @@
 @import "normalize.css";
 
 @import "function";
+@import "color-tokens";
 @import "mixins";
-@import "colors";
+@import "custom/custom-color-tokens";
+@import "color-utilities";
 @import "variables";
 
 @import "bootstrap/scss/bootstrap-grid";
@@ -72,3 +74,5 @@
 @import "utilities";
 
 @import "yasgui";
+
+@import "custom/custom";

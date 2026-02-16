@@ -1,6 +1,6 @@
 import alert from "./icons/alert.svg";
-import arrowLeftLongBlue from "./icons/arrow_left_long_blue.svg";
-import arrowRightLongWhite from "./icons/arrow_right_long_white.svg";
+import arrowLeftLong from "./icons/arrow_left_long.svg";
+import arrowRightLong from "./icons/arrow_right_long.svg";
 import arrow_right from "./icons/arrow_right.svg";
 import hvd from "./icons/categories/hvd.svg";
 import icon_hvdkat_cco from "./icons/categories/icon_hvdkat_cco.svg";
@@ -30,16 +30,15 @@ import external_link from "./icons/external_link.svg";
 import filter from "./icons/filter.svg";
 import icon_download from "./icons/icon_download.svg";
 import icon_upload from "./icons/icon_upload.svg";
-import infoBlue from "./icons/info_blue.svg";
+import info from "./icons/info.svg";
 import login from "./icons/login.svg";
 import mapMarker from "./icons/map_marker.svg";
 import mastodon from "./icons/mastodon.svg";
 import tool from "./icons/mediatypes/tool.svg";
-import mediatype_typ_article_inverted from "./icons/mediatypes/typ_article_inverted.svg";
-import mediatype_typ_blog_inverted from "./icons/mediatypes/typ_blog_inverted.svg";
-import mediatype_dataset_inverted from "./icons/mediatypes/typ_dataset_inverted.svg";
-import mediatype_showcase_blue from "./icons/mediatypes/typ_showcase_blue.svg";
-import mediatype_showcase_inverted from "./icons/mediatypes/typ_showcase_inverted.svg";
+import mediatype_typ_article from "./icons/mediatypes/typ_article.svg";
+import mediatype_typ_blog from "./icons/mediatypes/typ_blog.svg";
+import mediatype_dataset from "./icons/mediatypes/typ_dataset.svg";
+import mediatype_showcase from "./icons/mediatypes/typ_showcase.svg";
 import plus from "./icons/plus.svg";
 import remove from "./icons/remove.svg";
 import reset from "./icons/reset.svg";
@@ -76,16 +75,15 @@ const icons = {
   mastodon,
   remove,
   reset,
-  mediatype_dataset_inverted,
-  mediatype_typ_article_inverted,
-  mediatype_typ_blog_inverted,
-  mediatype_showcase_inverted,
-  mediatype_showcase_blue,
+  mediatype_dataset,
+  mediatype_typ_article,
+  mediatype_typ_blog,
+  mediatype_showcase,
   tool,
   hvd,
-  infoBlue,
-  arrowRightLongWhite,
-  arrowLeftLongBlue,
+  info,
+  arrowRightLong,
+  arrowLeftLong,
   plus,
   trash,
   editPencil,

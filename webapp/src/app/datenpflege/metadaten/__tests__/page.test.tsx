@@ -1,12 +1,14 @@
-import { beforeAll, describe, expect, test, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
+import { isFeatureEnabled } from "@/app/_lib/features";
 import {
   fetchMetadataForOrganizations,
   fetchOrganizationsForUser,
 } from "@/app/_lib/getData";
 import { getSession } from "@/app/api/auth/_session";
 import Page, { metadata } from "@/app/datenpflege/metadaten/page";
+import { Feature } from "@/configuration/featureFlags/types";
 import {
   MetadataSearchResultHit,
   OrganizationSorted,
@@ -19,6 +21,10 @@ vi.mock("@/app/api/auth/_session");
 vi.mock("@/app/_lib/getData", () => ({
   fetchOrganizationsForUser: vi.fn(),
   fetchMetadataForOrganizations: vi.fn(),
+}));
+
+vi.mock("@/app/_lib/features", () => ({
+  isFeatureEnabled: vi.fn(),
 }));
 
 const searchResults = {
@@ -61,8 +67,12 @@ describe("Landing Page", () => {
     username: "test",
   } as any;
 
-  beforeAll(() => {
+  beforeEach(() => {
+    vi.clearAllMocks();
     vi.mocked(getSession).mockResolvedValue(mockSession);
+    vi.mocked(isFeatureEnabled).mockImplementation(
+      (feature: Feature) => feature === Feature.contributorIdIsRequired,
+    );
   });
 
   test("should render a link to create Metadata", async () => {
@@ -79,17 +89,32 @@ describe("Landing Page", () => {
     screen.getByText(/warum werden mir keine informationen angezeigt?/i);
   });
 
-  test("should render a text if user has no contributor id", async () => {
+  test("should not render link to create Metadata if user has no contributor id", async () => {
     vi.mocked(fetchOrganizationsForUser).mockResolvedValue([
       { id: "org1", displayName: "Org 1", contributorIds: [] },
     ] as unknown as OrganizationSorted);
     render(await Page(pageParams));
 
-    screen.getByText(/warum werden mir keine informationen angezeigt?/i);
+    var element = screen.queryByRole("link", {
+      name: "Metadatensatz erstellen",
+    });
+    expect(element).toBeNull();
+  });
+
+  test("should render link to create Metadata if user has a contributor id", async () => {
+    vi.mocked(fetchOrganizationsForUser).mockResolvedValue([
+      { id: "org1", displayName: "Org 1", contributorIds: ["cont1"] },
+    ] as unknown as OrganizationSorted);
+    render(await Page(pageParams));
+
+    var element = screen.getByRole("link", {
+      name: "Metadatensatz erstellen",
+    });
+    expect(element).toBeInTheDocument();
   });
 
   test("should have correct meta info", () => {
-    expect(metadata.title).toBe("Datenpflege - GovData");
+    expect(metadata.title).toContain("Datenpflege -");
   });
 
   test("should show table", async () => {

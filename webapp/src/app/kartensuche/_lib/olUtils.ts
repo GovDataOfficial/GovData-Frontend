@@ -5,11 +5,11 @@ import { SimpleGeometry } from "ol/geom";
 import MultiPoint from "ol/geom/MultiPoint";
 import Polygon from "ol/geom/Polygon";
 import TileLayer from "ol/layer/Tile";
-import { fromLonLat } from "ol/proj";
 import OSM from "ol/source/OSM";
 import TileWMS from "ol/source/TileWMS";
 import { Circle, Fill, Stroke, Style } from "ol/style";
 
+import { getConfigurationOptions } from "@/configuration/options/options";
 import {
   boundingBoxNumberCoordinates,
   MappedSuggest,
@@ -49,27 +49,8 @@ export const styles = [
  * @returns {View} - The created OpenLayers view.
  */
 export function createView(isOSMActive: boolean): View {
-  return new View(
-    isOSMActive
-      ? // set center to Stuttgart since OSM is currently only used for BW
-        {
-          center: fromLonLat([9, 48.66]),
-          zoom: 8,
-          minZoom: 6,
-          maxZoom: 20,
-        }
-      : {
-          center: fromLonLat([9, 51]),
-          zoom: 6,
-          minZoom: 5,
-          maxZoom: 20,
-          // prevent panning outside of the map extent
-          extent: [
-            -1485382.3492853835, 5242175.946452834, 4073459.67079747,
-            8025039.157897306,
-          ],
-        },
-  );
+  const { view } = getConfigurationOptions().locationsearch;
+  return new View(view);
 }
 
 /**
@@ -123,15 +104,10 @@ export function validateBoundingBoxValue(bbox?: string) {
  */
 export function getFeatureForBoundingBox(boundingboxfield?: string) {
   // default box
-  let box = new Polygon([
-    [
-      [5.582, 52.088], // left upper corner 52.088/5.582
-      [12.417, 52.088], // right upper corner 52.088 12.417
-      [12.417, 49.885], // right lower corner 49.885/12.417
-      [5.582, 49.885], // left lower corner 49.885 5.582
-      [5.582, 52.088], // left upper corner 52.088/5.582
-    ],
-  ]);
+  let box = new Polygon(
+    getConfigurationOptions().locationsearch.defaultBoundingBox,
+  );
+
   if (boundingboxfield && boundingboxfield.length > 0) {
     // there is already a boundingbox, parse it and use it
     const bboxcoords = boundingboxfield.split(",");

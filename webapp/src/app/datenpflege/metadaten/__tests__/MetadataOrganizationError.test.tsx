@@ -5,7 +5,7 @@ import { MetadataOrganizationError } from "@/app/datenpflege/metadaten/_componen
 
 describe("MetadataOrganizationError", () => {
   beforeEach(() => {
-    vi.stubEnv("mail_fitko", "test@foo.de");
+    vi.stubEnv("mail_datamanagement", "test@foo.de");
   });
 
   test("should render the error message", () => {

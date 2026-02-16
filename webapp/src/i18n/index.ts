@@ -1,6 +1,16 @@
 import { createInstance, InitOptions } from "i18next";
 
+import customDe from "@/i18n/locales/custom.json";
 import de from "@/i18n/locales/de.json";
+
+const merged = {
+  ...de,
+};
+
+merged.govdata = {
+  ...merged.govdata,
+  ...customDe,
+};
 
 const options: InitOptions = {
   supportedLngs: ["de"],
@@ -10,7 +20,7 @@ const options: InitOptions = {
   initImmediate: false,
   lng: "de",
   resources: {
-    de,
+    de: merged,
   },
 };
 

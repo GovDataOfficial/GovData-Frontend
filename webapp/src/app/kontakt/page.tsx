@@ -6,6 +6,7 @@ import {
   ContainerWrapperModifier,
 } from "@/app/_components/Container";
 import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
+import { Trans } from "@/app/_components/Trans/Trans";
 import { ContactForm } from "@/app/kontakt/ContactForm";
 import { i18n } from "@/i18n";
 
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
 export default function Page() {
   const mailto = `mailto:${process.env.mail_smtp_to_address}`;
   const { t } = i18n;
+  const mail = <a href={mailto}>{t("contact.page.info.mailto")}</a>;
 
   return (
     <>
@@ -25,11 +27,15 @@ export default function Page() {
         modifier={[ContainerWrapperModifier.MARGIN_TOP]}
       >
         <DesignBox>
-          {t("contact.page.info.description")}&nbsp;
-          <a href={mailto}>{t("contact.page.info.mailto")}</a>
+          <Trans
+            i18nKey={`contact.page.info.description`}
+            params={{ portalName: t("portal.name"), mail, lineBreak: <br /> }}
+          />
           {process.env.mail_enabled &&
             process.env.mail_enabled.toLowerCase() === "true" && (
-              <ContactForm />
+              <ContactForm
+                mailAdress={process.env.mail_smtp_to_address || ""}
+              />
             )}
         </DesignBox>
       </ContainerSection>

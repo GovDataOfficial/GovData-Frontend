@@ -17,7 +17,7 @@ describe("Logout Page", () => {
   });
 
   test("should have correct meta info", () => {
-    expect(metadata.title).toBe("Erfolgreich abgemeldet - GovData");
+    expect(metadata.title).toContain("Erfolgreich abgemeldet -");
   });
 
   test("should redirect to logout api if user has a session", async () => {
@@ -35,7 +35,7 @@ describe("Logout Page", () => {
 
     screen.getByRole("heading", { name: /erfolgreich abgemeldet/i, level: 1 });
     screen.getByText(/hier geht es/i);
-    screen.getByRole("link", { name: /zur startseite von govdata\./i });
+    screen.getByRole("link", { name: /^zur startseite von/i });
 
     const loginAgainLink = screen.getByRole("link", {
       name: /erneut anmelden/i,

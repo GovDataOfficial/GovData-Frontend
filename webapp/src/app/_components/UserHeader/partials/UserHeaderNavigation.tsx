@@ -62,7 +62,7 @@ export function UserHeaderNavigation({
               )}
               <li>
                 <a href={PAGES.logout} className="d-flex">
-                  <SVG icon={icons.login} size="big" />
+                  <SVG icon={icons.login} size="big" className="primary" />
                   <span>{t("header.user.navigation.logout")}</span>
                 </a>
               </li>

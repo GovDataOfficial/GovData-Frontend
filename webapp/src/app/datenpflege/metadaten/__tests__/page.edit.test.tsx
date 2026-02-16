@@ -2,11 +2,13 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { redirect } from "next/navigation";
 
+import { isFeatureEnabled } from "@/app/_lib/features";
 import { fetchMetadata, fetchOrganizationsForUser } from "@/app/_lib/getData";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
 import { getSession } from "@/app/api/auth/_session";
 import { MetadataForm } from "@/app/datenpflege/metadaten/_components/MetadataForm/MetadataForm";
 import Page from "@/app/datenpflege/metadaten/bearbeiten/[id]/page";
+import { Feature } from "@/configuration/featureFlags/types";
 
 import { metadata } from "../bearbeiten/[id]/page";
 
@@ -15,8 +17,14 @@ vi.mock("@/app/api/auth/_session");
 vi.mock("@/app/_lib/getData");
 vi.mock("next/navigation");
 vi.mock("@/app/datenpflege/metadaten/_components/MetadataForm/MetadataForm");
+// Mock the features module
+vi.mock("@/app/_lib/features", () => ({
+  isFeatureEnabled: vi.fn(),
+}));
 
 describe("Metadata Edit Page", () => {
+  const mockIsFeatureEnabled = vi.mocked(isFeatureEnabled);
+
   const orgsWithoutContributorId = [
     {
       id: "123",
@@ -54,10 +62,13 @@ describe("Metadata Edit Page", () => {
     vi.mocked(MetadataForm).mockReturnValue(
       <div data-testid="mock-metadataform" />,
     );
+    mockIsFeatureEnabled.mockImplementation(
+      (feature: Feature) => feature === Feature.contributorIdIsRequired,
+    );
   });
 
   test("should export correct metadata", () => {
-    expect(metadata.title).toBe("Metadatensatz bearbeiten - GovData");
+    expect(metadata.title).toContain("Metadatensatz bearbeiten -");
   });
 
   test("should redirect if no no contributor-ids are available", async () => {
@@ -69,6 +80,25 @@ describe("Metadata Edit Page", () => {
     expect(vi.mocked(redirect)).toHaveBeenCalledWith(
       PAGES_AUTH.manage_metadata,
     );
+  });
+
+  test("should not redirect if no no contributor-ids are available but feature is disabled", async () => {
+    vi.mocked(fetchOrganizationsForUser).mockResolvedValue(
+      orgsWithContributorId,
+    );
+    vi.mocked(fetchMetadata).mockResolvedValue({ owner_org: "myOrgId" } as any);
+    const Component = Page({ params: { id: "123" }, searchParams: {} });
+
+    mockIsFeatureEnabled.mockImplementation(
+      (feature: Feature) => feature !== Feature.contributorIdIsRequired,
+    );
+
+    render(await Component);
+
+    expect(vi.mocked(redirect)).not.toHaveBeenCalled();
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+
+    expect(screen.getByTestId("mock-metadataform")).toBeInTheDocument();
   });
 
   test("should redirect if no no org is available", async () => {

@@ -5,22 +5,22 @@
 //*******************************
 // Font Definition
 //*******************************
-.noto-sans-normal {
+.font-normal {
   font-family: "Noto Sans";
   font-weight: 400;
 }
 
-.noto-sans-bold {
+.font-bold {
   font-family: "Noto Sans";
   font-weight: 700;
 }
 
 .normal {
-  @extend .noto-sans-normal;
+  @extend .font-normal;
 }
 
 .bold {
-  @extend .noto-sans-bold;
+  @extend .font-bold;
 }
 
 //*******************************

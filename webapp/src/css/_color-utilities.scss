@@ -1,0 +1,93 @@
+// generate color classes from the colors map
+// you can use it like: <div class="bg-data-green clr-data-green"></div>
+@each $color_name, $color_code in $colors {
+  // background color classes
+  .bg-#{$color_name} {
+    --class-item-bg: #{$color_code};
+    background-color: $color_code;
+  }
+
+  // color classes
+  .clr-#{$color_name} {
+    --class-item-clr: #{$color_code};
+    color: $color_code;
+  }
+}
+
+// own colors
+$checkbox-border: darken($kontur-gray, 10%);
+
+@mixin navcolor($background-color, $color) {
+  &.active > a {
+    background-color: $background-color;
+    color: $color;
+
+    &:focus {
+      background-color: transparent;
+      color: $clr-media-grey-500;
+    }
+  }
+
+  a::after {
+    border-top-color: $background-color;
+    color: $background-color;
+  }
+}
+
+// colors for the background of the main menu...
+#layout_3 {
+  // Daten
+  @include navcolor($clr-media-green-500, $white);
+}
+
+#layout_6 {
+  // Dokumente
+  @include navcolor($dokument-violett, $white);
+}
+
+#layout_7 {
+  // Showcases
+  @include navcolor($showcase-blue, $white);
+}
+
+#layout_8 {
+  // Neues
+  @include navcolor($blog-red, $white);
+}
+
+#layout_9 {
+  // Bibliothek
+  @include navcolor($black, $white);
+}
+
+#layout_47 {
+  // Entwicklerecke
+  @include navcolor($devcorner-green, $white);
+}
+
+#layout_51 {
+  // Metadatenqualität
+  @include navcolor($metadataquality-pink, $white);
+}
+
+// colors for mediatype-icons
+$mediatypes: (
+  "article": $clr-media-grey-500,
+  "blog": $blog-red,
+  "dataset": $clr-media-green-500,
+  "showcase": $clr-media-blue-500,
+);
+
+.mediatype-icon.inverted {
+  img {
+    filter: invert(1);
+  }
+}
+
+@each $suffix, $typeColor in $mediatypes {
+  .mediatype-icon {
+    &.mediatype-#{$suffix} {
+      background-color: #{$typeColor};
+    }
+  }
+}

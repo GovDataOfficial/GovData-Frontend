@@ -2,16 +2,15 @@
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { checkFeatureFlagForDataManagement } from "@/app/api/_lib/checkFeatureFlags";
+import { checkFeatureFlagForEnvVarDataManagement } from "@/app/api/_lib/checkEnvVarFeatureFlags";
 import { getSessionOrThrow } from "@/app/api/_lib/getSessionOrThrow";
 import { sendAuthorizedRequestWithBearer } from "@/app/api/_lib/sendAuthorizedRequest";
 import { SessionInformation } from "@/app/api/auth/_session";
 import { DELETE } from "@/app/api/datenpflege/showcases/delete/[id]/route";
-import { POST } from "@/app/api/datenpflege/showcases/edit/[id]/route";
 
 vi.mock("@/app/api/_lib/sendAuthorizedRequest");
 vi.mock("@/app/api/_lib/getSessionOrThrow");
-vi.mock("@/app/api/_lib/checkFeatureFlags");
+vi.mock("@/app/api/_lib/checkEnvVarFeatureFlags");
 
 describe("Showcase Delete Route", () => {
   beforeEach(() => {
@@ -20,7 +19,7 @@ describe("Showcase Delete Route", () => {
     vi.mocked(sendAuthorizedRequestWithBearer).mockResolvedValueOnce({
       status: 200,
     } as any);
-    vi.mocked(checkFeatureFlagForDataManagement).mockReturnValue(true);
+    vi.mocked(checkFeatureFlagForEnvVarDataManagement).mockReturnValue(true);
   });
 
   it("should return 401 if no session is available", async () => {
@@ -51,7 +50,7 @@ describe("Showcase Delete Route", () => {
   });
 
   it("should return 501 if feature is not enabled", async () => {
-    vi.mocked(checkFeatureFlagForDataManagement).mockReturnValue(false);
+    vi.mocked(checkFeatureFlagForEnvVarDataManagement).mockReturnValue(false);
     const response = await DELETE({} as Request, {
       params: Promise.resolve({ id: "test" }),
     });

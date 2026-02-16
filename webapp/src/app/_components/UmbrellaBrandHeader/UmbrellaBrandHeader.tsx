@@ -1,12 +1,14 @@
 import Image from "next/image";
 
+import { isFeatureEnabled } from "@/app/_lib/features";
+import { Feature } from "@/configuration/featureFlags/types";
 import { i18n } from "@/i18n";
 
 import flagGermany from "./flag_germany.svg";
 
 export function UmbrellaBrandHeader() {
-  const showHeader = process.env.show_umbrella_brand_header;
-  return showHeader && showHeader.toLowerCase() === "true" ? (
+  const showHeader = isFeatureEnabled(Feature.showUmbrellaBrandHeader);
+  return showHeader ? (
     <div className="gd-umbrella-brand-header-container">
       <div className="container-lg">
         <div className="row">

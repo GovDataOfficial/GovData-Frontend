@@ -54,7 +54,10 @@ export function MetadataForm({
   const editMode = !!metadata;
   const infoRef = useRef<HTMLDivElement>(null);
 
-  const { requestError, formProps } = useMetadataForm({ editMode, infoRef });
+  const { requestError, detailedErrorInfo, formProps } = useMetadataForm({
+    editMode,
+    infoRef,
+  });
 
   const {
     setStepAndFocusFirstVisibleInput,
@@ -72,7 +75,7 @@ export function MetadataForm({
       <div className="form-header-container">
         <div className="mb-2_5">
           <a href={PAGES_AUTH.manage_metadata}>
-            <SVG icon={icons.arrowLeftLongBlue} size={"big"} />
+            <SVG icon={icons.arrowLeftLong} size={"big"} className="primary" />
             <span className="ms-1_5">
               {i18n.t("metadataform.navigation.myDatasets")}
             </span>
@@ -83,6 +86,7 @@ export function MetadataForm({
             <MetadataFormRequestError
               requestError={requestError}
               mailFitko={mailFitko}
+              timeStamp={detailedErrorInfo?.timestamp}
             />
           )}
         </div>

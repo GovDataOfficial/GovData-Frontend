@@ -11,9 +11,9 @@ import VectorLayer from "ol/layer/Vector";
 import { useGeographic as olUseGeographic } from "ol/proj";
 import VectorSource from "ol/source/Vector";
 
+import { InfoBadge } from "@/app/_components/InfoBoxes/InfoBadge";
 import { debounce } from "@/app/_lib/debounce";
 import { PreviewLoading } from "@/app/suche/_components/common/PreviewLoading";
-import { ResourcePreviewError } from "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewError";
 import { styleFunction } from "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewMapStyles";
 import { i18n } from "@/i18n";
 import { ProjectionName } from "@/types/types";
@@ -147,7 +147,7 @@ export const ResourcePreviewMap = ({
   ]);
 
   if (hasError) {
-    return <ResourcePreviewError />;
+    return <InfoBadge>{i18n.t("search.details.preview.error")}</InfoBadge>;
   }
 
   return (

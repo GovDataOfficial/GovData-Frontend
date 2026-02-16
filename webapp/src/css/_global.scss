@@ -83,7 +83,7 @@ button:-moz-focusring,
 a {
   @include outline-base();
   @extend .paragraph;
-  @extend .noto-sans-bold;
+  @extend .font-bold;
   color: $clr-primary-400;
   text-decoration: none;
   align-items: center;

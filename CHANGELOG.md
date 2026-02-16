@@ -1,9 +1,16 @@
 # Changelog
 
+## 7.11.0 2026-01-21
+
+- Added timestamp to error message in metadata form
+- Changed mastodon link
+
 ## 7.10.0 2026-01-07
 
 - Changed default contact email address
 - Removed automatic focus when link "show more" is clicked in a facet on the search results page
+- Add customization options for map preview styles and location search
+- Add customization options for features, texts and styles
 
 ## 7.9.1 2025-12-16
 

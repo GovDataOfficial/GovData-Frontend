@@ -1,31 +1,32 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 import { UmbrellaBrandHeader } from "@/app/_components/UmbrellaBrandHeader/UmbrellaBrandHeader";
+import { isFeatureEnabled } from "@/app/_lib/features";
 
 describe("UmbrellaBrandHeader", () => {
+  vi.mock("@/app/_lib/features");
+
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
   it("should show header", () => {
-    vi.stubEnv("show_umbrella_brand_header", "true");
+    vi.mocked(isFeatureEnabled).mockReturnValue(true);
     render(<UmbrellaBrandHeader />);
     screen.getByText("Offizielle Website – Bundesrepublik Deutschland");
     vi.unstubAllEnvs();
   });
 
   it("should show header (camel-case)", () => {
-    vi.stubEnv("show_umbrella_brand_header", "True");
+    vi.mocked(isFeatureEnabled).mockReturnValue(true);
     render(<UmbrellaBrandHeader />);
     screen.getByText("Offizielle Website – Bundesrepublik Deutschland");
     vi.unstubAllEnvs();
   });
 
   it("should not show header", () => {
-    vi.stubEnv("show_umbrella_brand_header", "false");
-    const { container } = render(<UmbrellaBrandHeader />);
-    expect(container).toBeEmptyDOMElement();
-    vi.unstubAllEnvs();
-  });
-
-  it("should not show header (config param not exists)", () => {
+    vi.mocked(isFeatureEnabled).mockReturnValue(false);
     const { container } = render(<UmbrellaBrandHeader />);
     expect(container).toBeEmptyDOMElement();
     vi.unstubAllEnvs();

@@ -247,7 +247,7 @@ export type Metadata = {
   creator_user_id: string;
   open: boolean;
   geocodingText?: string[];
-  contributorID: string[];
+  contributorID?: string[];
   legalbasisText: string[];
   politicalGeocodingURI: string[];
   policiticalGeocodingLevelURI: string;

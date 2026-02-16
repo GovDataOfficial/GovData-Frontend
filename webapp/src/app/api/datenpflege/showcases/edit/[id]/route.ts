@@ -1,4 +1,4 @@
-import { checkFeatureFlagForDataManagement } from "@/app/api/_lib/checkFeatureFlags";
+import { checkFeatureFlagForEnvVarDataManagement } from "@/app/api/_lib/checkEnvVarFeatureFlags";
 import { getSessionOrThrow } from "@/app/api/_lib/getSessionOrThrow";
 import { postShowcase } from "@/app/api/datenpflege/showcases/_lib/postShowcase";
 
@@ -6,7 +6,7 @@ export async function POST(
   request: Request,
   props: { params: Promise<{ id: string }> },
 ) {
-  if (!checkFeatureFlagForDataManagement()) {
+  if (!checkFeatureFlagForEnvVarDataManagement()) {
     return new Response(null, { status: 501 });
   }
 

@@ -20,7 +20,7 @@ describe("Showcase Edit Page", () => {
   });
 
   test("should export correct metadata data", () => {
-    expect(metadata.title).toBe("Anwendung bearbeiten - GovData");
+    expect(metadata.title).toContain("Anwendung bearbeiten -");
   });
 
   test("should render error if requested showcase is not available", async () => {

@@ -1,7 +1,10 @@
 import { FilterResultCount } from "@/app/_components/FilterArea/FilterResultCount";
+import { isFeatureEnabled } from "@/app/_lib/features";
 import { URLHelper } from "@/app/_lib/URLHelper";
+import { Feature } from "@/configuration/featureFlags/types";
 import { i18n } from "@/i18n";
 import {
+  HitType,
   NextJSSearchParams,
   SearchResults,
   UnknownSearchResultHit,
@@ -65,13 +68,24 @@ export function TypeListFilter({
     <>
       <h3 className="sr-only">Datentypen</h3>
       <ul className="gd-typelist d-sm-block">
-        {data.filterMap.type.facetList.map((facet) => (
-          <TypeListFilterItem
-            key={facet.name}
-            facet={facet}
-            searchParams={searchParams}
-          />
-        ))}
+        {data.filterMap.type.facetList
+          .filter((facet) => {
+            // Don't show showcases if showcasesEnabled feature is disabled
+            if (
+              facet.name.toLowerCase() === HitType.showcase &&
+              !isFeatureEnabled(Feature.showcasesEnabled)
+            ) {
+              return false;
+            }
+            return true;
+          })
+          .map((facet) => (
+            <TypeListFilterItem
+              key={facet.name}
+              facet={facet}
+              searchParams={searchParams}
+            />
+          ))}
       </ul>
     </>
   );

@@ -59,9 +59,13 @@ async function sendAuthorizedRequest(
 
     if (!response.ok) {
       const errorBody = await response.text();
+      const timestamp = new Date().toISOString();
       log.error(response, "Response status not ok");
       return new Response(errorBody, {
         status: response.status,
+        headers: {
+          "X-Error-Timestamp": timestamp,
+        },
       });
     }
     // https://community.vercel.com/t/nextresponse-throws-error-when-http-request-status-code-is-204/625
@@ -70,6 +74,12 @@ async function sendAuthorizedRequest(
     return new Response(responseStatusText, { status: response.status });
   } catch (e) {
     log.error(e, "Error sending request");
-    return new Response(null, { status: 500 });
+    const timestamp = new Date().toISOString();
+    return new Response(null, {
+      status: 500,
+      headers: {
+        "X-Error-Timestamp": timestamp,
+      },
+    });
   }
 }

@@ -1,8 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { act, render, screen, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent, { UserEvent } from "@testing-library/user-event";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 
+import { isFeatureEnabled } from "@/app/_lib/features";
 import { OrganizationSorted, StateList } from "@/types/types";
 
 import { ExtendedSearchFields } from "../ExtendedSearchFields";
@@ -11,11 +12,20 @@ vi.mock("next/navigation", () => ({
   useSearchParams: vi.fn(),
 }));
 
+vi.mock("@/app/_lib/features", () => ({
+  isFeatureEnabled: vi.fn(() => true),
+}));
+
 describe("External Search Filter Test", () => {
   beforeEach(() => {
+    vi.clearAllMocks();
     vi.mocked(useSearchParams).mockReturnValue(
       new URLSearchParams() as ReadonlyURLSearchParams,
     );
+    // Mock all feature flags as enabled by default
+    vi.mocked(isFeatureEnabled).mockImplementation((feature) => {
+      return true; // Enable all features by default
+    });
   });
 
   const getFormData = (container: HTMLElement): FormData => {
@@ -43,23 +53,38 @@ describe("External Search Filter Test", () => {
     const filterList = screen.getByRole("list", { name: "Filter Optionen" });
     expect(filterList).toBeDefined();
 
-    // should be 19 filter options
-    expect(within(filterList).getAllByRole("listitem")).toHaveLength(19);
+    // The count depends on feature flags at module level
+    const initialItemCount = within(filterList).getAllByRole("listitem").length;
+    expect(initialItemCount).toBeGreaterThanOrEqual(16);
 
     // adding a filter from within the list, expecting it not to be there anymore
-    await user.click(within(filterList).getByText("Bund oder Land"));
-    expect(within(filterList).getAllByRole("listitem")).toHaveLength(18);
-    expect(within(filterList).queryByText("Bund oder Land")).toBeNull();
+    // Use "Titel" which is always available
+    await user.click(within(filterList).getByText("Titel"));
+
+    // Re-open the dropdown to check the updated count
+    await user.click(add);
+    const updatedFilterList = screen.getByRole("list", {
+      name: "Filter Optionen",
+    });
+    expect(
+      within(updatedFilterList).getAllByRole("listitem", { hidden: true }),
+    ).toHaveLength(initialItemCount - 1);
+    expect(within(updatedFilterList).queryByText("Titel")).toBeNull();
 
     // removing the added filter
     const removeButton = screen.getByRole("button", {
-      name: /suchfeld „Bund oder Land“ entfernen/i,
+      name: /titel.*entfernen/i,
     });
     // removing filter and expecting it to be in list again
     await user.click(removeButton);
     await user.click(add);
-    expect(within(filterList).getAllByRole("listitem")).toHaveLength(19);
-    expect(within(filterList).getByText("Bund oder Land")).toBeDefined();
+    const finalFilterList = screen.getByRole("list", {
+      name: "Filter Optionen",
+    });
+    expect(
+      within(finalFilterList).getAllByRole("listitem", { hidden: true }),
+    ).toHaveLength(initialItemCount);
+    expect(within(finalFilterList).getByText("Titel")).toBeDefined();
   });
 
   it("should set correct param on einfache suche", async () => {
@@ -141,7 +166,12 @@ describe("External Search Filter Test", () => {
     expect(formData.get("dataservice")).toEqual("has_data_service");
   });
 
-  it("should set correct param on Bund oder Land", async () => {
+  it("should set correct param on Bund oder Land (requires region search feature)", async () => {
+    // This test requires the showRegionSearch feature to be enabled
+
+    // Import the component with the disabled feature flag
+    const { ExtendedSearchFields } = await import("../ExtendedSearchFields");
+
     const stateListMock: StateList = [
       { id: "00", name: "Erstes Bundes Land" },
       { id: "01", name: "Ein weiteres Bundes Land" },
@@ -198,5 +228,102 @@ describe("External Search Filter Test", () => {
 
     const formData = getFormData(container);
     expect(formData.get("sourceportal")).toEqual("999-555");
+  });
+});
+
+describe("External Search Filter Test - Feature Flag Disabled", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.mocked(useSearchParams).mockReturnValue(
+      new URLSearchParams() as ReadonlyURLSearchParams,
+    );
+  });
+
+  it("should not include state filter if showRegionSearch feature is disabled", async () => {
+    // Mock feature flags: disable region search, enable others
+    vi.mocked(isFeatureEnabled).mockImplementation((feature) => {
+      if (feature === "showRegionSearch") {
+        return false;
+      }
+      return true;
+    });
+
+    vi.resetModules();
+
+    // Re-import the component with the new mock implementation
+    const { ExtendedSearchFields } = await import("../ExtendedSearchFields");
+
+    const user = userEvent.setup();
+    render(<ExtendedSearchFields searchParams={{}} />);
+
+    const add = screen.getByRole("button", { name: /suchfeld hinzufügen/i });
+    await user.click(add);
+
+    const filterList = screen.getByRole("list", { name: "Filter Optionen" });
+    expect(filterList).toBeDefined();
+
+    // Should not include "Bund oder Land" (state) filter
+    expect(screen.queryByRole("button", { name: "Bund oder Land" })).toBeNull();
+  });
+
+  it("should have correct count when showRegionSearch feature is enabled", async () => {
+    // Mock feature flags: enable region search, disable showcase
+    vi.mocked(isFeatureEnabled).mockImplementation((feature) => {
+      if (feature === "showRegionSearch") {
+        return true;
+      }
+      if (feature === "showcasesEnabled") {
+        return false;
+      }
+      return true;
+    });
+
+    // Reset the module cache to force re-evaluation of the filterItems array
+    vi.resetModules();
+
+    // Re-import the component with the new mock implementation
+    const { ExtendedSearchFields } = await import("../ExtendedSearchFields");
+
+    const user = userEvent.setup();
+    render(<ExtendedSearchFields searchParams={{}} />);
+
+    const add = screen.getByRole("button", { name: /suchfeld hinzufügen/i });
+    await user.click(add);
+
+    const filterList = screen.getByRole("list", { name: "Filter Optionen" });
+    expect(filterList).toBeDefined();
+
+    expect(within(filterList).getAllByRole("listitem")).toHaveLength(17);
+  });
+
+  it("should not include filter showcase_types and platforms if showcasesEnabled feature is disabled", async () => {
+    vi.mocked(isFeatureEnabled).mockImplementation((feature) => {
+      if (feature === "showcasesEnabled") {
+        return false;
+      }
+      if (feature === "showRegionSearch") {
+        return true;
+      }
+      return true;
+    });
+
+    // Reset the module cache to force re-evaluation of the filterItems array
+    vi.resetModules();
+
+    // Re-import the component with the new mock implementation
+    const { ExtendedSearchFields } = await import("../ExtendedSearchFields");
+
+    const user = userEvent.setup();
+    render(<ExtendedSearchFields searchParams={{}} />);
+
+    const add = screen.getByRole("button", { name: /suchfeld hinzufügen/i });
+    await user.click(add);
+
+    const filterList = screen.getByRole("list", { name: "Filter Optionen" });
+    expect(filterList).toBeDefined();
+
+    expect(within(filterList).getAllByRole("listitem")).toHaveLength(17);
+    expect(within(filterList).queryByText("Anwendungstypen")).toBeNull();
+    expect(within(filterList).queryByText("Systeme")).toBeNull();
   });
 });

@@ -4,6 +4,7 @@ type TeaserBox = {
   theme: "bright" | "dark";
   href: string;
   target?: HTMLAttributeAnchorTarget;
+  rel?: string;
 };
 
 export function TeaserBox({
@@ -11,11 +12,13 @@ export function TeaserBox({
   theme,
   href,
   target,
+  rel,
 }: PropsWithChildren<TeaserBox>) {
   return (
     <a
       href={href}
       target={target}
+      rel={rel}
       className={`gd-teaser-box gd-teaser-box-${theme}`}
     >
       {children}

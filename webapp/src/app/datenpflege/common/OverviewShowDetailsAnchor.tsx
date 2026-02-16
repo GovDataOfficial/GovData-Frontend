@@ -17,7 +17,7 @@ export function OverviewShowDetailsAnchor({
       target="_blank"
     >
       {i18n.t("overview.table.show")}
-      <SVG icon={icons.external_link} size="big" />
+      <SVG icon={icons.external_link} size="big" className="primary" />
     </a>
   );
 }

@@ -6,8 +6,8 @@ describe("Kartensuche Page", () => {
   it("should set correct metadata ", async () => {
     expect(metadata).toBeDefined();
 
-    expect(metadata).toHaveProperty("title", "Kartensuche - GovData");
-    expect(metadata.openGraph).toHaveProperty("title", "Kartensuche - GovData");
+    expect(metadata.title).toMatch(/^Kartensuche -/);
+    expect(metadata.openGraph?.title).toMatch(/^Kartensuche -/);
 
     expect(metadata).toHaveProperty(
       "description",

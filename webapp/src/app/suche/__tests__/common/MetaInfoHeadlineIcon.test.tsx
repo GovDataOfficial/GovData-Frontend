@@ -7,8 +7,8 @@ import { HitType } from "@/types/types";
 // if not mocked, next.js will optimize the SVG and convert it to a base64 string
 vi.mock("@/app/_components/SVG/iconMap", () => ({
   icons: {
-    mediatype_dataset_inverted: "/mocked-mediatype_dataset_inverted.svg",
-    mediatype_showcase_inverted: "/mocked-mediatype_showcase_inverted.svg",
+    mediatype_dataset: "/mocked-mediatype_dataset.svg",
+    mediatype_showcase: "/mocked-mediatype_showcase.svg",
   },
 }));
 
@@ -18,7 +18,7 @@ describe("MetaInfoHeadlineIcon", () => {
 
     screen.getByText("Datensatz");
     const image = screen.getByRole("presentation");
-    expect(image.getAttribute("src")).toContain("dataset_inverted");
+    expect(image.getAttribute("src")).toContain("dataset");
   });
 
   it("should render text inside a strong element", () => {

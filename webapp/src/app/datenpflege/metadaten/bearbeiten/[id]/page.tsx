@@ -67,7 +67,7 @@ export default async function Page(props: PageConstructor<{ id: string }>) {
           licenses={licenses}
           organizations={organizations!}
           metadata={data}
-          mailFitko={process.env.mail_fitko!}
+          mailFitko={process.env.mail_datamanagement!}
           metadataGuideLink={process.env.metadata_guide_link!}
           metadataDcatapLink={process.env.metadata_dcatap_link!}
         />

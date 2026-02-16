@@ -67,7 +67,7 @@
     width: map-get($spacers, 3);
   }
 
-  + .gd-input-checkbox,
+  &.gd-input-checkbox,
   .gd-input-multi-checkbox-item {
     @include transparent-border();
     display: flex;
@@ -84,7 +84,7 @@
     label {
       @extend a;
       @extend .paragraph;
-      //noto-sans-normal, need better css decoupling for checkboxes here
+      //font-normal, need better css decoupling for checkboxes here
       font-weight: 400;
       color: $clr-neutral-grey-800;
     }

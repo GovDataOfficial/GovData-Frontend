@@ -10,18 +10,18 @@ declare global {
   }
 }
 
-type Matomo = { url: string; siteId: string };
+type Matomo = { url: string; siteId: string; options: string[][] };
 
-export function Matomo({ url, siteId }: Matomo) {
+export function Matomo({ url, siteId, options }: Readonly<Matomo>) {
   const trackerUrl = url + "/matomo.php";
   useEffect(() => {
     const config = [];
-    config.push(["trackPageView"]);
-    config.push(["enableLinkTracking"]);
-    config.push(["setTrackerUrl", trackerUrl]);
-    config.push(["setSiteId", siteId]);
+    for (const option of options) {
+      config.push(option);
+    }
+    config.push(["setTrackerUrl", trackerUrl], ["setSiteId", siteId]);
     window._paq = config;
-  }, [siteId, trackerUrl]);
+  }, [siteId, trackerUrl, options]);
 
   return (
     <>

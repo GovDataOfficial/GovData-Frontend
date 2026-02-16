@@ -1,9 +1,9 @@
-import { checkFeatureFlagForDataManagement } from "@/app/api/_lib/checkFeatureFlags";
+import { checkFeatureFlagForEnvVarDataManagement } from "@/app/api/_lib/checkEnvVarFeatureFlags";
 import { getSessionOrThrow } from "@/app/api/_lib/getSessionOrThrow";
 import { postMetadata } from "@/app/api/datenpflege/metadata/_lib/postMetadata";
 
 export async function POST(request: Request) {
-  if (!checkFeatureFlagForDataManagement()) {
+  if (!checkFeatureFlagForEnvVarDataManagement()) {
     return new Response(null, { status: 501 });
   }
 

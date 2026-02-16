@@ -19,26 +19,32 @@ export enum MetadataRequestError {
 
 export interface DetailedErrorInfo {
   code: string;
+  timestamp?: string;
 }
 
 const parseErrorResponse = async (
   response: Response,
 ): Promise<DetailedErrorInfo> => {
+  const timestamp = response.headers.get("X-Error-Timestamp") || undefined;
+
   try {
     const errorText = await response.text();
     try {
       const errorData = JSON.parse(errorText);
       return {
         code: errorData.code,
+        timestamp,
       };
     } catch {
       return {
         code: "",
+        timestamp,
       };
     }
   } catch {
     return {
       code: "",
+      timestamp,
     };
   }
 };

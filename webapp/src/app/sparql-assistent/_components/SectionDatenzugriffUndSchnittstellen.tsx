@@ -20,10 +20,7 @@ export function SectionDatenzugriffUndSchnittstellen() {
       ]}
       headline={i18n.t("sparql.datenzugriffundschnittstellen.headline")}
     >
-      <Trans
-        i18nKey="sparql.datenzugriffundschnittstellen.text"
-        htmlElement="paragraph"
-      />
+      <p>{i18n.t("sparql.datenzugriffundschnittstellen.text")}</p>
     </ContainerSection>
   );
 }

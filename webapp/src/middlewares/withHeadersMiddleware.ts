@@ -22,7 +22,9 @@ function addExtraCSP(env: string | undefined, directive: string[]) {
   try {
     const parsedEnv = env && JSON.parse(env);
     if (Array.isArray(parsedEnv)) {
-      directive.push(...parsedEnv);
+      // Don't include empty entries
+      const cleanedEnv = parsedEnv.filter((entry) => entry.trim() !== "");
+      directive.push(...cleanedEnv);
     }
   } catch (e) {
     throw Error(`could not JSON parse ${env}`);

@@ -4,8 +4,10 @@ import Fill from "ol/style/Fill";
 import Stroke from "ol/style/Stroke";
 import Style from "ol/style/Style";
 
-const strokeColor = "#0073a8";
-const fillColor = "#0073A899";
+import { getConfigurationOptions } from "@/configuration/options/options";
+
+const { strokeColor, fillColor } = getConfigurationOptions().resourcePreviewMap;
+
 const strokeWidth = 2;
 
 const image = new CircleStyle({

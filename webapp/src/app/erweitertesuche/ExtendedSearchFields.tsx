@@ -14,12 +14,14 @@ import {
   defaultTypeData,
   normalizeData,
 } from "@/app/_lib/defaultFormData";
+import { isFeatureEnabled } from "@/app/_lib/features";
 import { FilterListItem } from "@/app/erweitertesuche/filter/FilterListItem";
 import { CommonInputText } from "@/app/erweitertesuche/inputs/CommonInputText";
 import { CommonSelect } from "@/app/erweitertesuche/inputs/CommonSelect";
 import { FilterMultiBox } from "@/app/erweitertesuche/inputs/FilterMultiBox";
 import { FilterTags } from "@/app/erweitertesuche/inputs/FilterTags";
 import { FilterTemporalCoverage } from "@/app/erweitertesuche/inputs/FilterTemporalCoverage";
+import { Feature } from "@/configuration/featureFlags/types";
 import { i18n } from "@/i18n";
 import {
   CategoriesSorted,
@@ -38,7 +40,7 @@ const filterItems: string[] = [
   "licence",
   "sourceportal",
   "tags",
-  "state",
+  ...(isFeatureEnabled(Feature.showRegionSearch) ? ["state"] : []),
   "title",
   "publisher",
   "maintainer",
@@ -48,8 +50,8 @@ const filterItems: string[] = [
   "dataservice",
   "hvd",
   "hvd_categories",
-  "platforms",
-  "showcase_types",
+  ...(isFeatureEnabled(Feature.showcasesEnabled) ? ["platforms"] : []),
+  ...(isFeatureEnabled(Feature.showcasesEnabled) ? ["showcase_types"] : []),
 ];
 
 type ExtendedSearchFields = {

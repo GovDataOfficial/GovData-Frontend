@@ -1,6 +1,6 @@
 .tippy-box[data-theme~="gd-theme"] {
   @extend .paragraph;
-  @extend .noto-sans-normal;
+  @extend .font-normal;
   background-color: $clr-primary-500;
   padding: rem-calc(8) rem-calc(12);
   text-align: center;

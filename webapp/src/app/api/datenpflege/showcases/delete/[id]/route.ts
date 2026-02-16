@@ -1,4 +1,4 @@
-import { checkFeatureFlagForDataManagement } from "@/app/api/_lib/checkFeatureFlags";
+import { checkFeatureFlagForEnvVarDataManagement } from "@/app/api/_lib/checkEnvVarFeatureFlags";
 import { getSessionOrThrow } from "@/app/api/_lib/getSessionOrThrow";
 import { sendAuthorizedRequestWithBearer } from "@/app/api/_lib/sendAuthorizedRequest";
 
@@ -6,7 +6,7 @@ export async function DELETE(
   _request: Request,
   props: { params: Promise<{ id: string }> },
 ): Promise<Response | undefined> {
-  if (!checkFeatureFlagForDataManagement()) {
+  if (!checkFeatureFlagForEnvVarDataManagement()) {
     return new Response(null, { status: 501 });
   }
 

@@ -7,11 +7,13 @@ import {
 import { icons } from "@/app/_components/SVG/iconMap";
 import { TeaserBoxMastodon } from "@/app/_components/TeaserBox/partials/TeaserBoxMastodon";
 import { TeaserBoxNumber } from "@/app/_components/TeaserBox/partials/TeaserBoxNumber";
+import { isFeatureEnabled } from "@/app/_lib/features";
 import { fetchMastodonData, fetchPortalNumbers } from "@/app/_lib/getData";
 import {
   createLinkToSearchWithHVD,
   createLinkToSearchWithType,
 } from "@/app/_lib/URLHelper";
+import { Feature } from "@/configuration/featureFlags/types";
 import { i18n } from "@/i18n";
 import { PortalNumbers } from "@/types/types";
 
@@ -21,7 +23,9 @@ function findTypeByName(name: string, data?: PortalNumbers) {
 
 export async function TeaserBoxes() {
   const numbersData = await fetchPortalNumbers();
-  const mastodonData = await fetchMastodonData();
+  const mastodonData = isFeatureEnabled(Feature.showMastodonTeaserBox)
+    ? await fetchMastodonData()
+    : null;
 
   if (!numbersData && !mastodonData) {
     return null;
@@ -49,7 +53,7 @@ export async function TeaserBoxes() {
           <TeaserBoxNumber
             docCount={dataset.docCount}
             name={i18n.t(`home.teaserbox.numbers.dataset`)}
-            icon={icons.mediatype_dataset_inverted}
+            icon={icons.mediatype_dataset}
             href={createLinkToSearchWithType("dataset")}
           />
         )}
@@ -65,7 +69,7 @@ export async function TeaserBoxes() {
           <TeaserBoxNumber
             docCount={showcase.docCount}
             name={i18n.t(`home.teaserbox.numbers.showcase`)}
-            icon={icons.mediatype_showcase_inverted}
+            icon={icons.mediatype_showcase}
             href={createLinkToSearchWithType("showcase")}
           />
         )}

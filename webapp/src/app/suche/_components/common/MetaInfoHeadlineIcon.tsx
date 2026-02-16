@@ -11,11 +11,11 @@ type MetaInfoHeadlineIcon = {
 const getIcon = (type: HitType) => {
   switch (type) {
     case HitType.dataset:
-      return icons.mediatype_dataset_inverted;
+      return icons.mediatype_dataset;
     case HitType.showcase:
-      return icons.mediatype_showcase_inverted;
+      return icons.mediatype_showcase;
     default:
-      return icons.mediatype_dataset_inverted;
+      return icons.mediatype_dataset;
   }
 };
 
@@ -30,7 +30,7 @@ export function MetaInfoHeadlineIcon({ type }: MetaInfoHeadlineIcon) {
   const iconSrc = getIcon(type);
   return (
     <div className="metainfo">
-      <div className={`mediatype-icon mediatype-${type}`}>
+      <div className={`mediatype-icon mediatype-${type} inverted`}>
         <Image width={0} height={0} src={iconSrc} alt="" />
       </div>
       <MetaInfoHeadline type={type} />

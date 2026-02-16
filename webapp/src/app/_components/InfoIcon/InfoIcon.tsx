@@ -3,6 +3,8 @@
 import { PropsWithChildren, useState } from "react";
 import Image from "next/image";
 
+import { icons } from "@/app/_components/SVG/SVG";
+
 type InfoIcon = {
   title: string;
 };
@@ -24,10 +26,10 @@ export function InfoIcon({ title, children }: PropsWithChildren<InfoIcon>) {
         onClick={toggleInfoMessage}
       >
         <Image
-          width={20}
-          height={20}
+          width={16}
+          height={16}
           alt={""}
-          src={"/images/info.svg"}
+          src={icons.info}
           className="lexicon-icon lexicon-icon-info-panel-closed"
         />
       </button>

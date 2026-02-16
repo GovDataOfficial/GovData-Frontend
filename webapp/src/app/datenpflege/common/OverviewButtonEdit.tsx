@@ -11,7 +11,7 @@ export function OverviewButtonEdit({ id, dataTitle, url }: OverviewButtonEdit) {
 
   return (
     <a title={dataTitle} className="d-flex me-2" href={`${url}/${id}`}>
-      <SVG icon={icons.editPencil} size="big" />
+      <SVG icon={icons.editPencil} size="big" className="primary" />
       {t("overview.table.edit")}
     </a>
   );

@@ -21,10 +21,9 @@ vi.mock("@/app/suche/_components/common/PreviewLoading", () => ({
   PreviewLoading: () => <div>Loading...</div>,
 }));
 
-vi.mock(
-  "@/app/suche/_components/ResourceTable/ResourcePreview/ResourcePreviewError",
-  () => ({ ResourcePreviewError: () => <div>Error loading preview</div> }),
-);
+vi.mock("@/app/_components/InfoBoxes/InfoBadge", () => ({
+  InfoBadge: () => <div>Error loading preview</div>,
+}));
 
 describe("DtResourcePreview", () => {
   const defaultProps = {

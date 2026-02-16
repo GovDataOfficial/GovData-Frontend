@@ -37,7 +37,7 @@ export function ShowcaseForm({ categories, showcaseData }: ShowcaseForm) {
       <div className="form-header-container">
         <div className="mb-2_5">
           <a href={PAGES_AUTH.manage_showcases}>
-            <SVG icon={icons.arrowLeftLongBlue} size={"big"} />
+            <SVG icon={icons.arrowLeftLong} size={"big"} className="primary" />
             <span className="ms-1_5">
               {i18n.t("showcaseform.navigation.myDatasets")}
             </span>
