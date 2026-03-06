@@ -67,8 +67,7 @@ export function useMetadataFormStickyNavigation({
   // First time this step is entered → mark as visited
   useEffect(() => {
     if (isActive && !state.visited) {
-      // queueMicrotask avoids warnings about updates during render
-      queueMicrotask(() => dispatch({ type: "VISIT" }));
+      dispatch({ type: "VISIT" });
     }
   }, [isActive, state.visited]);
 
@@ -76,7 +75,7 @@ export function useMetadataFormStickyNavigation({
   const wasActiveRef = useRef(isActive);
   useEffect(() => {
     if (wasActiveRef.current && !isActive) {
-      queueMicrotask(checkValidityOfCurrentStep);
+      checkValidityOfCurrentStep();
     }
     wasActiveRef.current = isActive;
   }, [isActive, checkValidityOfCurrentStep]);
@@ -84,7 +83,7 @@ export function useMetadataFormStickyNavigation({
   // Edit mode: run an initial validation once
   useEffect(() => {
     if (editMode) {
-      queueMicrotask(checkValidityOfCurrentStep);
+      checkValidityOfCurrentStep();
     }
   }, [editMode, checkValidityOfCurrentStep]);
 

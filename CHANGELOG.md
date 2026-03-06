@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.12.1 2026-03-04
+
+- Fix CVE-2026-26996, CVE-2026-27904, CVE-2026-27903, CVE-2025-69873 and CVE-2026-27606
+
 ## 7.12.0 2026-02-16
 
 - Updated @zazuko/yasgui to version 4.6.1
