@@ -1,6 +1,6 @@
 {
   "name": "gd-template-engine",
-  "version": "0.1.0",
+  "version": "99.0.0-SNAPSHOT",
   "description": "GovData Frontend Service",
   "private": true,
   "scripts": {
@@ -25,7 +25,7 @@
     "i18next": "^23.15.2",
     "ioredis": "^5.4.1",
     "iron-session": "^8.0.3",
-    "next": "16.1.6",
+    "next": "16.1.7",
     "nodemailer": "^7.0.11",
     "normalize.css": "^8.0.1",
     "ol": "^10.4.0",
@@ -39,7 +39,7 @@
     "sanitize-html": "^2.13.1",
     "sharp": "^0.34.2",
     "tippy.js": "^6.3.7",
-    "undici": "^7.19.2"
+    "undici": "^7.24.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",

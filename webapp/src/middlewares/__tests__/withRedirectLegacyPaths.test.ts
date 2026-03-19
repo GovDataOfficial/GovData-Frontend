@@ -21,6 +21,7 @@ describe("middleware Redirect", () => {
       "/web/guest/erklaerung-zur-barrierefreiheit",
       "/erklaerung-zur-barrierefreiheit",
     ],
+    ["/web/guest/barrierefreiheit", "/erklaerung-zur-barrierefreiheit"],
     ["/web/guest/impressum", "/impressum"],
     ["/web/guest/suchen/-/details/testfoo", "/suche/daten/testfoo"],
     ["/web/guest/suchen/-/details/123", "/suche/anwendung/123"],
@@ -30,11 +31,11 @@ describe("middleware Redirect", () => {
       "/suche?sort=title_asc",
     ],
     [
-      "/web/guest/suchen/-/searchresult/f/showcase_types%3Awebsite%2C/s/relevance_desc",
+      "/web/guest/suchen/-/searchresult/f/showcase_types%3Awebsite%7C/s/relevance_desc",
       "suche?showcase_types=website&sort=relevance_desc",
     ],
     [
-      "/web/guest/suchen/-/searchresult/q/Mein+Test/f/tags%3Abau%2C/s/title_asc",
+      "/web/guest/suchen/-/searchresult/q/Mein+Test/f/tags%3Abau%7C/s/title_asc",
       "/suche?q=Mein%2BTest&tags=bau&sort=title_asc",
     ],
     [
@@ -47,15 +48,15 @@ describe("middleware Redirect", () => {
     ],
     [
       // double encoding check
-      "/web/guest/suchen/-/searchresult/f/licence%3Ahttp%253A%252F%252Fdcat-ap.de%252Fdef%252Flicenses%252Fdl-by-de%252F2.0%2C",
+      "/web/guest/suchen/-/searchresult/f/licence%3Ahttp%253A%252F%252Fdcat-ap.de%252Fdef%252Flicenses%252Fdl-by-de%252F2.0%7C",
       "/suche?licence=http%3A%2F%2Fdcat-ap.de%2Fdef%2Flicenses%2Fdl-by-de%2F2.0",
     ],
     [
-      "/web/guest/daten/-/searchresult/q/test/f/type%3Adataset%2Cgroups%3Aener%2C/s/relevance_desc",
+      "/web/guest/daten/-/searchresult/q/test/f/type%3Adataset%7Cgroups%3Aener%7C/s/relevance_desc",
       "/suche?q=test&type=dataset&groups=ener&sort=relevance_desc",
     ],
     [
-      "/web/guest/showroom/-/searchresult/f/type%3Ashowcase%2Cshowcase_types%3Awebsite%2C/s/relevance_desc",
+      "/web/guest/showroom/-/searchresult/f/type%3Ashowcase%7Cshowcase_types%3Awebsite%7C/s/relevance_desc",
       "/suche?type=showcase&showcase_types=website&sort=relevance_desc",
     ],
     ["/web/guest/open-government", "informationen/open-government"],
@@ -86,7 +87,16 @@ describe("middleware Redirect", () => {
       "/web/guest/hochwertige-datensaetze",
       "informationen/hochwertige-datensaetze",
     ],
+    [
+      encodeURI("/web/guest/hochwertige-datensätze"),
+      "informationen/hochwertige-datensaetze",
+    ],
     ["/hochwertige-datensaetze", "informationen/hochwertige-datensaetze"],
+    [
+      encodeURI("/hochwertige-datensätze"),
+      "informationen/hochwertige-datensaetze",
+    ],
+    ["/web/guest/kommunale-datenportale", "informationen/weitere-portale"],
     [
       "/daten/-/details/govdata-metadatenkatalog",
       "/suche/daten/govdata-metadatenkatalog",

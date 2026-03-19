@@ -20,7 +20,7 @@ function getFilterFromLegacyPath(path: string): string[][] | undefined {
   if (match && match[1]) {
     const decodedString = decodeURIComponent(match[1]);
     return decodedString
-      .split(",")
+      .split("|")
       .filter((f) => f)
       .map((param) => {
         const [key, value] = param.split(":");
@@ -156,11 +156,19 @@ function getRedirectPath(request: NextRequest): string | null {
     case "/nutzungsbestimmungen":
     case "/web/guest/nutzungsbestimmungen":
       return "/nutzungshinweise";
+    case "/web/guest/barrierefreiheit":
+    case "/barrierefreiheit":
     case "/web/guest/erklaerung-zur-barrierefreiheit":
       return "/erklaerung-zur-barrierefreiheit";
     case "/web/guest/impressum":
       return "/impressum";
     /* information pages */
+    case "/web/guest/kommunale-datenportale":
+    case "/kommunale-datenportale":
+      return redirectToInformationPage("/weitere-portale");
+    case encodeURI("/web/guest/hochwertige-datensätze"):
+    case encodeURI("/hochwertige-datensätze"):
+      return redirectToInformationPage("/hochwertige-datensaetze");
     case "/web/guest/open-government":
     case "/open-government":
     case "/web/guest/datenbereitsteller":
@@ -177,10 +185,14 @@ function getRedirectPath(request: NextRequest): string | null {
     case "/termine":
     case "/web/guest/ogd-dachli":
     case "/ogd-dachli":
+    case "/web/guest/datenbereitstellung":
+    case "/datenbereitstellung":
     case "/web/guest/datenbereitstellungaufgovdata":
     case "/datenbereitstellungaufgovdata":
     case "/web/guest/hochwertige-datensaetze":
     case "/hochwertige-datensaetze":
+    case "/web/guest/weitere-portale":
+    case "/weitere-portale":
       return redirectToInformationPage(path);
     default:
       break;
