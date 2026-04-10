@@ -1,28 +1,36 @@
 # GovData Template-Engine
 
-A NextJS/React based frontend for GovData
+A NextJS/React based frontend for GovData.
+
+## Documentation
+
+This project uses a modular documentation structure:
+
+- **[Local Development](webapp/README.md)** - Instructions for the web application (Next.js)
+- **[Docker & Pipeline Documentation](docker/README.md)** - Docker build and local container setup
+- **[GitLab CI Pipeline](.gitlab/readme.md)** - CI/CD architecture and pipeline configuration
 
 ## Getting Started
 
-go to webapp folder
+### Local Development
 
-```bash
-cd webapp
-```
+1. **Go to webapp folder**
+   ```bash
+   cd webapp
+   ```
 
-installing all dependencies
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-```bash
-npm install
-```
+3. **Run development server**
+   Open [http://localhost:3000](http://localhost:3000) with your browser.
+   ```bash
+   npm run dev
+   ```
 
-running development server on http://localhost:3000
-
-```bash
-npm run dev
-```
-
-see package.json for more scripts 
+See `webapp/package.json` for more scripts.
 
 
 ## Customization
