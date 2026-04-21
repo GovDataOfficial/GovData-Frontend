@@ -1,3 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+    <suppress until="2026-06-01Z">
+        <notes>lodash - Jsonwebtoken bundled in Next.js. Managed by Next.js compilation. Github Issue: https://github.com/vercel/next.js/issues/92454</notes>
+        <filePath regex="true">.*node_modules/next/dist/compiled/jsonwebtoken/index\.js</filePath>
+        <cve>CVE-2026-4800</cve>
+        <cve>CVE-2026-2950</cve>
+    </suppress>
+
+    <suppress until="2026-06-01Z">
+        <notes>lodash - Babel packages bundled in Next.js. Managed by Next.js compilation. Github Issue: https://github.com/vercel/next.js/issues/92454</notes>
+        <filePath regex="true">.*node_modules/next/dist/compiled/babel-packages/packages-bundle\.js</filePath>
+        <cve>CVE-2026-4800</cve>
+        <cve>CVE-2026-2950</cve>
+    </suppress>
 </suppressions>
