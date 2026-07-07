@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import type { Metadata, Viewport } from "next";
 
 import { Footer } from "@/app/_components/Footer/Footer";
@@ -9,7 +9,6 @@ import { OffCanvasOverlayExit } from "@/app/_components/OffCanvasMenu/OffCanvasO
 import { QuickAccessNavigation } from "@/app/_components/QuickAccesNavigation/QuickAccessNavigation";
 import { SearchHeaderSwitcher } from "@/app/_components/Search/SearchHeaderSwitcher";
 import { UmbrellaBrandHeader } from "@/app/_components/UmbrellaBrandHeader/UmbrellaBrandHeader";
-import { UserHeader } from "@/app/_components/UserHeader/UserHeader";
 import { GlobalIds } from "@/app/_lib/globalIds";
 
 import "@/css/main.scss";
@@ -59,7 +58,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <QuickAccessNavigation />
             <UmbrellaBrandHeader />
             <HeaderNavigation />
-            <UserHeader />
             <SearchHeaderSwitcher />
           </header>
           <main id={GlobalIds.mainContent}>{children}</main>

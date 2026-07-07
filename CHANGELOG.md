@@ -1,5 +1,9 @@
 # Changelog
 
+## unreleased
+- Fix  GHSA-39q2-94rc-95cp, GHSA-h7mw-gpvr-xq4m,GHSA-crv5-9vww-q3g8, GHSA-v9jr-rg53-9pgp, GHSA-j452-xhg8-qg39, GHSA-58qx-3vcg-4xpx, GHSA-qx2v-qp2m-jg93, GHSA-5xrq-8626-4rwp
+- Moved UserHeader to data management
+
 ## 7.13.1 2026-05-15
 - Fix CVE-2026-45109, CVE-2026-44574, CVE-2026-44575, CVE-2026-44990
 

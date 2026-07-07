@@ -1,4 +1,3 @@
-import React from "react";
 import { Metadata } from "next";
 
 import { AnchorButton } from "@/app/_components/Button/AnchorButton";

@@ -56,7 +56,7 @@ export function fetchData<T>(
     return undefined;
   }
 
-  return fetch(url, { ...opts, cache: "no-cache" })
+  return fetch(url, { ...opts })
     .then((r) => {
       if (r.ok) {
         // Handle 204 No Content and any other status that might not have a body

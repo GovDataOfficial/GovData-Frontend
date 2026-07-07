@@ -69,14 +69,6 @@ describe("getData", () => {
     );
   });
 
-  it("should call fetchData with no-cache options", async () => {
-    await fetchData("http://www.test.de", { other: "option" });
-    expect(vi.mocked(global.fetch)).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.objectContaining({ cache: "no-cache" }),
-    );
-  });
-
   it("fetchMetadataForOrganizations should create correct url", async () => {
     const mockOrg1 = {
       id: "1",
@@ -89,7 +81,7 @@ describe("getData", () => {
     await fetchMetadataForOrganizations([mockOrg1]);
     expect(vi.mocked(global.fetch)).toHaveBeenCalledWith(
       "http://mtest.de/search/search?activeFilters=onlyEditorMetadata%3AhidePrivateDataset&sortType=lastmodification&ascending=false&numResults=3000&editorOrganizationIdList=1",
-      expect.objectContaining({ cache: "no-cache" }),
+      expect.anything(),
     );
   });
 });

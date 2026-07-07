@@ -53,7 +53,7 @@ describe("api/geocoding-suggest", () => {
     expect(await response.json()).toBe("mock");
     expect(fetchSpy).toHaveBeenCalledWith(
       "test/geosearch?outputformat=json&count=5&query=123",
-      { cache: "no-cache" },
+      {},
     );
   });
 
@@ -69,7 +69,7 @@ describe("api/geocoding-suggest", () => {
     expect(await response.json()).toBe("mock");
     expect(fetchSpy).toHaveBeenCalledWith(
       "https://openstreetmap.org/search?q=mysuggest",
-      { cache: "no-cache" },
+      {},
     );
   });
 });

@@ -24,4 +24,17 @@ describe("AutocompleteHighlightedSuggestion", () => {
     const html = container.innerHTML;
     expect(html).toEqual("das ist meine test");
   });
+
+  it("should highlight each word in inputValue separately", () => {
+    const { container } = render(
+      <AutocompleteHighlightedSuggestion
+        suggestion={"das ist meine test"}
+        inputValue={"das te"}
+      />,
+    );
+    const html = container.innerHTML;
+    expect(html).toEqual(
+      "<strong>das</strong> ist meine <strong>te</strong>st",
+    );
+  });
 });
