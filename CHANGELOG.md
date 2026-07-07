@@ -1,8 +1,14 @@
 # Changelog
 
-## unreleased
+## 7.14.1 2026-06-24
+- Updated nodemailer to 9.0.1, undici to 7.28.0 and added dompurify 3.4.11 override (fixes GHSA-p6gq-j5cr-w38f, GHSA-vmh5-mc38-953g, GHSA-pr7r-676h-xcf6, GHSA-p88m-4jfj-68fv, GHSA-vxpw-j846-p89q, GHSA-hm92-r4w5-c3mj, GHSA-35p6-xmwp-9g52, GHSA-g8m3-5g58-fq7m, GHSA-cmwh-pvxp-8882)
+- Updated @vitejs/plugin-react to 6.0.2 and vite to 8.0.16 (fixes GHSA-gv7w-rqvm-qjhr, GHSA-g7r4-m6w7-qqqr)
+- Raised semver floors in webapp/package.json to match installed versions (bootstrap, eslint, vitest, @vitest/coverage-v8, i18next, ioredis, iron-session, nodemailer, ol, ol-mapbox-style, pino, sharp, @fontsource/noto-sans, @ianvs/prettier-plugin-sort-imports, @testing-library/user-event, @types/node, @types/sanitize-html, content-security-policy-builder)
 - Fix  GHSA-39q2-94rc-95cp, GHSA-h7mw-gpvr-xq4m,GHSA-crv5-9vww-q3g8, GHSA-v9jr-rg53-9pgp, GHSA-j452-xhg8-qg39, GHSA-58qx-3vcg-4xpx, GHSA-qx2v-qp2m-jg93, GHSA-5xrq-8626-4rwp
 - Moved UserHeader to data management
+
+## 7.14.0 2026-06-11
+- Update to Elastic Search 9
 
 ## 7.13.1 2026-05-15
 - Fix CVE-2026-45109, CVE-2026-44574, CVE-2026-44575, CVE-2026-44990

@@ -419,7 +419,7 @@
     "metadata.welcome.title": "Herzlich Willkommen, {{name}}",
     "metadata.welcome.no_org.title": "Warum werden mir keine Informationen angezeigt?",
     "metadata.welcome.no_org.desc.1": "Sie sind keiner Organisation zugeordnet oder besitzen keine Contributer-ID. Dies ist notwendig, um Datensätze für Ihre Organisation anlegen, bearbeiten und löschen zu können.",
-    "metadata.welcome.no_org.desc.2": "Wenden Sie sich an die FITKO unter {{mail}}. Geben Sie ihren {{username}} an, damit die entsprechenden Einstellungen vorgenommen werden können.",
+    "metadata.welcome.no_org.desc.2": "Kontaktieren Sie uns unter {{mail}}. Geben Sie ihren {{username}} an, damit die entsprechenden Einstellungen vorgenommen werden können.",
     "username": "Benutzername",
     "metadata.welcome.desc.1": "Im $t(portal.name) Datenpflege-Bereich können neue Metadatensätze angelegt und bearbeitet werden.",
     "metadata.welcome.desc.2": "Hinweis zum Erstellen von Metadatensätzen.",
