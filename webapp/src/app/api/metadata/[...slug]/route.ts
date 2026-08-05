@@ -41,7 +41,7 @@ export async function GET(
       },
     });
   } catch (error) {
-    log.error("Error fetching metadata:", error);
+    log.error(error, "Error fetching metadata");
     return Response.json({ error: "Internal server error" }, { status: 500 });
   }
 }

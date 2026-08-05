@@ -60,7 +60,7 @@ export function createModify(features: Collection<Feature>) {
 
     // modification: tell the cache to update by emitting change-event!
     // Assuming we only have one certain feature in the collection
-    this["features_"].item(0).changed();
+    this["features_"][0].changed();
 
     setCursorStyle("pointer");
     return false;
@@ -74,7 +74,7 @@ export function createModify(features: Collection<Feature>) {
   ) {
     // override hover to only show allowed actions
     // check if the coordinates / vertexFeature point to a corner of our box
-    const featureGeometry = this["features_"].item(0).getGeometry();
+    const featureGeometry = this["features_"][0].getGeometry();
     const nodes = featureGeometry.getCoordinates()[0];
     let goodcoordinate = false;
     for (let i = 0; i < nodes.length; i++) {

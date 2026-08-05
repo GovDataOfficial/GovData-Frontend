@@ -51,7 +51,7 @@ export async function GET(request: NextRequest): Promise<Request> {
     codeVerifierSession.destroy();
     await setSession(tokenSet);
   } catch (error) {
-    log.error("Failed to exchange authorization code:", error);
+    log.error(error, "Failed to exchange authorization code");
     if (codeVerifierSession) {
       codeVerifierSession.destroy();
     }

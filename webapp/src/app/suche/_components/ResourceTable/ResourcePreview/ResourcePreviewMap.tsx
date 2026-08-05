@@ -5,7 +5,7 @@ import { Map, View } from "ol";
 import { apply as applyMapboxStyle } from "ol-mapbox-style";
 import { defaults as defaultControls } from "ol/control/defaults";
 import Zoom from "ol/control/Zoom";
-import { Extent } from "ol/extent";
+import { createEmpty, Extent } from "ol/extent";
 import GeoJSON from "ol/format/GeoJSON";
 import VectorLayer from "ol/layer/Vector";
 import { useGeographic as olUseGeographic } from "ol/proj";
@@ -87,7 +87,7 @@ export const ResourcePreviewMap = ({
         features: new GeoJSON().readFeatures(resourceData),
       });
 
-      const extent: Extent = vectorSource.getExtent();
+      const extent: Extent = vectorSource.getExtent() ?? createEmpty();
 
       const resetIsLoading = debounce(() => {
         setIsLoading(false);

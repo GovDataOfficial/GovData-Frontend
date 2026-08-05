@@ -1,5 +1,32 @@
 # Changelog
 
+## 7.14.3 2026-08-05
+- Adds ability to disable data types in extended search via the environment configuration
+- Updated @vitejs/plugin-react to 6.0.5
+- Updated @types/react to 19.2.18, @types/react-dom to 19.2.4
+- Added Renovate Bot configuration with concurrent PR limit
+- Changed Renovate Bot schedule from nights to daily
+- Fixed ResourcePreviewMap for breaking change in OpenLayers 10.9.0
+- Updated ol to 10.9.0
+- Updated OWASP dependency-check plugin to 12.2.2
+- Updated @vitejs/plugin-react to 6.0.3
+- Updated sanitize-html to 2.17.6 and @types/sanitize-html to 2.16.1
+- Updated react and react-dom to 19.2.7, @types/react to 19.2.17
+- Updated vitest and @vitest/coverage-v8 to 4.1.10
+- Updated eslint to 9.39.5
+- Updated eslint-formatter-gitlab to 7.2.0
+- Updated @ianvs/prettier-plugin-sort-imports to 4.7.1
+- Updated @types/node to 22.20.1
+- Updated ioredis to 5.11.1
+- Updated @fontsource/noto-sans to 5.2.10
+- Updated @eslint/eslintrc to 3.3.5
+- Updated nodemailer to 9.0.3
+- Updated @fortawesome/fontawesome-free to 6.7.2
+- Updated @testing-library/react to 16.3.2
+- Updated bootstrap to 5.3.8
+- Updated openid-client to 6.8.4
+- Updated @types/prismjs to 1.26.6
+
 ## 7.14.1 2026-06-24
 - Updated nodemailer to 9.0.1, undici to 7.28.0 and added dompurify 3.4.11 override (fixes GHSA-p6gq-j5cr-w38f, GHSA-vmh5-mc38-953g, GHSA-pr7r-676h-xcf6, GHSA-p88m-4jfj-68fv, GHSA-vxpw-j846-p89q, GHSA-hm92-r4w5-c3mj, GHSA-35p6-xmwp-9g52, GHSA-g8m3-5g58-fq7m, GHSA-cmwh-pvxp-8882)
 - Updated @vitejs/plugin-react to 6.0.2 and vite to 8.0.16 (fixes GHSA-gv7w-rqvm-qjhr, GHSA-g7r4-m6w7-qqqr)

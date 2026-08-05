@@ -229,6 +229,70 @@ describe("External Search Filter Test", () => {
     const formData = getFormData(container);
     expect(formData.get("sourceportal")).toEqual("999-555");
   });
+
+  it("should show all 4 types when disabledFilterTypes is empty", async () => {
+    vi.resetModules();
+
+    const { ExtendedSearchFields } = await import("../ExtendedSearchFields");
+
+    const user = userEvent.setup();
+    render(<ExtendedSearchFields searchParams={{}} disabledFilterTypes="" />);
+
+    await addFilter("Typen", user);
+    const select = screen.getByRole("combobox", { name: "in Typen" });
+    const options = within(select).getAllByRole("option");
+
+    expect(options).toHaveLength(4);
+    expect(options.map((o) => o.textContent)).toContain("Daten");
+    expect(options.map((o) => o.textContent)).toContain("Anwendungen");
+    expect(options.map((o) => o.textContent)).toContain("Informationen");
+    expect(options.map((o) => o.textContent)).toContain("Blog-Beiträge");
+  });
+
+  it("should hide blog type when disabledFilterTypes contains 'blog'", async () => {
+    vi.resetModules();
+
+    const { ExtendedSearchFields } = await import("../ExtendedSearchFields");
+
+    const user = userEvent.setup();
+    render(
+      <ExtendedSearchFields searchParams={{}} disabledFilterTypes="blog" />,
+    );
+
+    await addFilter("Typen", user);
+    const select = screen.getByRole("combobox", { name: "in Typen" });
+    const options = within(select).getAllByRole("option");
+
+    expect(options).toHaveLength(3);
+    expect(options.map((o) => o.textContent)).toContain("Daten");
+    expect(options.map((o) => o.textContent)).toContain("Anwendungen");
+    expect(options.map((o) => o.textContent)).toContain("Informationen");
+    expect(options.map((o) => o.textContent)).not.toContain("Blog-Beiträge");
+  });
+
+  it("should hide multiple types when disabledFilterTypes contains comma-separated keys", async () => {
+    vi.resetModules();
+
+    const { ExtendedSearchFields } = await import("../ExtendedSearchFields");
+
+    const user = userEvent.setup();
+    render(
+      <ExtendedSearchFields
+        searchParams={{}}
+        disabledFilterTypes="blog,article"
+      />,
+    );
+
+    await addFilter("Typen", user);
+    const select = screen.getByRole("combobox", { name: "in Typen" });
+    const options = within(select).getAllByRole("option");
+
+    expect(options).toHaveLength(2);
+    expect(options.map((o) => o.textContent)).toContain("Daten");
+    expect(options.map((o) => o.textContent)).toContain("Anwendungen");
+    expect(options.map((o) => o.textContent)).not.toContain("Informationen");
+    expect(options.map((o) => o.textContent)).not.toContain("Blog-Beiträge");
+  });
 });
 
 describe("External Search Filter Test - Feature Flag Disabled", () => {

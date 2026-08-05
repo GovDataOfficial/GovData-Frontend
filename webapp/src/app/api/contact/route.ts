@@ -50,7 +50,7 @@ function sendContactMail(data: ContactMailFormData) {
       to: process.env.mail_smtp_to_address,
     })
     .then((info: { messageId: string }) => {
-      log.debug("Contact mail sent", info.messageId);
+      log.debug({ messageId: info.messageId }, "Contact mail sent");
     })
     .catch((error: unknown) => {
       log.error(error, "Contact mail could not be sent");

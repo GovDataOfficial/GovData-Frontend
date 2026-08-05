@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
       state: state,
     });
   } catch (error) {
-    log.error("Failed to initiate login:", error);
+    log.error(error, "Failed to initiate login");
     return redirect("/error");
   }
 

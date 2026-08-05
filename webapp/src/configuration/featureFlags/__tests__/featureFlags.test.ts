@@ -18,9 +18,8 @@ describe("featureFlags", () => {
       customFeatures: {},
     }));
 
-    const { getFeatureFlags } = await import(
-      "@/configuration/featureFlags/featureFlags"
-    );
+    const { getFeatureFlags } =
+      await import("@/configuration/featureFlags/featureFlags");
     expect(getFeatureFlags()).toEqual(defaultFeatures);
   });
 
@@ -32,9 +31,8 @@ describe("featureFlags", () => {
       customFeatures: mockCustomFeatures,
     }));
 
-    const { getFeatureFlags } = await import(
-      "@/configuration/featureFlags/featureFlags"
-    );
+    const { getFeatureFlags } =
+      await import("@/configuration/featureFlags/featureFlags");
     expect(getFeatureFlags()).toEqual({
       ...defaultFeatures,
       ...mockCustomFeatures,

@@ -3,9 +3,7 @@ import { ReadonlyURLSearchParams } from "next/navigation";
 import { NextJSSearchParams } from "@/types/types";
 
 export type ValidSearchParamsForConversion =
-  | NextJSSearchParams
-  | URLSearchParams
-  | ReadonlyURLSearchParams;
+  NextJSSearchParams | URLSearchParams | ReadonlyURLSearchParams;
 
 export function convertToURLSearchParams(
   searchParams: ValidSearchParamsForConversion,

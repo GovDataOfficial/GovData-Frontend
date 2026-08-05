@@ -20,7 +20,7 @@ describe("createModify", () => {
     const modify = createModify(features);
 
     expect(modify).toBeDefined();
-    expect(modify["features_"]).toBe(features);
+    expect(modify["features_"]).toEqual(features.getArray());
   });
 
   it("should handle up event and update the feature", () => {

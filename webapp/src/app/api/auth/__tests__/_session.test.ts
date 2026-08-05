@@ -271,9 +271,8 @@ describe("_session", () => {
       JSON.stringify(mockSession),
     );
 
-    const { getSessionAndRefreshIt: getSessionAndRefreshIt } = await import(
-      "../_session.js"
-    );
+    const { getSessionAndRefreshIt: getSessionAndRefreshIt } =
+      await import("../_session.js");
 
     const session = await getSessionAndRefreshIt();
     expect(session).toEqual(mockSession);
@@ -318,9 +317,8 @@ describe("_session", () => {
     );
     vi.mocked(redisClientMock.set).mockResolvedValue(undefined);
 
-    const { getSessionAndRefreshIt: getSessionAndRefreshIt } = await import(
-      "../_session.js"
-    );
+    const { getSessionAndRefreshIt: getSessionAndRefreshIt } =
+      await import("../_session.js");
 
     const session = await getSessionAndRefreshIt();
 

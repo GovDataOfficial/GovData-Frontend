@@ -61,7 +61,7 @@ type ExtendedSearchFields = {
   licenseActiveSorted?: LicenseActiveSorted;
   organizationSorted?: OrganizationSorted;
   resourceFormatsSorted?: ResourceFormatsSorted;
-  filterTypes?: string;
+  disabledFilterTypes?: string;
 };
 
 export function ExtendedSearchFields({
@@ -71,7 +71,7 @@ export function ExtendedSearchFields({
   licenseActiveSorted,
   organizationSorted,
   resourceFormatsSorted,
-  filterTypes = "article,dataset,showcase", // no blogs currently
+  disabledFilterTypes = "",
 }: ExtendedSearchFields) {
   const urlSearchParams = convertToURLSearchParams(searchParams);
   const initialFilters = filterItems.filter((item) => {
@@ -140,8 +140,8 @@ export function ExtendedSearchFields({
     label: item,
   }));
 
-  const typeData = defaultTypeData.filter((defaultFilter) =>
-    filterTypes.includes(defaultFilter.key),
+  const typeData = defaultTypeData.filter(
+    (defaultFilter) => !disabledFilterTypes.includes(defaultFilter.key),
   );
 
   function toFilterComponent(item: string) {

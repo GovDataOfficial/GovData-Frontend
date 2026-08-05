@@ -206,9 +206,8 @@ describe("middleware Headers", () => {
 
     // Reimport the module to get fresh instance with mocked env vars
     await vi.resetModules();
-    const { withHeadersMiddleware } = await import(
-      "@/middlewares/withHeadersMiddleware"
-    );
+    const { withHeadersMiddleware } =
+      await import("@/middlewares/withHeadersMiddleware");
 
     const response = new NextResponse();
     await withHeadersMiddleware(request, response);

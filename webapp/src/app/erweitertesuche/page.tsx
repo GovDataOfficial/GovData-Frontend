@@ -1,4 +1,3 @@
-import React from "react";
 import { Metadata } from "next";
 
 import {
@@ -29,8 +28,8 @@ export default async function ErweiterteSuche(props: PageConstructor) {
   const organizationSorted = await fetchOrganizationSorted();
   const resourceFormatsSorted = await fetchResourceFormatsSorted();
 
-  // active filter types provides by BE
-  const filterTypes = process.env.elasticsearch_filter_types;
+  // disabled filter types from environment variable
+  const disabledFilterTypes = process.env.disabled_elasticsearch_filter_types;
 
   return (
     <ContainerSection
@@ -45,7 +44,7 @@ export default async function ErweiterteSuche(props: PageConstructor) {
         licenseActiveSorted={licenseActiveSorted}
         organizationSorted={organizationSorted}
         resourceFormatsSorted={resourceFormatsSorted}
-        filterTypes={filterTypes}
+        disabledFilterTypes={disabledFilterTypes}
       />
       <div className="row mt-2">
         <div className="col-12 col-md-4 col-lg-6">

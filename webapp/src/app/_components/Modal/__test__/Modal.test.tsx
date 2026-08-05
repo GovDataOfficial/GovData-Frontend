@@ -375,9 +375,8 @@ describe("Modal", () => {
         vi.resetModules();
 
         // Re-import Modal with the new mock
-        const { Modal: ModalWithoutButton } = await import(
-          "@/app/_components/Modal/Modal"
-        );
+        const { Modal: ModalWithoutButton } =
+          await import("@/app/_components/Modal/Modal");
 
         render(
           <ModalWithoutButton {...defaultProps}>

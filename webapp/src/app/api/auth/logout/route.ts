@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     endSessionUrl = client.buildEndSessionUrl(config, endSessionParams);
     await deleteSession();
   } catch (error) {
-    log.error("Failed to logout:", error);
+    log.error(error, "Failed to logout");
     // Still delete the session even if Keycloak logout fails
     await deleteSession();
     return redirect("/");

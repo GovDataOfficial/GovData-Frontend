@@ -184,11 +184,7 @@ export type MetadataResource = {
   availability: string;
   availabilityDisplay: string;
   shortendAvailability?:
-    | "STABLE"
-    | "EXPERIMENTAL"
-    | "TEMPORARY"
-    | "AVAILABLE"
-    | "OP_DATPRO";
+    "STABLE" | "EXPERIMENTAL" | "TEMPORARY" | "AVAILABLE" | "OP_DATPRO";
   accessServices: {
     description: string;
     title: string;
