@@ -1,27 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
     <suppress until="2026-10-01Z">
-        <notes>lodash - Jsonwebtoken bundled in Next.js. Managed by Next.js compilation. Github Issue: https://github.com/vercel/next.js/issues/92454</notes>
-        <filePath regex="true">.*node_modules/next/dist/compiled/jsonwebtoken/index\.js</filePath>
-        <cve>CVE-2026-4800</cve>
-        <cve>CVE-2026-2950</cve>
-        <cve>CVE-2025-13465</cve>
-        <cve>CVE-2021-23337</cve>
-    </suppress>
-
-    <suppress until="2026-10-01Z">
-        <notes>lodash - Babel packages bundled in Next.js. Managed by Next.js compilation. Github Issue: https://github.com/vercel/next.js/issues/92454</notes>
-        <filePath regex="true">.*node_modules/next/dist/compiled/babel-packages/packages-bundle\.js</filePath>
-        <cve>CVE-2026-4800</cve>
-        <cve>CVE-2026-2950</cve>
-        <cve>CVE-2025-13465</cve>
-        <cve>CVE-2021-23337</cve>
-    </suppress>
-
-    <suppress until="2026-10-01Z">
         <notes>moment.js CVEs bundled in chart.js@2.9.4 (Chart.bundle.min.js). CVE-2022-24785 (path traversal in moment.locale) is Node-only, not exploitable in the browser. CVE-2022-31129 (ReDoS on very long date strings) requires user-controlled input into moment.parse, which does not occur - chart.js on the metadata-quality page renders backend-controlled numbers only. Both are resolved by chart.js v2 -> v4 upgrade tracked in GOVDATADE-XXXX (moment is no longer bundled in chart.js v3+).</notes>
         <filePath regex="true">.*node_modules/chart\.js/dist/Chart\.bundle(\.min)?\.js</filePath>
         <cve>CVE-2022-24785</cve>
         <cve>CVE-2022-31129</cve>
+    </suppress>
+
+    <suppress until="2027-01-01Z">
+        <notes>nanoid 3.3.16+ - false positive. CVE-2026-67214 (infinite loop in customAlphabet/nanoid of nanoid/non-secure) is fixed in 3.3.16 (3.x branch) and 5.1.16 (5.x branch). Installed version 3.3.18 contains the fix; overrides in webapp/package.json pin nanoid to at least ^3.3.18 to prevent regressions. OWASP Dependency-Check matches on CPE without evaluating fixed-version metadata. Uses packageUrl regex because the npm analyzer identifies dependencies by PURL rather than a node_modules filepath.</notes>
+        <packageUrl regex="true">^pkg:npm/nanoid@3\.3\.(1[6-9]|[2-9]\d+)$</packageUrl>
+        <cve>CVE-2026-67214</cve>
     </suppress>
 </suppressions>

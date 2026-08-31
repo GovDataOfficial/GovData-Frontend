@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // generate color classes from the colors map
 // you can use it like: <div class="bg-data-green clr-data-green"></div>
 @each $color_name, $color_code in $colors {
@@ -15,7 +17,7 @@
 }
 
 // own colors
-$checkbox-border: darken($kontur-gray, 10%);
+$checkbox-border: color.adjust($kontur-gray, $lightness: -10%);
 
 @mixin navcolor($background-color, $color) {
   &.active > a {

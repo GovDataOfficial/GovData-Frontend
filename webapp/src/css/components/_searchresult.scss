@@ -1,3 +1,5 @@
+@use "sass:map";
+
 .filter-tags {
   display: flex;
   flex-wrap: wrap;
@@ -64,11 +66,11 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: map-get($spacers, 1);
+    gap: map.get($spacers, 1);
 
     .search-result-hit-detail-info-bulletpoint:before {
       content: "•";
-      margin-right: map-get($spacers, 1);
+      margin-right: map.get($spacers, 1);
       font-weight: 900;
     }
   }
@@ -95,7 +97,7 @@
 
   .search-results-tag-sort-container-sort,
   .search-results-tag-sort-container-tags {
-    margin-top: map-get($spacers, "1_5");
+    margin-top: map.get($spacers, "1_5");
   }
 
   .search-results-tag-sort-container-sort {

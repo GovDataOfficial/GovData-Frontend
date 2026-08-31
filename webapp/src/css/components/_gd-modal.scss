@@ -1,3 +1,5 @@
+@use "sass:map";
+
 // Modal backdrop that covers the entire screen
 .gd-modal-backdrop {
   position: fixed;
@@ -10,7 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: map-get($spacers, 2);
+  padding: map.get($spacers, 2);
 }
 
 // The modal dialog itself
@@ -28,7 +30,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  padding: map-get($spacers, 3);
+  padding: map.get($spacers, 3);
 
   &:focus {
     outline: none;
@@ -45,7 +47,7 @@ pre {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: map-get($spacers, 2);
+  margin-bottom: map.get($spacers, 2);
   flex-shrink: 0;
   .gd-button.gd-button-icon-tertiary {
     background-color: $clr-neutral-grey-0;
@@ -56,12 +58,12 @@ pre {
 .gd-modal-title {
   margin: 0;
   flex-grow: 1;
-  margin-right: map-get($spacers, 2);
+  margin-right: map.get($spacers, 2);
 }
 
 // Modal body for content component
 .gd-modal-body {
-  padding: map-get($spacers, 3);
+  padding: map.get($spacers, 3);
 }
 
 // Animation for modal appearance

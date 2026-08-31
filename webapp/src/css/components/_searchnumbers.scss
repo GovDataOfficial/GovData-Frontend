@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .gd-search-numbers-portlet {
   ul {
     margin: 0;
@@ -293,7 +295,7 @@
         &:hover,
         &:active,
         &:focus {
-          background-color: darken($clr-media-grey-500, 10%);
+          background-color: color.adjust($clr-media-grey-500, $lightness: -10%);
         }
       }
     }

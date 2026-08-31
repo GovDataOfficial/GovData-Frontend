@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // autocomplete
 .gd-autocomplete {
   .yui3-aclist {
@@ -63,7 +65,7 @@
 
   .yui3-aclist-item {
     span {
-      color: darken($kontur-gray, 20%);
+      color: color.adjust($kontur-gray, $lightness: -20%);
     }
   }
 }

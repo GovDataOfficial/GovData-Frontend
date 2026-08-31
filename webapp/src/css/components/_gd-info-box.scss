@@ -1,8 +1,10 @@
+@use "sass:map";
+
 .info-box {
   background-color: $clr-primary-100;
   border: 1px solid $clr-primary-500;
   border-radius: $spacer * 0.5;
-  padding: map-get($spacers, 2);
+  padding: map.get($spacers, 2);
   color: $clr-neutral-grey-800;
 
   .info-box-message {
@@ -40,7 +42,7 @@
   @extend .paragraph-extra-small;
   display: flex;
   align-items: center;
-  padding: map-get($spacers, "0_5") map-get($spacers, 1);
+  padding: map.get($spacers, "0_5") map.get($spacers, 1);
   img {
     filter: $filter-info;
   }

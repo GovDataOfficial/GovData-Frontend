@@ -1,4 +1,6 @@
-$utilities: map-merge(
+@use "sass:map";
+
+$utilities: map.merge(
   $utilities,
   (
     "width": (

@@ -1,3 +1,5 @@
+@use "sass:map";
+
 $rem-base: 16px;
 
 @mixin heading($fnt-size, $fnt-size-mobile, $line-height) {
@@ -32,12 +34,18 @@ $rem-base: 16px;
 }
 
 @function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
-  $min: map-get($breakpoints, $name);
-  @return if($min != 0, $min, null);
+  $min: map.get($breakpoints, $name);
+  @if $min != 0 {
+    @return $min;
+  }
+  @return null;
 }
 
 @function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
-  @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
+  @if breakpoint-min($name, $breakpoints) == null {
+    @return "";
+  }
+  @return "-#{$name}";
 }
 
 $focus-common-outline: 3px solid $focus-outline-color;
@@ -87,25 +95,29 @@ $focus-common-z-index: 100;
 
   @each $type in $types {
     @if $type == phone {
-      $maxWidth: if($maxWidth == -1, $breakpoint_phone - 1, $maxWidth);
+      @if $maxWidth == -1 {
+        $maxWidth: $breakpoint_phone - 1;
+      }
       $minWidth: 0;
     } @else if $type == tablet {
       @if $maxWidth != 0 {
-        $maxWidth: if(
-          $maxWidth == -1,
-          $breakpoint_tablet - 1,
-          max($breakpoint_tablet - 1, $maxWidth)
-        );
+        @if $maxWidth == -1 {
+          $maxWidth: $breakpoint_tablet - 1;
+        } @else {
+          $maxWidth: max($breakpoint_tablet - 1, $maxWidth);
+        }
       }
 
-      $minWidth: if(
-        $minWidth == -1,
-        $breakpoint_phone,
-        min($breakpoint_phone, $minWidth)
-      );
+      @if $minWidth == -1 {
+        $minWidth: $breakpoint_phone;
+      } @else {
+        $minWidth: min($breakpoint_phone, $minWidth);
+      }
     } @else if $type == desktop {
       $maxWidth: 0;
-      $minWidth: if($minWidth == -1, $breakpoint_tablet, $minWidth);
+      @if $minWidth == -1 {
+        $minWidth: $breakpoint_tablet;
+      }
     }
   }
 
@@ -130,36 +142,4 @@ $focus-common-z-index: 100;
   opacity: $opacity;
   $opacity-ie: $opacity * 100;
   filter: alpha(opacity=$opacity-ie); //IE8
-}
-
-@mixin text-shadow($shadow...) {
-  $shadow: if(length($shadow) > 0, $shadow, default);
-  $default: -compass-space-list(
-    compact(
-      $default-text-shadow-h-offset $default-text-shadow-v-offset
-        $default-text-shadow-blur $default-text-shadow-spread
-        $default-text-shadow-color
-    )
-  );
-  $shadows-without-spread: join((), (), comma);
-  $shadows: join((), (), comma);
-  $has-spread: false;
-  @each $layer in $shadow {
-    $layer: if($layer == "default", $default, $layer);
-    @if length($layer) > 4 {
-      $has-spread: true;
-      $shadows-without-spread: append(
-        $shadows-without-spread,
-        nth($layer, 1) nth($layer, 2) nth($layer, 3) nth($layer, 5)
-      );
-      $shadows: append($shadows, $layer);
-    } @else {
-      $shadows-without-spread: append($shadows-without-spread, $layer);
-      $shadows: append($shadows, $layer);
-    }
-  }
-  @if $has-spread {
-    text-shadow: $shadows-without-spread;
-  }
-  text-shadow: $shadows;
 }

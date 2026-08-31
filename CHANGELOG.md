@@ -1,4 +1,23 @@
 # Changelog
+## Unreleased yyyy-mm-dd
+
+## 7.14.4  2026-08-25
+- Updated brace-expansion to 5.0.9, dompurify to 3.4.14, js-yaml to 4.3.1 and nanoid to 3.3.18 (fixes GHSA-rgw5-rvv9-x895, GHSA-55q2-fjhq-7xh7, GHSA-5p4m-2wfm-xmqj, GHSA-2v37-7h3g-55p8)
+- Updated Next.js to 16.3.2
+- Updated @vitejs/plugin-react to 6.1.0
+- Updated openid-client to 6.8.7
+- Updated sanitize-html to 2.17.7
+- Updated @zazuko/yasgui to 4.6.2
+- Updated @testing-library/user-event to 14.6.6
+- Updated @types/react-dom to 19.2.5
+- Updated minimatch to 10.2.6
+- Updated sass to 1.103.1
+- Updated vitest and @vitest/coverage-v8 to 4.1.11
+- Raised semver floors in webapp/package.json to match installed versions and consolidated overrides to brace-expansion, minimatch, dompurify and nanoid (security floors)
+- Switched `next build` to `--webpack` in the pipeline; Turbopack (Next 16 default) fails to resolve UMD wrappers bundled inside @zazuko/yasgui's CodeMirror addons
+- Suppressed OWASP false-positive for nanoid CVE-2026-67214 via `packageUrl` regex (patched at 3.3.16, installed 3.3.18) and removed obsolete jsonwebtoken/babel suppressions that no longer matched
+- Added automated publish pipeline to GitHub and OpenCode
+- Renovate now bumps package.json semver ranges (`rangeStrategy: bump`) instead of only updating the lockfile
 
 ## 7.14.3 2026-08-05
 - Adds ability to disable data types in extended search via the environment configuration

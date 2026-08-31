@@ -52,3 +52,4 @@ gradle
 # vitest and coverage
 .vite/*
 coverage/*
+/.claude/settings.local.json
