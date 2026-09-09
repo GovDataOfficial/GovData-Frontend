@@ -52,45 +52,6 @@ export const defaultOpennessData = [
 ];
 
 //TODO need route from backend to fetch this data.
-
-/**
- * key with complete url required for backend
- * shortkey: metadata dto returns this instead of the key
- */
-export const defaultHvdCategoriesData = [
-  {
-    label: i18n.t("category.label.met"),
-    key: "http://data.europa.eu/bna/c_164e0bf5",
-    shortkey: "MET",
-  },
-  {
-    label: i18n.t("category.label.cco"),
-    key: "http://data.europa.eu/bna/c_a9135398",
-    shortkey: "CCO",
-  },
-  {
-    label: i18n.t("category.label.geo"),
-    key: "http://data.europa.eu/bna/c_ac64a52d",
-    shortkey: "GEO",
-  },
-  {
-    label: i18n.t("category.label.mob"),
-    key: "http://data.europa.eu/bna/c_b79e35eb",
-    shortkey: "MOB",
-  },
-  {
-    label: i18n.t("category.label.eoe"),
-    key: "http://data.europa.eu/bna/c_dd313021",
-    shortkey: "EOE",
-  },
-  {
-    label: i18n.t("category.label.sta"),
-    key: "http://data.europa.eu/bna/c_e1da4e07",
-    shortkey: "STA",
-  },
-];
-
-//TODO need route from backend to fetch this data.
 export const defaultAvailability = [
   {
     key: "http://publications.europa.eu/resource/authority/planned-availability/STABLE",

@@ -5,14 +5,14 @@ import { ContainerDiv } from "@/app/_components/Container";
 import { EditorialContent } from "@/app/_components/EditorialContent/EditorialContent";
 import { SiteNavigationT3 } from "@/app/_components/SiteNavBar/SiteNavigationT3";
 import { UserSurveyHeader } from "@/app/_components/UserSurveyHeader/UserSurveyHeader";
-import { fetchMetadata, fetchTypo3Data } from "@/app/_lib/getData";
+import { fetchTypo3Data } from "@/app/_lib/getData";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
 import { endpoints } from "@/configuration/endpoints";
 import { i18n } from "@/i18n";
 import { findT3ContentElement } from "@/types/typeGuards";
 import { PageConstructor } from "@/types/types";
 
-async function getPageData(params: PageConstructor["params"]) {
+async function getPageData(params: Awaited<PageConstructor["params"]>) {
   return fetchTypo3Data(endpoints.T3.informationen + `/${params.slug}`);
 }
 

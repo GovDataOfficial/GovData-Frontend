@@ -2,9 +2,9 @@ import {
   FilterCommon,
   FilterCommonConsumer,
 } from "@/app/_components/FilterArea/filters/FilterCommon";
-import { findHvdCategory } from "@/app/_lib/hvdCategories";
+import { labelForHvdUri } from "@/app/_lib/hvdCategories";
 import { i18n } from "@/i18n";
-import { FilterMap } from "@/types/types";
+import { FilterMap, HvdCategoryMap } from "@/types/types";
 
 import { FilterArea } from "./FilterArea";
 import { FilterDateFilter } from "./filters/FilterDateFilter";
@@ -22,7 +22,19 @@ const mapFacetList = (
   }));
 };
 
-export function FilterAreaFilterGroups({ filterMap }: FilterCommonConsumer) {
+type FilterAreaFilterGroupsProps = FilterCommonConsumer & {
+  /**
+   * Backend-provided HVD category vocabulary; used to render human-readable labels for
+   * the `hvd_categories` facet. Defaults to an empty map so that legacy callers keep
+   * compiling — the facet labels then simply fall back to the raw URI.
+   */
+  hvdMap?: HvdCategoryMap;
+};
+
+export function FilterAreaFilterGroups({
+  filterMap,
+  hvdMap = {},
+}: FilterAreaFilterGroupsProps) {
   const { t } = i18n;
 
   const groups = mapFacetList(filterMap.groups, (name) =>
@@ -51,9 +63,8 @@ export function FilterAreaFilterGroups({ filterMap }: FilterCommonConsumer) {
 
   const hvd = mapFacetList(filterMap.hvd, (name) => t("filter.hvd." + name));
 
-  const hvdCategories = mapFacetList(
-    filterMap.hvd_categories,
-    (name) => findHvdCategory(name)?.label || name,
+  const hvdCategories = mapFacetList(filterMap.hvd_categories, (name) =>
+    labelForHvdUri(name, hvdMap),
   );
 
   // these we dont map, so we take the name as is

@@ -318,6 +318,7 @@
     "filter.hvd_categories.title": "Hochwertige Datensatzkategorien",
     "filter.hvd_categories.extended.title": "Hochwertige Datensatzkategorien",
     "filter.hvd_categories.has_hvd": "Nur hochwertige Datensatzkategorien",
+    "filter.hvd_categories.extended.group.selected": "{{count}} ausgewählt",
     "filter.geoLocation.set": "Raumbezug festlegen",
     "filter.geoLocation.change": "festgelegten Raumbezug ändern",
     "sparql.datenzugriffundschnittstellen.headline": "Datenzugriff und Schnittstellen",

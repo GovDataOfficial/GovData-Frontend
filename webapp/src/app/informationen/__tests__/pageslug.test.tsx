@@ -13,7 +13,10 @@ vi.mock("next/navigation", () => ({
 
 describe("Information Slug Page", () => {
   it("should redirect to not-found page", async () => {
-    await InformationSlugPage({ params: { slug: "test" }, searchParams: {} });
+    await InformationSlugPage({
+      params: Promise.resolve({ slug: "test" }),
+      searchParams: Promise.resolve({}),
+    });
     expect(notFound).toHaveBeenCalled();
   });
 });

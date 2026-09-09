@@ -6,7 +6,6 @@ import { Dropdown } from "@/app/_components/Dropdown/Dropdown";
 import { convertToURLSearchParams } from "@/app/_lib/convertToSearchParams";
 import {
   defaultDataserviceData,
-  defaultHvdCategoriesData,
   defaultHvdData,
   defaultOpennessData,
   defaultPlatformData,
@@ -21,10 +20,12 @@ import { CommonSelect } from "@/app/erweitertesuche/inputs/CommonSelect";
 import { FilterMultiBox } from "@/app/erweitertesuche/inputs/FilterMultiBox";
 import { FilterTags } from "@/app/erweitertesuche/inputs/FilterTags";
 import { FilterTemporalCoverage } from "@/app/erweitertesuche/inputs/FilterTemporalCoverage";
+import { GroupedFilterMultiBox } from "@/app/erweitertesuche/inputs/GroupedFilterMultiBox";
 import { Feature } from "@/configuration/featureFlags/types";
 import { i18n } from "@/i18n";
 import {
   CategoriesSorted,
+  HvdCategoryMap,
   LicenseActiveSorted,
   NextJSSearchParams,
   OrganizationSorted,
@@ -61,6 +62,11 @@ type ExtendedSearchFields = {
   licenseActiveSorted?: LicenseActiveSorted;
   organizationSorted?: OrganizationSorted;
   resourceFormatsSorted?: ResourceFormatsSorted;
+  /**
+   * Backend HVD vocabulary. Rendered as the option list of the HVD categories
+   * multi-select in the extended search form.
+   */
+  hvdMap?: HvdCategoryMap;
   disabledFilterTypes?: string;
 };
 
@@ -71,6 +77,7 @@ export function ExtendedSearchFields({
   licenseActiveSorted,
   organizationSorted,
   resourceFormatsSorted,
+  hvdMap,
   disabledFilterTypes = "",
 }: ExtendedSearchFields) {
   const urlSearchParams = convertToURLSearchParams(searchParams);
@@ -177,7 +184,7 @@ export function ExtendedSearchFields({
       case "hvd":
         return <FilterMultiBox type={item} data={defaultHvdData} />;
       case "hvd_categories":
-        return <FilterMultiBox type={item} data={defaultHvdCategoriesData} />;
+        return <GroupedFilterMultiBox type={item} map={hvdMap ?? {}} />;
       case "dataservice":
         return <FilterMultiBox type={item} data={defaultDataserviceData} />;
       default:

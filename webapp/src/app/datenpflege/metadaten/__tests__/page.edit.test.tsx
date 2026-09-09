@@ -75,7 +75,10 @@ describe("Metadata Edit Page", () => {
     vi.mocked(fetchOrganizationsForUser).mockResolvedValue(
       orgsWithoutContributorId,
     );
-    const Component = Page({ params: { id: "123" }, searchParams: {} });
+    const Component = Page({
+      params: Promise.resolve({ id: "123" }),
+      searchParams: Promise.resolve({}),
+    });
     render(await Component);
     expect(vi.mocked(redirect)).toHaveBeenCalledWith(
       PAGES_AUTH.manage_metadata,
@@ -87,7 +90,10 @@ describe("Metadata Edit Page", () => {
       orgsWithContributorId,
     );
     vi.mocked(fetchMetadata).mockResolvedValue({ owner_org: "myOrgId" } as any);
-    const Component = Page({ params: { id: "123" }, searchParams: {} });
+    const Component = Page({
+      params: Promise.resolve({ id: "123" }),
+      searchParams: Promise.resolve({}),
+    });
 
     mockIsFeatureEnabled.mockImplementation(
       (feature: Feature) => feature !== Feature.contributorIdIsRequired,
@@ -103,7 +109,10 @@ describe("Metadata Edit Page", () => {
 
   test("should redirect if no no org is available", async () => {
     vi.mocked(fetchOrganizationsForUser).mockResolvedValue([]);
-    const Component = Page({ params: { id: "123" }, searchParams: {} });
+    const Component = Page({
+      params: Promise.resolve({ id: "123" }),
+      searchParams: Promise.resolve({}),
+    });
     render(await Component);
     expect(vi.mocked(redirect)).toHaveBeenCalledWith(
       PAGES_AUTH.manage_metadata,
@@ -115,7 +124,10 @@ describe("Metadata Edit Page", () => {
       orgsWithContributorId,
     );
     vi.mocked(fetchMetadata).mockResolvedValue({ owner_org: "no" } as any);
-    const Component = Page({ params: { id: "123" }, searchParams: {} });
+    const Component = Page({
+      params: Promise.resolve({ id: "123" }),
+      searchParams: Promise.resolve({}),
+    });
     render(await Component);
     expect(vi.mocked(redirect)).not.toHaveBeenCalled();
 
@@ -130,7 +142,10 @@ describe("Metadata Edit Page", () => {
       orgsWithContributorId,
     );
     vi.mocked(fetchMetadata).mockResolvedValue({ owner_org: "myOrgId" } as any);
-    const Component = Page({ params: { id: "123" }, searchParams: {} });
+    const Component = Page({
+      params: Promise.resolve({ id: "123" }),
+      searchParams: Promise.resolve({}),
+    });
     render(await Component);
 
     expect(vi.mocked(redirect)).not.toHaveBeenCalled();

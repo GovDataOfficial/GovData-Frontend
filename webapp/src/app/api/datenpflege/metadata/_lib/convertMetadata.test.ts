@@ -19,7 +19,10 @@ describe("Convert metadata", () => {
     formData.append(METADATA_FORM_INPUTS.TAGS, "tag1, tag2");
     formData.append(METADATA_FORM_INPUTS.CATEGORIES, "cat1");
     formData.append(METADATA_FORM_INPUTS.CATEGORIES, "cat2");
-    formData.append(METADATA_FORM_INPUTS.HVD_CATEGORIES, "hvd1");
+    formData.append(
+      METADATA_FORM_INPUTS.HVD_CATEGORIES,
+      "http://data.europa.eu/bna/c_ac64a52d",
+    );
     formData.append(METADATA_FORM_INPUTS.URL, "http://example.com");
     formData.append(creatorObject.name, "author");
     formData.append(creatorObject.email, "mail@mail.com");
@@ -105,7 +108,7 @@ describe("Convert metadata", () => {
       description: "desc",
       tags: ["tag1", "tag2"],
       categories: ["cat1", "cat2"],
-      hvd_categories: ["hvd1"],
+      hvd_categories: ["http://data.europa.eu/bna/c_ac64a52d"],
       url: "http://example.com",
       contacts: {
         creator: {

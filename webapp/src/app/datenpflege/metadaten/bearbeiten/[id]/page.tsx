@@ -9,6 +9,7 @@ import {
 import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 import {
   fetchCategoriesSorted,
+  fetchHvdCategoryMap,
   fetchLicenseActiveSorted,
   fetchMetadata,
   fetchOrganizationsForUser,
@@ -56,6 +57,7 @@ export default async function Page(props: PageConstructor<{ id: string }>) {
 
   const categories = await fetchCategoriesSorted();
   const licenses = await fetchLicenseActiveSorted();
+  const hvdMap = await fetchHvdCategoryMap();
   return (
     <>
       <ContainerDiv
@@ -67,6 +69,7 @@ export default async function Page(props: PageConstructor<{ id: string }>) {
           licenses={licenses}
           organizations={organizations!}
           metadata={data}
+          hvdMap={hvdMap}
           mailFitko={process.env.mail_datamanagement!}
           metadataGuideLink={process.env.metadata_guide_link!}
           metadataDcatapLink={process.env.metadata_dcatap_link!}

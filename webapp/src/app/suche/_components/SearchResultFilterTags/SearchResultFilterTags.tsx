@@ -1,5 +1,5 @@
 import { Time } from "@/app/_components/Time/Time";
-import { findHvdCategory } from "@/app/_lib/hvdCategories";
+import { labelForHvdUri } from "@/app/_lib/hvdCategories";
 import { getOrganizationDisplayName } from "@/app/_lib/organization";
 import { findStateById } from "@/app/_lib/stateList";
 import { SPECIAL_FILTERS, URLHelper } from "@/app/_lib/URLHelper";
@@ -8,6 +8,7 @@ import { i18n } from "@/i18n";
 import { isNotNullOrUndefined } from "@/types/typeGuards";
 import {
   CleanedActiveFilters,
+  HvdCategoryMap,
   NextJSSearchParams,
   RecordFilterMap,
 } from "@/types/types";
@@ -16,6 +17,11 @@ type SearchResultFilterTags = {
   cleanedActiveFilters: CleanedActiveFilters;
   filterMap: RecordFilterMap;
   searchParams: NextJSSearchParams;
+  /**
+   * Backend-provided HVD vocabulary; used to render the label for an active
+   * `hvd_categories` filter chip. Falls back to the URI when unknown.
+   */
+  hvdMap?: HvdCategoryMap;
 };
 
 /**
@@ -27,6 +33,7 @@ export function SearchResultFilterTags({
   cleanedActiveFilters,
   filterMap,
   searchParams,
+  hvdMap = {},
 }: SearchResultFilterTags) {
   const {
     getStartDateFromCurrentSearchParams,
@@ -61,7 +68,9 @@ export function SearchResultFilterTags({
       case "licence":
         return t("licenses::" + value);
       case "hvd_categories":
-        return findHvdCategory(value)?.label;
+        // cleanedActiveFilters values are URL-encoded when they arrive from search
+        // params; decode before looking up in the URI-keyed vocabulary map.
+        return labelForHvdUri(decodeURIComponent(value), hvdMap);
       case "groups":
         return t("category.label." + value);
       case "state":

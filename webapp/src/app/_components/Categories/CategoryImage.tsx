@@ -29,18 +29,6 @@ const getIcon = (type: string) => {
       return icons.icon_kat_econ;
     case "tech":
       return icons.icon_kat_tech;
-    case "cco":
-      return icons.icon_hvdkat_cco;
-    case "eoe":
-      return icons.icon_hvdkat_eoe;
-    case "geo":
-      return icons.icon_hvdkat_geo;
-    case "met":
-      return icons.icon_hvdkat_met;
-    case "mob":
-      return icons.icon_hvdkat_mob;
-    case "sta":
-      return icons.icon_hvdkat_sta;
     default:
       return "";
   }

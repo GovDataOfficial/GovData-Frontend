@@ -48,6 +48,15 @@ describe("SearchResultFilterTags", () => {
         cleanedActiveFilters={{
           hvd_categories: ["http%3A%2F%2Fdata.europa.eu%2Fbna%2Fc_164e0bf5"],
         }}
+        hvdMap={{
+          "http://data.europa.eu/bna/c_164e0bf5": {
+            uri: "http://data.europa.eu/bna/c_164e0bf5",
+            labelDe: "Meteorologie",
+            labelEn: "Meteorological",
+            parentUri: null,
+            deprecated: false,
+          },
+        }}
       />,
     );
 
@@ -57,6 +66,23 @@ describe("SearchResultFilterTags", () => {
     within(listItems[0]).getByText("Hochwertige Datensatzkategorien:");
     within(listItems[0]).getByText("Meteorologie");
     within(listItems[0]).getByRole("link", { name: "Filter deaktivieren" });
+  });
+
+  it("falls back to the URI when the hvd category is not in the vocabulary", () => {
+    render(
+      <SearchResultFilterTags
+        searchParams={{}}
+        filterMap={{}}
+        cleanedActiveFilters={{
+          hvd_categories: ["http%3A%2F%2Fdata.europa.eu%2Fbna%2Fc_unknown"],
+        }}
+        hvdMap={{}}
+      />,
+    );
+
+    const listItems = screen.getAllByRole("listitem");
+    expect(listItems).toHaveLength(1);
+    within(listItems[0]).getByText("http://data.europa.eu/bna/c_unknown");
   });
 
   it("should correct special filter for start and end date", () => {

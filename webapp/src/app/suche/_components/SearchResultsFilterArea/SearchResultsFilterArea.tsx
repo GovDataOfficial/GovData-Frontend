@@ -1,14 +1,24 @@
 import { FilterAreaFilterGroups } from "@/app/_components/FilterArea/FilterAreaFilterGroups";
 import { OffCanvasPortal } from "@/app/_components/OffCanvasMenu/OffCanvasPortal";
 import { ExtendedSearchLink } from "@/app/suche/_components/common/ExtendedSearchLink";
-import { SearchResults, UnknownSearchResultHit } from "@/types/types";
+import {
+  HvdCategoryMap,
+  SearchResults,
+  UnknownSearchResultHit,
+} from "@/types/types";
 
 type SearchResultsFilterArea = {
   data: SearchResults<UnknownSearchResultHit>;
+  hvdMap?: HvdCategoryMap;
 };
 
-export function SearchResultsFilterArea({ data }: SearchResultsFilterArea) {
-  const filterArea = <FilterAreaFilterGroups filterMap={data.filterMap} />;
+export function SearchResultsFilterArea({
+  data,
+  hvdMap,
+}: SearchResultsFilterArea) {
+  const filterArea = (
+    <FilterAreaFilterGroups filterMap={data.filterMap} hvdMap={hvdMap} />
+  );
 
   return (
     <>

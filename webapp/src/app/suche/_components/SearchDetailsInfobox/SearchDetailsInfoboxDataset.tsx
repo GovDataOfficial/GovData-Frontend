@@ -12,14 +12,20 @@ import { TermCategories } from "@/app/suche/_components/SearchDetailsInfobox/par
 import { SearchDetailsInfoboxFilterTagAnchor } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxFilterTagAnchor";
 import { i18n } from "@/i18n";
 import { isNotNullOrUndefined } from "@/types/typeGuards";
-import { Metadata } from "@/types/types";
+import { HvdCategoryMap, Metadata } from "@/types/types";
 
 type SearchDetailsInfoboxDataset = {
   data: Metadata;
+  /**
+   * Backend-provided HVD vocabulary; only consulted for HVD datasets to resolve URI
+   * values in {@code hvdCategories} into display labels.
+   */
+  hvdMap?: HvdCategoryMap;
 };
 
 export async function SearchDetailsInfoboxDataSet({
   data,
+  hvdMap = {},
 }: SearchDetailsInfoboxDataset) {
   const { t } = i18n;
 
@@ -123,6 +129,7 @@ export async function SearchDetailsInfoboxDataSet({
               isHVD={isHVD}
               title={t("search.details.infobox.categoriesHvd")}
               categories={hvdCategories}
+              hvdMap={hvdMap}
             />
           </SearchDetailsInfoBoxGroup>
         )}

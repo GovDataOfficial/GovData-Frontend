@@ -16,6 +16,7 @@ vi.mock("@/app/_lib/getData", () => ({
   fetchCategoriesSorted: vi.fn(),
   fetchLicenseActiveSorted: vi.fn(),
   fetchOrganizationsForUser: vi.fn(),
+  fetchHvdCategoryMap: vi.fn().mockResolvedValue({}),
 }));
 
 vi.mock("next/navigation", () => ({

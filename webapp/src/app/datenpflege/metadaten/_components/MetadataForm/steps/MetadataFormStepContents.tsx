@@ -1,11 +1,11 @@
 import React from "react";
 
+import { GroupedMultiCheckBox } from "@/app/_components/Inputs/GroupedMultiCheckBox";
 import { InputText } from "@/app/_components/Inputs/InputText";
 import { InputTextMultiple } from "@/app/_components/Inputs/InputTextMultiple";
 import { InputUrl } from "@/app/_components/Inputs/InputUrl";
 import { MultiCheckBox } from "@/app/_components/Inputs/MultiCheckBox";
 import { TextArea } from "@/app/_components/Inputs/TextArea";
-import { defaultHvdCategoriesData } from "@/app/_lib/defaultFormData";
 import {
   METADATA_FORM_INPUTS,
   METADATA_FORM_MAX_LENGTH_LONG,
@@ -13,10 +13,15 @@ import {
 } from "@/app/datenpflege/metadaten/_components/MetadataForm/metadata-formConstants";
 import { MetadataFormStepContainer } from "@/app/datenpflege/metadaten/_components/MetadataForm/partials/MetadataFormStepContainer";
 import { i18n } from "@/i18n";
-import { CategoriesSorted, Metadata } from "@/types/types";
+import { CategoriesSorted, HvdCategoryMap, Metadata } from "@/types/types";
 
 type MetadataFormStepContents = Omit<MetadataFormStepContainer, "headline"> & {
   categories?: CategoriesSorted;
+  /**
+   * Backend-provided HVD vocabulary. Drives the HVD categories multi-checkbox; when
+   * absent the widget renders no options (safe fallback if the sync failed).
+   */
+  hvdMap?: HvdCategoryMap;
   defaultTitle?: Metadata["notes"];
   defaultDescription?: string;
   defaultTags?: Metadata["tags"];
@@ -27,6 +32,7 @@ type MetadataFormStepContents = Omit<MetadataFormStepContainer, "headline"> & {
 
 export function MetadataFormStepContents({
   categories,
+  hvdMap,
   currentStep,
   forStep,
   defaultTitle,
@@ -41,14 +47,6 @@ export function MetadataFormStepContents({
     key: category.name,
     defaultChecked: defaultCategories?.some(
       (defaultCategory) => defaultCategory === category.name,
-    ),
-  }));
-
-  const hvdCategoriesMapped = defaultHvdCategoriesData.map((category) => ({
-    label: category.label,
-    key: category.key,
-    defaultChecked: defaultHvdCategories?.some(
-      (hvdCat) => hvdCat === category.shortkey,
     ),
   }));
 
@@ -86,9 +84,10 @@ export function MetadataFormStepContents({
         name={METADATA_FORM_INPUTS.CATEGORIES}
         recommended
       />
-      <MultiCheckBox
+      <GroupedMultiCheckBox
         name={METADATA_FORM_INPUTS.HVD_CATEGORIES}
-        data={hvdCategoriesMapped}
+        hvdMap={hvdMap ?? {}}
+        defaultChecked={defaultHvdCategories}
         legend={i18n.t("metadataform.field.hvdCategories.label")}
       />
       <InputUrl

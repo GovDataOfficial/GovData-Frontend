@@ -25,7 +25,10 @@ describe("Showcase Edit Page", () => {
 
   test("should render error if requested showcase is not available", async () => {
     vi.mocked(fetchShowcase).mockResolvedValue(undefined);
-    const Component = Page({ params: { id: "123" }, searchParams: {} });
+    const Component = Page({
+      params: Promise.resolve({ id: "123" }),
+      searchParams: Promise.resolve({}),
+    });
     render(await Component);
 
     const alertMessage = screen.getByRole("alert");
@@ -36,7 +39,10 @@ describe("Showcase Edit Page", () => {
 
   test("should render MetadataForm", async () => {
     vi.mocked(fetchShowcase).mockResolvedValue({ title: "testTitle" } as any);
-    const Component = Page({ params: { id: "123" }, searchParams: {} });
+    const Component = Page({
+      params: Promise.resolve({ id: "123" }),
+      searchParams: Promise.resolve({}),
+    });
     render(await Component);
 
     expect(screen.queryByRole("alert")).not.toBeInTheDocument();

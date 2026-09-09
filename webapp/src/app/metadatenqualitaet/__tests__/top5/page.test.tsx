@@ -30,8 +30,8 @@ describe("MetaDatenQualität - Top5 - Page", () => {
 
   it("should render correct components", async () => {
     const Component = await Page({
-      searchParams: {},
-      params: { slug: "" },
+      searchParams: Promise.resolve({}),
+      params: Promise.resolve({ slug: "" }),
     });
     render(Component);
 
@@ -45,8 +45,8 @@ describe("MetaDatenQualität - Top5 - Page", () => {
     vi.stubEnv("metadata_quality_dashboard_active", "");
 
     await Page({
-      searchParams: {},
-      params: { slug: "" },
+      searchParams: Promise.resolve({}),
+      params: Promise.resolve({ slug: "" }),
     });
     expect(vi.mocked(notFound)).toHaveBeenCalled();
   });

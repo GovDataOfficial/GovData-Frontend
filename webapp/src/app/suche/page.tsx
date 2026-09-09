@@ -6,7 +6,7 @@ import { FilterAreaOpenMenuButton } from "@/app/_components/FilterArea";
 import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 import { UserSurveyHeader } from "@/app/_components/UserSurveyHeader/UserSurveyHeader";
 import { convertToURLSearchParams } from "@/app/_lib/convertToSearchParams";
-import { getSearchResults } from "@/app/_lib/getData";
+import { fetchHvdCategoryMap, getSearchResults } from "@/app/_lib/getData";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
 import { numberToLocaleString } from "@/app/_lib/number";
 import { stripSearchResultHTMLContent } from "@/app/_lib/sanitizer/sanitizeHtml";
@@ -26,7 +26,7 @@ import {
   UnknownSearchResultHit,
 } from "@/types/types";
 
-function getQueryParam(searchParams: PageConstructor["searchParams"]) {
+function getQueryParam(searchParams: Awaited<PageConstructor["searchParams"]>) {
   const params = convertToURLSearchParams(searchParams);
   const q = params.get("q");
   return isNotNullOrUndefined(q) && q !== "" ? q : undefined;
@@ -64,7 +64,10 @@ function getHeadline(data: SearchResults<UnknownSearchResultHit>, q?: string) {
 
 export default async function Suche(props: PageConstructor) {
   const searchParams = await props.searchParams;
-  const data = await getSearchResults(searchParams);
+  const [data, hvdMap] = await Promise.all([
+    getSearchResults(searchParams),
+    fetchHvdCategoryMap(),
+  ]);
 
   if (!data) {
     return (
@@ -98,7 +101,7 @@ export default async function Suche(props: PageConstructor) {
             {i18n.t("search.results.filter.title")}
           </h2>
           <div className="col-sm-12 col-md-4 d-none d-md-block">
-            <SearchResultsFilterArea data={data} />
+            <SearchResultsFilterArea data={data} hvdMap={hvdMap} />
           </div>
           <div className="col-sm-12 col-md-8 mt-md-5">
             <TypeListFilter data={data} searchParams={searchParams} />
@@ -114,6 +117,7 @@ export default async function Suche(props: PageConstructor) {
                   searchParams={searchParams}
                   filterMap={data.filterMap}
                   cleanedActiveFilters={data.cleanedActiveFilters}
+                  hvdMap={hvdMap}
                 />
               </div>
               {hasHits && (

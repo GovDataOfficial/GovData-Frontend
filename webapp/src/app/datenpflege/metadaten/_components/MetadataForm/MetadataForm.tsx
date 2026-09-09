@@ -19,6 +19,7 @@ import { useMetadataFormNavigation } from "@/app/datenpflege/metadaten/_componen
 import { i18n } from "@/i18n";
 import {
   CategoriesSorted,
+  HvdCategoryMap,
   LicenseActiveSorted,
   Metadata,
   OrganizationSorted,
@@ -37,6 +38,12 @@ type MetadataForm = {
   licenses?: LicenseActiveSorted;
   organizations: OrganizationSorted;
   metadata?: Metadata;
+  /**
+   * Backend-provided HVD vocabulary. Renders as the HVD-categories multi-checkbox
+   * option list in the "contents" step and drives the URI-based match for pre-filled
+   * checkboxes on edit.
+   */
+  hvdMap?: HvdCategoryMap;
   mailFitko: string;
   metadataGuideLink: string;
   metadataDcatapLink: string;
@@ -47,6 +54,7 @@ export function MetadataForm({
   licenses,
   organizations,
   metadata,
+  hvdMap,
   mailFitko,
   metadataGuideLink,
   metadataDcatapLink,
@@ -149,6 +157,7 @@ export function MetadataForm({
             forStep={1}
             currentStep={currentStep}
             categories={categories}
+            hvdMap={hvdMap}
             defaultDescription={metadata?.notes}
             defaultTitle={metadata?.title}
             defaultTags={metadata?.tags}

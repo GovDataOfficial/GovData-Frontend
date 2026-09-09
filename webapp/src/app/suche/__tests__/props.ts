@@ -203,7 +203,10 @@ export const metaDataTestProps = {
     },
   ],
   state: "active",
-  hvdCategories: ["MET", "GEO"],
+  hvdCategories: [
+    "http://data.europa.eu/bna/c_164e0bf5",
+    "http://data.europa.eu/bna/c_ac64a52d",
+  ],
   applicableLegislation: [
     "http://data.europa.eu/eli/reg_impl/2023/138/oj",
     "http://data.europa.eu/eli/reg_impl/2023/138/oj_alt",

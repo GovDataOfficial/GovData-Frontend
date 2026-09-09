@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { ContainerDiv } from "@/app/_components/Container";
 import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 import { UserSurveyHeader } from "@/app/_components/UserSurveyHeader/UserSurveyHeader";
-import { fetchMetadata } from "@/app/_lib/getData";
+import { fetchHvdCategoryMap, fetchMetadata } from "@/app/_lib/getData";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
 import { SearchDetailsInfoboxDataSet } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxDataset";
 import { SearchDetailsMetaInfo } from "@/app/suche/_components/SearchDetailsMetaInfo/SearchDetailsMetaInfo";
@@ -29,7 +29,10 @@ export default async function DatasetPage(
 ) {
   const params = await props.params;
   const { t } = i18n;
-  const data = await fetchMetadata(params.id);
+  const [data, hvdMap] = await Promise.all([
+    fetchMetadata(params.id),
+    fetchHvdCategoryMap(),
+  ]);
 
   return (
     <ContainerDiv containerWidth="lg">
@@ -46,7 +49,7 @@ export default async function DatasetPage(
               <SectionDataServices data={data} />
             </div>
             <div className="col-sm-12 col-md-4 mt-3 mt-md-0">
-              <SearchDetailsInfoboxDataSet data={data} />
+              <SearchDetailsInfoboxDataSet data={data} hvdMap={hvdMap} />
             </div>
           </div>
         </>

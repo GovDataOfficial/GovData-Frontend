@@ -3,8 +3,8 @@ export type NextJSSearchParams = {
 };
 
 export type PageConstructor<WithSlug = { slug: string }> = {
-  params: WithSlug;
-  searchParams: NextJSSearchParams;
+  params: Promise<WithSlug>;
+  searchParams: Promise<NextJSSearchParams>;
 };
 
 export type SortOptions =
@@ -144,6 +144,16 @@ export type OrganizationSorted = {
 
 export type ResourceFormatsSorted = string[];
 
+export type HvdCategory = {
+  uri: string;
+  labelDe: string | null;
+  labelEn: string | null;
+  parentUri: string | null;
+  deprecated: boolean;
+};
+
+export type HvdCategoryMap = Record<string, HvdCategory>;
+
 export type MetadataQuality = {
   name: string;
   publisher: string;
@@ -260,7 +270,7 @@ export type Metadata = {
     active: boolean;
   }[];
   state: "active";
-  hvdCategories?: Array<"MET" | "GEO" | "CCO" | "EOE" | "MOB" | "STA">;
+  hvdCategories?: string[];
   applicableLegislation: string[];
   hvd: boolean;
   private: boolean;

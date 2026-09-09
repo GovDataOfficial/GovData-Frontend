@@ -8,6 +8,7 @@ import {
 } from "@/app/_components/Container";
 import {
   fetchCategoriesSorted,
+  fetchHvdCategoryMap,
   fetchLicenseActiveSorted,
   fetchOrganizationsForUser,
 } from "@/app/_lib/getData";
@@ -32,6 +33,7 @@ export default async function Page() {
 
   const categories = await fetchCategoriesSorted();
   const licenses = await fetchLicenseActiveSorted();
+  const hvdMap = await fetchHvdCategoryMap();
 
   return (
     <>
@@ -43,6 +45,7 @@ export default async function Page() {
           categories={categories}
           licenses={licenses}
           organizations={organizations!}
+          hvdMap={hvdMap}
           mailFitko={process.env.mail_datamanagement!}
           metadataGuideLink={process.env.metadata_guide_link!}
           metadataDcatapLink={process.env.metadata_dcatap_link!}

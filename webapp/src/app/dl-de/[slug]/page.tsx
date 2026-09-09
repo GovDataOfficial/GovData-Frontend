@@ -7,7 +7,7 @@ import { endpoints } from "@/configuration/endpoints";
 import { i18n } from "@/i18n";
 import { PageConstructor } from "@/types/types";
 
-async function getPageData(params: PageConstructor["params"]) {
+async function getPageData(params: Awaited<PageConstructor["params"]>) {
   return fetchTypo3Data(endpoints.T3.dl_de + `/${params.slug}`);
 }
 

@@ -1,11 +1,13 @@
 import { Agent } from "undici";
 
 import { convertToURLSearchParams } from "@/app/_lib/convertToSearchParams";
+import { FALLBACK_HVD_CATEGORY_MAP } from "@/app/_lib/hvdCategories";
 import { FILTERS, SPECIAL_FILTERS } from "@/app/_lib/URLHelper";
 import { logger } from "@/logger/logger";
 import {
   CategoriesSorted,
   DefaultSortOption,
+  HvdCategoryMap,
   LicenseActiveSorted,
   Metadata,
   MetadataQuality,
@@ -118,6 +120,47 @@ export function fetchLicenseActiveSorted() {
   return fetchMicroData<LicenseActiveSorted>(
     `${process.env.be_gd_data_url}/license-active-sorted`,
   );
+}
+
+/**
+ * Loads the HVD category vocabulary (URI → { labelDe, labelEn, parentUri, deprecated })
+ * from the DB service. The map is authoritative for both the search facet labels and
+ * the data curation form. Backend syncs the vocabulary from the EU Publications Office
+ * every 24h, so a fresh browser session always observes an up-to-date list.
+ * <p>
+ * When the backend is unreachable (network error, DB down, misconfiguration), we fall
+ * back to {@link FALLBACK_HVD_CATEGORY_MAP} — the six legacy top-level categories —
+ * so the extended search stays usable instead of showing an empty widget. The return
+ * value is therefore never {@code undefined}.
+ */
+/**
+ * Returns the HVD category URIs currently tagged on at least one indexed dataset —
+ * used to hide vocabulary entries nobody has used yet from the extended-search filter
+ * list. Hits a dedicated backend endpoint that runs an ES terms-aggregation with
+ * {@code size: 0} on the outer query, so no dataset hits are transferred (much
+ * cheaper than a regular search request that would ship the full first page).
+ * <p>
+ * Backend outages or empty responses yield an empty list; the caller can decide
+ * whether to hide the widget or fall through to the full vocabulary in that case.
+ */
+export async function fetchAvailableHvdCategoryUris(): Promise<string[]> {
+  const uris = await fetchMicroData<string[]>(
+    `${process.env.be_index_app2_url}/search/hvd-category-values/200`,
+  );
+  return uris ?? [];
+}
+
+export async function fetchHvdCategoryMap(): Promise<HvdCategoryMap> {
+  const map = await fetchMicroData<HvdCategoryMap>(
+    `${process.env.be_gd_db_url}/hvd-category/map`,
+  );
+  if (!map || Object.keys(map).length === 0) {
+    log.warn(
+      "HVD category map fetch returned no data - falling back to legacy top-level categories",
+    );
+    return FALLBACK_HVD_CATEGORY_MAP;
+  }
+  return map;
 }
 
 export function fetchMetadata(nameOrId: string) {

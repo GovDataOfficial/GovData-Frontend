@@ -1,9 +1,21 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 
-import { defaultHvdCategoriesData } from "@/app/_lib/defaultFormData";
 import { FILTERS } from "@/app/_lib/URLHelper";
 import { TermCategories } from "@/app/suche/_components/SearchDetailsInfobox/partials/TermCategories";
+import { HvdCategoryMap } from "@/types/types";
+
+const GEO_URI = "http://data.europa.eu/bna/c_ac64a52d";
+
+const HVD_MAP: HvdCategoryMap = {
+  [GEO_URI]: {
+    uri: GEO_URI,
+    labelDe: "Georaum",
+    labelEn: "Geospatial",
+    parentUri: null,
+    deprecated: false,
+  },
+};
 
 describe("TermCategories", () => {
   it("renders null when categories are not provided", () => {
@@ -36,16 +48,16 @@ describe("TermCategories", () => {
     );
   });
 
-  it("renders HVD category correctly", () => {
-    const categories = [defaultHvdCategoriesData[0].shortkey];
+  it("renders HVD category with backend label and URI-based filter link", () => {
     render(
       <TermCategories
         title="Test Title"
-        categories={categories}
+        categories={[GEO_URI]}
         isHVD={true}
+        hvdMap={HVD_MAP}
       />,
     );
-    screen.getByText(defaultHvdCategoriesData[0].label);
+    screen.getByText("Georaum");
     const link = screen.getByRole("link");
     expect(link).toHaveAttribute(
       "href",
@@ -53,22 +65,21 @@ describe("TermCategories", () => {
     );
     expect(link).toHaveAttribute(
       "href",
-      expect.stringContaining(
-        encodeURIComponent(defaultHvdCategoriesData[0].key),
-      ),
+      expect.stringContaining(encodeURIComponent(GEO_URI)),
     );
   });
 
-  it("does not render category if hvd category is not knwon", () => {
-    const categories = ["invalidCategory"];
+  it("falls back to the URI when the HVD category is not in the vocabulary map", () => {
+    const unknownUri = "http://data.europa.eu/bna/c_unknown-future";
     render(
       <TermCategories
         title="Test Title"
-        categories={categories}
+        categories={[unknownUri]}
         isHVD={true}
+        hvdMap={HVD_MAP}
       />,
     );
 
-    expect(screen.queryByText("invalidCategory")).not.toBeInTheDocument();
+    screen.getByText(unknownUri);
   });
 });

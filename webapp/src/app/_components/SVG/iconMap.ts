@@ -3,12 +3,6 @@ import arrowLeftLong from "./icons/arrow_left_long.svg";
 import arrowRightLong from "./icons/arrow_right_long.svg";
 import arrow_right from "./icons/arrow_right.svg";
 import hvd from "./icons/categories/hvd.svg";
-import icon_hvdkat_cco from "./icons/categories/icon_hvdkat_cco.svg";
-import icon_hvdkat_eoe from "./icons/categories/icon_hvdkat_eoe.svg";
-import icon_hvdkat_geo from "./icons/categories/icon_hvdkat_geo.svg";
-import icon_hvdkat_met from "./icons/categories/icon_hvdkat_met.svg";
-import icon_hvdkat_mob from "./icons/categories/icon_hvdkat_mob.svg";
-import icon_hvdkat_sta from "./icons/categories/icon_hvdkat_sta.svg";
 import icon_kat_agri from "./icons/categories/icon_kat_agri.svg";
 import icon_kat_econ from "./icons/categories/icon_kat_econ.svg";
 import icon_kat_educ from "./icons/categories/icon_kat_educ.svg";
@@ -45,12 +39,6 @@ import reset from "./icons/reset.svg";
 import trash from "./icons/trash.svg";
 
 const icons = {
-  icon_hvdkat_cco,
-  icon_hvdkat_eoe,
-  icon_hvdkat_geo,
-  icon_hvdkat_met,
-  icon_hvdkat_mob,
-  icon_hvdkat_sta,
   icon_kat_agri,
   icon_kat_econ,
   icon_kat_educ,

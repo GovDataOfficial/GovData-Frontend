@@ -7,6 +7,7 @@ import SearchPage from "../page";
 
 vi.mock("@/app/_lib/getData", () => ({
   getSearchResults: vi.fn(),
+  fetchHvdCategoryMap: vi.fn().mockResolvedValue({}),
 }));
 
 const emptySearchResults = {
@@ -25,8 +26,8 @@ describe.skip("SearchPage", () => {
   it("should render correct title with when query is available", async () => {
     vi.mocked(getSearchResults).mockResolvedValue(emptySearchResults);
     const Component = await SearchPage({
-      searchParams: { q: "test" },
-      params: { slug: "" },
+      searchParams: Promise.resolve({ q: "test" }),
+      params: Promise.resolve({ slug: "" }),
     });
     render(Component);
     screen.getByRole("heading", {
@@ -39,8 +40,8 @@ describe.skip("SearchPage", () => {
   it.skip("should render correct title with when no query is available", async () => {
     vi.mocked(getSearchResults).mockResolvedValue(emptySearchResults);
     const Component = await SearchPage({
-      searchParams: { q: "" },
-      params: { slug: "" },
+      searchParams: Promise.resolve({ q: "" }),
+      params: Promise.resolve({ slug: "" }),
     });
     render(Component);
     screen.getByRole("heading", {

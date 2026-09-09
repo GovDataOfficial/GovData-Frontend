@@ -58,8 +58,8 @@ const organizations = [
 ] as OrganizationSorted;
 
 const pageParams = {
-  params: { slug: "" },
-  searchParams: {},
+  params: Promise.resolve({ slug: "" }),
+  searchParams: Promise.resolve({}),
 };
 
 describe("Landing Page", () => {
@@ -147,7 +147,10 @@ describe("Landing Page", () => {
     vi.mocked(fetchMetadataForOrganizations).mockResolvedValue(searchResults);
     const deleteSuccessParams = {
       ...pageParams,
-      searchParams: { deleteResult: "success", title: "aTitle" },
+      searchParams: Promise.resolve({
+        deleteResult: "success",
+        title: "aTitle",
+      }),
     };
     render(await Page(deleteSuccessParams));
 
@@ -160,7 +163,10 @@ describe("Landing Page", () => {
     vi.mocked(fetchMetadataForOrganizations).mockResolvedValue(searchResults);
     const deleteSuccessParams = {
       ...pageParams,
-      searchParams: { deleteResult: "error", title: "aTitle" },
+      searchParams: Promise.resolve({
+        deleteResult: "error",
+        title: "aTitle",
+      }),
     };
     render(await Page(deleteSuccessParams));
 
