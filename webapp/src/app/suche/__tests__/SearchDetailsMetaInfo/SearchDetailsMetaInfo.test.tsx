@@ -52,7 +52,7 @@ describe("SearchDetailsMetaInfo", () => {
     });
 
     const notes = screen.getByText(/test notes/i);
-    expect(notes).toHaveClass("paragraph");
+    expect(notes.closest(".paragraph")).toBeInTheDocument();
   });
 
   it("should show images", () => {
@@ -107,13 +107,48 @@ describe("SearchDetailsMetaInfo", () => {
   it("should render sanitized notes", () => {
     const propsWithDirtyHtml = {
       ...metaDataTestProps,
-      notes: "<blo>test</blo>",
+      notes: "<span>test</span>",
     };
     const { container } = render(
       <SearchDetailsMetaInfo data={propsWithDirtyHtml} />,
     );
     const html = container.querySelector(".paragraph")?.innerHTML;
-    expect(html).toBe("test");
+    expect(html).toBe("<p>test</p>\n");
+  });
+
+  it("should render markdown notes", () => {
+    const propsWithMarkdown = {
+      ...metaDataTestProps,
+      notes:
+        "**Aktualisierungszyklus:**\n\n- keine Aktualisierung\n\n" +
+        "## Hinweise\n\n[Portal](https://example.org)",
+    };
+    const { container } = render(
+      <SearchDetailsMetaInfo data={propsWithMarkdown} />,
+    );
+
+    const notes = container.querySelector(".gd-prose");
+    expect(notes).toBeInTheDocument();
+
+    expect(
+      within(notes as HTMLElement).getByText("Aktualisierungszyklus:").tagName,
+    ).toBe("STRONG");
+    expect(
+      within(notes as HTMLElement).getByRole("listitem"),
+    ).toHaveTextContent("keine Aktualisierung");
+
+    // the h1 of the page is the title, so a markdown "##" ends up as h3
+    within(notes as HTMLElement).getByRole("heading", {
+      name: "Hinweise",
+      level: 3,
+    });
+
+    const link = within(notes as HTMLElement).getByRole("link", {
+      name: "Portal",
+    });
+    expect(link).toHaveAttribute("href", "https://example.org");
+    expect(link).toHaveAttribute("rel", "nofollow noopener noreferrer");
+    expect(link).toHaveAttribute("target", "_blank");
   });
 
   it("should not show default image for datasets", () => {

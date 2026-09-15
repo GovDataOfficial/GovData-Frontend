@@ -6,6 +6,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.15.1] - 2026-09-16
+
+### Changed
+- All accordions now follow the W3C disclosure pattern: the arrow points down while collapsed and up while expanded; the `rotateArrows` prop of the `Accordion` component became obsolete and was removed
+- Updated Next.js and eslint-config-next to 16.3.4
+- Updated marked to 18.0.13
+- Updated openid-client to 6.8.8
+- Updated undici to 7.29.1
+- Updated @types/react and @types/react-dom to 19.3.0
+- Updated @types/node to 22.20.2
+- Updated @testing-library/user-event to 14.6.7
+- Updated @eslint/eslintrc to 3.3.7
+- Updated @vitejs/plugin-react to 6.1.1
+- Updated sass to 1.104.0
+
+### Security
+- Added overrides to bump @humanfs/node to 0.17.0, browserslist to 4.28.8 and decode-uri-component to 0.5.0 (fixes GHSA-p498-v437-472g, GHSA-73wf-gq98-2v4g, GHSA-c83g-rgw3-j3cx, GHSA-vcc3-ghjq-m6fr)
+- Updated dompurify to 3.4.15 and nanoid to 3.3.19
+
 ## [7.15.0  2026-09-03]
 
 ### Changed
@@ -20,6 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - HVD category filter in extended search falls back to the full vocabulary when the index service is unreachable (previously rendered an empty widget)
 - HVD category URIs on a dataset are preserved on save when the vocabulary is degraded (previously silently dropped by the metadata form)
+- Markdown in the description (`dct:description`) of datasets and showcases is now rendered as HTML on the detail pages (bold, italic, paragraphs, ordered and unordered lists, headings, links); added `marked` as a dependency
+- Headings from a description are shifted one level down so they stay below the page headline; relative links from harvested descriptions are no longer rendered as anchors because they would resolve against govdata.de; external links now carry `rel="nofollow noopener noreferrer"`
+- Meta and OpenGraph descriptions of dataset and showcase detail pages are now plain text instead of raw Markdown, and are truncated at a word boundary
+- Markdown syntax in the content snippet of the search result list is no longer shown literally; it is reduced to plain text like the meta description
 
 ### Security
 

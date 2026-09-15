@@ -2,11 +2,8 @@ import { useMemo } from "react";
 import Image from "next/image";
 
 import { DesignBox } from "@/app/_components/DesignBox/DesignBox";
+import { markdownToSafeHTML } from "@/app/_lib/markdown/renderMarkdown";
 import { processBase64ImageString } from "@/app/_lib/processBase64ImageString";
-import {
-  ALLOWLIST_METADATA_NOTES,
-  sanitizeHTML,
-} from "@/app/_lib/sanitizer/sanitizeHtml";
 import { MetaInfoHeadlineIcon } from "@/app/suche/_components/common/MetaInfoHeadlineIcon";
 import { HitType, Metadata, ShowcaseData } from "@/types/types";
 
@@ -18,7 +15,7 @@ type SearchDetailsMetaInfo = {
 };
 
 export function SearchDetailsMetaInfo({ data }: SearchDetailsMetaInfo) {
-  const sanitizedNotes = sanitizeHTML(data.notes, ALLOWLIST_METADATA_NOTES);
+  const notesHTML = markdownToSafeHTML(data.notes);
   const type = "type" in data ? HitType.dataset : HitType.showcase;
 
   const sortedImages = useMemo(() => {
@@ -56,10 +53,10 @@ export function SearchDetailsMetaInfo({ data }: SearchDetailsMetaInfo) {
           ))}
         </div>
       )}
-      {sanitizedNotes && (
+      {notesHTML && (
         <div
-          className="paragraph"
-          dangerouslySetInnerHTML={{ __html: sanitizedNotes }}
+          className="paragraph gd-prose"
+          dangerouslySetInnerHTML={{ __html: notesHTML }}
         />
       )}
     </DesignBox>

@@ -5,6 +5,7 @@ import { InfoBox } from "@/app/_components/InfoBoxes/InfoBox";
 import { UserSurveyHeader } from "@/app/_components/UserSurveyHeader/UserSurveyHeader";
 import { fetchShowcase } from "@/app/_lib/getData";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
+import { markdownToPlainText } from "@/app/_lib/markdown/renderMarkdown";
 import { SearchDetailsInfoboxApplication } from "@/app/suche/_components/SearchDetailsInfobox/SearchDetailsInfoboxApplication";
 import { SearchDetailsMetaInfo } from "@/app/suche/_components/SearchDetailsMetaInfo/SearchDetailsMetaInfo";
 import { SectionRelatedLinks } from "@/app/suche/_components/SectionRelatedLinks";
@@ -19,7 +20,10 @@ export async function generateMetadata(
   const title = data?.title
     ? i18n.t("meta.dynamic.title", { title: data.title })
     : i18n.t("meta.search.title");
-  return metaDataGenerator({ title, description: data?.notes });
+  return metaDataGenerator({
+    title,
+    description: markdownToPlainText(data?.notes),
+  });
 }
 
 export default async function ShowcasePage(

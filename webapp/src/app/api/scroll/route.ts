@@ -1,5 +1,5 @@
 import { fetchSearchScrollResults } from "@/app/_lib/getData";
-import { stripSearchResultHTMLContent } from "@/app/_lib/sanitizer/sanitizeHtml";
+import { sanitizeSearchResultContent } from "@/app/_lib/markdown/renderMarkdown";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -7,7 +7,7 @@ export async function GET(request: Request) {
 
   if (scrollId) {
     const result = await fetchSearchScrollResults(scrollId);
-    const resultsSanitized = result && stripSearchResultHTMLContent(result);
+    const resultsSanitized = result && sanitizeSearchResultContent(result);
     return Response.json(resultsSanitized);
   }
 

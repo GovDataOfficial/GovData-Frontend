@@ -1,0 +1,111 @@
+// Rendered Markdown/HTML from harvested metadata (dct:description).
+// The markup is written by the publishers, so the spacing rules have to be
+// defensive: the wrapper itself must not add space at its edges.
+.gd-prose {
+  @extend .mark-external-links;
+
+  overflow-wrap: anywhere;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  p,
+  ul,
+  ol,
+  blockquote,
+  pre,
+  .gd-table-scroll {
+    margin-bottom: rem-calc(16);
+  }
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: rem-calc(16);
+    margin-bottom: rem-calc(8);
+  }
+
+  // Headings from a description must not compete with the page headline.
+  h2 {
+    font-size: $fnt-h4-size;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: $fnt-paragraph-regular;
+  }
+
+  ul,
+  ol {
+    padding-left: rem-calc(24);
+  }
+
+  li {
+    line-height: $line-height-paragraph;
+  }
+
+  li > ul,
+  li > ol {
+    margin-bottom: 0;
+  }
+
+  blockquote {
+    margin-left: 0;
+    padding-left: rem-calc(12);
+    border-left: rem-calc(3) solid $clr-neutral-grey-300;
+    color: $clr-neutral-grey-700;
+  }
+
+  code {
+    padding: 0 rem-calc(4);
+    border-radius: rem-calc(2);
+    background-color: $clr-neutral-grey-100;
+  }
+
+  pre {
+    padding: rem-calc(8);
+    border-radius: rem-calc(4);
+    background-color: $clr-neutral-grey-100;
+    overflow-x: auto;
+
+    code {
+      padding: 0;
+      background-color: transparent;
+    }
+  }
+
+  hr {
+    border: 0;
+    border-top: rem-calc(1) solid $clr-neutral-grey-300;
+  }
+
+  // GFM tables are rare in metadata, but have to stay legible if they appear.
+  // A table wider than the box scrolls inside its wrapper instead of pushing
+  // the whole detail page apart.
+  .gd-table-scroll {
+    overflow-x: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: rem-calc(4) rem-calc(8);
+      border: rem-calc(1) solid $clr-neutral-grey-300;
+      text-align: left;
+      // `anywhere` would let the columns collapse to a single character
+      // instead of letting the wrapper scroll.
+      overflow-wrap: normal;
+    }
+  }
+}

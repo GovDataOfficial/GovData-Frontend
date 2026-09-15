@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { createRef } from "react";
 
 import { Accordion } from "@/app/_components/Accordion/Accordion";
 
@@ -69,5 +70,45 @@ describe("Accordion", () => {
     );
     const summary = container.querySelector("summary");
     expect(summary).toHaveClass("gd-accordion-head gd-accordion-head-link");
+  });
+
+  it("should render the arrow icon inside the summary", () => {
+    const { container } = render(<Accordion title="test">content</Accordion>);
+    const icon = container.querySelector("summary .gd-icon");
+    expect(icon).toBeInTheDocument();
+  });
+
+  it("should apply only the base class and never the removed rotate-arrows class", () => {
+    const { container } = render(<Accordion title="test">content</Accordion>);
+    const detail = container.querySelector("details");
+    expect(detail).toHaveClass("gd-accordion");
+    expect(detail).not.toHaveClass("gd-accordion-rotate-arrows");
+    expect(detail?.className.trim()).toBe("gd-accordion");
+  });
+
+  it("should forward the ref to the details element", () => {
+    const ref = createRef<HTMLDetailsElement>();
+    render(
+      <Accordion ref={ref} title="test">
+        content
+      </Accordion>,
+    );
+    expect(ref.current).toBeInstanceOf(HTMLDetailsElement);
+  });
+
+  it("should toggle the open state back to closed on second click", async () => {
+    const user = userEvent.setup();
+    render(
+      <Accordion open title="test">
+        content
+      </Accordion>,
+    );
+
+    const detail = screen.getByRole("group");
+    const summary = screen.getByText("test");
+    expect(detail).toHaveAttribute("open");
+
+    await user.click(summary);
+    expect(detail).not.toHaveAttribute("open");
   });
 });

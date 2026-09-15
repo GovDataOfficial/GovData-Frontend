@@ -35,12 +35,7 @@ export function UserHeaderNavigation({
     >
       <ContainerDiv containerWidth="lg">
         <div className="gd-user-header-accordion-container">
-          <Accordion
-            ref={ref}
-            title={<span>{userName}</span>}
-            variant="link"
-            rotateArrows
-          >
+          <Accordion ref={ref} title={<span>{userName}</span>} variant="link">
             <ul className="gd-list gd-user-header-accordion-flyout">
               <li>
                 <a href={PAGES_AUTH.manage_metadata}>

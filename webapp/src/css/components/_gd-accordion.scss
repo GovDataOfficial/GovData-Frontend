@@ -25,6 +25,7 @@
     .gd-icon {
       display: inline-block;
       transition: transform 0.2s;
+      transform: rotate(90deg);
     }
 
     &-filter {
@@ -43,19 +44,7 @@
 
   &[open] {
     .gd-accordion-head .gd-icon {
-      transform: rotate(90deg);
-    }
-  }
-
-  &.gd-accordion-rotate-arrows {
-    .gd-accordion-head .gd-icon {
-      transform: rotate(90deg);
-    }
-
-    &[open] {
-      .gd-accordion-head .gd-icon {
-        transform: rotate(-90deg);
-      }
+      transform: rotate(-90deg);
     }
   }
 }

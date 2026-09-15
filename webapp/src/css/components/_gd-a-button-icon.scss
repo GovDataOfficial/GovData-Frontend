@@ -41,6 +41,9 @@
       -webkit-transition: -webkit-transform 0.2s;
       -ms-transition: -ms-transform 0.2s;
       display: inline-block;
+      transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
     }
   }
 
@@ -51,8 +54,8 @@
 
   &[open] .gd-a-button-icon-summary::before,
   &[aria-expanded="true"] .gd-a-button-icon-summary::before {
-    transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    -webkit-transform: rotate(90deg);
+    transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
   }
 }

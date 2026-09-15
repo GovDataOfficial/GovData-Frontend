@@ -1,18 +1,75 @@
 import sanitize from "sanitize-html";
 
-import { SearchResults, UnknownSearchResultHit } from "@/types/types";
+/**
+ * Link targets that may become an anchor.
+ *
+ * Relative targets are dropped on purpose: they are written for the source
+ * portal (e.g. `/dataset/foo` in a harvested description) and would resolve
+ * against govdata.de, producing a dead link.
+ */
+const LINKABLE_TARGET = /^(https?:|ftp:|mailto:)/i;
 
 export const ALLOWLIST_METADATA_NOTES = {
-  allowedTags: ["a", "li", "ol", "p", "ul", "br", "b", "i", "u"],
+  allowedTags: [
+    "a",
+    "b",
+    "blockquote",
+    "br",
+    "code",
+    "em",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "hr",
+    "i",
+    "li",
+    "ol",
+    "p",
+    "pre",
+    "strong",
+    "table",
+    "tbody",
+    "td",
+    "th",
+    "thead",
+    "tr",
+    "u",
+    "ul",
+  ],
   allowedAttributes: {
     a: ["href", "rel", "target"],
+    // A line starting with a number ("2024. Ein Rückblick") is read as an
+    // ordered list by every Markdown parser. Keeping `start` at least preserves
+    // the number in the text instead of renumbering it to 1.
+    ol: ["start"],
   },
   allowedSchemes: ["ftp", "http", "https", "mailto"],
   transformTags: {
-    a: (tagName: string, attribs: any) => ({
-      tagName,
-      attribs: { ...attribs, rel: "nofollow", target: "_blank" },
-    }),
+    // The page headline is the dataset title, so headings coming from the
+    // description start one level below it. Transforms are not applied
+    // recursively, so this shifts every level by exactly one.
+    h1: "h2",
+    h2: "h3",
+    h3: "h4",
+    h4: "h5",
+    h5: "h6",
+    a: (tagName: string, attribs: any) => {
+      if (!LINKABLE_TARGET.test(attribs?.href || "")) {
+        // span is not allowed, so the tag is dropped and the text kept.
+        return { tagName: "span", attribs: {} };
+      }
+
+      return {
+        tagName,
+        attribs: {
+          ...attribs,
+          rel: "nofollow noopener noreferrer",
+          target: "_blank",
+        },
+      };
+    },
   },
 } satisfies sanitize.IOptions;
 
@@ -34,15 +91,4 @@ export function sanitizeHTML(
   opts?: sanitize.IOptions,
 ): string | null {
   return html ? sanitize(html, opts || DEFAULT_REMOVE_ALL) : null;
-}
-
-export function stripSearchResultHTMLContent(
-  data: SearchResults<UnknownSearchResultHit>,
-): SearchResults<UnknownSearchResultHit> {
-  const sanitizedHits = data.hits.map((hit) => {
-    const sanitizedContent = sanitizeHTML(hit.content);
-    return { ...hit, content: sanitizedContent || "" };
-  });
-
-  return { ...data, hits: sanitizedHits };
 }

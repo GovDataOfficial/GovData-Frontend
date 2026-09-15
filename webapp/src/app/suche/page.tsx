@@ -8,8 +8,8 @@ import { UserSurveyHeader } from "@/app/_components/UserSurveyHeader/UserSurveyH
 import { convertToURLSearchParams } from "@/app/_lib/convertToSearchParams";
 import { fetchHvdCategoryMap, getSearchResults } from "@/app/_lib/getData";
 import { metaDataGenerator } from "@/app/_lib/getMetaData";
+import { sanitizeSearchResultContent } from "@/app/_lib/markdown/renderMarkdown";
 import { numberToLocaleString } from "@/app/_lib/number";
-import { stripSearchResultHTMLContent } from "@/app/_lib/sanitizer/sanitizeHtml";
 import { ExtendedSearchLink } from "@/app/suche/_components/common/ExtendedSearchLink";
 import { SearchResultFilterTags } from "@/app/suche/_components/SearchResultFilterTags/SearchResultFilterTags";
 import { SearchResultsContainer } from "@/app/suche/_components/SearchResults/SearchResultsContainer";
@@ -128,7 +128,7 @@ export default async function Suche(props: PageConstructor) {
             </div>
             {hasHits ? (
               <SearchResultsContainer
-                data={stripSearchResultHTMLContent(data)}
+                data={sanitizeSearchResultContent(data)}
               />
             ) : (
               <SearchResultsEmpty suggestions={data.suggestions} />

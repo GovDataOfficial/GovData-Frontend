@@ -12,12 +12,10 @@ describe("SanitizeHtml", () => {
     expect(sanitizeHTML()).toBeNull();
   });
 
-  it("should transform anchor and keep href", () => {
+  it("should keep the text of a relative anchor but drop the tag", () => {
     const dirty = "<a href='/foo'>test</a>";
     const cleaned = sanitizeHTML(dirty, ALLOWLIST_METADATA_NOTES);
-    expect(cleaned).toBe(
-      '<a href="/foo" rel="nofollow" target="_blank">test</a>',
-    );
+    expect(cleaned).toBe("test");
   });
 
   it("should transform dirty anchor", () => {
@@ -25,7 +23,7 @@ describe("SanitizeHtml", () => {
       'test <a href="http://test.de" title="title" alt="alt" style="">link</a>';
     const cleaned = sanitizeHTML(dirty, ALLOWLIST_METADATA_NOTES);
     expect(cleaned).toBe(
-      'test <a href="http://test.de" rel="nofollow" target="_blank">link</a>',
+      'test <a href="http://test.de" rel="nofollow noopener noreferrer" target="_blank">link</a>',
     );
   });
 
@@ -33,8 +31,22 @@ describe("SanitizeHtml", () => {
     const keep = '<a href="mailto://test.de">link</a>';
     const cleaned = sanitizeHTML(keep, ALLOWLIST_METADATA_NOTES);
     expect(cleaned).toBe(
-      '<a href="mailto://test.de" rel="nofollow" target="_blank">link</a>',
+      '<a href="mailto://test.de" rel="nofollow noopener noreferrer" target="_blank">link</a>',
     );
+  });
+
+  it("should keep tags produced by the markdown renderer", () => {
+    const safe =
+      "<p><strong>fett</strong> <em>kursiv</em></p><ol><li>eins</li></ol>" +
+      "<blockquote>zitat</blockquote><pre><code>code</code></pre><hr />";
+    const cleaned = sanitizeHTML(safe, ALLOWLIST_METADATA_NOTES);
+    expect(cleaned).toBe(safe);
+  });
+
+  it("should shift headings one level down", () => {
+    const dirty = "<h1>eins</h1><h2>zwei</h2><h6>sechs</h6>";
+    const cleaned = sanitizeHTML(dirty, ALLOWLIST_METADATA_NOTES);
+    expect(cleaned).toBe("<h2>eins</h2><h3>zwei</h3><h6>sechs</h6>");
   });
 
   it("should keep allowed attributes", () => {
