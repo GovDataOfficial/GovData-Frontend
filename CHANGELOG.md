@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.15.2] - 2026-09-25
+
+### Changed
+- Updated react and react-dom to 19.3.0
+- Updated marked to 18.0.14
+- Updated prettier to 3.9.7
+- Updated browserslist to 4.29.0
+- Updated brace-expansion to 5.0.12
+
 ## [7.15.1] - 2026-09-16
 
 ### Changed
@@ -20,6 +29,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated @eslint/eslintrc to 3.3.7
 - Updated @vitejs/plugin-react to 6.1.1
 - Updated sass to 1.104.0
+
+## Fixed
+- Markdown syntax in the content snippet of the search result list is no longer shown literally; it is reduced to plain text like the meta description
 
 ### Security
 - Added overrides to bump @humanfs/node to 0.17.0, browserslist to 4.28.8 and decode-uri-component to 0.5.0 (fixes GHSA-p498-v437-472g, GHSA-73wf-gq98-2v4g, GHSA-c83g-rgw3-j3cx, GHSA-vcc3-ghjq-m6fr)
@@ -42,7 +54,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Markdown in the description (`dct:description`) of datasets and showcases is now rendered as HTML on the detail pages (bold, italic, paragraphs, ordered and unordered lists, headings, links); added `marked` as a dependency
 - Headings from a description are shifted one level down so they stay below the page headline; relative links from harvested descriptions are no longer rendered as anchors because they would resolve against govdata.de; external links now carry `rel="nofollow noopener noreferrer"`
 - Meta and OpenGraph descriptions of dataset and showcase detail pages are now plain text instead of raw Markdown, and are truncated at a word boundary
-- Markdown syntax in the content snippet of the search result list is no longer shown literally; it is reduced to plain text like the meta description
 
 ### Security
 
