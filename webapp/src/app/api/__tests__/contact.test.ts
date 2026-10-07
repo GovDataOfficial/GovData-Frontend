@@ -1,7 +1,6 @@
 // @vitest-environment node
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { redirect } from "next/navigation";
-// @ts-expect-error no typings for nodemailer
 import nodemailer from "nodemailer";
 
 import { POST } from "../contact/route";

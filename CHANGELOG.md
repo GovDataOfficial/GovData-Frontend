@@ -6,6 +6,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.15.3] - 2026-00-07
+
+### Changed
+- Updated Next.js and eslint-config-next to 16.3.8
+- Updated ol to 10.11.0
+- Updated sanitize-html to 2.18.0
+- Updated sharp to 0.35.5
+- Updated undici to 7.30.0
+- Updated @types/node to 22.20.5
+- Updated @types/sanitize-html to 2.16.2
+- Updated pino-pretty to 13.2.0
+- Updated prettier to 3.9.9
+- Updated sass to 1.105.0
+- Updated browserslist to 4.29.1
+- Explicitly enabled gzip compression (`compress: true`) in the Next.js config
+- Renovate groups all minor and patch updates into a single branch
+
+### Fixed
+- Map search: added null check for `getTargetElement()`, which may return null since ol 10.11
+
+### Security
+- Updated nodemailer to 10.0.14 (major update); SMTP port is now passed as a number
+- Updated dompurify to 3.4.16
+- Added OWASP Dependency-Check suppression for braces 3.0.3 (CVE-2026-93687 / GHSA-vfj7-8cjw-p6xm): dev-only dependency via eslint-config-next, no patched version available yet
+
 ## [7.15.2] - 2026-09-25
 
 ### Changed

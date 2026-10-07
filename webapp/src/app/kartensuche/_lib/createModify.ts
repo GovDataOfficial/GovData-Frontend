@@ -47,6 +47,9 @@ export function createModify(features: Collection<Feature>) {
       return;
     }
     const mapTarget = map.getTargetElement();
+    if (!mapTarget) {
+      return;
+    }
     mapTarget.style.cursor = cursorStyle;
   }
 

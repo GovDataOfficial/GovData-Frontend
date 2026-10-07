@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-// @ts-expect-error no typings for nodemailer
 import nodemailer from "nodemailer";
 
 import { i18n } from "@/i18n";
@@ -7,11 +6,11 @@ import { logger } from "@/logger/logger";
 
 const transporter = nodemailer.createTransport({
   host: process.env.mail_smtp_host,
-  port: process.env.mail_smtp_port,
+  port: process.env.mail_smtp_port
+    ? Number(process.env.mail_smtp_port)
+    : undefined,
   secure: false,
-  requireTLS:
-    process.env.mail_smtp_tls_enable &&
-    process.env.mail_smtp_tls_enable.toLowerCase() === "true",
+  requireTLS: process.env.mail_smtp_tls_enable?.toLowerCase() === "true",
   auth: {
     user: process.env.mail_smtp_user,
     pass: process.env.mail_smtp_password,

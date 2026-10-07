@@ -12,4 +12,11 @@
         <packageUrl regex="true">^pkg:npm/nanoid@3\.3\.(1[6-9]|[2-9]\d+)$</packageUrl>
         <cve>CVE-2026-67214</cve>
     </suppress>
+
+    <suppress until="2027-01-01Z">
+        <notes>braces 3.0.3 - dev-only, not exploitable. CVE-2026-93687 / GHSA-vfj7-8cjw-p6xm (stack exhaustion via deeply nested brace patterns) has no patched release yet (affects &lt;= 3.0.3, latest version). braces is only pulled in via eslint-config-next -> @next/eslint-plugin-next -> fast-glob -> micromatch (devDependency, `npm ls braces --omit=dev` is empty) and only processes glob patterns from our own eslint config, never untrusted input. npm audit fix --force would downgrade eslint-config-next to 14.x (incompatible with Next 16). Remove once braces ships a fix (micromatch/braces#70) and pin it via overrides in webapp/package.json. Pinned to exactly 3.0.3 so newer versions are re-evaluated.</notes>
+        <packageUrl regex="true">^pkg:npm/braces@3\.0\.3$</packageUrl>
+        <cve>CVE-2026-93687</cve>
+        <vulnerabilityName>GHSA-vfj7-8cjw-p6xm</vulnerabilityName>
+    </suppress>
 </suppressions>
