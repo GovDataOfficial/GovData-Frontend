@@ -6,6 +6,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.15.4] - 2026-10-22
+
+### Add
+- Add new Activity Indicator Component
+
+### Changed
+- Update Metadatenformular Feedback on send with new Component
+- Update UmbrellaBrandHeader to Kern-UX-Component
+- Kern header (kern-kopfzeile) is only loaded when the umbrella brand header feature is enabled; removed unused umbrellabrand i18n keys
+- Updated Next.js and eslint-config-next to 16.4.2
+- Updated react and react-dom to 19.3.1
+- Updated marked to 18.1.1
+- Updated nodemailer to 10.1.1
+- Updated dompurify to 3.4.17
+- Updated sanitize-html to 2.18.1
+- Updated undici to 7.30.1
+- Updated sass to 1.106.0
+- Updated browserslist to 4.29.4
+- Updated prettier to 3.9.10
+- Updated nanoid to 3.3.20
+- Updated @testing-library/user-event to 14.6.8
+- Updated @vitejs/plugin-react to 6.1.2
+- Updated vitest and @vitest/coverage-v8 to 4.1.12
+- Updated jdeb Maven plugin to 1.15
+
+### Security
+- Updated source-map-js to 1.2.2 via `npm audit fix`
+- Updated fast-copy to 4.1.2 via `npm audit fix` (dev-only dependency)
+- Extended OWASP Dependency-Check suppression for moment.js CVEs in chart.js@2.9.4 until 2027-01-01
+
 ## [7.15.3] - 2026-00-07
 
 ### Changed

@@ -131,8 +131,11 @@ export const ResourcePreviewMap = ({
         map && map.addLayer(layer);
       });
     } catch (e) {
-      setIsLoading(false);
-      setHasError(true);
+      // deferred, setState must not run synchronously in the effect body
+      queueMicrotask(() => {
+        setIsLoading(false);
+        setHasError(true);
+      });
     }
     mapRef.current = map;
   }, [

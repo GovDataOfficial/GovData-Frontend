@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { set } from "ol/transform";
 
 import { ResourceFormatShort } from "@/types/types";
 
@@ -52,9 +51,6 @@ export function useFetchPreviewData(
 
   useEffect(() => {
     let isMounted = true;
-    setData(null);
-    setError(null);
-    setIsLoading(true);
 
     const fetchData = async () => {
       try {

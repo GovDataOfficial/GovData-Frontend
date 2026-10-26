@@ -1,0 +1,33 @@
+.activity-indicator {
+  display: inline-block;
+  box-sizing: border-box;
+  vertical-align: middle;
+  // Centers against the text when placed inside a flex container, e.g. .gd-button
+  align-self: center;
+  border-style: solid;
+  border-color: currentColor;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: activity-indicator-rotation 1s linear infinite;
+
+  &-small {
+    width: rem-calc(16);
+    height: rem-calc(16);
+    border-width: 2px;
+  }
+
+  &-large {
+    width: rem-calc(48);
+    height: rem-calc(48);
+    border-width: 6px;
+  }
+}
+
+@keyframes activity-indicator-rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

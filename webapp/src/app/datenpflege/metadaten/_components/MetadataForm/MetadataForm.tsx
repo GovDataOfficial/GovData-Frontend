@@ -62,10 +62,11 @@ export function MetadataForm({
   const editMode = !!metadata;
   const infoRef = useRef<HTMLDivElement>(null);
 
-  const { requestError, detailedErrorInfo, formProps } = useMetadataForm({
-    editMode,
-    infoRef,
-  });
+  const { requestError, detailedErrorInfo, formProps, isSubmitting } =
+    useMetadataForm({
+      editMode,
+      infoRef,
+    });
 
   const {
     setStepAndFocusFirstVisibleInput,
@@ -123,7 +124,7 @@ export function MetadataForm({
         />
       </div>
       <form id={METADATA_FORM_ID} {...formProps}>
-        <div className="form-step-container">
+        <fieldset className="form-step-container" disabled={isSubmitting}>
           <MetadataFormHelpBox
             metadataGuideLink={metadataGuideLink}
             metadataDcatapLink={metadataDcatapLink}
@@ -208,8 +209,9 @@ export function MetadataForm({
                 ? t("metadataform.navigation.submit.edit")
                 : t("metadataform.navigation.submit.create")
             }
+            isSubmitting={isSubmitting}
           />
-        </div>
+        </fieldset>
       </form>
     </div>
   );

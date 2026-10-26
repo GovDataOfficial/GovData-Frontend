@@ -1,5 +1,6 @@
 import React from "react";
 
+import { ActivityIndicator } from "@/app/_components/ActivityIndicator/ActivityIndicator";
 import { Button } from "@/app/_components/Button/Button";
 import { icons, SVG } from "@/app/_components/SVG/SVG";
 import { PAGES_AUTH } from "@/app/_lib/URLHelper";
@@ -10,6 +11,7 @@ type MetadataFormBottomNavigation = {
   setCurrentStep: (step: number) => void;
   reportValidity: () => boolean;
   submitButtonTitle: string;
+  isSubmitting?: boolean;
 };
 
 export function MetadataFormBottomNavigation({
@@ -17,6 +19,7 @@ export function MetadataFormBottomNavigation({
   setCurrentStep,
   reportValidity,
   submitButtonTitle,
+  isSubmitting = false,
 }: MetadataFormBottomNavigation) {
   const showBackButton = currentStep !== 0;
   const isLastStep = currentStep === 7;
@@ -46,7 +49,14 @@ export function MetadataFormBottomNavigation({
             id="metadata-form-submit-button"
             type="submit"
             variant="primary"
+            disabled={isSubmitting}
           >
+            {isSubmitting && (
+              <ActivityIndicator
+                className="me-1"
+                label={i18n.t("metadataform.navigation.submit.loading")}
+              />
+            )}
             {submitButtonTitle}
           </Button>
         ) : (

@@ -138,4 +138,29 @@ describe("MetadataFormBottomNavigation", () => {
     const submit = getSubmitButton();
     expect(submit).toHaveAttribute("id", "metadata-form-submit-button");
   });
+
+  test("should disable submit button and show activity indicator while submitting", () => {
+    const props = {
+      reportValidity: () => true,
+      setCurrentStep: vi.fn(),
+      submitButtonTitle: "speichern",
+      currentStep: 7,
+    };
+
+    const { rerender } = render(
+      <MetadataFormBottomNavigation {...props} isSubmitting={false} />,
+    );
+
+    expect(getSubmitButton()).toBeEnabled();
+    expect(
+      screen.queryByRole("status", { name: "Wird gespeichert" }),
+    ).toBeNull();
+
+    rerender(<MetadataFormBottomNavigation {...props} isSubmitting />);
+
+    expect(screen.getByRole("button", { name: /speichern/ })).toBeDisabled();
+    expect(
+      screen.getByRole("status", { name: "Wird gespeichert" }),
+    ).toBeInTheDocument();
+  });
 });

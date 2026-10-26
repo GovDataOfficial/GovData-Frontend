@@ -57,7 +57,7 @@ export const useYasgui = (containerId: string, endpoint: string) => {
     if (yasgui) {
       const tab = yasgui.getTab();
       tab?.setRequestConfig({ endpoint });
-      yasgui.config.requestConfig.endpoint = endpoint;
+      yasguiRef.current.config.requestConfig.endpoint = endpoint;
     }
   };
 
@@ -80,7 +80,7 @@ export const useYasgui = (containerId: string, endpoint: string) => {
       const tab = yasgui.getTab();
 
       tab?.setRequestConfig({ acceptHeaderSelect: contentType });
-      yasgui.config.requestConfig.acceptHeaderSelect = contentType;
+      yasguiRef.current.config.requestConfig.acceptHeaderSelect = contentType;
     }
   };
 

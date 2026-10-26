@@ -69,6 +69,9 @@ export function useMetadataForm({ editMode, infoRef }: useMetadataForm) {
     DetailedErrorInfo | undefined
   >(undefined);
 
+  // Locks the form from submit until the server has answered
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     releaseFormSubmit();
     e.preventDefault();
@@ -76,18 +79,30 @@ export function useMetadataForm({ editMode, infoRef }: useMetadataForm) {
     setDetailedErrorInfo(undefined);
 
     const form = e.target as HTMLFormElement;
-    const response = await fetch(form.action, {
-      method: form.method,
-      redirect: "follow",
-      body: new FormData(e.target as HTMLFormElement),
-    });
+    const body = new FormData(form);
+    setIsSubmitting(true);
+
+    let response: Response;
+    try {
+      response = await fetch(form.action, {
+        method: form.method,
+        redirect: "follow",
+        body,
+      });
+    } catch {
+      setIsSubmitting(false);
+      setRequestError(MetadataRequestError.general);
+      return;
+    }
 
     if (response.ok) {
+      // Keep the form locked while the success page loads
       const redirectTo = editMode
         ? PAGES_AUTH.manage_metadata_form_edit_success
         : PAGES_AUTH.manage_metadata_form_add_success;
       router.push(redirectTo);
     } else {
+      setIsSubmitting(false);
       // Parse detailed error information
       const errorInfo = await parseErrorResponse(response);
       setDetailedErrorInfo(errorInfo);
@@ -130,5 +145,6 @@ export function useMetadataForm({ editMode, infoRef }: useMetadataForm) {
     },
     requestError,
     detailedErrorInfo,
+    isSubmitting,
   };
 }
