@@ -7,9 +7,12 @@ export default defineConfig({
     environment: "jsdom",
     globals: true,
     setupFiles: "vitest.setup.ts",
+    // JUnit XML for the GitLab pipeline Tests tab (reports:junit of the npm test job).
+    reporters: ["default", "junit"],
+    outputFile: { junit: "coverage/junit.xml" },
     coverage: {
       provider: "v8",
-      reporter: ["clover", "text-summary", "cobertura"],
+      reporter: ["clover", "text-summary", "cobertura", "html"],
       include: ["src"],
       exclude: [
         "**/.DS_Store",

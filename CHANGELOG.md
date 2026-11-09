@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.15.5] - 2026-11-05
+
+### Changed
+- Updated Next.js and eslint-config-next to 16.4.5
+- Updated marked to 18.1.3
+- Updated nodemailer to 10.3.1
+- Updated openid-client to 6.8.9
+- Updated @vitejs/plugin-react to 6.2.1
+- Updated sass to 1.107.1
+- Updated browserslist to 4.29.5
+- Updated decode-uri-component to 0.5.1
+- Updated zod to 4.6.7
+- Umbrella brand header background now uses the KERN surface color and loads the KERN Fira Sans font
+
 ## [7.15.4] - 2026-10-22
 
 ### Add
