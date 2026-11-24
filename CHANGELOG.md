@@ -6,6 +6,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.15.6] - 2026-11-20
+
+### Changed
+- Updated @kern-ux/native to 2.9.0
+- Updated @testing-library/user-event to 14.6.13
+- Updated @vitejs/plugin-react to 6.3.0
+- Updated bootstrap to 5.3.9
+- Updated browserslist to 4.29.6
+- Updated brace-expansion to 5.0.13
+- Updated dompurify to 3.4.18
+- Updated eslint-config-next to 16.4.6
+- Updated marked to 18.2.1
+- Updated next to 16.4.6
+- Updated nodemailer to 10.6.0
+- Updated openid-client to 6.9.0
+- Updated prettier to 3.10.1
+- Updated sanitize-html to 2.18.2
+- Updated sass to 1.108.2
+- Updated undici to 7.30.2
+
 ## [7.15.5] - 2026-11-05
 
 ### Changed
